@@ -10,7 +10,7 @@ var testFieldTpl = `	if %[1]s {
 	}
 `
 
-type FieldValidation struct {
+type FieldInfo struct {
 	Name string
 	Type string
 	Tag  string
@@ -18,7 +18,7 @@ type FieldValidation struct {
 
 // TODO: NewFieldValidation to validate params and build the object.
 
-func (f *FieldValidation) Generate() (string, error) {
+func (f *FieldInfo) GenerateTestField() (string, error) {
 	tag := f.Tag
 	tag, _ = strings.CutPrefix(tag, "validate:")
 	testCondition := ""

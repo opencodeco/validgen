@@ -9,7 +9,7 @@ import (
 func TestFileValidatorGenerate(t *testing.T) {
 	type fields struct {
 		FileHeader FileHeader
-		StructInfo FuncValidator
+		StructInfo StructInfo
 	}
 	tests := []struct {
 		name    string
@@ -23,9 +23,9 @@ func TestFileValidatorGenerate(t *testing.T) {
 				FileHeader: FileHeader{
 					PackageName: "main",
 				},
-				StructInfo: FuncValidator{
+				StructInfo: StructInfo{
 					Name: "User",
-					FieldsValidations: []FieldValidation{
+					FieldsInfo: []FieldInfo{
 						{
 							Name: "FirstName",
 							Type: "string",

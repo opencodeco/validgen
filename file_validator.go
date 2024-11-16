@@ -11,7 +11,7 @@ var fileValidatorTpl = "%s\n%s"
 // - Function to validate the struct
 type FileValidator struct {
 	FileHeader FileHeader
-	StructInfo FuncValidator
+	StructInfo StructInfo
 }
 
 func (fv *FileValidator) Generate() (string, error) {
@@ -20,7 +20,7 @@ func (fv *FileValidator) Generate() (string, error) {
 		return "", err
 	}
 
-	code, err := fv.StructInfo.Generate()
+	code, err := fv.StructInfo.GenerateFuncValidator()
 	if err != nil {
 		return "", err
 	}

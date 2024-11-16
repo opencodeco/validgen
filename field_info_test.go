@@ -47,12 +47,12 @@ func TestFieldValidationGenerate(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			f := &FieldValidation{
+			f := &FieldInfo{
 				Name: tt.fields.Name,
 				Type: tt.fields.Type,
 				Tag:  tt.fields.Tag,
 			}
-			got, err := f.Generate()
+			got, err := f.GenerateTestField()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("FieldValidation.Generate() error = %v, wantErr %v", err, tt.wantErr)
 				return

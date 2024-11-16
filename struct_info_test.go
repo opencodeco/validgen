@@ -9,7 +9,7 @@ import (
 func TestFuncValidatorGenerate(t *testing.T) {
 	type fields struct {
 		Name              string
-		FieldsValidations []FieldValidation
+		FieldsValidations []FieldInfo
 		HasValidateTag    bool
 	}
 	tests := []struct {
@@ -22,7 +22,7 @@ func TestFuncValidatorGenerate(t *testing.T) {
 			name: "Valid struct",
 			fields: fields{
 				Name: "User",
-				FieldsValidations: []FieldValidation{
+				FieldsValidations: []FieldInfo{
 					{
 						Name: "FirstName",
 						Type: "string",
@@ -55,12 +55,12 @@ func TestFuncValidatorGenerate(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			s := &FuncValidator{
-				Name:              tt.fields.Name,
-				FieldsValidations: tt.fields.FieldsValidations,
-				HasValidateTag:    tt.fields.HasValidateTag,
+			s := &StructInfo{
+				Name:           tt.fields.Name,
+				FieldsInfo:     tt.fields.FieldsValidations,
+				HasValidateTag: tt.fields.HasValidateTag,
 			}
-			got, err := s.Generate()
+			got, err := s.GenerateFuncValidator()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("FuncValidator.Generate() error = %v, wantErr %v", err, tt.wantErr)
 				return
