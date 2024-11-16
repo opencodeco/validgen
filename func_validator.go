@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-var funcValidatorTpl = `func %[1]sValidate(u *structs.%[1]s) []error {
+var funcValidatorTpl = `func %[1]sValidate(u *%[1]s) []error {
 	var errs []error
 %[2]s
 	return errs
@@ -13,6 +13,8 @@ var funcValidatorTpl = `func %[1]sValidate(u *structs.%[1]s) []error {
 
 type FuncValidator struct {
 	Name              string
+	Path              string
+	Package           string
 	FieldsValidations []FieldValidation
 	HasValidateTag    bool
 }

@@ -16,6 +16,8 @@ type FieldValidation struct {
 	Tag  string
 }
 
+// TODO: NewFieldValidation to validate params and build the object.
+
 func (f *FieldValidation) Generate() (string, error) {
 	tag := f.Tag
 	tag, _ = strings.CutPrefix(tag, "validate:")

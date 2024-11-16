@@ -8,7 +8,7 @@ import (
 
 func TestFileHeaderGenerate(t *testing.T) {
 	type fields struct {
-		ImportPath string
+		PackageName string
 	}
 	tests := []struct {
 		name    string
@@ -19,14 +19,12 @@ func TestFileHeaderGenerate(t *testing.T) {
 		{
 			name: "Valid import path",
 			fields: fields{
-				ImportPath: "github.com/alexgarzao/myvalidator_samples/ex1/structs",
+				PackageName: "main",
 			},
-			want: `package validators
+			want: `package main
 
 import (
 	"fmt"
-
-	"github.com/alexgarzao/myvalidator_samples/ex1/structs"
 )
 `,
 			wantErr: false,
@@ -35,7 +33,7 @@ import (
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			p := &FileHeader{
-				ImportPath: tt.fields.ImportPath,
+				PackageName: tt.fields.PackageName,
 			}
 			got, err := p.Generate()
 			if (err != nil) != tt.wantErr {

@@ -21,7 +21,7 @@ func TestFileValidatorGenerate(t *testing.T) {
 			name: "Valid struct",
 			fields: fields{
 				FileHeader: FileHeader{
-					ImportPath: "github.com/alexgarzao/myvalidator_samples/ex1/structs",
+					PackageName: "main",
 				},
 				StructInfo: FuncValidator{
 					Name: "User",
@@ -40,18 +40,13 @@ func TestFileValidatorGenerate(t *testing.T) {
 					HasValidateTag: true,
 				},
 			},
-			want: `package validators
+			want: `package main
 
 import (
-	"errors"
 	"fmt"
-
-	"github.com/alexgarzao/myvalidator_samples/ex1/structs"
 )
 
-var ErrValidation = errors.New("validation error")
-
-func UserValidate(u *structs.User) []error {
+func UserValidate(u *User) []error {
 	var errs []error
 
 	if u.FirstName == "" {

@@ -4,21 +4,19 @@ import (
 	"fmt"
 )
 
-var structFileHeaderTpl = `package validators
+var structFileHeaderTpl = `package %[1]s
 
 import (
 	"fmt"
-
-	"%[1]s"
 )
 `
 
 type FileHeader struct {
-	ImportPath string
+	PackageName string
 }
 
 func (p *FileHeader) Generate() (string, error) {
-	code := fmt.Sprintf(structFileHeaderTpl, p.ImportPath)
+	code := fmt.Sprintf(structFileHeaderTpl, p.PackageName)
 
 	return code, nil
 }

@@ -36,7 +36,7 @@ func TestFuncValidatorGenerate(t *testing.T) {
 				},
 				HasValidateTag: true,
 			},
-			want: `func UserValidate(u *structs.User) []error {
+			want: `func UserValidate(u *User) []error {
 	var errs []error
 
 	if u.FirstName == "" {
