@@ -7,13 +7,10 @@ import (
 var structFileHeaderTpl = `package validators
 
 import (
-	"errors"
 	"fmt"
 
 	"%[1]s"
 )
-
-var ErrValidation = errors.New("validation error")
 `
 
 type FileHeader struct {

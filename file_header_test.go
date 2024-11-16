@@ -24,13 +24,10 @@ func TestFileHeaderGenerate(t *testing.T) {
 			want: `package validators
 
 import (
-	"errors"
 	"fmt"
 
 	"github.com/alexgarzao/myvalidator_samples/ex1/structs"
 )
-
-var ErrValidation = errors.New("validation error")
 `,
 			wantErr: false,
 		},
