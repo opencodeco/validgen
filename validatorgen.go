@@ -2,25 +2,17 @@ package main
 
 import (
 	"log"
+	"os"
 )
 
 func main() {
-	fullpath := "./tests/test01/test01.go"
 
-	structs, err := parseFile(fullpath)
-	if err != nil {
-		log.Fatal(err)
+	argsWithoutCmd := os.Args[1:]
+	if len(argsWithoutCmd) == 0 {
+		log.Fatal("Invalid parameters:\n\tvalidatorgen <path>\n")
 	}
 
-	writeStructsInfo(structs)
-
-	if err := generateCode(structs); err != nil {
+	if err := findFiles(argsWithoutCmd[0]); err != nil {
 		log.Fatal(err)
-	}
-}
-
-func writeStructsInfo(structs []StructInfo) {
-	for _, structInfo := range structs {
-		structInfo.PrintInfo()
 	}
 }
