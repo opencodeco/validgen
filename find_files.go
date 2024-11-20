@@ -32,7 +32,9 @@ func walk(path string, d os.DirEntry, err error) error {
 		log.Fatal(err)
 	}
 
-	printStructsInfo(structs)
+	for _, structInfo := range structs {
+		structInfo.PrintInfo()
+	}
 
 	if err := generateCode(structs); err != nil {
 		log.Fatal(err)
