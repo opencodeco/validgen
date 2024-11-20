@@ -4,18 +4,18 @@ import (
 	"fmt"
 )
 
-func UserValidate(u *User) []error {
+func UserValidate(obj *User) []error {
 	var errs []error
 
-	if u.FirstName == "" {
+	if obj.FirstName == "" {
 		errs = append(errs, fmt.Errorf("%w: FirstName required", ErrValidation))
 	}
 
-	if u.LastName == "" {
+	if obj.LastName == "" {
 		errs = append(errs, fmt.Errorf("%w: LastName required", ErrValidation))
 	}
 
-	if u.Age == 0 {
+	if obj.Age == 0 {
 		errs = append(errs, fmt.Errorf("%w: Age required", ErrValidation))
 	}
 
