@@ -7,12 +7,10 @@ import (
 )
 
 func main() {
-
 	u := &structsinpkg.User{}
 	if err := structsinpkg.UserValidate(u); err != nil {
-		fmt.Println(err)
-		return
+		fmt.Printf("User: %+v Error: %s\n", u, err)
+	} else {
+		fmt.Printf("User: %+v is valid\n", u)
 	}
-
-	fmt.Println("User is valid")
 }
