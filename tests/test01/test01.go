@@ -18,12 +18,10 @@ type NoValidateInfo struct {
 }
 
 func main() {
-
 	u := &User{}
 	if err := UserValidate(u); err != nil {
-		fmt.Println(err)
-		return
+		fmt.Printf("User: %+v Error: %s\n", u, err)
+	} else {
+		fmt.Printf("User: %+v is valid\n", u)
 	}
-
-	fmt.Println("User is valid")
 }
