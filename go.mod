@@ -1,4 +1,4 @@
-module github.com/alexgarzao/myvalidator
+module github.com/opencodeco/myvalidator
 
 go 1.22.0
 
