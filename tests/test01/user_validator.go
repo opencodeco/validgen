@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/opencodeco/myvalidator/types"
+	"github.com/opencodeco/validgen/types"
 )
 
 func UserValidate(obj *User) []error {

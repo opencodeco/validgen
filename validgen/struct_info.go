@@ -13,7 +13,7 @@ var structValidatorTpl = `package {{.PackageName}}
 import (
 	"fmt"
 
-	"github.com/opencodeco/myvalidator/types"
+	"github.com/opencodeco/validgen/types"
 )
 
 func {{.Name}}Validate(obj *{{.Name}}) []error {
