@@ -14,7 +14,7 @@ func TestValidGen(t *testing.T) {
 		UserName:  "myusername",
 	}
 
-	errors := ValidGenValidate(data)
+	errors := StructToValidateValidate(data)
 	assert.Equal(t, 0, len(errors))
 }
 
@@ -27,6 +27,6 @@ func BenchmarkValidGen(b *testing.B) {
 			UserName:  "myusername",
 		}
 
-		ValidGenValidate(data)
+		StructToValidateValidate(data)
 	}
 }
