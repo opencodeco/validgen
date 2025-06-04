@@ -6,7 +6,7 @@ import (
 	"github.com/opencodeco/validgen/types"
 )
 
-func ValidGenValidate(obj *StructToValidate) []error {
+func StructToValidateValidate(obj *StructToValidate) []error {
 	var errs []error
 
 	if !(obj.FirstName != "") {
