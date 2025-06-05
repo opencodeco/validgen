@@ -26,7 +26,7 @@ func main() {
 	u2 := &User{
 		FirstName: "First",
 		LastName:  "Last",
-		Age:       1,
+		Age:       18,
 	}
 
 	if err := UserValidate(u2); err != nil {
