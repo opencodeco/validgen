@@ -41,7 +41,7 @@ cd validgen
 make test
 ```
 
-# Steps to run the bechmark tests
+# Steps to run the benchmark tests
 
 The steps to run the benchmark tests are:
 
