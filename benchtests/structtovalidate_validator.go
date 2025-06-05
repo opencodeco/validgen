@@ -17,8 +17,8 @@ func StructToValidateValidate(obj *StructToValidate) []error {
 		errs = append(errs, fmt.Errorf("%w: LastName required", types.ErrValidation))
 	}
 
-	if !(obj.Age >= 0) {
-		errs = append(errs, fmt.Errorf("%w: Age must be >= 0", types.ErrValidation))
+	if !(obj.Age >= 18) {
+		errs = append(errs, fmt.Errorf("%w: Age must be >= 18", types.ErrValidation))
 	}
 
 	if !(obj.Age <= 130) {
