@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestGetFieldTestElements(t *testing.T) {
+func TestGetFieldTestElementsWithNumericFields(t *testing.T) {
 	type args struct {
 		fieldName       string
 		fieldValidation string
@@ -17,21 +17,6 @@ func TestGetFieldTestElements(t *testing.T) {
 		want    FieldTestElements
 		wantErr bool
 	}{
-		{
-			name: "Required string",
-			args: args{
-				fieldName:       "myfield1",
-				fieldValidation: "required",
-				fieldType:       "string",
-			},
-			want: FieldTestElements{
-				loperand:     "obj.myfield1",
-				operator:     "!=",
-				roperand:     `""`,
-				errorMessage: "myfield1 required",
-			},
-			wantErr: false,
-		},
 		{
 			name: "Required uint8",
 			args: args{
@@ -74,36 +59,6 @@ func TestGetFieldTestElements(t *testing.T) {
 				operator:     "<=",
 				roperand:     `130`,
 				errorMessage: "myfield4 must be <= 130",
-			},
-			wantErr: false,
-		},
-		{
-			name: "String size >= 5",
-			args: args{
-				fieldName:       "myfield5",
-				fieldValidation: "gte=5",
-				fieldType:       "string",
-			},
-			want: FieldTestElements{
-				loperand:     "len(obj.myfield5)",
-				operator:     ">=",
-				roperand:     `5`,
-				errorMessage: "length myfield5 must be >= 5",
-			},
-			wantErr: false,
-		},
-		{
-			name: "String size <= 10",
-			args: args{
-				fieldName:       "myfield6",
-				fieldValidation: "lte=10",
-				fieldType:       "string",
-			},
-			want: FieldTestElements{
-				loperand:     "len(obj.myfield6)",
-				operator:     "<=",
-				roperand:     `10`,
-				errorMessage: "length myfield6 must be <= 10",
 			},
 			wantErr: false,
 		},
