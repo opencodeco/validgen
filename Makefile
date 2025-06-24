@@ -10,4 +10,4 @@ bench:
 	go test -bench=. -v -benchmem -benchtime=2s ./benchtests
 
 build: clean
-	go build -o bin/ ./validgen/...
+	go build -o bin/
