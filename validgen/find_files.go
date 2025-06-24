@@ -1,4 +1,4 @@
-package main
+package validgen
 
 import (
 	"log"
@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-func findFiles(path string) error {
+func FindFiles(path string) error {
 	if err := filepath.WalkDir(path, walk); err != nil {
 		return err
 	}

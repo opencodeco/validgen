@@ -1,4 +1,4 @@
-package main
+package validgen
 
 func generateCode(structs []StructInfo) error {
 	// TODO: validate tags ok?
