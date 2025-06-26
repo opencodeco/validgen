@@ -18,6 +18,21 @@ func TestGetFieldTestElementsWithStringFields(t *testing.T) {
 		wantErr bool
 	}{
 		{
+			name: "Equal string",
+			args: args{
+				fieldName:       "myfield1",
+				fieldValidation: "eq=abc",
+				fieldType:       "string",
+			},
+			want: FieldTestElements{
+				loperand:     "obj.myfield1",
+				operator:     "==",
+				roperand:     `"abc"`,
+				errorMessage: "myfield1 must be equal to 'abc'",
+			},
+			wantErr: false,
+		},
+		{
 			name: "Required string",
 			args: args{
 				fieldName:       "myfield1",
