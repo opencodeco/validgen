@@ -112,15 +112,15 @@ func UserValidate(obj *User) []error {
 			fv := tt.fields.StructInfo
 			got, err := fv.GenerateValidator()
 			if (err != nil) != tt.wantErr {
-				t.Errorf("FileValidator.Generate() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("FileValidator.GenerateValidator() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if got != tt.want {
-				t.Errorf("FileValidator.Generate() = %v, want %v", got, tt.want)
+				t.Errorf("FileValidator.GenerateValidator() = %v, want %v", got, tt.want)
 				dmp := diffmatchpatch.New()
 				diffs := dmp.DiffMain(tt.want, got, false)
 				if len(diffs) > 1 {
-					t.Errorf("FileValidator.Generate() diff = \n%v", dmp.DiffPrettyText(diffs))
+					t.Errorf("FileValidator.GenerateValidator() diff = \n%v", dmp.DiffPrettyText(diffs))
 				}
 			}
 		})
