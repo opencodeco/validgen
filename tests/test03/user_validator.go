@@ -3,8 +3,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/opencodeco/validgen/types"
 )
 
@@ -12,27 +10,27 @@ func UserValidate(obj *User) []error {
 	var errs []error
 
 	if !(obj.FirstName != "") {
-		errs = append(errs, fmt.Errorf("%w: FirstName required", types.ErrValidation))
+		errs = append(errs, types.NewValidationError("FirstName required"))
 	}
 
 	if !(obj.LastName != "") {
-		errs = append(errs, fmt.Errorf("%w: LastName required", types.ErrValidation))
+		errs = append(errs, types.NewValidationError("LastName required"))
 	}
 
 	if !(obj.Age >= 18) {
-		errs = append(errs, fmt.Errorf("%w: Age must be >= 18", types.ErrValidation))
+		errs = append(errs, types.NewValidationError("Age must be >= 18"))
 	}
 
 	if !(obj.Age <= 130) {
-		errs = append(errs, fmt.Errorf("%w: Age must be <= 130", types.ErrValidation))
+		errs = append(errs, types.NewValidationError("Age must be <= 130"))
 	}
 
 	if !(len(obj.UserName) >= 5) {
-		errs = append(errs, fmt.Errorf("%w: length UserName must be >= 5", types.ErrValidation))
+		errs = append(errs, types.NewValidationError("length UserName must be >= 5"))
 	}
 
 	if !(len(obj.UserName) <= 10) {
-		errs = append(errs, fmt.Errorf("%w: length UserName must be <= 10", types.ErrValidation))
+		errs = append(errs, types.NewValidationError("length UserName must be <= 10"))
 	}
 
 	return errs
