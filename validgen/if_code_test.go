@@ -23,7 +23,7 @@ func TestIfCode(t *testing.T) {
 			},
 			want: `
 	if !(obj.strField == "abc") {
-		errs = append(errs, fmt.Errorf("%w: strField must be equal to 'abc'", types.ErrValidation))
+		errs = append(errs, types.NewValidationError("strField must be equal to 'abc'"))
 	}
 `,
 		},

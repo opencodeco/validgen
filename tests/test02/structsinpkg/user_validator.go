@@ -3,8 +3,6 @@
 package structsinpkg
 
 import (
-	"fmt"
-
 	"github.com/opencodeco/validgen/types"
 )
 
@@ -12,15 +10,15 @@ func UserValidate(obj *User) []error {
 	var errs []error
 
 	if !(obj.FirstName != "") {
-		errs = append(errs, fmt.Errorf("%w: FirstName required", types.ErrValidation))
+		errs = append(errs, types.NewValidationError("FirstName required"))
 	}
 
 	if !(obj.LastName != "") {
-		errs = append(errs, fmt.Errorf("%w: LastName required", types.ErrValidation))
+		errs = append(errs, types.NewValidationError("LastName required"))
 	}
 
 	if !(obj.Age != 0) {
-		errs = append(errs, fmt.Errorf("%w: Age required", types.ErrValidation))
+		errs = append(errs, types.NewValidationError("Age required"))
 	}
 
 	return errs
