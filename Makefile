@@ -1,13 +1,23 @@
+.PHONY: clean
 clean:
 	rm -Rf bin/
 
-test:
+.PHONY: unittests
+unittests:
 	go clean -testcache
 	go test -v ./...
 
-bench:
+.PHONY: benchtests
+benchtests:
 	go clean -testcache
-	go test -bench=. -v -benchmem -benchtime=2s ./benchtests
+	go test -bench=. -v -benchmem -benchtime=2s ./tests/bench
 
+.PHONY: build
 build: clean
 	go build -o bin/
+
+.PHONY: end2endtests
+end2endtests: build
+	find tests/end2end/ -name '*_validator.go' -exec rm \{} \;
+	./bin/validgen tests/end2end
+	cd tests/end2end; go run .
