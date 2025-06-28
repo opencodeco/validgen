@@ -14,7 +14,7 @@ benchtests:
 
 .PHONY: build
 build: clean
-	go build -o bin/
+	go build -o bin/validgen .
 
 .PHONY: end2endtests
 end2endtests: build
