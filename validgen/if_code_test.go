@@ -27,6 +27,19 @@ func TestIfCode(t *testing.T) {
 	}
 `,
 		},
+		{
+			name: "if code with uint8",
+			args: args{
+				fieldName:       "intField",
+				fieldType:       "uint8",
+				fieldValidation: "gte=123",
+			},
+			want: `
+	if !(obj.intField >= 123) {
+		errs = append(errs, types.NewValidationError("intField must be >= 123"))
+	}
+`,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
