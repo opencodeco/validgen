@@ -23,15 +23,6 @@ func {{.Name}}Validate(obj *{{.Name}}) []error {
 }
 `
 
-var packageDefinitionTpl = `package {{.PackageName}}
-
-import (
-	"errors"
-)
-
-var ErrValidation = errors.New("validation error")
-`
-
 type StructInfo struct {
 	Name           string
 	Path           string
@@ -148,20 +139,6 @@ func (s *StructInfo) GenerateFileValidator() error {
 	}
 
 	return nil
-}
-
-func (s *StructInfo) Generate() (string, error) {
-	tmpl, err := template.New("PkgDef").Parse(packageDefinitionTpl)
-	if err != nil {
-		return "", err
-	}
-
-	code := new(bytes.Buffer)
-	if err := tmpl.Execute(code, s); err != nil {
-		return "", err
-	}
-
-	return code.String(), nil
 }
 
 func (s *StructInfo) PrintInfo() {
