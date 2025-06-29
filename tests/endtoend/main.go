@@ -29,16 +29,17 @@ type NoValidateInfo struct {
 }
 
 func main() {
-	log.Println("starting all_types tests")
+	log.Println("starting tests")
 
-	all_types1_test()
-	all_types2_test()
-	struct_in_pkg_test()
+	all_types1_tests()
+	all_types2_tests()
+	struct_in_pkg_tests()
+	string_test()
 
-	log.Println("all_types tests ok")
+	log.Println("finishing tests")
 }
 
-func all_types1_test() {
+func all_types1_tests() {
 	var expectedMsgErrors []string
 	var errs []error
 
@@ -64,10 +65,10 @@ func all_types1_test() {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
-	log.Println("all_types1 ok")
+	log.Println("all_types1 tests ok")
 }
 
-func all_types2_test() {
+func all_types2_tests() {
 	var expectedMsgErrors []string
 	var errs []error
 
@@ -114,10 +115,10 @@ func all_types2_test() {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
-	log.Println("all_types2 ok")
+	log.Println("all_types2 tests ok")
 }
 
-func struct_in_pkg_test() {
+func struct_in_pkg_tests() {
 	var expectedMsgErrors []string
 	var errs []error
 
@@ -143,7 +144,7 @@ func struct_in_pkg_test() {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
-	log.Println("struct_in_pkg ok")
+	log.Println("struct_in_pkg tests ok")
 }
 
 func expectedMsgErrorsOk(errs []error, expectedMsgErrors []string) bool {
