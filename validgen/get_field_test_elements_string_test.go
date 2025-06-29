@@ -77,7 +77,23 @@ func TestGetFieldTestElementsWithStringFields(t *testing.T) {
 			},
 			wantErr: false,
 		},
+		{
+			name: "Equal string ignore case",
+			args: args{
+				fieldName:       "myStrField",
+				fieldValidation: "eq_ignore_case=AbC",
+				fieldType:       "string",
+			},
+			want: FieldTestElements{
+				loperand:     "types.ToLower(obj.myStrField)",
+				operator:     "==",
+				roperand:     `"abc"`,
+				errorMessage: "myStrField must be equal to 'abc'",
+			},
+			wantErr: false,
+		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := GetFieldTestElements(tt.args.fieldName, tt.args.fieldValidation, tt.args.fieldType)
