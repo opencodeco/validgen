@@ -132,13 +132,13 @@ func struct_in_pkg_test() {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
-	v2 := &AllTypes1{
+	v2 := &structsinpkg.Type1{
 		FirstName: "First",
 		LastName:  "Last",
 		Age:       18,
 	}
 	expectedMsgErrors = nil
-	errs = AllTypes1Validate(v2)
+	errs = structsinpkg.Type1Validate(v2)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
