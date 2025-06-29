@@ -16,8 +16,8 @@ benchtests:
 build: clean
 	go build -o bin/validgen .
 
-.PHONY: end2endtests
-end2endtests: build
-	find tests/end2end/ -name '*_validator.go' -exec rm \{} \;
-	./bin/validgen tests/end2end
-	cd tests/end2end; go run .
+.PHONY: endtoendtests
+endtoendtests: build
+	find tests/endtoend/ -name '*_validator.go' -exec rm \{} \;
+	./bin/validgen tests/endtoend
+	cd tests/endtoend; go run .
