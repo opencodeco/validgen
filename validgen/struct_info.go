@@ -116,12 +116,12 @@ func GetFieldTestElements(fieldName, fieldValidation, fieldType string) (FieldTe
 		return FieldTestElements{}, fmt.Errorf("unsupported validation %s type %s", fieldValidation, fieldType)
 	}
 
-	ifData.loperand = strings.Replace(ifData.loperand, "{{.Name}}", "obj."+fieldName, -1)
-	ifData.loperand = strings.Replace(ifData.loperand, "{{.Target}}", target, -1)
-	ifData.roperand = strings.Replace(ifData.roperand, "{{.Name}}", "obj."+fieldName, -1)
-	ifData.roperand = strings.Replace(ifData.roperand, "{{.Target}}", target, -1)
-	ifData.errorMessage = strings.Replace(ifData.errorMessage, "{{.Name}}", fieldName, -1)
-	ifData.errorMessage = strings.Replace(ifData.errorMessage, "{{.Target}}", target, -1)
+	ifData.loperand = strings.ReplaceAll(ifData.loperand, "{{.Name}}", "obj."+fieldName)
+	ifData.loperand = strings.ReplaceAll(ifData.loperand, "{{.Target}}", target)
+	ifData.roperand = strings.ReplaceAll(ifData.roperand, "{{.Name}}", "obj."+fieldName)
+	ifData.roperand = strings.ReplaceAll(ifData.roperand, "{{.Target}}", target)
+	ifData.errorMessage = strings.ReplaceAll(ifData.errorMessage, "{{.Name}}", fieldName)
+	ifData.errorMessage = strings.ReplaceAll(ifData.errorMessage, "{{.Target}}", target)
 
 	return ifData, nil
 }
