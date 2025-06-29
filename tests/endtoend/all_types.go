@@ -5,7 +5,7 @@ import (
 	"log"
 	"slices"
 
-	"github.com/opencodeco/validgen/tests/end2end/structsinpkg"
+	"github.com/opencodeco/validgen/tests/endtoend/structsinpkg"
 	"github.com/opencodeco/validgen/types"
 )
 
