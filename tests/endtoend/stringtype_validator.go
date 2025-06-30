@@ -13,16 +13,20 @@ func StringTypeValidate(obj *StringType) []error {
 		errs = append(errs, types.NewValidationError("FieldReq required"))
 	}
 
+	if !(obj.FieldEq == "aabbcc") {
+		errs = append(errs, types.NewValidationError("FieldEq must be equal to 'aabbcc'"))
+	}
+
 	if !(types.ToLower(obj.FieldEqIC) == "yes") {
 		errs = append(errs, types.NewValidationError("FieldEqIC must be equal to 'yes'"))
 	}
 
 	if !(len(obj.FieldGteLte) >= 5) {
-		errs = append(errs, types.NewValidationError("length FieldGteLte must be >= 5"))
+		errs = append(errs, types.NewValidationError("FieldGteLte length must be >= 5"))
 	}
 
 	if !(len(obj.FieldGteLte) <= 10) {
-		errs = append(errs, types.NewValidationError("length FieldGteLte must be <= 10"))
+		errs = append(errs, types.NewValidationError("FieldGteLte length must be <= 10"))
 	}
 
 	return errs
