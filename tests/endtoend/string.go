@@ -6,7 +6,7 @@ type StringType struct {
 	FieldReq    string `validate:"required"`
 	FieldEq     string `validate:"eq=aabbcc"`
 	FieldEqIC   string `validate:"eq_ignore_case=YeS"`
-	FieldGteLte string `validate:"gte=5,lte=10"`
+	FieldMinMax string `validate:"min=5,max=10"`
 }
 
 func string_test() {
@@ -16,13 +16,13 @@ func string_test() {
 	v := &StringType{
 		FieldEq:     "123",
 		FieldEqIC:   "abc",
-		FieldGteLte: "1",
+		FieldMinMax: "1",
 	}
 	expectedMsgErrors = []string{
 		"FieldReq required",
 		"FieldEq must be equal to 'aabbcc'",
 		"FieldEqIC must be equal to 'yes'",
-		"FieldGteLte length must be >= 5",
+		"FieldMinMax length must be >= 5",
 	}
 	errs = StringTypeValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
@@ -33,10 +33,10 @@ func string_test() {
 		FieldReq:    "123",
 		FieldEq:     "aabbcc",
 		FieldEqIC:   "yEs",
-		FieldGteLte: "12345678901",
+		FieldMinMax: "12345678901",
 	}
 	expectedMsgErrors = []string{
-		"FieldGteLte length must be <= 10",
+		"FieldMinMax length must be <= 10",
 	}
 	errs = StringTypeValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
@@ -47,7 +47,7 @@ func string_test() {
 		FieldReq:    "123",
 		FieldEq:     "aabbcc",
 		FieldEqIC:   "yEs",
-		FieldGteLte: "12345678",
+		FieldMinMax: "12345678",
 	}
 	expectedMsgErrors = nil
 	errs = StringTypeValidate(v)

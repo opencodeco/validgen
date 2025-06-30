@@ -51,7 +51,7 @@ func TestGetFieldTestElementsWithStringFields(t *testing.T) {
 			name: "String size >= 5",
 			args: args{
 				fieldName:       "myfield5",
-				fieldValidation: "gte=5",
+				fieldValidation: "min=5",
 				fieldType:       "string",
 			},
 			want: FieldTestElements{
@@ -66,7 +66,7 @@ func TestGetFieldTestElementsWithStringFields(t *testing.T) {
 			name: "String size <= 10",
 			args: args{
 				fieldName:       "myfield6",
-				fieldValidation: "lte=10",
+				fieldValidation: "max=10",
 				fieldType:       "string",
 			},
 			want: FieldTestElements{

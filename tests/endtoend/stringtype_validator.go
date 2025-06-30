@@ -21,12 +21,12 @@ func StringTypeValidate(obj *StringType) []error {
 		errs = append(errs, types.NewValidationError("FieldEqIC must be equal to 'yes'"))
 	}
 
-	if !(len(obj.FieldGteLte) >= 5) {
-		errs = append(errs, types.NewValidationError("FieldGteLte length must be >= 5"))
+	if !(len(obj.FieldMinMax) >= 5) {
+		errs = append(errs, types.NewValidationError("FieldMinMax length must be >= 5"))
 	}
 
-	if !(len(obj.FieldGteLte) <= 10) {
-		errs = append(errs, types.NewValidationError("FieldGteLte length must be <= 10"))
+	if !(len(obj.FieldMinMax) <= 10) {
+		errs = append(errs, types.NewValidationError("FieldMinMax length must be <= 10"))
 	}
 
 	return errs
