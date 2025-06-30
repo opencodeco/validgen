@@ -26,11 +26,11 @@ func AllTypes2Validate(obj *AllTypes2) []error {
 	}
 
 	if !(len(obj.UserName) >= 5) {
-		errs = append(errs, types.NewValidationError("length UserName must be >= 5"))
+		errs = append(errs, types.NewValidationError("UserName length must be >= 5"))
 	}
 
 	if !(len(obj.UserName) <= 10) {
-		errs = append(errs, types.NewValidationError("length UserName must be <= 10"))
+		errs = append(errs, types.NewValidationError("UserName length must be <= 10"))
 	}
 
 	return errs

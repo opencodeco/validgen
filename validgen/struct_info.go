@@ -100,8 +100,8 @@ func GetFieldTestElements(fieldName, fieldValidation, fieldType string) (FieldTe
 		"required,uint8":  {"{{.Name}}", "!=", `0`, "{{.Name}} required"},
 		"gte,uint8":       {"{{.Name}}", ">=", `{{.Target}}`, "{{.Name}} must be >= {{.Target}}"},
 		"lte,uint8":       {"{{.Name}}", "<=", `{{.Target}}`, "{{.Name}} must be <= {{.Target}}"},
-		"gte,string":      {"len({{.Name}})", ">=", `{{.Target}}`, "length {{.Name}} must be >= {{.Target}}"},
-		"lte,string":      {"len({{.Name}})", "<=", `{{.Target}}`, "length {{.Name}} must be <= {{.Target}}"},
+		"gte,string":      {"len({{.Name}})", ">=", `{{.Target}}`, "{{.Name}} length must be >= {{.Target}}"},
+		"lte,string":      {"len({{.Name}})", "<=", `{{.Target}}`, "{{.Name}} length must be <= {{.Target}}"},
 	}
 
 	splitField := strings.Split(fieldValidation, "=")

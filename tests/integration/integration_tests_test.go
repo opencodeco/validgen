@@ -93,7 +93,7 @@ func UserValidate(obj *User) []error {
 	var errs []error
 
 	if !(len(obj.FirstName) >= 5) {
-		errs = append(errs, types.NewValidationError("length FirstName must be >= 5"))
+		errs = append(errs, types.NewValidationError("FirstName length must be >= 5"))
 	}
 
 	return errs
