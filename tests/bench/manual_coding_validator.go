@@ -27,11 +27,11 @@ func ManualCodingValidate(obj *StructToValidate) []error {
 	}
 
 	if len(obj.UserName) < 5 {
-		errs = append(errs, fmt.Errorf("%w: length UserName must be >= 5", ErrValidation))
+		errs = append(errs, fmt.Errorf("%w: UserName length must be >= 5", ErrValidation))
 	}
 
 	if len(obj.UserName) > 10 {
-		errs = append(errs, fmt.Errorf("%w: length UserName must be <= 10", ErrValidation))
+		errs = append(errs, fmt.Errorf("%w: UserName length must be <= 10", ErrValidation))
 	}
 
 	return errs
