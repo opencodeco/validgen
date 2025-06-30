@@ -82,7 +82,7 @@ func all_types2_tests() {
 		"FirstName required",
 		"LastName required",
 		"Age must be <= 130",
-		"length UserName must be >= 5",
+		"UserName length must be >= 5",
 	}
 	errs = AllTypes2Validate(v1)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
@@ -96,7 +96,7 @@ func all_types2_tests() {
 		UserName:  "mylongusername",
 	}
 	expectedMsgErrors = []string{
-		"length UserName must be <= 10",
+		"UserName length must be <= 10",
 	}
 	errs = AllTypes2Validate(v2)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
