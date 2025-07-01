@@ -92,6 +92,21 @@ func TestGetFieldTestElementsWithStringFields(t *testing.T) {
 			},
 			wantErr: false,
 		},
+		{
+			name: "Len string",
+			args: args{
+				fieldName:       "myStrField",
+				fieldType:       "string",
+				fieldValidation: "len=8",
+			},
+			want: FieldTestElements{
+				loperand:     "len(obj.myStrField)",
+				operator:     "==",
+				roperand:     `8`,
+				errorMessage: "myStrField length must be 8",
+			},
+			wantErr: false,
+		},
 	}
 
 	for _, tt := range tests {

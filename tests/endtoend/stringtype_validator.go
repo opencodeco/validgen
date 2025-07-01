@@ -29,5 +29,9 @@ func StringTypeValidate(obj *StringType) []error {
 		errs = append(errs, types.NewValidationError("FieldMinMax length must be <= 10"))
 	}
 
+	if !(len(obj.FieldLen) == 8) {
+		errs = append(errs, types.NewValidationError("FieldLen length must be 8"))
+	}
+
 	return errs
 }
