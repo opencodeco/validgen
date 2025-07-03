@@ -107,6 +107,21 @@ func TestGetFieldTestElementsWithStringFields(t *testing.T) {
 			},
 			wantErr: false,
 		},
+		{
+			name: "Not equal string",
+			args: args{
+				fieldName:       "MyFieldNotEqual",
+				fieldType:       "string",
+				fieldValidation: "neq=abc",
+			},
+			want: FieldTestElements{
+				loperand:     "obj.MyFieldNotEqual",
+				operator:     "!=",
+				roperand:     `"abc"`,
+				errorMessage: "MyFieldNotEqual must be not equal to 'abc'",
+			},
+			wantErr: false,
+		},
 	}
 
 	for _, tt := range tests {

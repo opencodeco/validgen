@@ -8,6 +8,7 @@ type StringType struct {
 	FieldEqIC   string `validate:"eq_ignore_case=YeS"`
 	FieldMinMax string `validate:"min=5,max=10"`
 	FieldLen    string `validate:"len=8"`
+	FieldNeq    string `validate:"neq=cba"`
 }
 
 func string_test() {
@@ -19,6 +20,7 @@ func string_test() {
 		FieldEqIC:   "abc",
 		FieldMinMax: "1",
 		FieldLen:    "abcde",
+		FieldNeq:    "cba",
 	}
 	expectedMsgErrors = []string{
 		"FieldReq required",
@@ -26,6 +28,7 @@ func string_test() {
 		"FieldEqIC must be equal to 'yes'",
 		"FieldMinMax length must be >= 5",
 		"FieldLen length must be 8",
+		"FieldNeq must be not equal to 'cba'",
 	}
 	errs = StringTypeValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
@@ -53,6 +56,7 @@ func string_test() {
 		FieldEqIC:   "yEs",
 		FieldMinMax: "12345678",
 		FieldLen:    "abcdefgh",
+		FieldNeq:    "ops",
 	}
 	expectedMsgErrors = nil
 	errs = StringTypeValidate(v)

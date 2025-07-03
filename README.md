@@ -57,7 +57,7 @@ The following table shows the validations and possible types, where "I" means "I
 | gte             | -      | W             | -       | -     | -     | -   | W    | W        |
 | lt              | -      | W             | -       | -     | -     | -   | W    | W        |
 | lte             | -      | W             | -       | -     | -     | -   | W    | W        |
-| ne              | W      | W             | W       | -     | -     | -   | W    | W        |
+| ne              | I      | W             | W       | -     | -     | -   | W    | W        |
 | ne_ignore_case  | W      | -             | -       | -     | -     | -   | -    | -        |
 | len             | I      | -             | -       | W     | W     | W   | -    | -        |
 | max             | I      | -             | -       | W     | W     | W   | W    | W        |

@@ -33,5 +33,9 @@ func StringTypeValidate(obj *StringType) []error {
 		errs = append(errs, types.NewValidationError("FieldLen length must be 8"))
 	}
 
+	if !(obj.FieldNeq != "cba") {
+		errs = append(errs, types.NewValidationError("FieldNeq must be not equal to 'cba'"))
+	}
+
 	return errs
 }
