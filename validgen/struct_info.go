@@ -99,16 +99,17 @@ func IfCode(fieldName, fieldValidation, fieldType string) (string, error) {
 
 func GetFieldTestElements(fieldName, fieldValidation, fieldType string) (FieldTestElements, error) {
 	ifCode := map[string]FieldTestElements{
-		"eq,string":             {"{{.Name}}", "==", `"{{.Target}}"`, "{{.Name}} must be equal to '{{.Target}}'"},
-		"required,string":       {"{{.Name}}", "!=", `""`, "{{.Name}} required"},
-		"required,uint8":        {"{{.Name}}", "!=", `0`, "{{.Name}} required"},
-		"gte,uint8":             {"{{.Name}}", ">=", `{{.Target}}`, "{{.Name}} must be >= {{.Target}}"},
-		"lte,uint8":             {"{{.Name}}", "<=", `{{.Target}}`, "{{.Name}} must be <= {{.Target}}"},
-		"min,string":            {"len({{.Name}})", ">=", `{{.Target}}`, "{{.Name}} length must be >= {{.Target}}"},
-		"max,string":            {"len({{.Name}})", "<=", `{{.Target}}`, "{{.Name}} length must be <= {{.Target}}"},
-		"eq_ignore_case,string": {"types.ToLower({{.Name}})", "==", `"{{.Target}}"`, "{{.Name}} must be equal to '{{.Target}}'"},
-		"len,string":            {"len({{.Name}})", "==", `{{.Target}}`, "{{.Name}} length must be {{.Target}}"},
-		"neq,string":            {"{{.Name}}", "!=", `"{{.Target}}"`, "{{.Name}} must be not equal to '{{.Target}}'"},
+		"eq,string":              {"{{.Name}}", "==", `"{{.Target}}"`, "{{.Name}} must be equal to '{{.Target}}'"},
+		"required,string":        {"{{.Name}}", "!=", `""`, "{{.Name}} required"},
+		"required,uint8":         {"{{.Name}}", "!=", `0`, "{{.Name}} required"},
+		"gte,uint8":              {"{{.Name}}", ">=", `{{.Target}}`, "{{.Name}} must be >= {{.Target}}"},
+		"lte,uint8":              {"{{.Name}}", "<=", `{{.Target}}`, "{{.Name}} must be <= {{.Target}}"},
+		"min,string":             {"len({{.Name}})", ">=", `{{.Target}}`, "{{.Name}} length must be >= {{.Target}}"},
+		"max,string":             {"len({{.Name}})", "<=", `{{.Target}}`, "{{.Name}} length must be <= {{.Target}}"},
+		"eq_ignore_case,string":  {"types.ToLower({{.Name}})", "==", `"{{.Target}}"`, "{{.Name}} must be equal to '{{.Target}}'"},
+		"len,string":             {"len({{.Name}})", "==", `{{.Target}}`, "{{.Name}} length must be {{.Target}}"},
+		"neq,string":             {"{{.Name}}", "!=", `"{{.Target}}"`, "{{.Name}} must be not equal to '{{.Target}}'"},
+		"neq_ignore_case,string": {"types.ToLower({{.Name}})", "!=", `"{{.Target}}"`, "{{.Name}} must be not equal to '{{.Target}}'"},
 	}
 
 	splitField := strings.Split(fieldValidation, "=")

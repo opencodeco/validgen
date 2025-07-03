@@ -122,6 +122,21 @@ func TestGetFieldTestElementsWithStringFields(t *testing.T) {
 			},
 			wantErr: false,
 		},
+		{
+			name: "Not equal string ignore case",
+			args: args{
+				fieldName:       "MyFieldNotEqual",
+				fieldValidation: "neq_ignore_case=AbC",
+				fieldType:       "string",
+			},
+			want: FieldTestElements{
+				loperand:     "types.ToLower(obj.MyFieldNotEqual)",
+				operator:     "!=",
+				roperand:     `"abc"`,
+				errorMessage: "MyFieldNotEqual must be not equal to 'abc'",
+			},
+			wantErr: false,
+		},
 	}
 
 	for _, tt := range tests {
