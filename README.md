@@ -27,7 +27,43 @@ cd validgen
 make build
 ```
 
-After that the executable will be in bin/validgen.
+After that the executable will be in `bin/validgen`.
+
+# Validations
+
+The following validations will be implemented:
+
+- eq (equal): must be equal to the specified value
+- eq_ignore_case (equal ignoring case): must be equal to the specified value (ignoring case)
+- gt (greater than): must be > to the specified value
+- gte (greater than or equal): must be >= to the specified value
+- lt (less than): must be < to the specified value
+- lte (less than or equal): must be <= to the specified value
+- ne (not equal): must not be equal to the specified value
+- ne_ignore_case (not equal ignoring case): must not be equal to the specified value (ignoring case)
+- len (length): must have the following length
+- max (max): must have no more than max characters
+- min (min): must have no less than min characters
+- oneof (one of): must be on of the following values
+- required (required): is required
+
+The following table shows the validations and possible types, where "I" means "Implemented", "W" means "Will be implemented" and "-" means "Will not be implemented":
+
+| Validation/Type | String | Numeric types | Boolean | Slice | Array | Map | Time | Duration |
+| -               | -      | -             | -       | -     | -     | -   | -    | -        |
+| eq              | I      | W             | W       | -     | -     | -   | W    | W        |
+| eq_ignore_case  | I      | -             | -       | -     | -     | -   | -    | -        |
+| gt              | -      | W             | -       | -     | -     | -   | W    | W        |
+| gte             | -      | W             | -       | -     | -     | -   | W    | W        |
+| lt              | -      | W             | -       | -     | -     | -   | W    | W        |
+| lte             | -      | W             | -       | -     | -     | -   | W    | W        |
+| ne              | I      | W             | W       | -     | -     | -   | W    | W        |
+| ne_ignore_case  | I      | -             | -       | -     | -     | -   | -    | -        |
+| len             | I      | -             | -       | W     | W     | W   | -    | -        |
+| max             | I      | -             | -       | W     | W     | W   | W    | W        |
+| min             | I      | -             | -       | W     | W     | W   | W    | W        |
+| oneof           | W      | W             | W       | W     | W     | W   | -    | W        |
+| required        | I      | W             | W       | W     | W     | W   | W    | W        |
 
 # Steps to run the unit tests
 
@@ -105,7 +141,7 @@ go run .
 
 ## Steps to run test03
 
-Test03 aims to be an example where the structs to be validated use gte and lte tags.
+Test03 aims to be an example where the structs to be validated use min and max tags.
 
 ```
 # Runs validgen to generate structs validator code
