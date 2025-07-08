@@ -44,7 +44,7 @@ The following validations will be implemented:
 - len (length): must have the following length
 - max (max): must have no more than max characters
 - min (min): must have no less than min characters
-- oneof (one of): must be on of the following values
+- oneof (one of): must be one of the following values
 - required (required): is required
 
 The following table shows the validations and possible types, where "I" means "Implemented", "W" means "Will be implemented" and "-" means "Will not be implemented":
