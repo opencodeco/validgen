@@ -73,8 +73,8 @@ func UserValidate(obj *User) []error {
 						{
 							Name:        "FirstName",
 							Type:        "string",
-							Tag:         `validate:"gte=5"`,
-							Validations: []string{"gte=5"},
+							Tag:         `validate:"min=5"`,
+							Validations: []string{"min=5"},
 						},
 					},
 					HasValidateTag: true,
