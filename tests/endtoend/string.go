@@ -12,7 +12,7 @@ type StringType struct {
 	FieldNeqIC  string `validate:"neq_ignore_case=YeS"`
 }
 
-func string_test() {
+func string_tests() {
 	var expectedMsgErrors []string
 	var errs []error
 
