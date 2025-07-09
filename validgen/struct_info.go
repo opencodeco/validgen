@@ -140,8 +140,8 @@ func GetFieldTestElements(fieldName, fieldValidation, fieldType string) (FieldTe
 	return ifData, nil
 }
 
-func replaceNameAndTarget(text, name, target string, addObjInName bool) string {
-	if addObjInName {
+func replaceNameAndTarget(text, name, target string, prefixWithObj bool) string {
+	if prefixWithObj {
 		text = strings.ReplaceAll(text, "{{.Name}}", "obj."+name)
 	} else {
 		text = strings.ReplaceAll(text, "{{.Name}}", name)
