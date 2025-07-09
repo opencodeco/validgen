@@ -34,7 +34,7 @@ func main() {
 	all_types1_tests()
 	all_types2_tests()
 	struct_in_pkg_tests()
-	string_test()
+	string_tests()
 
 	log.Println("finishing tests")
 }
