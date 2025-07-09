@@ -133,20 +133,22 @@ func GetFieldTestElements(fieldName, fieldValidation, fieldType string) (FieldTe
 		target = strings.ToLower(target)
 	}
 
-	ifData.loperand = replaceNameAndTarget(ifData.loperand, fieldName, target, true)
-	ifData.roperand = replaceNameAndTarget(ifData.roperand, fieldName, target, true)
-	ifData.errorMessage = replaceNameAndTarget(ifData.errorMessage, fieldName, target, false)
+	ifData.loperand = replaceNameAndTargetWithPrefix(ifData.loperand, fieldName, target)
+	ifData.roperand = replaceNameAndTargetWithPrefix(ifData.roperand, fieldName, target)
+	ifData.errorMessage = replaceNameAndTargetWithoutPrefix(ifData.errorMessage, fieldName, target)
 
 	return ifData, nil
 }
 
-func replaceNameAndTarget(text, name, target string, prefixWithObj bool) string {
-	if prefixWithObj {
-		text = strings.ReplaceAll(text, "{{.Name}}", "obj."+name)
-	} else {
-		text = strings.ReplaceAll(text, "{{.Name}}", name)
-	}
+func replaceNameAndTargetWithPrefix(text, name, target string) string {
+	text = strings.ReplaceAll(text, "{{.Name}}", "obj."+name)
+	text = strings.ReplaceAll(text, "{{.Target}}", target)
 
+	return text
+}
+
+func replaceNameAndTargetWithoutPrefix(text, name, target string) string {
+	text = strings.ReplaceAll(text, "{{.Name}}", name)
 	text = strings.ReplaceAll(text, "{{.Target}}", target)
 
 	return text
