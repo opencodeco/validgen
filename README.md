@@ -39,8 +39,8 @@ The following validations will be implemented:
 - gte (greater than or equal): must be >= to the specified value
 - lt (less than): must be < to the specified value
 - lte (less than or equal): must be <= to the specified value
-- ne (not equal): must not be equal to the specified value
-- ne_ignore_case (not equal ignoring case): must not be equal to the specified value (ignoring case)
+- neq (not equal): must not be equal to the specified value
+- neq_ignore_case (not equal ignoring case): must not be equal to the specified value (ignoring case)
 - len (length): must have the following length
 - max (max): must have no more than max characters
 - min (min): must have no less than min characters
