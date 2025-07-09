@@ -114,6 +114,10 @@ func GetFieldTestElements(fieldName, fieldValidation, fieldType string) (FieldTe
 	}
 
 	splitField := strings.Split(fieldValidation, "=")
+	if len(splitField) > 2 {
+		return FieldTestElements{}, fmt.Errorf("malformed validation %s type %s", fieldValidation, fieldType)
+	}
+
 	validation := splitField[0]
 	target := ""
 	if len(splitField) > 1 {
