@@ -133,14 +133,23 @@ func GetFieldTestElements(fieldName, fieldValidation, fieldType string) (FieldTe
 		target = strings.ToLower(target)
 	}
 
-	ifData.loperand = strings.ReplaceAll(ifData.loperand, "{{.Name}}", "obj."+fieldName)
-	ifData.loperand = strings.ReplaceAll(ifData.loperand, "{{.Target}}", target)
-	ifData.roperand = strings.ReplaceAll(ifData.roperand, "{{.Name}}", "obj."+fieldName)
-	ifData.roperand = strings.ReplaceAll(ifData.roperand, "{{.Target}}", target)
-	ifData.errorMessage = strings.ReplaceAll(ifData.errorMessage, "{{.Name}}", fieldName)
-	ifData.errorMessage = strings.ReplaceAll(ifData.errorMessage, "{{.Target}}", target)
+	ifData.loperand = replaceNameAndTarget(ifData.loperand, fieldName, target, true)
+	ifData.roperand = replaceNameAndTarget(ifData.roperand, fieldName, target, true)
+	ifData.errorMessage = replaceNameAndTarget(ifData.errorMessage, fieldName, target, false)
 
 	return ifData, nil
+}
+
+func replaceNameAndTarget(text, name, target string, addObjInName bool) string {
+	if addObjInName {
+		text = strings.ReplaceAll(text, "{{.Name}}", "obj."+name)
+	} else {
+		text = strings.ReplaceAll(text, "{{.Name}}", name)
+	}
+
+	text = strings.ReplaceAll(text, "{{.Target}}", target)
+
+	return text
 }
 
 func (s *StructInfo) GenerateFileValidator() error {
