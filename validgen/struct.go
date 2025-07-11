@@ -18,27 +18,27 @@ import (
 
 func {{.Name}}Validate(obj *{{.Name}}) []error {
 	var errs []error
-{{range .FieldsInfo}}{{condition .Name .Type .Validations}}{{end}}
+{{range .Fields}}{{condition .Name .Type .Validations}}{{end}}
 	return errs
 }
 `
 
-type StructInfo struct {
+type Struct struct {
 	Name           string
 	Path           string
 	PackageName    string
-	FieldsInfo     []FieldInfo
+	Fields         []Field
 	HasValidateTag bool
 }
 
-type FieldInfo struct {
+type Field struct {
 	Name        string
 	Type        string
 	Tag         string
 	Validations []string
 }
 
-func (fv *StructInfo) GenerateValidator() (string, error) {
+func (fv *Struct) GenerateValidator() (string, error) {
 	funcMap := template.FuncMap{
 		"condition": condition,
 	}
@@ -56,7 +56,7 @@ func (fv *StructInfo) GenerateValidator() (string, error) {
 	return code.String(), nil
 }
 
-func (s *StructInfo) GenerateFileValidator() error {
+func (s *Struct) GenerateFileValidator() error {
 	fmt.Printf("Generating struct %s validations code\n", s.Name)
 
 	code, err := s.GenerateValidator()
@@ -71,11 +71,11 @@ func (s *StructInfo) GenerateFileValidator() error {
 	return nil
 }
 
-func (s *StructInfo) PrintInfo() {
+func (s *Struct) PrintInfo() {
 	fmt.Println("Struct:", s.Name)
 	fmt.Println("\tHasValidateTag:", s.HasValidateTag)
 
-	for _, f := range s.FieldsInfo {
+	for _, f := range s.Fields {
 		fmt.Println("\tField:", f.Name, f.Type, f.Tag)
 	}
 }

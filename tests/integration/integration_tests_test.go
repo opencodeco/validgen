@@ -9,7 +9,7 @@ import (
 
 func TestIntegrationTests(t *testing.T) {
 	type fields struct {
-		StructInfo validgen.StructInfo
+		Struct validgen.Struct
 	}
 	tests := []struct {
 		name    string
@@ -20,9 +20,9 @@ func TestIntegrationTests(t *testing.T) {
 		{
 			name: "Valid struct",
 			fields: fields{
-				StructInfo: validgen.StructInfo{
+				Struct: validgen.Struct{
 					Name: "User",
-					FieldsInfo: []validgen.FieldInfo{
+					Fields: []validgen.Field{
 						{
 							Name:        "FirstName",
 							Type:        "string",
@@ -67,9 +67,9 @@ func UserValidate(obj *User) []error {
 		{
 			name: "FirstName must have 5 characters or more",
 			fields: fields{
-				StructInfo: validgen.StructInfo{
+				Struct: validgen.Struct{
 					Name: "User",
-					FieldsInfo: []validgen.FieldInfo{
+					Fields: []validgen.Field{
 						{
 							Name:        "FirstName",
 							Type:        "string",
@@ -105,7 +105,7 @@ func UserValidate(obj *User) []error {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			fv := tt.fields.StructInfo
+			fv := tt.fields.Struct
 			got, err := fv.GenerateValidator()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("FileValidator.GenerateValidator() error = %v, wantErr %v", err, tt.wantErr)

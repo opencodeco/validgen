@@ -1,6 +1,6 @@
 package validgen
 
-func generateCode(structs []StructInfo) error {
+func generateCode(structs []Struct) error {
 	// TODO: validate tags ok?
 
 	for _, structInfo := range structs {
