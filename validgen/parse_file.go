@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-func parseFile(fullpath string) ([]StructInfo, error) {
+func parseFile(fullpath string) ([]Struct, error) {
 	fmt.Printf("Parsing %s\n", fullpath)
 
 	src, err := os.ReadFile(fullpath)
@@ -27,7 +27,7 @@ func parseFile(fullpath string) ([]StructInfo, error) {
 	return structs, nil
 }
 
-func parseStructs(fullpath, src string) ([]StructInfo, error) {
+func parseStructs(fullpath, src string) ([]Struct, error) {
 
 	filename := filepath.Base(fullpath)
 
@@ -37,7 +37,7 @@ func parseStructs(fullpath, src string) ([]StructInfo, error) {
 		return nil, err
 	}
 
-	var structs []StructInfo
+	var structs []Struct
 	packageName := ""
 
 	ast.Inspect(f, func(n ast.Node) bool {
@@ -46,7 +46,7 @@ func parseStructs(fullpath, src string) ([]StructInfo, error) {
 		}
 
 		if typeSpec, ok := n.(*ast.TypeSpec); ok {
-			structs = append(structs, StructInfo{
+			structs = append(structs, Struct{
 				Name:        typeSpec.Name.Name,
 				Path:        "./" + filepath.Dir(fullpath),
 				PackageName: packageName,
@@ -71,7 +71,7 @@ func parseStructs(fullpath, src string) ([]StructInfo, error) {
 				}
 
 				for _, name := range field.Names {
-					currentStruct.FieldsInfo = append(currentStruct.FieldsInfo, FieldInfo{
+					currentStruct.Fields = append(currentStruct.Fields, Field{
 						Name:        name.Name,
 						Type:        fieldType,
 						Tag:         fieldTag,
