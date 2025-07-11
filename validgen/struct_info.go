@@ -85,7 +85,7 @@ func condition(fieldName, fieldType string, fieldValidations []string) (string, 
 }
 
 func IfCode(fieldName, fieldValidation, fieldType string) (string, error) {
-	testElements, err := GetFieldTestElements(fieldName, fieldValidation, fieldType)
+	testElements, err := GetTestElements(fieldName, fieldValidation, fieldType)
 	if err != nil {
 		return "", fmt.Errorf("field %s: %w", fieldName, err)
 	}
@@ -98,7 +98,7 @@ func IfCode(fieldName, fieldValidation, fieldType string) (string, error) {
 `, testElements.loperand, testElements.operator, testElements.roperand, testElements.errorMessage), nil
 }
 
-func GetFieldTestElements(fieldName, fieldValidation, fieldType string) (FieldTestElements, error) {
+func GetTestElements(fieldName, fieldValidation, fieldType string) (FieldTestElements, error) {
 	ifCode := map[string]FieldTestElements{
 		"eq,string":              {"{{.Name}}", "==", `"{{.Target}}"`, "{{.Name}} must be equal to '{{.Target}}'"},
 		"required,string":        {"{{.Name}}", "!=", `""`, "{{.Name}} required"},
