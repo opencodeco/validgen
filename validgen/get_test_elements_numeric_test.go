@@ -14,7 +14,7 @@ func TestGetTestElementsWithNumericFields(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
-		want    FieldTestElements
+		want    TestElements
 		wantErr bool
 	}{
 		{
@@ -24,7 +24,7 @@ func TestGetTestElementsWithNumericFields(t *testing.T) {
 				fieldValidation: "required",
 				fieldType:       "uint8",
 			},
-			want: FieldTestElements{
+			want: TestElements{
 				loperand:     "obj.myfield2",
 				operator:     "!=",
 				roperand:     `0`,
@@ -39,7 +39,7 @@ func TestGetTestElementsWithNumericFields(t *testing.T) {
 				fieldValidation: "gte=0",
 				fieldType:       "uint8",
 			},
-			want: FieldTestElements{
+			want: TestElements{
 				loperand:     "obj.myfield3",
 				operator:     ">=",
 				roperand:     `0`,
@@ -54,7 +54,7 @@ func TestGetTestElementsWithNumericFields(t *testing.T) {
 				fieldValidation: "lte=130",
 				fieldType:       "uint8",
 			},
-			want: FieldTestElements{
+			want: TestElements{
 				loperand:     "obj.myfield4",
 				operator:     "<=",
 				roperand:     `130`,
@@ -67,11 +67,11 @@ func TestGetTestElementsWithNumericFields(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := GetTestElements(tt.args.fieldName, tt.args.fieldValidation, tt.args.fieldType)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("GetFieldTestElements() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("GetTestElements() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("GetFieldTestElements() = %+v, want %+v", got, tt.want)
+				t.Errorf("GetTestElements() = %+v, want %+v", got, tt.want)
 			}
 		})
 	}
