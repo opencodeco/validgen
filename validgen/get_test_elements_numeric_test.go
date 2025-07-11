@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestGetFieldTestElementsWithNumericFields(t *testing.T) {
+func TestGetTestElementsWithNumericFields(t *testing.T) {
 	type args struct {
 		fieldName       string
 		fieldValidation string
@@ -65,7 +65,7 @@ func TestGetFieldTestElementsWithNumericFields(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := GetFieldTestElements(tt.args.fieldName, tt.args.fieldValidation, tt.args.fieldType)
+			got, err := GetTestElements(tt.args.fieldName, tt.args.fieldValidation, tt.args.fieldType)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetFieldTestElements() error = %v, wantErr %v", err, tt.wantErr)
 				return

@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestGetFieldTestElementsWithStringFields(t *testing.T) {
+func TestGetTestElementsWithStringFields(t *testing.T) {
 	type args struct {
 		fieldName       string
 		fieldValidation string
@@ -125,13 +125,13 @@ func TestGetFieldTestElementsWithStringFields(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			fieldType := "string"
 			wantErr := false
-			got, err := GetFieldTestElements(tt.args.fieldName, tt.args.fieldValidation, fieldType)
+			got, err := GetTestElements(tt.args.fieldName, tt.args.fieldValidation, fieldType)
 			if (err != nil) != wantErr {
-				t.Errorf("GetFieldTestElements() error = %v, wantErr %v", err, wantErr)
+				t.Errorf("GetTestElements() error = %v, wantErr %v", err, wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("GetFieldTestElements() = %+v, want %+v", got, tt.want)
+				t.Errorf("GetTestElements() = %+v, want %+v", got, tt.want)
 			}
 		})
 	}
