@@ -36,7 +36,6 @@ type StructInfo struct {
 	HasValidateTag bool
 }
 
-// TODO: NewFieldInfo to validate params and build the object.
 type FieldInfo struct {
 	Name        string
 	Type        string
@@ -44,7 +43,7 @@ type FieldInfo struct {
 	Validations []string
 }
 
-type FieldTestElements struct {
+type TestElements struct {
 	loperand     string
 	operator     string
 	roperand     string
@@ -98,8 +97,8 @@ func IfCode(fieldName, fieldValidation, fieldType string) (string, error) {
 `, testElements.loperand, testElements.operator, testElements.roperand, testElements.errorMessage), nil
 }
 
-func GetTestElements(fieldName, fieldValidation, fieldType string) (FieldTestElements, error) {
-	ifCode := map[string]FieldTestElements{
+func GetTestElements(fieldName, fieldValidation, fieldType string) (TestElements, error) {
+	ifCode := map[string]TestElements{
 		"eq,string":              {"{{.Name}}", "==", `"{{.Target}}"`, "{{.Name}} must be equal to '{{.Target}}'"},
 		"required,string":        {"{{.Name}}", "!=", `""`, "{{.Name}} required"},
 		"required,uint8":         {"{{.Name}}", "!=", `0`, "{{.Name}} required"},
@@ -115,7 +114,7 @@ func GetTestElements(fieldName, fieldValidation, fieldType string) (FieldTestEle
 
 	splitField := strings.Split(fieldValidation, "=")
 	if len(splitField) > 2 {
-		return FieldTestElements{}, fmt.Errorf("malformed validation %s type %s", fieldValidation, fieldType)
+		return TestElements{}, fmt.Errorf("malformed validation %s type %s", fieldValidation, fieldType)
 	}
 
 	validation := splitField[0]
@@ -126,7 +125,7 @@ func GetTestElements(fieldName, fieldValidation, fieldType string) (FieldTestEle
 
 	ifData, ok := ifCode[validation+","+fieldType]
 	if !ok {
-		return FieldTestElements{}, fmt.Errorf("unsupported validation %s type %s", fieldValidation, fieldType)
+		return TestElements{}, fmt.Errorf("unsupported validation %s type %s", fieldValidation, fieldType)
 	}
 
 	if validation == EqIgnoreCaseTag || validation == NeqIgnoreCaseTag {

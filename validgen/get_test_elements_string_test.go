@@ -13,7 +13,7 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want FieldTestElements
+		want TestElements
 	}{
 		{
 			name: "Equal string",
@@ -21,7 +21,7 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldName:       "myfield1",
 				fieldValidation: "eq=abc",
 			},
-			want: FieldTestElements{
+			want: TestElements{
 				loperand:     "obj.myfield1",
 				operator:     "==",
 				roperand:     `"abc"`,
@@ -34,7 +34,7 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldName:       "myfield1",
 				fieldValidation: "required",
 			},
-			want: FieldTestElements{
+			want: TestElements{
 				loperand:     "obj.myfield1",
 				operator:     "!=",
 				roperand:     `""`,
@@ -47,7 +47,7 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldName:       "myfield5",
 				fieldValidation: "min=5",
 			},
-			want: FieldTestElements{
+			want: TestElements{
 				loperand:     "len(obj.myfield5)",
 				operator:     ">=",
 				roperand:     `5`,
@@ -60,7 +60,7 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldName:       "myfield6",
 				fieldValidation: "max=10",
 			},
-			want: FieldTestElements{
+			want: TestElements{
 				loperand:     "len(obj.myfield6)",
 				operator:     "<=",
 				roperand:     `10`,
@@ -73,7 +73,7 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldName:       "myStrField",
 				fieldValidation: "eq_ignore_case=AbC",
 			},
-			want: FieldTestElements{
+			want: TestElements{
 				loperand:     "types.ToLower(obj.myStrField)",
 				operator:     "==",
 				roperand:     `"abc"`,
@@ -86,7 +86,7 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldName:       "myStrField",
 				fieldValidation: "len=8",
 			},
-			want: FieldTestElements{
+			want: TestElements{
 				loperand:     "len(obj.myStrField)",
 				operator:     "==",
 				roperand:     `8`,
@@ -99,7 +99,7 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldName:       "MyFieldNotEqual",
 				fieldValidation: "neq=abc",
 			},
-			want: FieldTestElements{
+			want: TestElements{
 				loperand:     "obj.MyFieldNotEqual",
 				operator:     "!=",
 				roperand:     `"abc"`,
@@ -112,7 +112,7 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldName:       "MyFieldNotEqual",
 				fieldValidation: "neq_ignore_case=AbC",
 			},
-			want: FieldTestElements{
+			want: TestElements{
 				loperand:     "types.ToLower(obj.MyFieldNotEqual)",
 				operator:     "!=",
 				roperand:     `"abc"`,
