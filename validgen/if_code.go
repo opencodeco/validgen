@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func Condition(fieldName, fieldType string, fieldValidations []string) (string, error) {
+func BuildValidationCode(fieldName, fieldType string, fieldValidations []string) (string, error) {
 
 	tests := ""
 	for _, fieldValidation := range fieldValidations {

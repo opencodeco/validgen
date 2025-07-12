@@ -18,7 +18,7 @@ import (
 
 func {{.Name}}Validate(obj *{{.Name}}) []error {
 	var errs []error
-{{range .Fields}}{{condition .Name .Type .Validations}}{{end}}
+{{range .Fields}}{{buildValidationCode .Name .Type .Validations}}{{end}}
 	return errs
 }
 `
@@ -40,7 +40,7 @@ type Field struct {
 
 func (s *Struct) GenerateValidator() (string, error) {
 	funcMap := template.FuncMap{
-		"condition": Condition,
+		"buildValidationCode": BuildValidationCode,
 	}
 
 	tmpl, err := template.New("FileValidator").Funcs(funcMap).Parse(structValidatorTpl)
