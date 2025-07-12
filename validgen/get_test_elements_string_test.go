@@ -22,10 +22,10 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "eq=abc",
 			},
 			want: TestElements{
-				leftOperand:  "obj.myfield1",
-				operator:     "==",
-				rightOperand: `"abc"`,
-				errorMessage: "myfield1 must be equal to 'abc'",
+				leftOperand:   "obj.myfield1",
+				operator:      "==",
+				rightOperands: []string{`"abc"`},
+				errorMessage:  "myfield1 must be equal to 'abc'",
 			},
 		},
 		{
@@ -35,10 +35,10 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "required",
 			},
 			want: TestElements{
-				leftOperand:  "obj.myfield1",
-				operator:     "!=",
-				rightOperand: `""`,
-				errorMessage: "myfield1 is required",
+				leftOperand:   "obj.myfield1",
+				operator:      "!=",
+				rightOperands: []string{`""`},
+				errorMessage:  "myfield1 is required",
 			},
 		},
 		{
@@ -48,10 +48,10 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "min=5",
 			},
 			want: TestElements{
-				leftOperand:  "len(obj.myfield5)",
-				operator:     ">=",
-				rightOperand: `5`,
-				errorMessage: "myfield5 length must be >= 5",
+				leftOperand:   "len(obj.myfield5)",
+				operator:      ">=",
+				rightOperands: []string{`5`},
+				errorMessage:  "myfield5 length must be >= 5",
 			},
 		},
 		{
@@ -61,10 +61,10 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "max=10",
 			},
 			want: TestElements{
-				leftOperand:  "len(obj.myfield6)",
-				operator:     "<=",
-				rightOperand: `10`,
-				errorMessage: "myfield6 length must be <= 10",
+				leftOperand:   "len(obj.myfield6)",
+				operator:      "<=",
+				rightOperands: []string{`10`},
+				errorMessage:  "myfield6 length must be <= 10",
 			},
 		},
 		{
@@ -74,10 +74,10 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "eq_ignore_case=AbC",
 			},
 			want: TestElements{
-				leftOperand:  "types.ToLower(obj.myStrField)",
-				operator:     "==",
-				rightOperand: `"abc"`,
-				errorMessage: "myStrField must be equal to 'abc'",
+				leftOperand:   "types.ToLower(obj.myStrField)",
+				operator:      "==",
+				rightOperands: []string{`"abc"`},
+				errorMessage:  "myStrField must be equal to 'abc'",
 			},
 		},
 		{
@@ -87,10 +87,10 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "len=8",
 			},
 			want: TestElements{
-				leftOperand:  "len(obj.myStrField)",
-				operator:     "==",
-				rightOperand: `8`,
-				errorMessage: "myStrField length must be 8",
+				leftOperand:   "len(obj.myStrField)",
+				operator:      "==",
+				rightOperands: []string{`8`},
+				errorMessage:  "myStrField length must be 8",
 			},
 		},
 		{
@@ -100,10 +100,10 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "neq=abc",
 			},
 			want: TestElements{
-				leftOperand:  "obj.MyFieldNotEqual",
-				operator:     "!=",
-				rightOperand: `"abc"`,
-				errorMessage: "MyFieldNotEqual must not be equal to 'abc'",
+				leftOperand:   "obj.MyFieldNotEqual",
+				operator:      "!=",
+				rightOperands: []string{`"abc"`},
+				errorMessage:  "MyFieldNotEqual must not be equal to 'abc'",
 			},
 		},
 		{
@@ -113,10 +113,36 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "neq_ignore_case=AbC",
 			},
 			want: TestElements{
-				leftOperand:  "types.ToLower(obj.MyFieldNotEqual)",
-				operator:     "!=",
-				rightOperand: `"abc"`,
-				errorMessage: "MyFieldNotEqual must not be equal to 'abc'",
+				leftOperand:   "types.ToLower(obj.MyFieldNotEqual)",
+				operator:      "!=",
+				rightOperands: []string{`"abc"`},
+				errorMessage:  "MyFieldNotEqual must not be equal to 'abc'",
+			},
+		},
+		{
+			name: "One of string with spaces",
+			args: args{
+				fieldName:       "OneOfField",
+				fieldValidation: "oneof=a b c",
+			},
+			want: TestElements{
+				leftOperand:   "obj.OneOfField",
+				operator:      "==",
+				rightOperands: []string{`"a"`, `"b"`, `"c"`},
+				errorMessage:  "OneOfField must be one of 'a' 'b' 'c'",
+			},
+		},
+		{
+			name: "One of string with '",
+			args: args{
+				fieldName:       "OneOfField",
+				fieldValidation: "oneof=' a ' ' b ' ' c '",
+			},
+			want: TestElements{
+				leftOperand:   "obj.OneOfField",
+				operator:      "==",
+				rightOperands: []string{`" a "`, `" b "`, `" c "`},
+				errorMessage:  "OneOfField must be one of ' a ' ' b ' ' c '",
 			},
 		},
 	}
