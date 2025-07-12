@@ -18,7 +18,7 @@ type TestElements struct {
 }
 
 func GetTestElements(fieldName, fieldValidation, fieldType string) (TestElements, error) {
-	ifCode := map[string]TestElements{
+	testElement := map[string]TestElements{
 		"eq,string":              {"{{.Name}}", "==", `"{{.Target}}"`, "{{.Name}} must be equal to '{{.Target}}'"},
 		"required,string":        {"{{.Name}}", "!=", `""`, "{{.Name}} is required"},
 		"required,uint8":         {"{{.Name}}", "!=", `0`, "{{.Name}} is required"},
@@ -43,7 +43,7 @@ func GetTestElements(fieldName, fieldValidation, fieldType string) (TestElements
 		target = splitField[1]
 	}
 
-	ifData, ok := ifCode[validation+","+fieldType]
+	test, ok := testElement[validation+","+fieldType]
 	if !ok {
 		return TestElements{}, fmt.Errorf("unsupported validation %s type %s", fieldValidation, fieldType)
 	}
@@ -52,11 +52,11 @@ func GetTestElements(fieldName, fieldValidation, fieldType string) (TestElements
 		target = strings.ToLower(target)
 	}
 
-	ifData.leftOperand = replaceNameAndTargetWithPrefix(ifData.leftOperand, fieldName, target)
-	ifData.rightOperand = replaceNameAndTargetWithPrefix(ifData.rightOperand, fieldName, target)
-	ifData.errorMessage = replaceNameAndTargetWithoutPrefix(ifData.errorMessage, fieldName, target)
+	test.leftOperand = replaceNameAndTargetWithPrefix(test.leftOperand, fieldName, target)
+	test.rightOperand = replaceNameAndTargetWithPrefix(test.rightOperand, fieldName, target)
+	test.errorMessage = replaceNameAndTargetWithoutPrefix(test.errorMessage, fieldName, target)
 
-	return ifData, nil
+	return test, nil
 }
 
 func replaceNameAndTargetWithPrefix(text, name, target string) string {
