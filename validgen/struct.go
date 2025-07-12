@@ -38,9 +38,9 @@ type Field struct {
 	Validations []string
 }
 
-func (fv *Struct) GenerateValidator() (string, error) {
+func (s *Struct) GenerateValidator() (string, error) {
 	funcMap := template.FuncMap{
-		"condition": condition,
+		"condition": Condition,
 	}
 
 	tmpl, err := template.New("FileValidator").Funcs(funcMap).Parse(structValidatorTpl)
@@ -49,7 +49,7 @@ func (fv *Struct) GenerateValidator() (string, error) {
 	}
 
 	code := new(bytes.Buffer)
-	if err := tmpl.Execute(code, fv); err != nil {
+	if err := tmpl.Execute(code, s); err != nil {
 		return "", err
 	}
 
