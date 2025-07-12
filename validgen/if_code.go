@@ -30,5 +30,5 @@ func IfCode(fieldName, fieldValidation, fieldType string) (string, error) {
 	if !(%s %s %s) {
 		errs = append(errs, types.NewValidationError("%s"))
 	}
-`, testElements.loperand, testElements.operator, testElements.roperand, testElements.errorMessage), nil
+`, testElements.leftOperand, testElements.operator, testElements.rightOperand, testElements.errorMessage), nil
 }

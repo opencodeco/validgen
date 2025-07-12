@@ -11,9 +11,9 @@ const (
 )
 
 type TestElements struct {
-	loperand     string
+	leftOperand  string
 	operator     string
-	roperand     string
+	rightOperand string
 	errorMessage string
 }
 
@@ -52,8 +52,8 @@ func GetTestElements(fieldName, fieldValidation, fieldType string) (TestElements
 		target = strings.ToLower(target)
 	}
 
-	ifData.loperand = replaceNameAndTargetWithPrefix(ifData.loperand, fieldName, target)
-	ifData.roperand = replaceNameAndTargetWithPrefix(ifData.roperand, fieldName, target)
+	ifData.leftOperand = replaceNameAndTargetWithPrefix(ifData.leftOperand, fieldName, target)
+	ifData.rightOperand = replaceNameAndTargetWithPrefix(ifData.rightOperand, fieldName, target)
 	ifData.errorMessage = replaceNameAndTargetWithoutPrefix(ifData.errorMessage, fieldName, target)
 
 	return ifData, nil
