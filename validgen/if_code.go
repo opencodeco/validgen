@@ -25,10 +25,19 @@ func IfCode(fieldName, fieldValidation, fieldType string) (string, error) {
 		return "", fmt.Errorf("field %s: %w", fieldName, err)
 	}
 
+	booleanCondition := ""
+	for _, roperand := range testElements.rightOperands {
+		if booleanCondition != "" {
+			booleanCondition += " || "
+		}
+
+		booleanCondition += fmt.Sprintf("%s %s %s", testElements.leftOperand, testElements.operator, roperand)
+	}
+
 	return fmt.Sprintf(
 		`
-	if !(%s %s %s) {
+	if !(%s) {
 		errs = append(errs, types.NewValidationError("%s"))
 	}
-`, testElements.leftOperand, testElements.operator, testElements.rightOperand, testElements.errorMessage), nil
+`, booleanCondition, testElements.errorMessage), nil
 }
