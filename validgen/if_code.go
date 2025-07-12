@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func condition(fieldName, fieldType string, fieldValidations []string) (string, error) {
+func Condition(fieldName, fieldType string, fieldValidations []string) (string, error) {
 
 	tests := ""
 	for _, fieldValidation := range fieldValidations {
