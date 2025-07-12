@@ -10,11 +10,11 @@ func UserValidate(obj *User) []error {
 	var errs []error
 
 	if !(obj.FirstName != "") {
-		errs = append(errs, types.NewValidationError("FirstName required"))
+		errs = append(errs, types.NewValidationError("FirstName is required"))
 	}
 
 	if !(obj.LastName != "") {
-		errs = append(errs, types.NewValidationError("LastName required"))
+		errs = append(errs, types.NewValidationError("LastName is required"))
 	}
 
 	if !(obj.Age >= 18) {
@@ -26,11 +26,11 @@ func UserValidate(obj *User) []error {
 	}
 
 	if !(len(obj.UserName) >= 5) {
-		errs = append(errs, types.NewValidationError("length UserName must be >= 5"))
+		errs = append(errs, types.NewValidationError("UserName length must be >= 5"))
 	}
 
 	if !(len(obj.UserName) <= 10) {
-		errs = append(errs, types.NewValidationError("length UserName must be <= 10"))
+		errs = append(errs, types.NewValidationError("UserName length must be <= 10"))
 	}
 
 	return errs
