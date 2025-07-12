@@ -11,11 +11,11 @@ func ManualCodingValidate(obj *StructToValidate) []error {
 	var errs []error
 
 	if obj.FirstName == "" {
-		errs = append(errs, fmt.Errorf("%w: FirstName required", ErrValidation))
+		errs = append(errs, fmt.Errorf("%w: FirstName is required", ErrValidation))
 	}
 
 	if obj.LastName == "" {
-		errs = append(errs, fmt.Errorf("%w: LastName required", ErrValidation))
+		errs = append(errs, fmt.Errorf("%w: LastName is required", ErrValidation))
 	}
 
 	if obj.Age < 18 {

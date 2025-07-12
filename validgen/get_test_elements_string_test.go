@@ -38,7 +38,7 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				leftOperand:  "obj.myfield1",
 				operator:     "!=",
 				rightOperand: `""`,
-				errorMessage: "myfield1 required",
+				errorMessage: "myfield1 is required",
 			},
 		},
 		{

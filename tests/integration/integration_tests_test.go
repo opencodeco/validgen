@@ -52,11 +52,11 @@ func UserValidate(obj *User) []error {
 	var errs []error
 
 	if !(obj.FirstName != "") {
-		errs = append(errs, types.NewValidationError("FirstName required"))
+		errs = append(errs, types.NewValidationError("FirstName is required"))
 	}
 
 	if !(obj.MyAge != 0) {
-		errs = append(errs, types.NewValidationError("MyAge required"))
+		errs = append(errs, types.NewValidationError("MyAge is required"))
 	}
 
 	return errs
