@@ -28,8 +28,8 @@ func GetTestElements(fieldName, fieldValidation, fieldType string) (TestElements
 		"max,string":             {"len({{.Name}})", "<=", `{{.Target}}`, "{{.Name}} length must be <= {{.Target}}"},
 		"eq_ignore_case,string":  {"types.ToLower({{.Name}})", "==", `"{{.Target}}"`, "{{.Name}} must be equal to '{{.Target}}'"},
 		"len,string":             {"len({{.Name}})", "==", `{{.Target}}`, "{{.Name}} length must be {{.Target}}"},
-		"neq,string":             {"{{.Name}}", "!=", `"{{.Target}}"`, "{{.Name}} must be not equal to '{{.Target}}'"},
-		"neq_ignore_case,string": {"types.ToLower({{.Name}})", "!=", `"{{.Target}}"`, "{{.Name}} must be not equal to '{{.Target}}'"},
+		"neq,string":             {"{{.Name}}", "!=", `"{{.Target}}"`, "{{.Name}} must not be equal to '{{.Target}}'"},
+		"neq_ignore_case,string": {"types.ToLower({{.Name}})", "!=", `"{{.Target}}"`, "{{.Name}} must not be equal to '{{.Target}}'"},
 	}
 
 	splitField := strings.Split(fieldValidation, "=")

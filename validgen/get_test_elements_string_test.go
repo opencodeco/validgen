@@ -103,7 +103,7 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				loperand:     "obj.MyFieldNotEqual",
 				operator:     "!=",
 				roperand:     `"abc"`,
-				errorMessage: "MyFieldNotEqual must be not equal to 'abc'",
+				errorMessage: "MyFieldNotEqual must not be equal to 'abc'",
 			},
 		},
 		{
@@ -116,7 +116,7 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				loperand:     "types.ToLower(obj.MyFieldNotEqual)",
 				operator:     "!=",
 				roperand:     `"abc"`,
-				errorMessage: "MyFieldNotEqual must be not equal to 'abc'",
+				errorMessage: "MyFieldNotEqual must not be equal to 'abc'",
 			},
 		},
 	}

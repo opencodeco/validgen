@@ -30,8 +30,8 @@ func string_tests() {
 		"FieldEqIC must be equal to 'yes'",
 		"FieldMinMax length must be >= 5",
 		"FieldLen length must be 8",
-		"FieldNeq must be not equal to 'cba'",
-		"FieldNeqIC must be not equal to 'yes'",
+		"FieldNeq must not be equal to 'cba'",
+		"FieldNeqIC must not be equal to 'yes'",
 	}
 	errs = StringTypeValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
