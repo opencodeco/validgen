@@ -40,6 +40,19 @@ func TestIfCode(t *testing.T) {
 	}
 `,
 		},
+		{
+			name: "if code with string and oneof",
+			args: args{
+				fieldName:       "strField",
+				fieldType:       "string",
+				fieldValidation: "oneof=a b c",
+			},
+			want: `
+	if !(obj.strField == "a" || obj.strField == "b" || obj.strField == "c") {
+		errs = append(errs, types.NewValidationError("strField must be one of 'a' 'b' 'c'"))
+	}
+`,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

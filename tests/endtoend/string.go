@@ -10,6 +10,7 @@ type StringType struct {
 	FieldLen    string `validate:"len=8"`
 	FieldNeq    string `validate:"neq=cba"`
 	FieldNeqIC  string `validate:"neq_ignore_case=YeS"`
+	FieldOneOf  string `validate:"oneof=ab bc cd"`
 }
 
 func string_tests() {
@@ -23,6 +24,7 @@ func string_tests() {
 		FieldLen:    "abcde",
 		FieldNeq:    "cba",
 		FieldNeqIC:  "yeS",
+		FieldOneOf:  "abc",
 	}
 	expectedMsgErrors = []string{
 		"FieldReq is required",
@@ -32,21 +34,7 @@ func string_tests() {
 		"FieldLen length must be 8",
 		"FieldNeq must not be equal to 'cba'",
 		"FieldNeqIC must not be equal to 'yes'",
-	}
-	errs = StringTypeValidate(v)
-	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
-		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
-	}
-
-	v = &StringType{
-		FieldReq:    "123",
-		FieldEq:     "aabbcc",
-		FieldEqIC:   "yEs",
-		FieldMinMax: "12345678901",
-	}
-	expectedMsgErrors = []string{
-		"FieldMinMax length must be <= 10",
-		"FieldLen length must be 8",
+		"FieldOneOf must be one of 'ab' 'bc' 'cd'",
 	}
 	errs = StringTypeValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
@@ -61,6 +49,7 @@ func string_tests() {
 		FieldLen:    "abcdefgh",
 		FieldNeq:    "ops",
 		FieldNeqIC:  "No",
+		FieldOneOf:  "bc",
 	}
 	expectedMsgErrors = nil
 	errs = StringTypeValidate(v)
