@@ -34,11 +34,11 @@ func StringTypeValidate(obj *StringType) []error {
 	}
 
 	if !(obj.FieldNeq != "cba") {
-		errs = append(errs, types.NewValidationError("FieldNeq must be not equal to 'cba'"))
+		errs = append(errs, types.NewValidationError("FieldNeq must not be equal to 'cba'"))
 	}
 
 	if !(types.ToLower(obj.FieldNeqIC) != "yes") {
-		errs = append(errs, types.NewValidationError("FieldNeqIC must be not equal to 'yes'"))
+		errs = append(errs, types.NewValidationError("FieldNeqIC must not be equal to 'yes'"))
 	}
 
 	return errs
