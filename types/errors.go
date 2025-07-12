@@ -8,9 +8,9 @@ type ValidationError struct {
 	Msg string
 }
 
-func NewValidationError(msg string) ValidationError {
+func NewValidationError(format string, a ...any) error {
 	return ValidationError{
-		Msg: msg,
+		Msg: fmt.Sprintf(format, a...),
 	}
 }
 
