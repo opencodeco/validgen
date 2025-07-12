@@ -10,7 +10,7 @@ func StringTypeValidate(obj *StringType) []error {
 	var errs []error
 
 	if !(obj.FieldReq != "") {
-		errs = append(errs, types.NewValidationError("FieldReq required"))
+		errs = append(errs, types.NewValidationError("FieldReq is required"))
 	}
 
 	if !(obj.FieldEq == "aabbcc") {

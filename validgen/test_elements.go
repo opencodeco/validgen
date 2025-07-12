@@ -20,8 +20,8 @@ type TestElements struct {
 func GetTestElements(fieldName, fieldValidation, fieldType string) (TestElements, error) {
 	ifCode := map[string]TestElements{
 		"eq,string":              {"{{.Name}}", "==", `"{{.Target}}"`, "{{.Name}} must be equal to '{{.Target}}'"},
-		"required,string":        {"{{.Name}}", "!=", `""`, "{{.Name}} required"},
-		"required,uint8":         {"{{.Name}}", "!=", `0`, "{{.Name}} required"},
+		"required,string":        {"{{.Name}}", "!=", `""`, "{{.Name}} is required"},
+		"required,uint8":         {"{{.Name}}", "!=", `0`, "{{.Name}} is required"},
 		"gte,uint8":              {"{{.Name}}", ">=", `{{.Target}}`, "{{.Name}} must be >= {{.Target}}"},
 		"lte,uint8":              {"{{.Name}}", "<=", `{{.Target}}`, "{{.Name}} must be <= {{.Target}}"},
 		"min,string":             {"len({{.Name}})", ">=", `{{.Target}}`, "{{.Name}} length must be >= {{.Target}}"},

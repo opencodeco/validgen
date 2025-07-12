@@ -28,7 +28,7 @@ func TestGetTestElementsWithNumericFields(t *testing.T) {
 				leftOperand:  "obj.myfield2",
 				operator:     "!=",
 				rightOperand: `0`,
-				errorMessage: "myfield2 required",
+				errorMessage: "myfield2 is required",
 			},
 			wantErr: false,
 		},

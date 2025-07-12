@@ -10,15 +10,15 @@ func Type1Validate(obj *Type1) []error {
 	var errs []error
 
 	if !(obj.FirstName != "") {
-		errs = append(errs, types.NewValidationError("FirstName required"))
+		errs = append(errs, types.NewValidationError("FirstName is required"))
 	}
 
 	if !(obj.LastName != "") {
-		errs = append(errs, types.NewValidationError("LastName required"))
+		errs = append(errs, types.NewValidationError("LastName is required"))
 	}
 
 	if !(obj.Age != 0) {
-		errs = append(errs, types.NewValidationError("Age required"))
+		errs = append(errs, types.NewValidationError("Age is required"))
 	}
 
 	return errs

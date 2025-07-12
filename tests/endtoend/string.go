@@ -25,7 +25,7 @@ func string_tests() {
 		FieldNeqIC:  "yeS",
 	}
 	expectedMsgErrors = []string{
-		"FieldReq required",
+		"FieldReq is required",
 		"FieldEq must be equal to 'aabbcc'",
 		"FieldEqIC must be equal to 'yes'",
 		"FieldMinMax length must be >= 5",

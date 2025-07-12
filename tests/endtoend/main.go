@@ -45,9 +45,9 @@ func all_types1_tests() {
 
 	v1 := &AllTypes1{}
 	expectedMsgErrors = []string{
-		"FirstName required",
-		"LastName required",
-		"Age required",
+		"FirstName is required",
+		"LastName is required",
+		"Age is required",
 	}
 	errs = AllTypes1Validate(v1)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
@@ -79,8 +79,8 @@ func all_types2_tests() {
 		UserName:  "abc",
 	}
 	expectedMsgErrors = []string{
-		"FirstName required",
-		"LastName required",
+		"FirstName is required",
+		"LastName is required",
 		"Age must be <= 130",
 		"UserName length must be >= 5",
 	}
@@ -124,9 +124,9 @@ func struct_in_pkg_tests() {
 
 	v1 := &structsinpkg.Type1{}
 	expectedMsgErrors = []string{
-		"FirstName required",
-		"LastName required",
-		"Age required",
+		"FirstName is required",
+		"LastName is required",
+		"Age is required",
 	}
 	errs = structsinpkg.Type1Validate(v1)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
