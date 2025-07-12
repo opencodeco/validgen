@@ -3,6 +3,8 @@ package validgen
 import (
 	"fmt"
 	"strings"
+
+	"github.com/opencodeco/validgen/types"
 )
 
 const (
@@ -11,14 +13,22 @@ const (
 )
 
 type TestElements struct {
-	leftOperand  string
-	operator     string
-	rightOperand string
-	errorMessage string
+	leftOperand   string
+	operator      string
+	rightOperands []string
+	errorMessage  string
 }
 
 func GetTestElements(fieldName, fieldValidation, fieldType string) (TestElements, error) {
-	testElement := map[string]TestElements{
+
+	type ConditionTable struct {
+		loperand     string
+		operator     string
+		roperand     string
+		errorMessage string
+	}
+
+	conditionTable := map[string]ConditionTable{
 		"eq,string":              {"{{.Name}}", "==", `"{{.Target}}"`, "{{.Name}} must be equal to '{{.Target}}'"},
 		"required,string":        {"{{.Name}}", "!=", `""`, "{{.Name}} is required"},
 		"required,uint8":         {"{{.Name}}", "!=", `0`, "{{.Name}} is required"},
@@ -30,33 +40,53 @@ func GetTestElements(fieldName, fieldValidation, fieldType string) (TestElements
 		"len,string":             {"len({{.Name}})", "==", `{{.Target}}`, "{{.Name}} length must be {{.Target}}"},
 		"neq,string":             {"{{.Name}}", "!=", `"{{.Target}}"`, "{{.Name}} must not be equal to '{{.Target}}'"},
 		"neq_ignore_case,string": {"types.ToLower({{.Name}})", "!=", `"{{.Target}}"`, "{{.Name}} must not be equal to '{{.Target}}'"},
+		"oneof,string":           {"{{.Name}}", "==", `"{{.Target}}"`, "{{.Name}} must be one of {{.Targets}}"},
 	}
 
-	splitField := strings.Split(fieldValidation, "=")
-	if len(splitField) > 2 {
-		return TestElements{}, fmt.Errorf("malformed validation %s type %s", fieldValidation, fieldType)
+	validation, err := ParserValidation(fieldValidation)
+	if err != nil {
+		return TestElements{}, types.NewValidationError("%s", fmt.Errorf("parser validation %s type %s %w", fieldValidation, fieldType, err).Error())
 	}
 
-	validation := splitField[0]
-	target := ""
-	if len(splitField) > 1 {
-		target = splitField[1]
-	}
-
-	test, ok := testElement[validation+","+fieldType]
+	condition, ok := conditionTable[validation.Operation+","+fieldType]
 	if !ok {
-		return TestElements{}, fmt.Errorf("unsupported validation %s type %s", fieldValidation, fieldType)
+		return TestElements{}, types.NewValidationError("unsupported validation %s type %s", fieldValidation, fieldType)
 	}
 
-	if validation == EqIgnoreCaseTag || validation == NeqIgnoreCaseTag {
-		target = strings.ToLower(target)
+	if validation.Operation == EqIgnoreCaseTag || validation.Operation == NeqIgnoreCaseTag {
+		for i := range validation.Values {
+			validation.Values[i] = strings.ToLower(validation.Values[i])
+		}
 	}
 
-	test.leftOperand = replaceNameAndTargetWithPrefix(test.leftOperand, fieldName, target)
-	test.rightOperand = replaceNameAndTargetWithPrefix(test.rightOperand, fieldName, target)
-	test.errorMessage = replaceNameAndTargetWithoutPrefix(test.errorMessage, fieldName, target)
+	roperands := []string{}
+	targetValue := ""
+	targetValues := ""
 
-	return test, nil
+	switch validation.ExpectedValues {
+	case ZERO_VALUE:
+		roperands = append(roperands, replaceNameAndTargetWithPrefix(condition.roperand, fieldName, condition.roperand))
+		targetValue = condition.roperand
+		targetValues = "'" + condition.roperand + "' "
+	case ONE_VALUE, MANY_VALUES:
+		for _, value := range validation.Values {
+			roperands = append(roperands, replaceNameAndTargetWithPrefix(condition.roperand, fieldName, value))
+			targetValue = value
+			targetValues += "'" + value + "' "
+		}
+	}
+
+	targetValues = strings.TrimSpace(targetValues)
+	errorMsg := condition.errorMessage
+	errorMsg = replaceNameAndTargetWithoutPrefix(errorMsg, fieldName, targetValue)
+	errorMsg = replaceTargetInErrors(errorMsg, targetValue, targetValues)
+
+	return TestElements{
+		leftOperand:   replaceNameAndTargetWithPrefix(condition.loperand, fieldName, targetValue),
+		operator:      condition.operator,
+		rightOperands: roperands,
+		errorMessage:  errorMsg,
+	}, nil
 }
 
 func replaceNameAndTargetWithPrefix(text, name, target string) string {
@@ -69,6 +99,13 @@ func replaceNameAndTargetWithPrefix(text, name, target string) string {
 func replaceNameAndTargetWithoutPrefix(text, name, target string) string {
 	text = strings.ReplaceAll(text, "{{.Name}}", name)
 	text = strings.ReplaceAll(text, "{{.Target}}", target)
+
+	return text
+}
+
+func replaceTargetInErrors(text, target, targets string) string {
+	text = strings.ReplaceAll(text, "{{.Target}}", target)
+	text = strings.ReplaceAll(text, "{{.Targets}}", targets)
 
 	return text
 }
