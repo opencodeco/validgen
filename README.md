@@ -62,7 +62,7 @@ The following table shows the validations and possible types, where "I" means "I
 | len             | I      | -             | -       | W     | W     | W   | -    | -        |
 | max             | I      | -             | -       | W     | W     | W   | W    | W        |
 | min             | I      | -             | -       | W     | W     | W   | W    | W        |
-| oneof           | W      | W             | W       | W     | W     | W   | -    | W        |
+| oneof           | I      | W             | W       | W     | W     | W   | -    | W        |
 | required        | I      | W             | W       | W     | W     | W   | W    | W        |
 
 # Steps to run the unit tests
