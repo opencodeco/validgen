@@ -120,29 +120,29 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 			},
 		},
 		{
-			name: "One of string with spaces",
+			name: "In string with spaces",
 			args: args{
-				fieldName:       "OneOfField",
-				fieldValidation: "oneof=a b c",
+				fieldName:       "InField",
+				fieldValidation: "in=a b c",
 			},
 			want: TestElements{
-				leftOperand:   "obj.OneOfField",
+				leftOperand:   "obj.InField",
 				operator:      "==",
 				rightOperands: []string{`"a"`, `"b"`, `"c"`},
-				errorMessage:  "OneOfField must be one of 'a' 'b' 'c'",
+				errorMessage:  "InField must be one of 'a' 'b' 'c'",
 			},
 		},
 		{
-			name: "One of string with '",
+			name: "In string with '",
 			args: args{
-				fieldName:       "OneOfField",
-				fieldValidation: "oneof=' a ' ' b ' ' c '",
+				fieldName:       "InField",
+				fieldValidation: "in=' a ' ' b ' ' c '",
 			},
 			want: TestElements{
-				leftOperand:   "obj.OneOfField",
+				leftOperand:   "obj.InField",
 				operator:      "==",
 				rightOperands: []string{`" a "`, `" b "`, `" c "`},
-				errorMessage:  "OneOfField must be one of ' a ' ' b ' ' c '",
+				errorMessage:  "InField must be one of ' a ' ' b ' ' c '",
 			},
 		},
 	}

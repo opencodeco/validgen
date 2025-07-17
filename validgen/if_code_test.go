@@ -41,11 +41,11 @@ func TestIfCode(t *testing.T) {
 `,
 		},
 		{
-			name: "if code with string and oneof",
+			name: "if code with string and in",
 			args: args{
 				fieldName:       "strField",
 				fieldType:       "string",
-				fieldValidation: "oneof=a b c",
+				fieldValidation: "in=a b c",
 			},
 			want: `
 	if !(obj.strField == "a" || obj.strField == "b" || obj.strField == "c") {

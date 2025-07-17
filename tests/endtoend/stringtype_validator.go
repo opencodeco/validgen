@@ -41,8 +41,8 @@ func StringTypeValidate(obj *StringType) []error {
 		errs = append(errs, types.NewValidationError("FieldNeqIC must not be equal to 'yes'"))
 	}
 
-	if !(obj.FieldOneOf == "ab" || obj.FieldOneOf == "bc" || obj.FieldOneOf == "cd") {
-		errs = append(errs, types.NewValidationError("FieldOneOf must be one of 'ab' 'bc' 'cd'"))
+	if !(obj.FieldIn == "ab" || obj.FieldIn == "bc" || obj.FieldIn == "cd") {
+		errs = append(errs, types.NewValidationError("FieldIn must be one of 'ab' 'bc' 'cd'"))
 	}
 
 	return errs
