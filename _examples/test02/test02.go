@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/opencodeco/validgen/tests/test02/structsinpkg"
+	"github.com/opencodeco/validgen/_examples/test02/structsinpkg"
 )
 
 func main() {
