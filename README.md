@@ -44,7 +44,8 @@ The following validations will be implemented:
 - len (length): must have the following length
 - max (max): must have no more than max characters
 - min (min): must have no less than min characters
-- oneof (one of): must be one of the following values
+- in (in): must be one of the following values
+- nin (not in): must not be one of the following values
 - required (required): is required
 
 The following table shows the validations and possible types, where "I" means "Implemented", "W" means "Will be implemented" and "-" means "Will not be implemented":
@@ -62,7 +63,8 @@ The following table shows the validations and possible types, where "I" means "I
 | len             | I      | -             | -       | W     | W     | W   | -    | -        |
 | max             | I      | -             | -       | W     | W     | W   | W    | W        |
 | min             | I      | -             | -       | W     | W     | W   | W    | W        |
-| oneof           | I      | W             | W       | W     | W     | W   | -    | W        |
+| in              | I      | W             | W       | W     | W     | W   | -    | W        |
+| nin             | W      | W             | W       | W     | W     | W   | -    | W        |
 | required        | I      | W             | W       | W     | W     | W   | W    | W        |
 
 # Steps to run the unit tests

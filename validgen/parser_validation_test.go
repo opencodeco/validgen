@@ -34,63 +34,63 @@ func Test_ValidParserValidation(t *testing.T) {
 		},
 		{
 			name:       "tag with multivalue (a b c)",
-			validation: "oneof=a b c",
+			validation: "in=a b c",
 			want: &Validation{
-				Operation:      "oneof",
+				Operation:      "in",
 				ExpectedValues: MANY_VALUES,
 				Values:         []string{"a", "b", "c"},
 			},
 		},
 		{
 			name:       "tag with multivalue ('abc')",
-			validation: "oneof='abc'",
+			validation: "in='abc'",
 			want: &Validation{
-				Operation:      "oneof",
+				Operation:      "in",
 				ExpectedValues: MANY_VALUES,
 				Values:         []string{"abc"},
 			},
 		},
 		{
 			name:       "tag with multivalue ('a' 'b' 'c')",
-			validation: "oneof='a' 'b' 'c'",
+			validation: "in='a' 'b' 'c'",
 			want: &Validation{
-				Operation:      "oneof",
+				Operation:      "in",
 				ExpectedValues: MANY_VALUES,
 				Values:         []string{"a", "b", "c"},
 			},
 		},
 		{
 			name:       "tag with multivalue ('a ' 'b ' 'c ')",
-			validation: "oneof='a ' 'b ' 'c '",
+			validation: "in='a ' 'b ' 'c '",
 			want: &Validation{
-				Operation:      "oneof",
+				Operation:      "in",
 				ExpectedValues: MANY_VALUES,
 				Values:         []string{"a ", "b ", "c "},
 			},
 		},
 		{
 			name:       "tag with multivalue (' a ' ' b ' ' c ')",
-			validation: "oneof=' a ' ' b ' ' c '",
+			validation: "in=' a ' ' b ' ' c '",
 			want: &Validation{
-				Operation:      "oneof",
+				Operation:      "in",
 				ExpectedValues: MANY_VALUES,
 				Values:         []string{" a ", " b ", " c "},
 			},
 		},
 		{
 			name:       "tag with multivalue ('a b c')",
-			validation: "oneof='a b c'",
+			validation: "in='a b c'",
 			want: &Validation{
-				Operation:      "oneof",
+				Operation:      "in",
 				ExpectedValues: MANY_VALUES,
 				Values:         []string{"a b c"},
 			},
 		},
 		{
 			name:       "tag with multivalue (  a  b  c  )",
-			validation: "oneof=  a  b  c  ",
+			validation: "in=  a  b  c  ",
 			want: &Validation{
-				Operation:      "oneof",
+				Operation:      "in",
 				ExpectedValues: MANY_VALUES,
 				Values:         []string{"a", "b", "c"},
 			},
@@ -140,12 +140,12 @@ func Test_ParserInvalidValidation(t *testing.T) {
 		},
 		{
 			name:        "malformed value",
-			validation:  "oneof='abc",
+			validation:  "in='abc",
 			expectedErr: types.NewValidationError("invalid quote value in 'abc"),
 		},
 		{
 			name:        "malformed value",
-			validation:  "oneof='a ' b ' 'c '",
+			validation:  "in='a ' b ' 'c '",
 			expectedErr: types.NewValidationError("invalid quote value in 'a ' b ' 'c '"),
 		},
 	}
