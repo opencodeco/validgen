@@ -126,10 +126,11 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "in=a b c",
 			},
 			want: TestElements{
-				leftOperand:   "obj.InField",
-				operator:      "==",
-				rightOperands: []string{`"a"`, `"b"`, `"c"`},
-				errorMessage:  "InField must be one of 'a' 'b' 'c'",
+				leftOperand:    "obj.InField",
+				operator:       "==",
+				rightOperands:  []string{`"a"`, `"b"`, `"c"`},
+				concatOperator: "||",
+				errorMessage:   "InField must be one of 'a' 'b' 'c'",
 			},
 		},
 		{
@@ -139,10 +140,25 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "in=' a ' ' b ' ' c '",
 			},
 			want: TestElements{
-				leftOperand:   "obj.InField",
-				operator:      "==",
-				rightOperands: []string{`" a "`, `" b "`, `" c "`},
-				errorMessage:  "InField must be one of ' a ' ' b ' ' c '",
+				leftOperand:    "obj.InField",
+				operator:       "==",
+				rightOperands:  []string{`" a "`, `" b "`, `" c "`},
+				concatOperator: "||",
+				errorMessage:   "InField must be one of ' a ' ' b ' ' c '",
+			},
+		},
+		{
+			name: "NotIn string with spaces",
+			args: args{
+				fieldName:       "NotInField",
+				fieldValidation: "nin=a b c",
+			},
+			want: TestElements{
+				leftOperand:    "obj.NotInField",
+				operator:       "!=",
+				rightOperands:  []string{`"a"`, `"b"`, `"c"`},
+				concatOperator: "&&",
+				errorMessage:   "NotInField must not be one of 'a' 'b' 'c'",
 			},
 		},
 		{

@@ -28,7 +28,7 @@ func IfCode(fieldName, fieldValidation, fieldType string) (string, error) {
 	booleanCondition := ""
 	for _, roperand := range testElements.rightOperands {
 		if booleanCondition != "" {
-			booleanCondition += " || "
+			booleanCondition += " " + testElements.concatOperator + " "
 		}
 
 		booleanCondition += fmt.Sprintf("%s %s %s", testElements.leftOperand, testElements.operator, roperand)

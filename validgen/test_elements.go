@@ -8,15 +8,18 @@ import (
 )
 
 const (
-	EqIgnoreCaseTag  = "eq_ignore_case"
-	NeqIgnoreCaseTag = "neq_ignore_case"
+	EqIgnoreCaseOp  = "eq_ignore_case"
+	NeqIgnoreCaseOp = "neq_ignore_case"
+	InOp            = "in"
+	NotInOp         = "nin"
 )
 
 type TestElements struct {
-	leftOperand   string
-	operator      string
-	rightOperands []string
-	errorMessage  string
+	leftOperand    string
+	operator       string
+	rightOperands  []string
+	concatOperator string
+	errorMessage   string
 }
 
 func GetTestElements(fieldName, fieldValidation, fieldType string) (TestElements, error) {
@@ -41,6 +44,7 @@ func GetTestElements(fieldName, fieldValidation, fieldType string) (TestElements
 		"neq,string":             {"{{.Name}}", "!=", `"{{.Target}}"`, "{{.Name}} must not be equal to '{{.Target}}'"},
 		"neq_ignore_case,string": {"types.ToLower({{.Name}})", "!=", `"{{.Target}}"`, "{{.Name}} must not be equal to '{{.Target}}'"},
 		"in,string":              {"{{.Name}}", "==", `"{{.Target}}"`, "{{.Name}} must be one of {{.Targets}}"},
+		"nin,string":             {"{{.Name}}", "!=", `"{{.Target}}"`, "{{.Name}} must not be one of {{.Targets}}"},
 		"email,string":           {"types.IsValidEmail({{.Name}})", "==", `true`, "{{.Name}} must be a valid email"},
 	}
 
@@ -54,7 +58,7 @@ func GetTestElements(fieldName, fieldValidation, fieldType string) (TestElements
 		return TestElements{}, types.NewValidationError("unsupported validation %s type %s", fieldValidation, fieldType)
 	}
 
-	if validation.Operation == EqIgnoreCaseTag || validation.Operation == NeqIgnoreCaseTag {
+	if validation.Operation == EqIgnoreCaseOp || validation.Operation == NeqIgnoreCaseOp {
 		for i := range validation.Values {
 			validation.Values[i] = strings.ToLower(validation.Values[i])
 		}
@@ -77,16 +81,31 @@ func GetTestElements(fieldName, fieldValidation, fieldType string) (TestElements
 		}
 	}
 
+	var concatOperator string
+	switch validation.Operation {
+	case InOp:
+		concatOperator = "||"
+	case NotInOp:
+		concatOperator = "&&"
+	default:
+		concatOperator = ""
+	}
+
+	if len(roperands) > 1 && concatOperator == "" {
+		return TestElements{}, types.NewValidationError("missed concat operator")
+	}
+
 	targetValues = strings.TrimSpace(targetValues)
 	errorMsg := condition.errorMessage
 	errorMsg = replaceNameAndTargetWithoutPrefix(errorMsg, fieldName, targetValue)
 	errorMsg = replaceTargetInErrors(errorMsg, targetValue, targetValues)
 
 	return TestElements{
-		leftOperand:   replaceNameAndTargetWithPrefix(condition.loperand, fieldName, targetValue),
-		operator:      condition.operator,
-		rightOperands: roperands,
-		errorMessage:  errorMsg,
+		leftOperand:    replaceNameAndTargetWithPrefix(condition.loperand, fieldName, targetValue),
+		operator:       condition.operator,
+		rightOperands:  roperands,
+		concatOperator: concatOperator,
+		errorMessage:   errorMsg,
 	}, nil
 }
 

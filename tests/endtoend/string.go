@@ -11,6 +11,7 @@ type StringType struct {
 	FieldNeq    string `validate:"neq=cba"`
 	FieldNeqIC  string `validate:"neq_ignore_case=YeS"`
 	FieldIn     string `validate:"in=ab bc cd"`
+	FieldNotIn  string `validate:"nin=xx yy zz"`
 	EmailReq    string `validate:"required,email"`
 	EmailOpt    string `validate:"email"`
 }
@@ -28,8 +29,9 @@ func string_tests() {
 		FieldNeq:    "cba",
 		FieldNeqIC:  "yeS",
 		FieldIn:     "abc",
-		EmailReq:    "invalid.email.format",  // Invalid required email
-		EmailOpt:    "invalid",               // Invalid optional email
+		FieldNotIn:  "zz",
+		EmailReq:    "invalid.email.format", // Invalid required email
+		EmailOpt:    "invalid",              // Invalid optional email
 	}
 	expectedMsgErrors = []string{
 		"FieldReq is required",
@@ -40,6 +42,7 @@ func string_tests() {
 		"FieldNeq must not be equal to 'cba'",
 		"FieldNeqIC must not be equal to 'yes'",
 		"FieldIn must be one of 'ab' 'bc' 'cd'",
+		"FieldNotIn must not be one of 'xx' 'yy' 'zz'",
 		"EmailReq must be a valid email",
 		"EmailOpt must be a valid email",
 	}
@@ -58,8 +61,9 @@ func string_tests() {
 		FieldNeq:    "ops",
 		FieldNeqIC:  "No",
 		FieldIn:     "bc",
-		EmailReq:    "user@example.com",      // Valid required email
-		EmailOpt:    "",                      // Empty optional email (valid)
+		FieldNotIn:  "xy",
+		EmailReq:    "user@example.com", // Valid required email
+		EmailOpt:    "",                 // Empty optional email (valid)
 	}
 	expectedMsgErrors = nil
 	errs = StringTypeValidate(v)
