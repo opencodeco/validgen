@@ -25,6 +25,10 @@ func IfCode(fieldName, fieldValidation, fieldType string) (string, error) {
 		return "", fmt.Errorf("field %s: %w", fieldName, err)
 	}
 
+	if len(testElements.rightOperands) > 1 && testElements.concatOperator == "" {
+		return "", fmt.Errorf("missed concat operator")
+	}
+
 	booleanCondition := ""
 	for _, roperand := range testElements.rightOperands {
 		if booleanCondition != "" {
