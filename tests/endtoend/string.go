@@ -11,6 +11,7 @@ type StringType struct {
 	FieldNeq    string `validate:"neq=cba"`
 	FieldNeqIC  string `validate:"neq_ignore_case=YeS"`
 	FieldIn     string `validate:"in=ab bc cd"`
+	FieldNotIn  string `validate:"nin=xx yy zz"`
 }
 
 func string_tests() {
@@ -25,6 +26,7 @@ func string_tests() {
 		FieldNeq:    "cba",
 		FieldNeqIC:  "yeS",
 		FieldIn:     "abc",
+		FieldNotIn:  "zz",
 	}
 	expectedMsgErrors = []string{
 		"FieldReq is required",
@@ -35,6 +37,7 @@ func string_tests() {
 		"FieldNeq must not be equal to 'cba'",
 		"FieldNeqIC must not be equal to 'yes'",
 		"FieldIn must be one of 'ab' 'bc' 'cd'",
+		"FieldNotIn must not be one of 'xx' 'yy' 'zz'",
 	}
 	errs = StringTypeValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
@@ -50,6 +53,7 @@ func string_tests() {
 		FieldNeq:    "ops",
 		FieldNeqIC:  "No",
 		FieldIn:     "bc",
+		FieldNotIn:  "xy",
 	}
 	expectedMsgErrors = nil
 	errs = StringTypeValidate(v)

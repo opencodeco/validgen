@@ -64,7 +64,7 @@ The following table shows the validations and possible types, where "I" means "I
 | max             | I      | -             | -       | W     | W     | W   | W    | W        |
 | min             | I      | -             | -       | W     | W     | W   | W    | W        |
 | in              | I      | W             | W       | W     | W     | W   | -    | W        |
-| nin             | W      | W             | W       | W     | W     | W   | -    | W        |
+| nin             | I      | W             | W       | W     | W     | W   | -    | W        |
 | required        | I      | W             | W       | W     | W     | W   | W    | W        |
 
 # Steps to run the unit tests
