@@ -5,6 +5,10 @@ import (
 	"strings"
 )
 
+// emailRegex is a pre-compiled regex for email validation
+// This avoids recompiling the regex on every validation call
+var emailRegex = regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
+
 func ToLower(str string) string {
 	return strings.ToLower(str)
 }
@@ -17,8 +21,6 @@ func IsValidEmail(email string) bool {
 		return true // Empty email is valid for optional fields
 	}
 	
-	// Basic email regex pattern
-	// This covers most common email formats but is not exhaustive
-	emailRegex := regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
+	// Use pre-compiled regex for better performance
 	return emailRegex.MatchString(email)
 }
