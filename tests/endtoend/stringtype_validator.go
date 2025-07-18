@@ -45,5 +45,17 @@ func StringTypeValidate(obj *StringType) []error {
 		errs = append(errs, types.NewValidationError("FieldIn must be one of 'ab' 'bc' 'cd'"))
 	}
 
+	if !(obj.EmailReq != "") {
+		errs = append(errs, types.NewValidationError("EmailReq is required"))
+	}
+
+	if !(types.IsValidEmail(obj.EmailReq) == true) {
+		errs = append(errs, types.NewValidationError("EmailReq must be a valid email"))
+	}
+
+	if !(types.IsValidEmail(obj.EmailOpt) == true) {
+		errs = append(errs, types.NewValidationError("EmailOpt must be a valid email"))
+	}
+
 	return errs
 }

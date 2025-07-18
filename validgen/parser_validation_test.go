@@ -95,6 +95,15 @@ func Test_ValidParserValidation(t *testing.T) {
 				Values:         []string{"a", "b", "c"},
 			},
 		},
+		{
+			name:       "email validation without value",
+			validation: "email",
+			want: &Validation{
+				Operation:      "email",
+				ExpectedValues: ZERO_VALUE,
+				Values:         []string{},
+			},
+		},
 	}
 
 	for _, tt := range tests {
