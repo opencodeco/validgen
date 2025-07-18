@@ -111,6 +111,30 @@ func UserValidate(obj *User) []error {
 - **Internal errors**: Return standard Go errors for development issues
 - **Fatal errors**: Use `log.Fatal()` only in main package for CLI errors
 
+### Commit Message Conventions
+Follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) pattern for all commit messages:
+
+**Format**: `<type>[optional scope]: <description>`
+
+**Types**:
+- `feat` - New features or functionality
+- `fix` - Bug fixes
+- `docs` - Documentation changes
+- `style` - Code style/formatting changes (no logic changes)
+- `refactor` - Code refactoring without feature/bug changes
+- `test` - Adding or updating tests
+- `perf` - Performance improvements
+- `build` - Build system or dependency changes
+- `ci` - CI/CD configuration changes
+- `chore` - Maintenance tasks
+
+**Examples**:
+- `feat: add support for email validation tag`
+- `fix: handle empty strings in min/max validation`
+- `docs: update README with new validation examples`
+- `test: add benchmark tests for string validations`
+- `refactor(parser): simplify validation tag parsing logic`
+
 ## Best Practices for Contributors
 
 ### Code Generation
