@@ -91,6 +91,10 @@ func GetTestElements(fieldName, fieldValidation, fieldType string) (TestElements
 		concatOperator = ""
 	}
 
+	if len(roperands) > 1 && concatOperator == "" {
+		return TestElements{}, types.NewValidationError("missed concat operator")
+	}
+
 	targetValues = strings.TrimSpace(targetValues)
 	errorMsg := condition.errorMessage
 	errorMsg = replaceNameAndTargetWithoutPrefix(errorMsg, fieldName, targetValue)
