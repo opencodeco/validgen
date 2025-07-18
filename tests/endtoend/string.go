@@ -11,12 +11,15 @@ type StringType struct {
 	FieldNeq    string `validate:"neq=cba"`
 	FieldNeqIC  string `validate:"neq_ignore_case=YeS"`
 	FieldIn     string `validate:"in=ab bc cd"`
+	EmailReq    string `validate:"required,email"`
+	EmailOpt    string `validate:"email"`
 }
 
 func string_tests() {
 	var expectedMsgErrors []string
 	var errs []error
 
+	// Test case 1: All validation failures including email
 	v := &StringType{
 		FieldEq:     "123",
 		FieldEqIC:   "abc",
@@ -25,6 +28,8 @@ func string_tests() {
 		FieldNeq:    "cba",
 		FieldNeqIC:  "yeS",
 		FieldIn:     "abc",
+		EmailReq:    "",           // Empty required email
+		EmailOpt:    "invalid",    // Invalid optional email
 	}
 	expectedMsgErrors = []string{
 		"FieldReq is required",
@@ -35,12 +40,15 @@ func string_tests() {
 		"FieldNeq must not be equal to 'cba'",
 		"FieldNeqIC must not be equal to 'yes'",
 		"FieldIn must be one of 'ab' 'bc' 'cd'",
+		"EmailReq is required",
+		"EmailOpt must be a valid email",
 	}
 	errs = StringTypeValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
+	// Test case 2: Invalid required email format
 	v = &StringType{
 		FieldReq:    "123",
 		FieldEq:     "aabbcc",
@@ -50,6 +58,48 @@ func string_tests() {
 		FieldNeq:    "ops",
 		FieldNeqIC:  "No",
 		FieldIn:     "bc",
+		EmailReq:    "invalid.email.format",  // Invalid required email
+		EmailOpt:    "",                      // Empty optional email (valid)
+	}
+	expectedMsgErrors = []string{
+		"EmailReq must be a valid email",
+	}
+	errs = StringTypeValidate(v)
+	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
+		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
+	}
+
+	// Test case 3: All valid including valid emails
+	v = &StringType{
+		FieldReq:    "123",
+		FieldEq:     "aabbcc",
+		FieldEqIC:   "yEs",
+		FieldMinMax: "12345678",
+		FieldLen:    "abcdefgh",
+		FieldNeq:    "ops",
+		FieldNeqIC:  "No",
+		FieldIn:     "bc",
+		EmailReq:    "user@example.com",      // Valid required email
+		EmailOpt:    "optional@test.org",     // Valid optional email
+	}
+	expectedMsgErrors = nil
+	errs = StringTypeValidate(v)
+	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
+		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
+	}
+
+	// Test case 4: Valid required email, empty optional email
+	v = &StringType{
+		FieldReq:    "123",
+		FieldEq:     "aabbcc",
+		FieldEqIC:   "yEs",
+		FieldMinMax: "12345678",
+		FieldLen:    "abcdefgh",
+		FieldNeq:    "ops",
+		FieldNeqIC:  "No",
+		FieldIn:     "bc",
+		EmailReq:    "required@domain.com",   // Valid required email
+		EmailOpt:    "",                      // Empty optional email (valid)
 	}
 	expectedMsgErrors = nil
 	errs = StringTypeValidate(v)
