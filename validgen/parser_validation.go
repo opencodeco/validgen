@@ -35,6 +35,7 @@ func ParserValidation(fieldValidation string) (*Validation, error) {
 		"neq_ignore_case": ONE_VALUE,
 		"in":              MANY_VALUES,
 		"nin":             MANY_VALUES,
+		"email":           ZERO_VALUE,
 	}
 
 	validation, values, err := parserValidationString(fieldValidation)

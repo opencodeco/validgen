@@ -161,6 +161,19 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 				errorMessage:   "NotInField must not be one of 'a' 'b' 'c'",
 			},
 		},
+		{
+			name: "Email validation",
+			args: args{
+				fieldName:       "EmailField",
+				fieldValidation: "email",
+			},
+			want: TestElements{
+				leftOperand:   "types.IsValidEmail(obj.EmailField)",
+				operator:      "==",
+				rightOperands: []string{`true`},
+				errorMessage:  "EmailField must be a valid email",
+			},
+		},
 	}
 
 	for _, tt := range tests {

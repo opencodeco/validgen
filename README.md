@@ -47,6 +47,7 @@ The following validations will be implemented:
 - in (in): must be one of the following values
 - nin (not in): must not be one of the following values
 - required (required): is required
+- email (email): must be a valid email format (empty is valid for optional fields)
 
 The following table shows the validations and possible types, where "I" means "Implemented", "W" means "Will be implemented" and "-" means "Will not be implemented":
 
@@ -66,6 +67,7 @@ The following table shows the validations and possible types, where "I" means "I
 | in              | I      | W             | W       | W     | W     | W   | -    | W        |
 | nin             | I      | W             | W       | W     | W     | W   | -    | W        |
 | required        | I      | W             | W       | W     | W     | W   | W    | W        |
+| email           | I      | -             | -       | -     | -     | -   | -    | -        |
 
 # Steps to run the unit tests
 
