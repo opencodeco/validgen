@@ -8,12 +8,20 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
+type StructValidator struct {
+	FirstName string `validate:"required"`
+	LastName  string `validate:"required"`
+	Age       uint8  `validate:"gte=18,lte=130"`
+	UserName  string `validate:"min=5,max=10"`
+	Optional  string
+}
+
 func TestValidator(t *testing.T) {
 	var validate *validator.Validate
 
 	validate = validator.New(validator.WithRequiredStructEnabled())
 
-	data := &StructToValidate{
+	data := &StructValidator{
 		FirstName: "First",
 		LastName:  "Last",
 		Age:       49,
@@ -32,7 +40,7 @@ func BenchmarkValidator(b *testing.B) {
 
 	for b.Loop() {
 
-		data := &StructToValidate{
+		data := &StructValidator{
 			FirstName: "First",
 			LastName:  "Last",
 			Age:       49,

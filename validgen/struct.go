@@ -24,11 +24,11 @@ func {{.Name}}Validate(obj *{{.Name}}) []error {
 `
 
 type Struct struct {
-	Name           string
-	Path           string
-	PackageName    string
-	Fields         []Field
-	HasValidateTag bool
+	Name         string
+	Path         string
+	PackageName  string
+	Fields       []Field
+	HasVerifyTag bool
 }
 
 type Field struct {
@@ -73,7 +73,7 @@ func (s *Struct) GenerateFileValidator() error {
 
 func (s *Struct) PrintInfo() {
 	fmt.Println("Struct:", s.Name)
-	fmt.Println("\tHasValidateTag:", s.HasValidateTag)
+	fmt.Println("\tHasVerifyTag:", s.HasVerifyTag)
 
 	for _, f := range s.Fields {
 		fmt.Println("\tField:", f.Name, f.Type, f.Tag)
