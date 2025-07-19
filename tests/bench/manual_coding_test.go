@@ -7,7 +7,7 @@ import (
 )
 
 func TestManualCoding(t *testing.T) {
-	data := &StructToValidate{
+	data := &StructManualCoding{
 		FirstName: "First",
 		LastName:  "Last",
 		Age:       49,
@@ -20,7 +20,7 @@ func TestManualCoding(t *testing.T) {
 
 func BenchmarkManualCoding(b *testing.B) {
 	for b.Loop() {
-		data := &StructToValidate{
+		data := &StructManualCoding{
 			FirstName: "First",
 			LastName:  "Last",
 			Age:       49,

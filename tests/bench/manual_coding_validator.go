@@ -7,7 +7,15 @@ import (
 
 var ErrValidation = errors.New("validation error")
 
-func ManualCodingValidate(obj *StructToValidate) []error {
+type StructManualCoding struct {
+	FirstName string
+	LastName  string
+	Age       uint8
+	UserName  string
+	Optional  string
+}
+
+func ManualCodingValidate(obj *StructManualCoding) []error {
 	var errs []error
 
 	if obj.FirstName == "" {

@@ -5,8 +5,8 @@ import (
 )
 
 type User struct {
-	Email1 string `validate:"required,email"`
-	Email2 string `validate:"email"`
+	Email1 string `verify:"required,email"`
+	Email2 string `verify:"email"`
 }
 
 func main() {

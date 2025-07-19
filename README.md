@@ -4,8 +4,6 @@
 
 ValidGen born to solve that gap. Instead of use reflection, ValidGen uses the code generating approach.
 
-This project aims to be compatible with validator tag syntax.
-
 At this time it is an unstable project and should not be used in production environments.
 
 # How to build ValidGen
