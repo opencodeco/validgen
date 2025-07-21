@@ -3,17 +3,17 @@ package main
 import "log"
 
 type StringType struct {
-	FieldReq    string `validate:"required"`
-	FieldEq     string `validate:"eq=aabbcc"`
-	FieldEqIC   string `validate:"eq_ignore_case=YeS"`
-	FieldMinMax string `validate:"min=5,max=10"`
-	FieldLen    string `validate:"len=8"`
-	FieldNeq    string `validate:"neq=cba"`
-	FieldNeqIC  string `validate:"neq_ignore_case=YeS"`
-	FieldIn     string `validate:"in=ab bc cd"`
-	FieldNotIn  string `validate:"nin=xx yy zz"`
-	EmailReq    string `validate:"required,email"`
-	EmailOpt    string `validate:"email"`
+	FieldReq    string `valid:"required"`
+	FieldEq     string `valid:"eq=aabbcc"`
+	FieldEqIC   string `valid:"eq_ignore_case=YeS"`
+	FieldMinMax string `valid:"min=5,max=10"`
+	FieldLen    string `valid:"len=8"`
+	FieldNeq    string `valid:"neq=cba"`
+	FieldNeqIC  string `valid:"neq_ignore_case=YeS"`
+	FieldIn     string `valid:"in=ab bc cd"`
+	FieldNotIn  string `valid:"nin=xx yy zz"`
+	EmailReq    string `valid:"required,email"`
+	EmailOpt    string `valid:"email"`
 }
 
 func string_tests() {

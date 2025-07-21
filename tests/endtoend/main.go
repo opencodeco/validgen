@@ -10,16 +10,16 @@ import (
 )
 
 type AllTypes1 struct {
-	FirstName string `validate:"required"`
-	LastName  string `validate:"required"`
-	Age       uint8  `validate:"required"`
+	FirstName string `valid:"required"`
+	LastName  string `valid:"required"`
+	Age       uint8  `valid:"required"`
 }
 
 type AllTypes2 struct {
-	FirstName string `validate:"required"`
-	LastName  string `validate:"required"`
-	Age       uint8  `validate:"gte=18,lte=130"`
-	UserName  string `validate:"min=5,max=10"`
+	FirstName string `valid:"required"`
+	LastName  string `valid:"required"`
+	Age       uint8  `valid:"gte=18,lte=130"`
+	UserName  string `valid:"min=5,max=10"`
 	Optional  string
 }
 

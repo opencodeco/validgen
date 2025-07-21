@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-ValidGen is a **code generation tool** for Go that creates high-performance validators as an alternative to reflection-based validation libraries. It generates validation code at build time by parsing Go structs with `validate` tags and creating corresponding validator functions.
+ValidGen is a **code generation tool** for Go that creates high-performance validators as an alternative to reflection-based validation libraries. It generates validation code at build time by parsing Go structs with `valid` tags and creating corresponding validator functions.
 
 ### Core Purpose
 - **Performance**: Generate compile-time validation code instead of runtime reflection
@@ -38,9 +38,9 @@ validgen/
 ### Validation Tag Format
 ```go
 type User struct {
-    Name  string `validate:"required,min=2,max=50"`
-    Email string `validate:"required,email"`
-    Age   int    `validate:"gte=0,lte=120"`
+    Name  string `valid:"required,min=2,max=50"`
+    Email string `valid:"required,email"`
+    Age   int    `valid:"gte=0,lte=120"`
 }
 ```
 
@@ -102,7 +102,7 @@ func UserValidate(obj *User) []error {
 
 ### File Processing Workflow
 1. `FindFiles()` - Recursively discover `.go` files
-2. `parseFile()` - Parse AST to extract structs with validate tags
+2. `parseFile()` - Parse AST to extract structs with valid tags
 3. `generateCode()` - Generate validator functions for valid structs
 4. Write `*_validator.go` files in same directories as source
 

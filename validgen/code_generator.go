@@ -1,10 +1,8 @@
 package validgen
 
 func generateCode(structs []Struct) error {
-	// TODO: validate tags ok?
-
 	for _, structInfo := range structs {
-		if !structInfo.HasValidateTag {
+		if !structInfo.HasValidTag {
 			continue
 		}
 

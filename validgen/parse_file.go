@@ -11,6 +11,8 @@ import (
 	"strings"
 )
 
+const validTag = "valid"
+
 func parseFile(fullpath string) ([]Struct, error) {
 	fmt.Printf("Parsing %s\n", fullpath)
 
@@ -57,26 +59,27 @@ func parseStructs(fullpath, src string) ([]Struct, error) {
 			currentStruct := &structs[len(structs)-1]
 
 			for _, field := range structType.Fields.List {
-				fieldType := field.Type.(*ast.Ident).Name
+				if ident, ok := field.Type.(*ast.Ident); ok {
+					fieldType := ident.Name
+					fieldTag := ""
+					if field.Tag != nil {
+						fieldTag = field.Tag.Value
+						fieldTag, _ = strconv.Unquote(fieldTag)
+					}
 
-				fieldTag := ""
-				if field.Tag != nil {
-					fieldTag = field.Tag.Value
-					fieldTag, _ = strconv.Unquote(fieldTag)
-				}
+					fieldValidations, hasValidTag := parseFieldValidations(fieldTag)
+					if hasValidTag {
+						currentStruct.HasValidTag = true
+					}
 
-				fieldValidations, hasValidateTag := parseFieldValidations(fieldTag)
-				if hasValidateTag {
-					currentStruct.HasValidateTag = true
-				}
-
-				for _, name := range field.Names {
-					currentStruct.Fields = append(currentStruct.Fields, Field{
-						Name:        name.Name,
-						Type:        fieldType,
-						Tag:         fieldTag,
-						Validations: fieldValidations,
-					})
+					for _, name := range field.Names {
+						currentStruct.Fields = append(currentStruct.Fields, Field{
+							Name:        name.Name,
+							Type:        fieldType,
+							Tag:         fieldTag,
+							Validations: fieldValidations,
+						})
+					}
 				}
 			}
 		}
@@ -89,14 +92,15 @@ func parseStructs(fullpath, src string) ([]Struct, error) {
 
 func parseFieldValidations(fieldTag string) ([]string, bool) {
 	fieldValidations := []string{}
-	hasValidateTag := false
+	hasValidTag := false
+	prefixToSearch := validTag + ":"
 
-	if strings.HasPrefix(fieldTag, "validate:") {
-		hasValidateTag = true
-		tagWithoutPrefix, _ := strings.CutPrefix(fieldTag, "validate:")
+	if strings.HasPrefix(fieldTag, prefixToSearch) {
+		hasValidTag = true
+		tagWithoutPrefix, _ := strings.CutPrefix(fieldTag, prefixToSearch)
 		tagWithoutQuotes, _ := strconv.Unquote(tagWithoutPrefix)
 		fieldValidations = strings.Split(tagWithoutQuotes, ",")
 	}
 
-	return fieldValidations, hasValidateTag
+	return fieldValidations, hasValidTag
 }

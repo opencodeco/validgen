@@ -1,12 +1,12 @@
 package structsinpkg
 
 type User struct {
-	FirstName string `validate:"required"`
-	LastName  string `validate:"required"`
-	Age       uint8  `validate:"required"`
+	FirstName string `valid:"required"`
+	LastName  string `valid:"required"`
+	Age       uint8  `valid:"required"`
 }
 
-type NoValidateInfo struct {
+type NoValidTag struct {
 	Name    string
 	Address string
 }
