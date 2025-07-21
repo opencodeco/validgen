@@ -2,7 +2,7 @@ package validgen
 
 func generateCode(structs []Struct) error {
 	for _, structInfo := range structs {
-		if !structInfo.HasVerifyTag {
+		if !structInfo.HasValidTag {
 			continue
 		}
 

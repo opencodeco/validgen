@@ -1,9 +1,9 @@
 package structsinpkg
 
 type Type1 struct {
-	FirstName string `verify:"required"`
-	LastName  string `verify:"required"`
-	Age       uint8  `verify:"required"`
+	FirstName string `valid:"required"`
+	LastName  string `valid:"required"`
+	Age       uint8  `valid:"required"`
 }
 
 type NoValidateInfo struct {

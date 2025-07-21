@@ -5,12 +5,12 @@ import (
 )
 
 type User struct {
-	FirstName string `verify:"required"`
-	LastName  string `verify:"required"`
-	Age       uint8  `verify:"required"`
+	FirstName string `valid:"required"`
+	LastName  string `valid:"required"`
+	Age       uint8  `valid:"required"`
 }
 
-type NoVerifyInfo struct {
+type NoValidTag struct {
 	Name    string
 	Address string
 }

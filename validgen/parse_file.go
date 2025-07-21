@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-const verifyTag = "verify"
+const validTag = "valid"
 
 func parseFile(fullpath string) ([]Struct, error) {
 	fmt.Printf("Parsing %s\n", fullpath)
@@ -67,9 +67,9 @@ func parseStructs(fullpath, src string) ([]Struct, error) {
 						fieldTag, _ = strconv.Unquote(fieldTag)
 					}
 
-					fieldValidations, hasVerifyTag := parseFieldValidations(fieldTag)
-					if hasVerifyTag {
-						currentStruct.HasVerifyTag = true
+					fieldValidations, hasValidTag := parseFieldValidations(fieldTag)
+					if hasValidTag {
+						currentStruct.HasValidTag = true
 					}
 
 					for _, name := range field.Names {
@@ -92,15 +92,15 @@ func parseStructs(fullpath, src string) ([]Struct, error) {
 
 func parseFieldValidations(fieldTag string) ([]string, bool) {
 	fieldValidations := []string{}
-	hasVerifyTag := false
-	prefixToSearch := verifyTag + ":"
+	hasValidTag := false
+	prefixToSearch := validTag + ":"
 
 	if strings.HasPrefix(fieldTag, prefixToSearch) {
-		hasVerifyTag = true
+		hasValidTag = true
 		tagWithoutPrefix, _ := strings.CutPrefix(fieldTag, prefixToSearch)
 		tagWithoutQuotes, _ := strconv.Unquote(tagWithoutPrefix)
 		fieldValidations = strings.Split(tagWithoutQuotes, ",")
 	}
 
-	return fieldValidations, hasVerifyTag
+	return fieldValidations, hasValidTag
 }
