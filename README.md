@@ -185,30 +185,47 @@ pkg: github.com/opencodeco/validgen/tests/cmpbenchtests/generated_tests
 cpu: Apple M4 Pro (12 Cores used)
 ```
 
-The following table as the result:
+The following table as the performance results:
+
+| Test name      | ValidGen    | GoValidator | Performance |
+| -              | -:          | -:          | -:          |
+| StringRequired | 5.000 ns/op | 40.12 ns/op | 8.02x       |
+| StringEq       | 5.000 ns/op | 39.90 ns/op | 7.98x       |
+| StringEqIC     | 14.96 ns/op | 40.63 ns/op | 2.71x       |
+| StringNeq      | 5.000 ns/op | 40.65 ns/op | 8.13x       |
+| StringNeqIC    | 5.000 ns/op | 41.05 ns/op | 8.21x       |
+| StringLen      | 5.000 ns/op | 44.35 ns/op | 8.87x       |
+| StringMax      | 5.000 ns/op | 45.15 ns/op | 9.03x       |
+| StringMin      | 5.000 ns/op | 45.10 ns/op | 9.02x       |
+| StringIn       | 5.000 ns/op | 49.75 ns/op | 9.95x       |
+| StringEmail    | 167.4 ns/op | 436.3 ns/op | 2.60x       |
+
+
+The following table as the raw results:
 
 | Test name                           | Iterations    | Nanoseconds per operation | Number os bytes allocated per operation | Number of allocations per operation |
 | -                                   | -:            | -:                        | -:                                      | -:                                  | 
-| BenchmarkValidGenStringRequired-12  |	1.000.000.000 |          5.000 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidatorStringRequired-12 | 149.656.641	  |        40.12 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidGenStringEq-12        | 1.000.000.000 |          5.000 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidatorStringEq-12       | 150.419.842	  |         39.90 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidGenStringEqIC-12      | 401.652.991	  |         14.96 ns/op	|        8 B/op	 |       1 allocs/op |
-| BenchmarkValidatorStringEqIC-12     | 147.517.011	  |         40.63 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidGenStringNeq-12       | 1.000.000.000 |          5.000 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidatorStringNeq-12      | 147.375.966   |         40.65 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidGenStringNeqIC-12     | 1.000.000.000 |          5.000 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidatorStringNeqIC-12    | 146.089.116	  |         41.05 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidGenStringLen-12       | 1.000.000.000 |          5.000 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidatorStringLen-12      | 135.221.859	  |         44.35 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidGenStringMax-12       | 1.000.000.000 |          5.000 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidatorStringMax-12      | 133.947.687	  |         45.15 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidGenStringMin-12       | 1.000.000.000 |          5.000 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidatorStringMin-12      | 133.335.433	  |         45.10 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidGenStringIn-12        | 1.000.000.000 |          5.000 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidatorStringIn-12       | 120.405.889	  |         49.75 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidGenStringEmail-12     | 35.513.684	  |        167.4 ns/op	|        0 B/op	 |       0 allocs/op |
-| BenchmarkValidatorStringEmail-12    | 13.740.566	  |        436.3 ns/op	|       88 B/op	 |       5 allocs/op |
+| BenchmarkValidGenStringRequired-12  |	1.000.000.000 |          5.000 ns/op      |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidatorStringRequired-12 | 149.656.641	  |        40.12 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidGenStringEq-12        | 1.000.000.000 |          5.000 ns/op	  |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidatorStringEq-12       | 150.419.842	  |         39.90 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidGenStringEqIC-12      | 401.652.991	  |         14.96 ns/op	      |        8 B/op	                        |       1 allocs/op                   |
+| BenchmarkValidatorStringEqIC-12     | 147.517.011	  |         40.63 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidGenStringNeq-12       | 1.000.000.000 |          5.000 ns/op	  |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidatorStringNeq-12      | 147.375.966   |         40.65 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidGenStringNeqIC-12     | 1.000.000.000 |          5.000 ns/op	  |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidatorStringNeqIC-12    | 146.089.116	  |         41.05 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidGenStringLen-12       | 1.000.000.000 |          5.000 ns/op	  |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidatorStringLen-12      | 135.221.859	  |         44.35 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidGenStringMax-12       | 1.000.000.000 |          5.000 ns/op	  |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidatorStringMax-12      | 133.947.687	  |         45.15 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidGenStringMin-12       | 1.000.000.000 |          5.000 ns/op	  |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidatorStringMin-12      | 133.335.433	  |         45.10 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidGenStringIn-12        | 1.000.000.000 |          5.000 ns/op	  |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidatorStringIn-12       | 120.405.889	  |         49.75 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidGenStringEmail-12     | 35.513.684	  |        167.4 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
+| BenchmarkValidatorStringEmail-12    | 13.740.566	  |        436.3 ns/op	      |       88 B/op	                        |       5 allocs/op                   |
+
 
 
 # License
