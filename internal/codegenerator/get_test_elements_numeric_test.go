@@ -8,8 +8,8 @@ import (
 func TestDefineTestElementsWithNumericFields(t *testing.T) {
 	type args struct {
 		fieldName       string
-		fieldValidation string
 		fieldType       string
+		fieldValidation string
 	}
 	tests := []struct {
 		name    string
@@ -21,8 +21,8 @@ func TestDefineTestElementsWithNumericFields(t *testing.T) {
 			name: "Required uint8",
 			args: args{
 				fieldName:       "myfield2",
-				fieldValidation: "required",
 				fieldType:       "uint8",
+				fieldValidation: "required",
 			},
 			want: TestElements{
 				leftOperand:   "obj.myfield2",
@@ -36,8 +36,8 @@ func TestDefineTestElementsWithNumericFields(t *testing.T) {
 			name: "uint8 >= 0",
 			args: args{
 				fieldName:       "myfield3",
-				fieldValidation: "gte=0",
 				fieldType:       "uint8",
+				fieldValidation: "gte=0",
 			},
 			want: TestElements{
 				leftOperand:   "obj.myfield3",
@@ -51,8 +51,8 @@ func TestDefineTestElementsWithNumericFields(t *testing.T) {
 			name: "uint8 <= 130",
 			args: args{
 				fieldName:       "myfield4",
-				fieldValidation: "lte=130",
 				fieldType:       "uint8",
+				fieldValidation: "lte=130",
 			},
 			want: TestElements{
 				leftOperand:   "obj.myfield4",
