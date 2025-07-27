@@ -9,10 +9,10 @@ import (
 type Struct struct {
 	parser.Struct
 	HasValidTag       bool
-	FieldsValidations []Validations
+	FieldsValidations []FieldValidations
 }
 
-type Validations struct {
+type FieldValidations struct {
 	Validations []string
 }
 

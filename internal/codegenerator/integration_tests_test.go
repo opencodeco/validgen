@@ -38,7 +38,7 @@ func TestIntegrationTests(t *testing.T) {
 							},
 						},
 					},
-					FieldsValidations: []analyzer.Validations{
+					FieldsValidations: []analyzer.FieldValidations{
 						{
 							Validations: []string{"required"},
 						},
@@ -87,7 +87,7 @@ func UserValidate(obj *User) []error {
 							},
 						},
 					},
-					FieldsValidations: []analyzer.Validations{
+					FieldsValidations: []analyzer.FieldValidations{
 						{
 							Validations: []string{"min=5"},
 						},

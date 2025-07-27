@@ -22,7 +22,7 @@ func AnalyzeStructs(structs []*parser.Struct) ([]*Struct, error) {
 				analyzedStruct.HasValidTag = true
 			}
 
-			analyzedStruct.FieldsValidations = append(analyzedStruct.FieldsValidations, Validations{fieldValidations})
+			analyzedStruct.FieldsValidations = append(analyzedStruct.FieldsValidations, FieldValidations{fieldValidations})
 		}
 
 		result = append(result, analyzedStruct)
