@@ -1,4 +1,4 @@
-package validgen
+package parser
 
 import (
 	"fmt"
@@ -8,12 +8,55 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
-	"strings"
 )
 
-const validTag = "valid"
+func ExtractStructs(path string) ([]*Struct, error) {
+	files, err := findFiles(path)
+	if err != nil {
+		return nil, err
+	}
 
-func parseFile(fullpath string) ([]Struct, error) {
+	structs := []*Struct{}
+
+	for _, file := range files {
+		parsedStructs, err := parseFile(file)
+		if err != nil {
+			return nil, err
+		}
+
+		structs = append(structs, parsedStructs...)
+	}
+
+	return structs, nil
+}
+
+func findFiles(path string) ([]string, error) {
+	files := []string{}
+	if err := filepath.WalkDir(path, func(path string, d os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if d.IsDir() {
+			return nil
+		}
+
+		if filepath.Ext(path) != ".go" {
+			return nil
+		}
+
+		files = append(files, path)
+
+		return nil
+
+	}); err != nil {
+		return nil, err
+	}
+
+	return files, nil
+}
+
+func parseFile(fullpath string) ([]*Struct, error) {
 	fmt.Printf("Parsing %s\n", fullpath)
 
 	src, err := os.ReadFile(fullpath)
@@ -29,7 +72,9 @@ func parseFile(fullpath string) ([]Struct, error) {
 	return structs, nil
 }
 
-func parseStructs(fullpath, src string) ([]Struct, error) {
+func parseStructs(fullpath, src string) ([]*Struct, error) {
+
+	structs := []*Struct{}
 
 	filename := filepath.Base(fullpath)
 
@@ -39,8 +84,8 @@ func parseStructs(fullpath, src string) ([]Struct, error) {
 		return nil, err
 	}
 
-	var structs []Struct
 	packageName := ""
+	currentStruct := &Struct{}
 
 	ast.Inspect(f, func(n ast.Node) bool {
 		if fileInfo, ok := n.(*ast.File); ok {
@@ -48,16 +93,16 @@ func parseStructs(fullpath, src string) ([]Struct, error) {
 		}
 
 		if typeSpec, ok := n.(*ast.TypeSpec); ok {
-			structs = append(structs, Struct{
-				Name:        typeSpec.Name.Name,
-				Path:        "./" + filepath.Dir(fullpath),
-				PackageName: packageName,
-			})
+			currentStruct = &Struct{
+				StructParserInfo: StructParserInfo{
+					StructName:  typeSpec.Name.Name,
+					Path:        "./" + filepath.Dir(fullpath),
+					PackageName: packageName,
+				},
+			}
 		}
 
 		if structType, ok := n.(*ast.StructType); ok {
-			currentStruct := &structs[len(structs)-1]
-
 			for _, field := range structType.Fields.List {
 				if ident, ok := field.Type.(*ast.Ident); ok {
 					fieldType := ident.Name
@@ -67,40 +112,23 @@ func parseStructs(fullpath, src string) ([]Struct, error) {
 						fieldTag, _ = strconv.Unquote(fieldTag)
 					}
 
-					fieldValidations, hasValidTag := parseFieldValidations(fieldTag)
-					if hasValidTag {
-						currentStruct.HasValidTag = true
-					}
-
 					for _, name := range field.Names {
 						currentStruct.Fields = append(currentStruct.Fields, Field{
-							Name:        name.Name,
-							Type:        fieldType,
-							Tag:         fieldTag,
-							Validations: fieldValidations,
+							FieldParserInfo: FieldParserInfo{
+								FieldName: name.Name,
+								Type:      fieldType,
+								Tag:       fieldTag,
+							},
 						})
 					}
 				}
 			}
+
+			structs = append(structs, currentStruct)
 		}
 
 		return true
 	})
 
 	return structs, nil
-}
-
-func parseFieldValidations(fieldTag string) ([]string, bool) {
-	fieldValidations := []string{}
-	hasValidTag := false
-	prefixToSearch := validTag + ":"
-
-	if strings.HasPrefix(fieldTag, prefixToSearch) {
-		hasValidTag = true
-		tagWithoutPrefix, _ := strings.CutPrefix(fieldTag, prefixToSearch)
-		tagWithoutQuotes, _ := strconv.Unquote(tagWithoutPrefix)
-		fieldValidations = strings.Split(tagWithoutQuotes, ",")
-	}
-
-	return fieldValidations, hasValidTag
 }
