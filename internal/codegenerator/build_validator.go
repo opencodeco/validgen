@@ -42,7 +42,7 @@ func BuildValidatorCode(st *analyzer.Struct) (string, error) {
 	stTpl := structToTpl(st)
 
 	funcMap := template.FuncMap{
-		"buildValidationCode": BuildValidationCode,
+		"buildValidationCode": buildValidationCode,
 	}
 
 	tmpl, err := template.New("FileValidator").Funcs(funcMap).Parse(structValidatorTpl)
@@ -91,7 +91,7 @@ func GenerateFileValidator(st *analyzer.Struct) error {
 	return nil
 }
 
-func BuildValidationCode(fieldName, fieldType string, fieldValidations []string) (string, error) {
+func buildValidationCode(fieldName, fieldType string, fieldValidations []string) (string, error) {
 
 	tests := ""
 	for _, fieldValidation := range fieldValidations {

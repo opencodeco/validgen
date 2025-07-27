@@ -71,13 +71,13 @@ func TestBuildValidationCode(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := BuildValidationCode(tt.args.fieldName, tt.args.fieldType, []string{tt.args.fieldValidation})
+			got, err := buildValidationCode(tt.args.fieldName, tt.args.fieldType, []string{tt.args.fieldValidation})
 			if (err != nil) != tt.wantErr {
-				t.Errorf("BuildValidationCode() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if got != tt.want {
-				t.Errorf("BuildValidationCode() = %v, want %v", got, tt.want)
+				t.Errorf("buildValidationCode() = %v, want %v", got, tt.want)
 			}
 		})
 	}
