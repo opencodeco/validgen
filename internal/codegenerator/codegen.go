@@ -1,8 +1,8 @@
 package codegenerator
 
-import "github.com/opencodeco/validgen/internal/parser"
+import "github.com/opencodeco/validgen/internal/analyzer"
 
-func GenerateCode(structs []*parser.Struct) error {
+func GenerateCode(structs []*analyzer.Struct) error {
 	for _, st := range structs {
 		if !st.HasValidTag {
 			continue

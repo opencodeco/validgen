@@ -9,19 +9,26 @@ import (
 
 const validTag = "valid"
 
-func AnalyzeStructs(structs []*parser.Struct) ([]*parser.Struct, error) {
+func AnalyzeStructs(structs []*parser.Struct) ([]*Struct, error) {
+	result := []*Struct{}
+
 	for _, st := range structs {
-		for fdIndex, fd := range st.Fields {
+		analyzedStruct := &Struct{
+			Struct: *st,
+		}
+		for _, fd := range st.Fields {
 			fieldValidations, hasValidTag := parseFieldValidations(fd.Tag)
 			if hasValidTag {
-				st.HasValidTag = true
+				analyzedStruct.HasValidTag = true
 			}
 
-			st.Fields[fdIndex].FieldAnalyzerInfo.Validations = fieldValidations
+			analyzedStruct.FieldsValidations = append(analyzedStruct.FieldsValidations, Validations{fieldValidations})
 		}
+
+		result = append(result, analyzedStruct)
 	}
 
-	return structs, nil
+	return result, nil
 }
 
 func parseFieldValidations(fieldTag string) ([]string, bool) {

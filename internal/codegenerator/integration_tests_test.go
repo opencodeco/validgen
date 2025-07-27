@@ -1,16 +1,16 @@
-package integration
+package codegenerator
 
 import (
 	"testing"
 
-	"github.com/opencodeco/validgen/internal/codegenerator"
+	"github.com/opencodeco/validgen/internal/analyzer"
 	"github.com/opencodeco/validgen/internal/parser"
 	"github.com/sergi/go-diff/diffmatchpatch"
 )
 
 func TestIntegrationTests(t *testing.T) {
 	type fields struct {
-		Struct *parser.Struct
+		Struct *analyzer.Struct
 	}
 	tests := []struct {
 		name    string
@@ -21,25 +21,29 @@ func TestIntegrationTests(t *testing.T) {
 		{
 			name: "Valid struct",
 			fields: fields{
-				Struct: &parser.Struct{
-					PackageName: "main",
-					StructName:  "User",
-					Fields: []parser.Field{
-						{
-							FieldName: "FirstName",
-							Type:      "string",
-							Tag:       `validate:"required"`,
-							FieldAnalyzerInfo: parser.FieldAnalyzerInfo{
-								Validations: []string{"required"},
+				Struct: &analyzer.Struct{
+					Struct: parser.Struct{
+						PackageName: "main",
+						StructName:  "User",
+						Fields: []parser.Field{
+							{
+								FieldName: "FirstName",
+								Type:      "string",
+								Tag:       `validate:"required"`,
+							},
+							{
+								FieldName: "MyAge",
+								Type:      "uint8",
+								Tag:       `validate:"required"`,
 							},
 						},
+					},
+					FieldsValidations: []analyzer.Validations{
 						{
-							FieldName: "MyAge",
-							Type:      "uint8",
-							Tag:       `validate:"required"`,
-							FieldAnalyzerInfo: parser.FieldAnalyzerInfo{
-								Validations: []string{"required"},
-							},
+							Validations: []string{"required"},
+						},
+						{
+							Validations: []string{"required"},
 						},
 					},
 				},
@@ -71,17 +75,21 @@ func UserValidate(obj *User) []error {
 		{
 			name: "FirstName must have 5 characters or more",
 			fields: fields{
-				Struct: &parser.Struct{
-					PackageName: "main",
-					StructName:  "User",
-					Fields: []parser.Field{
-						{
-							FieldName: "FirstName",
-							Type:      "string",
-							Tag:       `validate:"min=5"`,
-							FieldAnalyzerInfo: parser.FieldAnalyzerInfo{
-								Validations: []string{"min=5"},
+				Struct: &analyzer.Struct{
+					Struct: parser.Struct{
+						PackageName: "main",
+						StructName:  "User",
+						Fields: []parser.Field{
+							{
+								FieldName: "FirstName",
+								Type:      "string",
+								Tag:       `validate:"min=5"`,
 							},
+						},
+					},
+					FieldsValidations: []analyzer.Validations{
+						{
+							Validations: []string{"min=5"},
 						},
 					},
 				},
@@ -110,7 +118,7 @@ func UserValidate(obj *User) []error {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := codegenerator.BuildValidatorCode(tt.fields.Struct)
+			got, err := BuildValidatorCode(tt.fields.Struct)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("FileValidator.GenerateValidator() error = %v, wantErr %v", err, tt.wantErr)
 				return
