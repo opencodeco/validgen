@@ -22,29 +22,23 @@ func TestIntegrationTests(t *testing.T) {
 			name: "Valid struct",
 			fields: fields{
 				Struct: &parser.Struct{
-					StructParserInfo: parser.StructParserInfo{
-						PackageName: "main",
-						StructName:  "User",
-						Fields: []parser.Field{
-							{
-								FieldParserInfo: parser.FieldParserInfo{
-									FieldName: "FirstName",
-									Type:      "string",
-									Tag:       `validate:"required"`,
-								},
-								AnalyzerInfo: parser.AnalyzerInfo{
-									Validations: []string{"required"},
-								},
+					PackageName: "main",
+					StructName:  "User",
+					Fields: []parser.Field{
+						{
+							FieldName: "FirstName",
+							Type:      "string",
+							Tag:       `validate:"required"`,
+							FieldAnalyzerInfo: parser.FieldAnalyzerInfo{
+								Validations: []string{"required"},
 							},
-							{
-								FieldParserInfo: parser.FieldParserInfo{
-									FieldName: "MyAge",
-									Type:      "uint8",
-									Tag:       `validate:"required"`,
-								},
-								AnalyzerInfo: parser.AnalyzerInfo{
-									Validations: []string{"required"},
-								},
+						},
+						{
+							FieldName: "MyAge",
+							Type:      "uint8",
+							Tag:       `validate:"required"`,
+							FieldAnalyzerInfo: parser.FieldAnalyzerInfo{
+								Validations: []string{"required"},
 							},
 						},
 					},
@@ -78,19 +72,15 @@ func UserValidate(obj *User) []error {
 			name: "FirstName must have 5 characters or more",
 			fields: fields{
 				Struct: &parser.Struct{
-					StructParserInfo: parser.StructParserInfo{
-						PackageName: "main",
-						StructName:  "User",
-						Fields: []parser.Field{
-							{
-								FieldParserInfo: parser.FieldParserInfo{
-									FieldName: "FirstName",
-									Type:      "string",
-									Tag:       `validate:"min=5"`,
-								},
-								AnalyzerInfo: parser.AnalyzerInfo{
-									Validations: []string{"min=5"},
-								},
+					PackageName: "main",
+					StructName:  "User",
+					Fields: []parser.Field{
+						{
+							FieldName: "FirstName",
+							Type:      "string",
+							Tag:       `validate:"min=5"`,
+							FieldAnalyzerInfo: parser.FieldAnalyzerInfo{
+								Validations: []string{"min=5"},
 							},
 						},
 					},

@@ -17,7 +17,7 @@ func AnalyzeStructs(structs []*parser.Struct) ([]*parser.Struct, error) {
 				st.HasValidTag = true
 			}
 
-			st.Fields[fdIndex].AnalyzerInfo.Validations = fieldValidations
+			st.Fields[fdIndex].FieldAnalyzerInfo.Validations = fieldValidations
 		}
 	}
 

@@ -94,11 +94,9 @@ func parseStructs(fullpath, src string) ([]*Struct, error) {
 
 		if typeSpec, ok := n.(*ast.TypeSpec); ok {
 			currentStruct = &Struct{
-				StructParserInfo: StructParserInfo{
-					StructName:  typeSpec.Name.Name,
-					Path:        "./" + filepath.Dir(fullpath),
-					PackageName: packageName,
-				},
+				StructName:  typeSpec.Name.Name,
+				Path:        "./" + filepath.Dir(fullpath),
+				PackageName: packageName,
 			}
 		}
 
@@ -114,11 +112,9 @@ func parseStructs(fullpath, src string) ([]*Struct, error) {
 
 					for _, name := range field.Names {
 						currentStruct.Fields = append(currentStruct.Fields, Field{
-							FieldParserInfo: FieldParserInfo{
-								FieldName: name.Name,
-								Type:      fieldType,
-								Tag:       fieldTag,
-							},
+							FieldName: name.Name,
+							Type:      fieldType,
+							Tag:       fieldTag,
 						})
 					}
 				}

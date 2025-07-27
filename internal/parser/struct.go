@@ -3,15 +3,11 @@ package parser
 import "fmt"
 
 type Struct struct {
-	StructParserInfo
-	StructAnalyzerInfo
-}
-
-type StructParserInfo struct {
 	StructName  string
 	Path        string
 	PackageName string
 	Fields      []Field
+	StructAnalyzerInfo
 }
 
 type StructAnalyzerInfo struct {
@@ -19,17 +15,13 @@ type StructAnalyzerInfo struct {
 }
 
 type Field struct {
-	FieldParserInfo
-	AnalyzerInfo
-}
-
-type FieldParserInfo struct {
 	FieldName string
 	Type      string
 	Tag       string
+	FieldAnalyzerInfo
 }
 
-type AnalyzerInfo struct {
+type FieldAnalyzerInfo struct {
 	Validations []string
 }
 
