@@ -1,9 +1,10 @@
-package validgen
+package codegenerator
 
 import (
 	"fmt"
 	"strings"
 
+	"github.com/opencodeco/validgen/internal/analyzer"
 	"github.com/opencodeco/validgen/types"
 )
 
@@ -22,7 +23,7 @@ type TestElements struct {
 	errorMessage   string
 }
 
-func GetTestElements(fieldName, fieldValidation, fieldType string) (TestElements, error) {
+func DefineTestElements(fieldName, fieldType, fieldValidation string) (TestElements, error) {
 
 	type ConditionTable struct {
 		loperand     string
@@ -48,7 +49,7 @@ func GetTestElements(fieldName, fieldValidation, fieldType string) (TestElements
 		"email,string":           {"types.IsValidEmail({{.Name}})", "==", `true`, "{{.Name}} must be a valid email"},
 	}
 
-	validation, err := ParserValidation(fieldValidation)
+	validation, err := analyzer.ParserValidation(fieldValidation)
 	if err != nil {
 		return TestElements{}, types.NewValidationError("%s", fmt.Errorf("parser validation %s type %s %w", fieldValidation, fieldType, err).Error())
 	}
@@ -69,11 +70,11 @@ func GetTestElements(fieldName, fieldValidation, fieldType string) (TestElements
 	targetValues := ""
 
 	switch validation.ExpectedValues {
-	case ZERO_VALUE:
+	case analyzer.ZERO_VALUE:
 		roperands = append(roperands, replaceNameAndTargetWithPrefix(condition.roperand, fieldName, condition.roperand))
 		targetValue = condition.roperand
 		targetValues = "'" + condition.roperand + "' "
-	case ONE_VALUE, MANY_VALUES:
+	case analyzer.ONE_VALUE, analyzer.MANY_VALUES:
 		for _, value := range validation.Values {
 			roperands = append(roperands, replaceNameAndTargetWithPrefix(condition.roperand, fieldName, value))
 			targetValue = value

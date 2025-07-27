@@ -1,4 +1,4 @@
-package validgen
+package analyzer
 
 import (
 	"strings"
