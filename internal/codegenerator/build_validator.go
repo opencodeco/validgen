@@ -95,10 +95,7 @@ func BuildValidationCode(fieldName, fieldType string, fieldValidations []string)
 
 	tests := ""
 	for _, fieldValidation := range fieldValidations {
-		var testCode = ""
-		var err error
-
-		testCode, err = ifCode(fieldName, fieldType, fieldValidation)
+		testCode, err := buildIfCode(fieldName, fieldType, fieldValidation)
 		if err != nil {
 			return "", err
 		}
@@ -109,7 +106,7 @@ func BuildValidationCode(fieldName, fieldType string, fieldValidations []string)
 	return tests, nil
 }
 
-func ifCode(fieldName, fieldType, fieldValidation string) (string, error) {
+func buildIfCode(fieldName, fieldType, fieldValidation string) (string, error) {
 	testElements, err := DefineTestElements(fieldName, fieldType, fieldValidation)
 	if err != nil {
 		return "", fmt.Errorf("field %s: %w", fieldName, err)
