@@ -35,6 +35,7 @@ func main() {
 	all_types2_tests()
 	struct_in_pkg_tests()
 	string_tests()
+	nested_struct_tests()
 
 	log.Println("finishing tests")
 }
