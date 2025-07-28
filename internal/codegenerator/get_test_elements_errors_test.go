@@ -1,4 +1,4 @@
-package validgen
+package codegenerator
 
 import (
 	"errors"
@@ -7,7 +7,7 @@ import (
 	"github.com/opencodeco/validgen/types"
 )
 
-func TestGetTestElements(t *testing.T) {
+func TestDefineTestElements(t *testing.T) {
 	type args struct {
 		fieldName       string
 		fieldType       string
@@ -37,17 +37,18 @@ func TestGetTestElements(t *testing.T) {
 			expectedErr: types.NewValidationError("parser validation lt=123 type string unsupported validation lt"),
 		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := GetTestElements(tt.args.fieldName, tt.args.fieldValidation, tt.args.fieldType)
+			_, err := DefineTestElements(tt.args.fieldName, tt.args.fieldType, tt.args.fieldValidation)
 			var valErr types.ValidationError
 			if !errors.As(err, &valErr) {
-				t.Errorf("GetTestElements() error = %v, wantErr %v", err, tt.expectedErr)
+				t.Errorf("DefineTestElements() error = %v, wantErr %v", err, tt.expectedErr)
 				return
 			}
 
 			if !errors.Is(valErr, tt.expectedErr) {
-				t.Errorf("GetTestElements() error = %v, wantErr %v", err, tt.expectedErr)
+				t.Errorf("DefineTestElements() error = %v, wantErr %v", err, tt.expectedErr)
 				return
 			}
 		})

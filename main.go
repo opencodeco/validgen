@@ -4,16 +4,33 @@ import (
 	"log"
 	"os"
 
-	"github.com/opencodeco/validgen/validgen"
+	"github.com/opencodeco/validgen/internal/analyzer"
+	"github.com/opencodeco/validgen/internal/codegenerator"
+	"github.com/opencodeco/validgen/internal/parser"
 )
 
 func main() {
 	argsWithoutCmd := os.Args[1:]
-	if len(argsWithoutCmd) == 0 {
-		log.Fatal("Invalid parameters:\n\tvalidatorgen <path>\n")
+	if len(argsWithoutCmd) != 1 {
+		log.Fatal("Invalid parameters:\n\tvalidgen <path>\n")
 	}
 
-	if err := validgen.FindFiles(argsWithoutCmd[0]); err != nil {
+	parsedStructs, err := parser.ExtractStructs(argsWithoutCmd[0])
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	analyzedStructs, err := analyzer.AnalyzeStructs(parsedStructs)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, st := range analyzedStructs {
+		st.PrintInfo()
+	}
+
+	err = codegenerator.GenerateCode(analyzedStructs)
+	if err != nil {
 		log.Fatal(err)
 	}
 }

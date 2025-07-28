@@ -1,8 +1,10 @@
-package validgen
+package codegenerator
 
-import "testing"
+import (
+	"testing"
+)
 
-func TestIfCode(t *testing.T) {
+func TestBuildValidationCode(t *testing.T) {
 	type args struct {
 		fieldName       string
 		fieldType       string
@@ -69,13 +71,13 @@ func TestIfCode(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := IfCode(tt.args.fieldName, tt.args.fieldValidation, tt.args.fieldType)
+			got, err := buildValidationCode(tt.args.fieldName, tt.args.fieldType, []string{tt.args.fieldValidation})
 			if (err != nil) != tt.wantErr {
-				t.Errorf("IfCode() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if got != tt.want {
-				t.Errorf("IfCode() = %v, want %v", got, tt.want)
+				t.Errorf("buildValidationCode() = %v, want %v", got, tt.want)
 			}
 		})
 	}

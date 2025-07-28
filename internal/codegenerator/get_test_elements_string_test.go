@@ -1,11 +1,11 @@
-package validgen
+package codegenerator
 
 import (
 	"reflect"
 	"testing"
 )
 
-func TestGetTestElementsWithStringFields(t *testing.T) {
+func TestDefineTestElementsWithStringFields(t *testing.T) {
 	type args struct {
 		fieldName       string
 		fieldValidation string
@@ -180,13 +180,13 @@ func TestGetTestElementsWithStringFields(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			fieldType := "string"
 			wantErr := false
-			got, err := GetTestElements(tt.args.fieldName, tt.args.fieldValidation, fieldType)
+			got, err := DefineTestElements(tt.args.fieldName, fieldType, tt.args.fieldValidation)
 			if (err != nil) != wantErr {
-				t.Errorf("GetTestElements() error = %v, wantErr %v", err, wantErr)
+				t.Errorf("DefineTestElements() error = %v, wantErr %v", err, wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("GetTestElements() = %+v, want %+v", got, tt.want)
+				t.Errorf("DefineTestElements() = %+v, want %+v", got, tt.want)
 			}
 		})
 	}
