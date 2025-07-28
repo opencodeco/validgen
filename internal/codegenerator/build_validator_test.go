@@ -82,3 +82,43 @@ func TestBuildValidationCode(t *testing.T) {
 		})
 	}
 }
+
+func TestBuildValidationCodeWithNestedStructs(t *testing.T) {
+	type args struct {
+		fieldName       string
+		fieldType       string
+		fieldValidation string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    string
+		wantErr bool
+	}{
+		{
+			name: "if code with nested struct",
+			args: args{
+				fieldName:       "Field",
+				fieldType:       "NestedStructType",
+				fieldValidation: "required",
+			},
+			want: `
+	errs = append(errs, NestedStructTypeValidate(&obj.Field)...)
+`,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			clear(structsWithValidation)
+			structsWithValidation[tt.args.fieldType] = struct{}{}
+			got, err := buildValidationCode(tt.args.fieldName, tt.args.fieldType, []string{tt.args.fieldValidation})
+			if (err != nil) != tt.wantErr {
+				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if got != tt.want {
+				t.Errorf("buildValidationCode() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

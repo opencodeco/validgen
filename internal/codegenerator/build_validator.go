@@ -95,9 +95,17 @@ func buildValidationCode(fieldName, fieldType string, fieldValidations []string)
 
 	tests := ""
 	for _, fieldValidation := range fieldValidations {
-		testCode, err := buildIfCode(fieldName, fieldType, fieldValidation)
-		if err != nil {
-			return "", err
+		var testCode = ""
+		var err error
+
+		_, ok := structsWithValidation[fieldType]
+		if ok {
+			testCode = buildIfNestedCode(fieldName, fieldType)
+		} else {
+			testCode, err = buildIfCode(fieldName, fieldType, fieldValidation)
+			if err != nil {
+				return "", err
+			}
 		}
 
 		tests += testCode
@@ -127,4 +135,14 @@ func buildIfCode(fieldName, fieldType, fieldValidation string) (string, error) {
 		errs = append(errs, types.NewValidationError("%s"))
 	}
 `, booleanCondition, testElements.errorMessage), nil
+}
+
+func buildIfNestedCode(fieldName, fieldType string) string {
+	funcName := fieldType + "Validate"
+	fieldParam := "&obj." + fieldName
+
+	return fmt.Sprintf(
+		`
+	errs = append(errs, %s(%s)...)
+`, funcName, fieldParam)
 }
