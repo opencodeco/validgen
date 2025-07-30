@@ -2,13 +2,16 @@ package codegenerator
 
 import "github.com/opencodeco/validgen/internal/analyzer"
 
-var structsWithValidation map[string]struct{} = map[string]struct{}{}
+type genValidations struct {
+	StructsWithValidation map[string]struct{}
+	Struct                *analyzer.Struct
+}
 
 func GenerateCode(structs []*analyzer.Struct) error {
+	structsWithValidation := map[string]struct{}{}
+
 	for _, st := range structs {
-		if st.HasValidTag {
-			structsWithValidation[st.StructName] = struct{}{}
-		}
+		structsWithValidation[st.PackageName+"."+st.StructName] = struct{}{}
 	}
 
 	for _, st := range structs {
@@ -16,7 +19,12 @@ func GenerateCode(structs []*analyzer.Struct) error {
 			continue
 		}
 
-		if err := GenerateFileValidator(st); err != nil {
+		codeInfo := &genValidations{
+			StructsWithValidation: structsWithValidation,
+			Struct:                st,
+		}
+
+		if err := codeInfo.GenerateFileValidator(); err != nil {
 			return err
 		}
 	}
