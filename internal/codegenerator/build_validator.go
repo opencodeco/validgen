@@ -91,7 +91,10 @@ func (gv *genValidations) buildValidationCode(fieldName, fieldType string, field
 				return "", err
 			}
 		} else {
-			testCode = gv.buildIfNestedCode(fieldName, fieldType)
+			testCode, err = gv.buildIfNestedCode(fieldName, fieldType)
+			if err != nil {
+				return "", err
+			}
 		}
 
 		tests += testCode
@@ -123,10 +126,10 @@ func (gv *genValidations) buildIfCode(fieldName, fieldType, fieldValidation stri
 `, booleanCondition, testElements.errorMessage), nil
 }
 
-func (gv *genValidations) buildIfNestedCode(fieldName, fieldType string) string {
+func (gv *genValidations) buildIfNestedCode(fieldName, fieldType string) (string, error) {
 	_, ok := gv.StructsWithValidation[fieldType]
 	if !ok {
-		return ""
+		return "", fmt.Errorf("struct not found %s", fieldType)
 	}
 
 	pkg := common.ExtractPackage(fieldType)
@@ -140,7 +143,7 @@ func (gv *genValidations) buildIfNestedCode(fieldName, fieldType string) string 
 	return fmt.Sprintf(
 		`
 	errs = append(errs, %s(%s)...)
-`, funcName, fieldParam)
+`, funcName, fieldParam), nil
 }
 
 func (gv *genValidations) buildImportPath(imports map[string]parser.Import, fields []fieldTpl) (string, error) {
