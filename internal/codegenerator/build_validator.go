@@ -129,7 +129,7 @@ func (gv *genValidations) buildIfCode(fieldName, fieldType, fieldValidation stri
 func (gv *genValidations) buildIfNestedCode(fieldName, fieldType string) (string, error) {
 	_, ok := gv.StructsWithValidation[fieldType]
 	if !ok {
-		return "", fmt.Errorf("struct not found %s", fieldType)
+		return "", fmt.Errorf("no validator found for struct type %s", fieldType)
 	}
 
 	pkg := common.ExtractPackage(fieldType)
