@@ -10,6 +10,8 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/opencodeco/validgen/internal/common"
 )
 
 func ExtractStructs(path string) ([]*Struct, error) {
@@ -99,6 +101,8 @@ func parseStructs(fullpath, src string) ([]*Struct, error) {
 				if importLink.Name == nil {
 					idx := strings.LastIndexByte(path, '/')
 					name = path[idx+1:]
+				} else {
+					name = importLink.Name.Name
 				}
 				imports[name] = Import{
 					Name: name,
@@ -120,7 +124,7 @@ func parseStructs(fullpath, src string) ([]*Struct, error) {
 			for _, field := range structType.Fields.List {
 				if ident, ok := field.Type.(*ast.Ident); ok {
 					fieldType := ident.Name
-					if fieldType != "string" && fieldType != "uint8" {
+					if !common.IsGoType(fieldType) {
 						fieldType = packageName + "." + fieldType
 					}
 					fieldTag := ""

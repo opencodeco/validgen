@@ -1,0 +1,39 @@
+package common
+
+import "strings"
+
+func IsGoType(fieldType string) bool {
+	goTypes := map[string]struct{}{
+		"string": {},
+		// "bool":       {},
+		// "int":        {},
+		// "int8":       {},
+		// "int16":      {},
+		// "int32":      {},
+		// "int64":      {},
+		// "uint":       {},
+		"uint8": {},
+		// "uint16":     {},
+		// "uint32":     {},
+		// "uint64":     {},
+		// "float32":    {},
+		// "float64":    {},
+		// "complex64":  {},
+		// "complex128": {},
+	}
+
+	_, ok := goTypes[fieldType]
+
+	return ok
+}
+
+func ExtractPackage(fieldType string) string {
+	dotIdx := strings.IndexByte(fieldType, '.')
+	if dotIdx == -1 {
+		return ""
+	}
+
+	pkg := fieldType[:dotIdx]
+
+	return pkg
+}

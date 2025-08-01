@@ -7,6 +7,7 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/opencodeco/validgen/internal/common"
 	"github.com/opencodeco/validgen/internal/parser"
 )
 
@@ -84,7 +85,7 @@ func (gv *genValidations) buildValidationCode(fieldName, fieldType string, field
 		var testCode = ""
 		var err error
 
-		if IsGoType(fieldType) {
+		if common.IsGoType(fieldType) {
 			testCode, err = gv.buildIfCode(fieldName, fieldType, fieldValidation)
 			if err != nil {
 				return "", err
@@ -128,7 +129,7 @@ func (gv *genValidations) buildIfNestedCode(fieldName, fieldType string) string 
 		return ""
 	}
 
-	pkg := ExtractPackage(fieldType)
+	pkg := common.ExtractPackage(fieldType)
 	if pkg == gv.Struct.PackageName {
 		fieldType = strings.TrimPrefix(fieldType, pkg+".")
 	}
@@ -148,7 +149,7 @@ func (gv *genValidations) buildImportPath(imports map[string]parser.Import, fiel
 	code += "\t\"github.com/opencodeco/validgen/types\""
 
 	for _, field := range fields {
-		pkg := ExtractPackage(field.Type)
+		pkg := common.ExtractPackage(field.Type)
 		if pkg != "" {
 			imp, ok := imports[pkg]
 			if ok {

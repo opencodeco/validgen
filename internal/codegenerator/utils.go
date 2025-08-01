@@ -1,8 +1,6 @@
 package codegenerator
 
 import (
-	"strings"
-
 	"github.com/opencodeco/validgen/internal/analyzer"
 )
 
@@ -23,26 +21,4 @@ func StructToTpl(st *analyzer.Struct) *structTpl {
 	}
 
 	return stTpl
-}
-
-func IsGoType(fieldType string) bool {
-	goTypes := map[string]struct{}{
-		"string": {},
-		"uint8":  {},
-	}
-
-	_, ok := goTypes[fieldType]
-
-	return ok
-}
-
-func ExtractPackage(fieldType string) string {
-	dotIdx := strings.IndexByte(fieldType, '.')
-	if dotIdx == -1 {
-		return ""
-	}
-
-	pkg := fieldType[:dotIdx]
-
-	return pkg
 }
