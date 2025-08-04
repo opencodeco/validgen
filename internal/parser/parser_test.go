@@ -252,7 +252,7 @@ func TestParseStructsOk(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := parseStructs(tt.args.fullpath, tt.args.src)
-			wantErr := error(nil)
+			var wantErr error = nil
 			if err != wantErr {
 				t.Errorf("parseStructs() error = %v, wantErr %v", err, wantErr)
 				return
