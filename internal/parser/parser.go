@@ -5,7 +5,6 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"maps"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -116,7 +115,7 @@ func parseStructs(fullpath, src string) ([]*Struct, error) {
 				StructName:  typeSpec.Name.Name,
 				Path:        "./" + filepath.Dir(fullpath),
 				PackageName: packageName,
-				Imports:     maps.Clone(imports),
+				Imports:     imports,
 			}
 		}
 
