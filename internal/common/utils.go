@@ -28,12 +28,8 @@ func IsGoType(fieldType string) bool {
 }
 
 func ExtractPackage(fieldType string) string {
-	dotIdx := strings.IndexByte(fieldType, '.')
-	if dotIdx == -1 {
-		return ""
+	if pkg, _, ok := strings.Cut(fieldType, "."); ok {
+		return pkg
 	}
-
-	pkg := fieldType[:dotIdx]
-
-	return pkg
+	return ""
 }
