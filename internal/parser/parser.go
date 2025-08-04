@@ -8,6 +8,9 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
+
+	"github.com/opencodeco/validgen/internal/common"
 )
 
 func ExtractStructs(path string) ([]*Struct, error) {
@@ -86,10 +89,25 @@ func parseStructs(fullpath, src string) ([]*Struct, error) {
 
 	packageName := ""
 	currentStruct := &Struct{}
+	imports := map[string]Import{}
 
 	ast.Inspect(f, func(n ast.Node) bool {
 		if fileInfo, ok := n.(*ast.File); ok {
 			packageName = fileInfo.Name.Name
+			for _, importLink := range fileInfo.Imports {
+				path, _ := strconv.Unquote(importLink.Path.Value)
+				name := ""
+				if importLink.Name == nil {
+					idx := strings.LastIndexByte(path, '/')
+					name = path[idx+1:]
+				} else {
+					name = importLink.Name.Name
+				}
+				imports[name] = Import{
+					Name: name,
+					Path: path,
+				}
+			}
 		}
 
 		if typeSpec, ok := n.(*ast.TypeSpec); ok {
@@ -97,6 +115,7 @@ func parseStructs(fullpath, src string) ([]*Struct, error) {
 				StructName:  typeSpec.Name.Name,
 				Path:        "./" + filepath.Dir(fullpath),
 				PackageName: packageName,
+				Imports:     imports,
 			}
 		}
 
@@ -104,6 +123,9 @@ func parseStructs(fullpath, src string) ([]*Struct, error) {
 			for _, field := range structType.Fields.List {
 				if ident, ok := field.Type.(*ast.Ident); ok {
 					fieldType := ident.Name
+					if !common.IsGoType(fieldType) {
+						fieldType = packageName + "." + fieldType
+					}
 					fieldTag := ""
 					if field.Tag != nil {
 						fieldTag = field.Tag.Value
@@ -114,6 +136,22 @@ func parseStructs(fullpath, src string) ([]*Struct, error) {
 						currentStruct.Fields = append(currentStruct.Fields, Field{
 							FieldName: name.Name,
 							Type:      fieldType,
+							Tag:       fieldTag,
+						})
+					}
+				} else if selExpr, ok := field.Type.(*ast.SelectorExpr); ok {
+					pkgName := selExpr.X.(*ast.Ident).Name
+					fieldType := selExpr.Sel.Name
+					fieldTag := ""
+					if field.Tag != nil {
+						fieldTag = field.Tag.Value
+						fieldTag, _ = strconv.Unquote(fieldTag)
+					}
+
+					for _, name := range field.Names {
+						currentStruct.Fields = append(currentStruct.Fields, Field{
+							FieldName: name.Name,
+							Type:      pkgName + "." + fieldType,
 							Tag:       fieldTag,
 						})
 					}

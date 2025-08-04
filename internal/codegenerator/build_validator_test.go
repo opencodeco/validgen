@@ -2,6 +2,9 @@ package codegenerator
 
 import (
 	"testing"
+
+	"github.com/opencodeco/validgen/internal/analyzer"
+	"github.com/opencodeco/validgen/internal/parser"
 )
 
 func TestBuildValidationCode(t *testing.T) {
@@ -71,7 +74,66 @@ func TestBuildValidationCode(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := buildValidationCode(tt.args.fieldName, tt.args.fieldType, []string{tt.args.fieldValidation})
+			gv := genValidations{}
+			got, err := gv.buildValidationCode(tt.args.fieldName, tt.args.fieldType, []string{tt.args.fieldValidation})
+			if (err != nil) != tt.wantErr {
+				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if got != tt.want {
+				t.Errorf("buildValidationCode() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestBuildValidationCodeWithNestedStructs(t *testing.T) {
+	type args struct {
+		fieldName       string
+		fieldType       string
+		fieldValidation string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    string
+		wantErr bool
+	}{
+		{
+			name: "if code with nested struct",
+			args: args{
+				fieldName:       "Field",
+				fieldType:       "main.NestedStructType",
+				fieldValidation: "required",
+			},
+			want: `
+	errs = append(errs, NestedStructTypeValidate(&obj.Field)...)
+`,
+		},
+		{
+			name: "if code with nested struct in another package",
+			args: args{
+				fieldName:       "Field",
+				fieldType:       "mypkg.NestedStructType",
+				fieldValidation: "required",
+			},
+			want: `
+	errs = append(errs, mypkg.NestedStructTypeValidate(&obj.Field)...)
+`,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gv := genValidations{
+				Struct: &analyzer.Struct{
+					Struct: parser.Struct{
+						PackageName: "main",
+					},
+				},
+				StructsWithValidation: map[string]struct{}{},
+			}
+			gv.StructsWithValidation[tt.args.fieldType] = struct{}{}
+			got, err := gv.buildValidationCode(tt.args.fieldName, tt.args.fieldType, []string{tt.args.fieldValidation})
 			if (err != nil) != tt.wantErr {
 				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, tt.wantErr)
 				return
