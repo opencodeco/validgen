@@ -7,7 +7,7 @@ import (
 	"github.com/sergi/go-diff/diffmatchpatch"
 )
 
-func Test_parseStructsOk(t *testing.T) {
+func TestParseStructsOk(t *testing.T) {
 	type args struct {
 		fullpath string
 		src      string
@@ -252,16 +252,16 @@ func Test_parseStructsOk(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := parseStructs(tt.args.fullpath, tt.args.src)
-			var wantErr error = nil
+			wantErr := error(nil)
 			if err != wantErr {
 				t.Errorf("parseStructs() error = %v, wantErr %v", err, wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				gotStr := structsContentHelper(got)
-				wantStr := structsContentHelper(tt.want)
+				gotStr := structsToString(got)
+				wantStr := structsToString(tt.want)
 				dmp := diffmatchpatch.New()
-				diffs := dmp.DiffMain(wantStr, gotStr, false)
+				diffs := dmp.DiffMain(gotStr, wantStr, false)
 				if len(diffs) > 1 {
 					t.Errorf("parseStructs() diff = \n%v", dmp.DiffPrettyText(diffs))
 				}
@@ -270,7 +270,7 @@ func Test_parseStructsOk(t *testing.T) {
 	}
 }
 
-func structsContentHelper(structs []*Struct) string {
+func structsToString(structs []*Struct) string {
 	var result string
 	for _, s := range structs {
 		result += "Struct: " + s.StructName + "\n"
