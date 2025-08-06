@@ -14,10 +14,9 @@ func TestBuildValidationCode(t *testing.T) {
 		fieldValidation string
 	}
 	tests := []struct {
-		name    string
-		args    args
-		want    string
-		wantErr bool
+		name string
+		args args
+		want string
 	}{
 		{
 			name: "if code with string",
@@ -76,8 +75,8 @@ func TestBuildValidationCode(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			gv := genValidations{}
 			got, err := gv.buildValidationCode(tt.args.fieldName, tt.args.fieldType, []string{tt.args.fieldValidation})
-			if (err != nil) != tt.wantErr {
-				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, tt.wantErr)
+			if err != nil {
+				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, nil)
 				return
 			}
 			if got != tt.want {
@@ -94,10 +93,9 @@ func TestBuildValidationCodeWithNestedStructs(t *testing.T) {
 		fieldValidation string
 	}
 	tests := []struct {
-		name    string
-		args    args
-		want    string
-		wantErr bool
+		name string
+		args args
+		want string
 	}{
 		{
 			name: "if code with nested struct",
@@ -121,6 +119,19 @@ func TestBuildValidationCodeWithNestedStructs(t *testing.T) {
 	errs = append(errs, mypkg.NestedStructTypeValidate(&obj.Field)...)
 `,
 		},
+		{
+			name: "if code with required slice of string",
+			args: args{
+				fieldName:       "Field",
+				fieldType:       "[]string",
+				fieldValidation: "required",
+			},
+			want: `
+	if !(len(obj.Field) > 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+`,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -134,8 +145,8 @@ func TestBuildValidationCodeWithNestedStructs(t *testing.T) {
 			}
 			gv.StructsWithValidation[tt.args.fieldType] = struct{}{}
 			got, err := gv.buildValidationCode(tt.args.fieldName, tt.args.fieldType, []string{tt.args.fieldValidation})
-			if (err != nil) != tt.wantErr {
-				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, tt.wantErr)
+			if err != nil {
+				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, nil)
 				return
 			}
 			if got != tt.want {
