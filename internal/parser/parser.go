@@ -92,72 +92,13 @@ func parseStructs(fullpath, src string) ([]*Struct, error) {
 	imports := map[string]Import{}
 
 	ast.Inspect(f, func(n ast.Node) bool {
-		if fileInfo, ok := n.(*ast.File); ok {
-			packageName = fileInfo.Name.Name
-			for _, importLink := range fileInfo.Imports {
-				path, _ := strconv.Unquote(importLink.Path.Value)
-				name := ""
-				if importLink.Name == nil {
-					idx := strings.LastIndexByte(path, '/')
-					name = path[idx+1:]
-				} else {
-					name = importLink.Name.Name
-				}
-				imports[name] = Import{
-					Name: name,
-					Path: path,
-				}
-			}
-		}
-
-		if typeSpec, ok := n.(*ast.TypeSpec); ok {
-			currentStruct = &Struct{
-				StructName:  typeSpec.Name.Name,
-				Path:        "./" + filepath.Dir(fullpath),
-				PackageName: packageName,
-				Imports:     imports,
-			}
-		}
-
-		if structType, ok := n.(*ast.StructType); ok {
-			for _, field := range structType.Fields.List {
-				if ident, ok := field.Type.(*ast.Ident); ok {
-					fieldType := ident.Name
-					if !common.IsGoType(fieldType) {
-						fieldType = packageName + "." + fieldType
-					}
-					fieldTag := ""
-					if field.Tag != nil {
-						fieldTag = field.Tag.Value
-						fieldTag, _ = strconv.Unquote(fieldTag)
-					}
-
-					for _, name := range field.Names {
-						currentStruct.Fields = append(currentStruct.Fields, Field{
-							FieldName: name.Name,
-							Type:      fieldType,
-							Tag:       fieldTag,
-						})
-					}
-				} else if selExpr, ok := field.Type.(*ast.SelectorExpr); ok {
-					pkgName := selExpr.X.(*ast.Ident).Name
-					fieldType := selExpr.Sel.Name
-					fieldTag := ""
-					if field.Tag != nil {
-						fieldTag = field.Tag.Value
-						fieldTag, _ = strconv.Unquote(fieldTag)
-					}
-
-					for _, name := range field.Names {
-						currentStruct.Fields = append(currentStruct.Fields, Field{
-							FieldName: name.Name,
-							Type:      pkgName + "." + fieldType,
-							Tag:       fieldTag,
-						})
-					}
-				}
-			}
-
+		switch v := n.(type) {
+		case (*ast.File):
+			packageName, imports = extractPkgAndImports(v)
+		case (*ast.TypeSpec):
+			currentStruct = extractStructDefinition(v.Name.Name, fullpath, packageName, imports)
+		case (*ast.StructType):
+			appendFields(v, packageName, currentStruct)
 			structs = append(structs, currentStruct)
 		}
 
@@ -165,4 +106,118 @@ func parseStructs(fullpath, src string) ([]*Struct, error) {
 	})
 
 	return structs, nil
+}
+
+func extractPkgAndImports(f *ast.File) (string, map[string]Import) {
+	packageName := f.Name.Name
+	imports := map[string]Import{}
+
+	for _, importLink := range f.Imports {
+		path, _ := strconv.Unquote(importLink.Path.Value)
+		name := ""
+		if importLink.Name == nil {
+			idx := strings.LastIndexByte(path, '/')
+			name = path[idx+1:]
+		} else {
+			name = importLink.Name.Name
+		}
+		imports[name] = Import{
+			Name: name,
+			Path: path,
+		}
+	}
+
+	return packageName, imports
+}
+
+func extractStructDefinition(name, fullpath, packageName string, imports map[string]Import) *Struct {
+	return &Struct{
+		StructName:  name,
+		Path:        "./" + filepath.Dir(fullpath),
+		PackageName: packageName,
+		Imports:     imports,
+		Fields:      []Field{},
+	}
+}
+
+func appendFields(structType *ast.StructType, packageName string, cstruct *Struct) {
+	if structType.Fields == nil {
+		return
+	}
+
+	for _, field := range structType.Fields.List {
+		appendFieldNames := false
+		fieldType := ""
+		fieldTag := ""
+		if field.Tag != nil {
+			fieldTag = field.Tag.Value
+		}
+
+		switch v := field.Type.(type) {
+		case *ast.Ident:
+			fieldType = v.Name
+			fieldType, fieldTag = extractFieldTypeAndTag(packageName, fieldType, fieldTag)
+			appendFieldNames = true
+
+		case *ast.ArrayType:
+			fieldType = v.Elt.(*ast.Ident).Name
+			fieldType, fieldTag = extractSliceFieldTypeAndTag(packageName, fieldType, fieldTag)
+			appendFieldNames = true
+
+		case *ast.SelectorExpr:
+			nestedPkgName := v.X.(*ast.Ident).Name
+			fieldType, fieldTag = extractNestedFieldTypeAndTag(nestedPkgName, v.Sel.Name, fieldTag)
+			appendFieldNames = true
+		}
+
+		if appendFieldNames {
+			for _, name := range field.Names {
+				cstruct.Fields = append(cstruct.Fields, Field{
+					FieldName: name.Name,
+					Type:      fieldType,
+					Tag:       fieldTag,
+				})
+			}
+		}
+	}
+}
+
+func extractFieldTypeAndTag(packageName, fieldType, fieldTag string) (string, string) {
+	rFieldType := fieldType
+
+	if !common.IsGoType(fieldType) {
+		rFieldType = packageName + "." + fieldType
+	}
+	rFieldTag := ""
+	if fieldTag != "" {
+		rFieldTag = fieldTag
+		rFieldTag, _ = strconv.Unquote(rFieldTag)
+	}
+
+	return rFieldType, rFieldTag
+}
+
+func extractSliceFieldTypeAndTag(packageName, fieldType, fieldTag string) (string, string) {
+	rFieldType := fieldType
+
+	if !common.IsGoType(fieldType) {
+		rFieldType = packageName + "." + fieldType
+	}
+
+	rFieldType = "[]" + rFieldType
+
+	rFieldTag := ""
+	if fieldTag != "" {
+		rFieldTag = fieldTag
+		rFieldTag, _ = strconv.Unquote(rFieldTag)
+	}
+
+	return rFieldType, rFieldTag
+}
+
+func extractNestedFieldTypeAndTag(nestedPkgName, fieldType, fieldTag string) (string, string) {
+	rFieldType := nestedPkgName + "." + fieldType
+	rFieldTag, _ := strconv.Unquote(fieldTag)
+
+	return rFieldType, rFieldTag
 }
