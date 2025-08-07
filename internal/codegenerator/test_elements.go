@@ -49,6 +49,7 @@ func DefineTestElements(fieldName, fieldType, fieldValidation string) (TestEleme
 		"email,string":           {"types.IsValidEmail({{.Name}})", "==", `true`, "{{.Name}} must be a valid email"},
 		"required,[]string":      {"len({{.Name}})", ">", `0`, "{{.Name}} must not be empty"},
 		"min,[]string":           {"len({{.Name}})", ">=", `{{.Target}}`, "{{.Name}} must have at least {{.Target}} elements"},
+		"max,[]string":           {"len({{.Name}})", "<=", `{{.Target}}`, "{{.Name}} must have at most {{.Target}} elements"},
 	}
 
 	validation, err := analyzer.ParserValidation(fieldValidation)

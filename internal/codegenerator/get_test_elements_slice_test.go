@@ -44,6 +44,20 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 				errorMessage:  "myfield must have at least 2 elements",
 			},
 		},
+		{
+			name: "Max slice string",
+			args: args{
+				fieldName:       "myfield",
+				fieldType:       "[]string",
+				fieldValidation: "max=5",
+			},
+			want: TestElements{
+				leftOperand:   "len(obj.myfield)",
+				operator:      "<=",
+				rightOperands: []string{`5`},
+				errorMessage:  "myfield must have at most 5 elements",
+			},
+		},
 	}
 
 	for _, tt := range tests {
