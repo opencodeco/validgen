@@ -10,6 +10,7 @@ type SliceString struct {
 	TypesMax      []string `valid:"max=5"`
 	TypesLen      []string `valid:"len=3"`
 	TypesIn       []string `valid:"in=a b c"`
+	TypesNotIn    []string `valid:"nin=a b c"`
 }
 
 func slice_string_tests() {
@@ -23,6 +24,7 @@ func slice_string_tests() {
 		TypesMax:      []string{"1", "2", "3", "4", "5", "6"},
 		TypesLen:      []string{"1", "2"},
 		TypesIn:       []string{"d"},
+		TypesNotIn:    []string{"d", "b"},
 	}
 	expectedMsgErrors = []string{
 		"TypesRequired must not be empty",
@@ -30,6 +32,7 @@ func slice_string_tests() {
 		"TypesMax must have at most 5 elements",
 		"TypesLen must have exactly 3 elements",
 		"TypesIn elements must be one of 'a' 'b' 'c'",
+		"TypesNotIn elements must not be one of 'a' 'b' 'c'",
 	}
 	errs = SliceStringValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
@@ -43,6 +46,7 @@ func slice_string_tests() {
 		TypesMax:      []string{"1", "2", "3", "4"},
 		TypesLen:      []string{"1", "2", "3"},
 		TypesIn:       []string{"a", "b", "c", "b", "a"},
+		TypesNotIn:    []string{"d", "e", "f"},
 	}
 	expectedMsgErrors = nil
 	errs = SliceStringValidate(v)

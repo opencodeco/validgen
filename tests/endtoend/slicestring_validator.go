@@ -29,5 +29,9 @@ func SliceStringValidate(obj *SliceString) []error {
 		errs = append(errs, types.NewValidationError("TypesIn elements must be one of 'a' 'b' 'c'"))
 	}
 
+	if !(!types.SlicesContains(obj.TypesNotIn, "a") && !types.SlicesContains(obj.TypesNotIn, "b") && !types.SlicesContains(obj.TypesNotIn, "c")) {
+		errs = append(errs, types.NewValidationError("TypesNotIn elements must not be one of 'a' 'b' 'c'"))
+	}
+
 	return errs
 }

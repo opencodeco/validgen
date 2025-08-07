@@ -52,6 +52,7 @@ func DefineTestElements(fieldName, fieldType, fieldValidation string) (TestEleme
 		"max,[]string":           {"len({{.Name}})", "<=", `{{.Target}}`, "{{.Name}} must have at most {{.Target}} elements"},
 		"len,[]string":           {"len({{.Name}})", "==", `{{.Target}}`, "{{.Name}} must have exactly {{.Target}} elements"},
 		"in,[]string":            {"", "", `types.SlicesContains({{.Name}}, "{{.Target}}")`, "{{.Name}} elements must be one of {{.Targets}}"},
+		"nin,[]string":           {"", "", `!types.SlicesContains({{.Name}}, "{{.Target}}")`, "{{.Name}} elements must not be one of {{.Targets}}"},
 	}
 
 	validation, err := analyzer.ParserValidation(fieldValidation)
