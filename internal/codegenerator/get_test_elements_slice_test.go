@@ -17,7 +17,7 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 		want TestElements
 	}{
 		{
-			name: "Equal string",
+			name: "Required slice string",
 			args: args{
 				fieldName:       "myfield",
 				fieldType:       "[]string",
@@ -28,6 +28,20 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 				operator:      ">",
 				rightOperands: []string{`0`},
 				errorMessage:  "myfield must not be empty",
+			},
+		},
+		{
+			name: "Min slice string",
+			args: args{
+				fieldName:       "myfield",
+				fieldType:       "[]string",
+				fieldValidation: "min=2",
+			},
+			want: TestElements{
+				leftOperand:   "len(obj.myfield)",
+				operator:      ">=",
+				rightOperands: []string{`2`},
+				errorMessage:  "myfield must have at least 2 elements",
 			},
 		},
 	}

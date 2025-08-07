@@ -17,5 +17,9 @@ func SliceStringValidate(obj *SliceString) []error {
 		errs = append(errs, types.NewValidationError("TypesRequired must not be empty"))
 	}
 
+	if !(len(obj.TypesMin) >= 2) {
+		errs = append(errs, types.NewValidationError("TypesMin must have at least 2 elements"))
+	}
+
 	return errs
 }

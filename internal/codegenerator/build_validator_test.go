@@ -132,6 +132,19 @@ func TestBuildValidationCodeWithNestedStructs(t *testing.T) {
 	}
 `,
 		},
+		{
+			name: "if code with min slice of string",
+			args: args{
+				fieldName:       "Field",
+				fieldType:       "[]string",
+				fieldValidation: "min=2",
+			},
+			want: `
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+`,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
