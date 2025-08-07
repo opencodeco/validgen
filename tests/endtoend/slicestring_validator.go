@@ -25,5 +25,9 @@ func SliceStringValidate(obj *SliceString) []error {
 		errs = append(errs, types.NewValidationError("TypesMax must have at most 5 elements"))
 	}
 
+	if !(len(obj.TypesLen) == 3) {
+		errs = append(errs, types.NewValidationError("TypesLen must have exactly 3 elements"))
+	}
+
 	return errs
 }

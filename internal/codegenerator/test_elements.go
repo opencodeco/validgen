@@ -50,6 +50,7 @@ func DefineTestElements(fieldName, fieldType, fieldValidation string) (TestEleme
 		"required,[]string":      {"len({{.Name}})", ">", `0`, "{{.Name}} must not be empty"},
 		"min,[]string":           {"len({{.Name}})", ">=", `{{.Target}}`, "{{.Name}} must have at least {{.Target}} elements"},
 		"max,[]string":           {"len({{.Name}})", "<=", `{{.Target}}`, "{{.Name}} must have at most {{.Target}} elements"},
+		"len,[]string":           {"len({{.Name}})", "==", `{{.Target}}`, "{{.Name}} must have exactly {{.Target}} elements"},
 	}
 
 	validation, err := analyzer.ParserValidation(fieldValidation)
