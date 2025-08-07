@@ -86,7 +86,7 @@ func TestBuildValidationCode(t *testing.T) {
 	}
 }
 
-func TestBuildValidationCodeWithNestedStructs(t *testing.T) {
+func TestBuildValidationCodeWithNestedStructsAndSlices(t *testing.T) {
 	type args struct {
 		fieldName       string
 		fieldType       string
