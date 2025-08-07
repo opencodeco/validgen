@@ -2,6 +2,7 @@ package types
 
 import (
 	"regexp"
+	"slices"
 	"strings"
 )
 
@@ -20,7 +21,11 @@ func IsValidEmail(email string) bool {
 	if email == "" {
 		return true // Empty email is valid for optional fields
 	}
-	
+
 	// Use pre-compiled regex for better performance
 	return emailRegex.MatchString(email)
+}
+
+func SlicesContains[S ~[]E, E comparable](s S, v E) bool {
+	return slices.Contains(s, v)
 }

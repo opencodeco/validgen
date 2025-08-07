@@ -9,10 +9,6 @@ import (
 func SliceStringValidate(obj *SliceString) []error {
 	var errs []error
 
-	if !(obj.FirstName != "") {
-		errs = append(errs, types.NewValidationError("FirstName is required"))
-	}
-
 	if !(len(obj.TypesRequired) > 0) {
 		errs = append(errs, types.NewValidationError("TypesRequired must not be empty"))
 	}
@@ -27,6 +23,10 @@ func SliceStringValidate(obj *SliceString) []error {
 
 	if !(len(obj.TypesLen) == 3) {
 		errs = append(errs, types.NewValidationError("TypesLen must have exactly 3 elements"))
+	}
+
+	if !(types.SlicesContains(obj.TypesIn, "a") || types.SlicesContains(obj.TypesIn, "b") || types.SlicesContains(obj.TypesIn, "c")) {
+		errs = append(errs, types.NewValidationError("TypesIn elements must be one of 'a' 'b' 'c'"))
 	}
 
 	return errs

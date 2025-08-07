@@ -62,7 +62,7 @@ The following table shows the validations and possible types, where "I" means "I
 | len             | I      | -             | -       | I     | W     | W   | -    | -        |
 | max             | I      | -             | -       | I     | W     | W   | W    | W        |
 | min             | I      | -             | -       | I     | W     | W   | W    | W        |
-| in              | I      | W             | W       | W     | W     | W   | -    | W        |
+| in              | I      | W             | W       | I     | W     | W   | -    | W        |
 | nin             | I      | W             | W       | W     | W     | W   | -    | W        |
 | required        | I      | W             | W       | I     | W     | W   | W    | W        |
 | email           | I      | -             | -       | -     | -     | -   | -    | -        |

@@ -72,6 +72,36 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 				errorMessage:  "myfield must have exactly 3 elements",
 			},
 		},
+		{
+			name: "In slice string with spaces",
+			args: args{
+				fieldName:       "myfield",
+				fieldType:       "[]string",
+				fieldValidation: "in=a b c",
+			},
+			want: TestElements{
+				leftOperand:    "",
+				operator:       "",
+				rightOperands:  []string{`types.SlicesContains(obj.myfield, "a")`, `types.SlicesContains(obj.myfield, "b")`, `types.SlicesContains(obj.myfield, "c")`},
+				concatOperator: "||",
+				errorMessage:   "myfield elements must be one of 'a' 'b' 'c'",
+			},
+		},
+		{
+			name: "In slice string with '",
+			args: args{
+				fieldName:       "myfield",
+				fieldType:       "[]string",
+				fieldValidation: "in=' a ' ' b ' ' c '",
+			},
+			want: TestElements{
+				leftOperand:    "",
+				operator:       "",
+				rightOperands:  []string{`types.SlicesContains(obj.myfield, " a ")`, `types.SlicesContains(obj.myfield, " b ")`, `types.SlicesContains(obj.myfield, " c ")`},
+				concatOperator: "||",
+				errorMessage:   "myfield elements must be one of ' a ' ' b ' ' c '",
+			},
+		},
 	}
 
 	for _, tt := range tests {
