@@ -14,10 +14,9 @@ func TestBuildValidationCode(t *testing.T) {
 		fieldValidation string
 	}
 	tests := []struct {
-		name    string
-		args    args
-		want    string
-		wantErr bool
+		name string
+		args args
+		want string
 	}{
 		{
 			name: "if code with string",
@@ -71,13 +70,91 @@ func TestBuildValidationCode(t *testing.T) {
 	}
 `,
 		},
+		{
+			name: "Required slice string",
+			args: args{
+				fieldName:       "strField",
+				fieldType:       "[]string",
+				fieldValidation: "required",
+			},
+			want: `
+	if !(len(obj.strField) != 0) {
+		errs = append(errs, types.NewValidationError("strField must not be empty"))
+	}
+`,
+		},
+		{
+			name: "Min slice string",
+			args: args{
+				fieldName:       "strField",
+				fieldType:       "[]string",
+				fieldValidation: "min=2",
+			},
+			want: `
+	if !(len(obj.strField) >= 2) {
+		errs = append(errs, types.NewValidationError("strField must have at least 2 elements"))
+	}
+`,
+		},
+		{
+			name: "Max slice string",
+			args: args{
+				fieldName:       "strField",
+				fieldType:       "[]string",
+				fieldValidation: "max=5",
+			},
+			want: `
+	if !(len(obj.strField) <= 5) {
+		errs = append(errs, types.NewValidationError("strField must have at most 5 elements"))
+	}
+`,
+		},
+		{
+			name: "Len slice string",
+			args: args{
+				fieldName:       "strField",
+				fieldType:       "[]string",
+				fieldValidation: "len=3",
+			},
+			want: `
+	if !(len(obj.strField) == 3) {
+		errs = append(errs, types.NewValidationError("strField must have exactly 3 elements"))
+	}
+`,
+		},
+		{
+			name: "In slice string",
+			args: args{
+				fieldName:       "strField",
+				fieldType:       "[]string",
+				fieldValidation: "in=a b c",
+			},
+			want: `
+	if !(types.SlicesContains(obj.strField, "a") || types.SlicesContains(obj.strField, "b") || types.SlicesContains(obj.strField, "c")) {
+		errs = append(errs, types.NewValidationError("strField elements must be one of 'a' 'b' 'c'"))
+	}
+`,
+		},
+		{
+			name: "Not in slice string",
+			args: args{
+				fieldName:       "strField",
+				fieldType:       "[]string",
+				fieldValidation: "nin=a b c",
+			},
+			want: `
+	if !(!types.SlicesContains(obj.strField, "a") && !types.SlicesContains(obj.strField, "b") && !types.SlicesContains(obj.strField, "c")) {
+		errs = append(errs, types.NewValidationError("strField elements must not be one of 'a' 'b' 'c'"))
+	}
+`,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			gv := genValidations{}
 			got, err := gv.buildValidationCode(tt.args.fieldName, tt.args.fieldType, []string{tt.args.fieldValidation})
-			if (err != nil) != tt.wantErr {
-				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, tt.wantErr)
+			if err != nil {
+				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, nil)
 				return
 			}
 			if got != tt.want {
@@ -87,17 +164,16 @@ func TestBuildValidationCode(t *testing.T) {
 	}
 }
 
-func TestBuildValidationCodeWithNestedStructs(t *testing.T) {
+func TestBuildValidationCodeWithNestedStructsAndSlices(t *testing.T) {
 	type args struct {
 		fieldName       string
 		fieldType       string
 		fieldValidation string
 	}
 	tests := []struct {
-		name    string
-		args    args
-		want    string
-		wantErr bool
+		name string
+		args args
+		want string
 	}{
 		{
 			name: "if code with nested struct",
@@ -121,6 +197,32 @@ func TestBuildValidationCodeWithNestedStructs(t *testing.T) {
 	errs = append(errs, mypkg.NestedStructTypeValidate(&obj.Field)...)
 `,
 		},
+		{
+			name: "if code with required slice of string",
+			args: args{
+				fieldName:       "Field",
+				fieldType:       "[]string",
+				fieldValidation: "required",
+			},
+			want: `
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+`,
+		},
+		{
+			name: "if code with min slice of string",
+			args: args{
+				fieldName:       "Field",
+				fieldType:       "[]string",
+				fieldValidation: "min=2",
+			},
+			want: `
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+`,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -134,8 +236,8 @@ func TestBuildValidationCodeWithNestedStructs(t *testing.T) {
 			}
 			gv.StructsWithValidation[tt.args.fieldType] = struct{}{}
 			got, err := gv.buildValidationCode(tt.args.fieldName, tt.args.fieldType, []string{tt.args.fieldValidation})
-			if (err != nil) != tt.wantErr {
-				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, tt.wantErr)
+			if err != nil {
+				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, nil)
 				return
 			}
 			if got != tt.want {

@@ -59,12 +59,12 @@ The following table shows the validations and possible types, where "I" means "I
 | lte             | -      | W             | -       | -     | -     | -   | W    | W        |
 | neq             | I      | W             | W       | -     | -     | -   | W    | W        |
 | neq_ignore_case | I      | -             | -       | -     | -     | -   | -    | -        |
-| len             | I      | -             | -       | W     | W     | W   | -    | -        |
-| max             | I      | -             | -       | W     | W     | W   | W    | W        |
-| min             | I      | -             | -       | W     | W     | W   | W    | W        |
-| in              | I      | W             | W       | W     | W     | W   | -    | W        |
-| nin             | I      | W             | W       | W     | W     | W   | -    | W        |
-| required        | I      | W             | W       | W     | W     | W   | W    | W        |
+| len             | I      | -             | -       | I     | W     | W   | -    | -        |
+| max             | I      | -             | -       | I     | W     | W   | W    | W        |
+| min             | I      | -             | -       | I     | W     | W   | W    | W        |
+| in              | I      | W             | W       | I     | W     | W   | -    | W        |
+| nin             | I      | W             | W       | I     | W     | W   | -    | W        |
+| required        | I      | W             | W       | I     | W     | W   | W    | W        |
 | email           | I      | -             | -       | -     | -     | -   | -    | -        |
 
 # Steps to run the unit tests

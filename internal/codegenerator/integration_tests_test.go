@@ -13,10 +13,9 @@ func TestIntegrationTests(t *testing.T) {
 		Struct *analyzer.Struct
 	}
 	tests := []struct {
-		name    string
-		fields  fields
-		want    string
-		wantErr bool
+		name   string
+		fields fields
+		want   string
 	}{
 		{
 			name: "Valid struct",
@@ -70,7 +69,6 @@ func UserValidate(obj *User) []error {
 	return errs
 }
 `,
-			wantErr: false,
 		},
 		{
 			name: "FirstName must have 5 characters or more",
@@ -112,7 +110,6 @@ func UserValidate(obj *User) []error {
 	return errs
 }
 `,
-			wantErr: false,
 		},
 	}
 
@@ -122,8 +119,8 @@ func UserValidate(obj *User) []error {
 				Struct: tt.fields.Struct,
 			}
 			got, err := gv.BuildValidatorCode()
-			if (err != nil) != tt.wantErr {
-				t.Errorf("FileValidator.GenerateValidator() error = %v, wantErr %v", err, tt.wantErr)
+			if err != nil {
+				t.Errorf("FileValidator.GenerateValidator() error = %v, wantErr %v", err, nil)
 				return
 			}
 			if got != tt.want {

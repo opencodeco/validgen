@@ -36,6 +36,7 @@ func main() {
 	struct_in_pkg_tests()
 	string_tests()
 	nested_struct_tests()
+	slice_string_tests()
 
 	log.Println("finishing tests")
 }

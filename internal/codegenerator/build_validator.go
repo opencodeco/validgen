@@ -115,7 +115,7 @@ func (gv *genValidations) buildIfCode(fieldName, fieldType, fieldValidation stri
 			booleanCondition += " " + testElements.concatOperator + " "
 		}
 
-		booleanCondition += fmt.Sprintf("%s %s %s", testElements.leftOperand, testElements.operator, roperand)
+		booleanCondition += strings.TrimSpace(fmt.Sprintf("%s %s %s", testElements.leftOperand, testElements.operator, roperand))
 	}
 
 	return fmt.Sprintf(
