@@ -70,6 +70,84 @@ func TestBuildValidationCode(t *testing.T) {
 	}
 `,
 		},
+		{
+			name: "Required slice string",
+			args: args{
+				fieldName:       "strField",
+				fieldType:       "[]string",
+				fieldValidation: "required",
+			},
+			want: `
+	if !(len(obj.strField) != 0) {
+		errs = append(errs, types.NewValidationError("strField must not be empty"))
+	}
+`,
+		},
+		{
+			name: "Min slice string",
+			args: args{
+				fieldName:       "strField",
+				fieldType:       "[]string",
+				fieldValidation: "min=2",
+			},
+			want: `
+	if !(len(obj.strField) >= 2) {
+		errs = append(errs, types.NewValidationError("strField must have at least 2 elements"))
+	}
+`,
+		},
+		{
+			name: "Max slice string",
+			args: args{
+				fieldName:       "strField",
+				fieldType:       "[]string",
+				fieldValidation: "max=5",
+			},
+			want: `
+	if !(len(obj.strField) <= 5) {
+		errs = append(errs, types.NewValidationError("strField must have at most 5 elements"))
+	}
+`,
+		},
+		{
+			name: "Len slice string",
+			args: args{
+				fieldName:       "strField",
+				fieldType:       "[]string",
+				fieldValidation: "len=3",
+			},
+			want: `
+	if !(len(obj.strField) == 3) {
+		errs = append(errs, types.NewValidationError("strField must have exactly 3 elements"))
+	}
+`,
+		},
+		{
+			name: "In slice string",
+			args: args{
+				fieldName:       "strField",
+				fieldType:       "[]string",
+				fieldValidation: "in=a b c",
+			},
+			want: `
+	if !(types.SlicesContains(obj.strField, "a") || types.SlicesContains(obj.strField, "b") || types.SlicesContains(obj.strField, "c")) {
+		errs = append(errs, types.NewValidationError("strField elements must be one of 'a' 'b' 'c'"))
+	}
+`,
+		},
+		{
+			name: "Not in slice string",
+			args: args{
+				fieldName:       "strField",
+				fieldType:       "[]string",
+				fieldValidation: "nin=a b c",
+			},
+			want: `
+	if !(!types.SlicesContains(obj.strField, "a") && !types.SlicesContains(obj.strField, "b") && !types.SlicesContains(obj.strField, "c")) {
+		errs = append(errs, types.NewValidationError("strField elements must not be one of 'a' 'b' 'c'"))
+	}
+`,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -127,7 +205,7 @@ func TestBuildValidationCodeWithNestedStructsAndSlices(t *testing.T) {
 				fieldValidation: "required",
 			},
 			want: `
-	if !(len(obj.Field) > 0) {
+	if !(len(obj.Field) != 0) {
 		errs = append(errs, types.NewValidationError("Field must not be empty"))
 	}
 `,
