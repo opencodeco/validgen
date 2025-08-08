@@ -9,7 +9,7 @@ import (
 func SliceStringValidate(obj *SliceString) []error {
 	var errs []error
 
-	if !(len(obj.TypesRequired) > 0) {
+	if !(len(obj.TypesRequired) != 0) {
 		errs = append(errs, types.NewValidationError("TypesRequired must not be empty"))
 	}
 

@@ -25,7 +25,7 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 			},
 			want: TestElements{
 				leftOperand:   "len(obj.myfield)",
-				operator:      ">",
+				operator:      "!=",
 				rightOperands: []string{`0`},
 				errorMessage:  "myfield must not be empty",
 			},
@@ -102,7 +102,6 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 				errorMessage:   "myfield elements must be one of ' a ' ' b ' ' c '",
 			},
 		},
-
 		{
 			name: "Not in slice string with spaces",
 			args: args{

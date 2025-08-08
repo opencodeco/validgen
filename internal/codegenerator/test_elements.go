@@ -47,7 +47,7 @@ func DefineTestElements(fieldName, fieldType, fieldValidation string) (TestEleme
 		"in,string":              {"{{.Name}}", "==", `"{{.Target}}"`, "{{.Name}} must be one of {{.Targets}}"},
 		"nin,string":             {"{{.Name}}", "!=", `"{{.Target}}"`, "{{.Name}} must not be one of {{.Targets}}"},
 		"email,string":           {"types.IsValidEmail({{.Name}})", "==", `true`, "{{.Name}} must be a valid email"},
-		"required,[]string":      {"len({{.Name}})", ">", `0`, "{{.Name}} must not be empty"},
+		"required,[]string":      {"len({{.Name}})", "!=", `0`, "{{.Name}} must not be empty"},
 		"min,[]string":           {"len({{.Name}})", ">=", `{{.Target}}`, "{{.Name}} must have at least {{.Target}} elements"},
 		"max,[]string":           {"len({{.Name}})", "<=", `{{.Target}}`, "{{.Name}} must have at most {{.Target}} elements"},
 		"len,[]string":           {"len({{.Name}})", "==", `{{.Target}}`, "{{.Name}} must have exactly {{.Target}} elements"},
