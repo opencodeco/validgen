@@ -6,9 +6,7 @@ import (
 
 func StructToTpl(st *analyzer.Struct) *structTpl {
 	stTpl := &structTpl{
-		StructName:  st.StructName,
-		PackageName: st.PackageName,
-		Imports:     st.Imports,
+		StructName: st.StructName,
 	}
 
 	for i, field := range st.Fields {
