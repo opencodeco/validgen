@@ -76,8 +76,7 @@ func UserValidate(obj *User) []error {
 	}
 
 	return errs
-}
-`,
+}`,
 		},
 		{
 			name: "FirstName must have 5 characters or more",
@@ -123,8 +122,7 @@ func UserValidate(obj *User) []error {
 	}
 
 	return errs
-}
-`,
+}`,
 		},
 	}
 

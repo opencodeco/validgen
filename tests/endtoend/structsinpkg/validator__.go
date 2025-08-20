@@ -36,4 +36,3 @@ func Type1Validate(obj *Type1) []error {
 
 	return errs
 }
-

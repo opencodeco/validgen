@@ -23,4 +23,3 @@ func UserValidate(obj *User) []error {
 
 	return errs
 }
-

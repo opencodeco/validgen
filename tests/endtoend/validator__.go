@@ -190,4 +190,3 @@ func UserWithStructInPkgValidate(obj *UserWithStructInPkg) []error {
 
 	return errs
 }
-
