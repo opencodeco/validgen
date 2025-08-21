@@ -96,4 +96,3 @@ func ValidGenStringRequiredStructValidate(obj *ValidGenStringRequiredStruct) []e
 
 	return errs
 }
-

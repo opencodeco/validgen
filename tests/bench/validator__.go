@@ -35,4 +35,3 @@ func StructValidGenValidate(obj *StructValidGen) []error {
 
 	return errs
 }
-

@@ -19,6 +19,7 @@ func AddressValidate(obj *Address) []error {
 
 	return errs
 }
+
 func Type1Validate(obj *Type1) []error {
 	var errs []error
 

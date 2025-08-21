@@ -20,6 +20,7 @@ func AddressValidate(obj *Address) []error {
 
 	return errs
 }
+
 func AllTypes1Validate(obj *AllTypes1) []error {
 	var errs []error
 
@@ -37,6 +38,7 @@ func AllTypes1Validate(obj *AllTypes1) []error {
 
 	return errs
 }
+
 func AllTypes2Validate(obj *AllTypes2) []error {
 	var errs []error
 
@@ -66,6 +68,7 @@ func AllTypes2Validate(obj *AllTypes2) []error {
 
 	return errs
 }
+
 func SliceStringValidate(obj *SliceString) []error {
 	var errs []error
 
@@ -95,6 +98,7 @@ func SliceStringValidate(obj *SliceString) []error {
 
 	return errs
 }
+
 func StringTypeValidate(obj *StringType) []error {
 	var errs []error
 
@@ -152,6 +156,7 @@ func StringTypeValidate(obj *StringType) []error {
 
 	return errs
 }
+
 func UserValidate(obj *User) []error {
 	var errs []error
 
@@ -171,6 +176,7 @@ func UserValidate(obj *User) []error {
 
 	return errs
 }
+
 func UserWithStructInPkgValidate(obj *UserWithStructInPkg) []error {
 	var errs []error
 
