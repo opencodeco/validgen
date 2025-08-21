@@ -9,7 +9,8 @@ import (
 	"github.com/opencodeco/validgen/internal/common"
 )
 
-var funcValidatorTpl = `func {{.StructName}}Validate(obj *{{.StructName}}) []error {
+var funcValidatorTpl = `
+func {{.StructName}}Validate(obj *{{.StructName}}) []error {
 	var errs []error
 {{range .Fields}}{{buildValidationCode .FieldName .Type .Validations}}{{end}}
 	return errs

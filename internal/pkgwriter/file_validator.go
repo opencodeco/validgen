@@ -17,7 +17,6 @@ package {{.Name}}
 import (
 {{buildImportPath .Imports}}
 )
-
 {{range .Structs}}{{.ValidatorFuncCode}}{{end}}`
 
 func Writer(pkgs map[string]*codegenerator.Pkg) error {

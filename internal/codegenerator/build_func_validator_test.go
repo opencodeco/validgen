@@ -47,7 +47,8 @@ func TestBuildFuncValidatorCode(t *testing.T) {
 					},
 				},
 			},
-			want: `func UserValidate(obj *User) []error {
+			want: `
+func UserValidate(obj *User) []error {
 	var errs []error
 
 	if !(obj.FirstName != "") {
@@ -84,7 +85,8 @@ func TestBuildFuncValidatorCode(t *testing.T) {
 					},
 				},
 			},
-			want: `func UserValidate(obj *User) []error {
+			want: `
+func UserValidate(obj *User) []error {
 	var errs []error
 
 	if !(len(obj.FirstName) >= 5) {

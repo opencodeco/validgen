@@ -41,7 +41,8 @@ func TestBuildFileValidator(t *testing.T) {
 							},
 						},
 					},
-					ValidatorFuncCode: `func UserValidate(obj *User) []error {
+					ValidatorFuncCode: `
+func UserValidate(obj *User) []error {
 	var errs []error
 
 	if !(obj.FirstName != "") {
@@ -95,7 +96,8 @@ func UserValidate(obj *User) []error {
 							},
 						},
 					},
-					ValidatorFuncCode: `func UserValidate(obj *User) []error {
+					ValidatorFuncCode: `
+func UserValidate(obj *User) []error {
 	var errs []error
 
 	if !(len(obj.FirstName) >= 5) {
