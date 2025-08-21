@@ -35,7 +35,8 @@ func GenerateCode(structs []*analyzer.Struct) (map[string]*Pkg, error) {
 			return nil, err
 		}
 
-		pkg, ok := pkgs[st.PackageName]
+		pkdId := st.Path + "." + st.PackageName
+		pkg, ok := pkgs[pkdId]
 		if !ok {
 			pkg = &Pkg{
 				Name:    st.PackageName,
@@ -43,7 +44,7 @@ func GenerateCode(structs []*analyzer.Struct) (map[string]*Pkg, error) {
 				Imports: map[string]parser.Import{},
 				Structs: map[string]*Struct{},
 			}
-			pkgs[st.PackageName] = pkg
+			pkgs[pkdId] = pkg
 		}
 
 		cgSt := &Struct{
