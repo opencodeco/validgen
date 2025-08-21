@@ -15,6 +15,7 @@ func ValidGenStringEmailStructValidate(obj *ValidGenStringEmailStruct) []error {
 
 	return errs
 }
+
 func ValidGenStringEqICStructValidate(obj *ValidGenStringEqICStruct) []error {
 	var errs []error
 
@@ -24,6 +25,7 @@ func ValidGenStringEqICStructValidate(obj *ValidGenStringEqICStruct) []error {
 
 	return errs
 }
+
 func ValidGenStringEqStructValidate(obj *ValidGenStringEqStruct) []error {
 	var errs []error
 
@@ -33,6 +35,7 @@ func ValidGenStringEqStructValidate(obj *ValidGenStringEqStruct) []error {
 
 	return errs
 }
+
 func ValidGenStringInStructValidate(obj *ValidGenStringInStruct) []error {
 	var errs []error
 
@@ -42,6 +45,7 @@ func ValidGenStringInStructValidate(obj *ValidGenStringInStruct) []error {
 
 	return errs
 }
+
 func ValidGenStringLenStructValidate(obj *ValidGenStringLenStruct) []error {
 	var errs []error
 
@@ -51,6 +55,7 @@ func ValidGenStringLenStructValidate(obj *ValidGenStringLenStruct) []error {
 
 	return errs
 }
+
 func ValidGenStringMaxStructValidate(obj *ValidGenStringMaxStruct) []error {
 	var errs []error
 
@@ -60,6 +65,7 @@ func ValidGenStringMaxStructValidate(obj *ValidGenStringMaxStruct) []error {
 
 	return errs
 }
+
 func ValidGenStringMinStructValidate(obj *ValidGenStringMinStruct) []error {
 	var errs []error
 
@@ -69,6 +75,7 @@ func ValidGenStringMinStructValidate(obj *ValidGenStringMinStruct) []error {
 
 	return errs
 }
+
 func ValidGenStringNeqICStructValidate(obj *ValidGenStringNeqICStruct) []error {
 	var errs []error
 
@@ -78,6 +85,7 @@ func ValidGenStringNeqICStructValidate(obj *ValidGenStringNeqICStruct) []error {
 
 	return errs
 }
+
 func ValidGenStringNeqStructValidate(obj *ValidGenStringNeqStruct) []error {
 	var errs []error
 
@@ -87,6 +95,7 @@ func ValidGenStringNeqStructValidate(obj *ValidGenStringNeqStruct) []error {
 
 	return errs
 }
+
 func ValidGenStringRequiredStructValidate(obj *ValidGenStringRequiredStruct) []error {
 	var errs []error
 
