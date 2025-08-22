@@ -7,6 +7,7 @@ import (
 	"github.com/opencodeco/validgen/internal/analyzer"
 	"github.com/opencodeco/validgen/internal/codegenerator"
 	"github.com/opencodeco/validgen/internal/parser"
+	"github.com/opencodeco/validgen/internal/pkgwriter"
 )
 
 func main() {
@@ -29,7 +30,12 @@ func main() {
 		st.PrintInfo()
 	}
 
-	err = codegenerator.GenerateCode(analyzedStructs)
+	pkgs, err := codegenerator.GenerateCode(analyzedStructs)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = pkgwriter.Writer(pkgs)
 	if err != nil {
 		log.Fatal(err)
 	}

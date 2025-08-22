@@ -25,7 +25,7 @@ build: clean
 
 .PHONY: endtoendtests
 endtoendtests: build
-	find tests/endtoend/ -name '*_validator.go' -exec rm \{} \;
+	find tests/endtoend/ -name 'validator__.go' -exec rm \{} \;
 	$(VALIDGEN_BIN) tests/endtoend
 	cd tests/endtoend; go run .
 
