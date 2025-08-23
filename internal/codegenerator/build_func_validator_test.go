@@ -39,10 +39,10 @@ func TestBuildFuncValidatorCode(t *testing.T) {
 					},
 					FieldsValidations: []analyzer.FieldValidations{
 						{
-							Validations: []string{"required"},
+							Validations: []*analyzer.Validation{AssertParserValidation(t, "required")},
 						},
 						{
-							Validations: []string{"required"},
+							Validations: []*analyzer.Validation{AssertParserValidation(t, "required")},
 						},
 					},
 				},
@@ -80,7 +80,7 @@ func UserValidate(obj *User) []error {
 					},
 					FieldsValidations: []analyzer.FieldValidations{
 						{
-							Validations: []string{"min=5"},
+							Validations: []*analyzer.Validation{AssertParserValidation(t, "min=5")},
 						},
 					},
 				},

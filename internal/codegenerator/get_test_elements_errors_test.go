@@ -7,7 +7,7 @@ import (
 	"github.com/opencodeco/validgen/types"
 )
 
-func TestDefineTestElements(t *testing.T) {
+func TestDefineTestElementsWithInvalidOperations(t *testing.T) {
 	type args struct {
 		fieldName       string
 		fieldType       string
@@ -19,28 +19,20 @@ func TestDefineTestElements(t *testing.T) {
 		expectedErr error
 	}{
 		{
-			name: "invalid operation",
+			name: "invalid uint8 operation",
 			args: args{
 				fieldName:       "xpto",
-				fieldType:       "string",
-				fieldValidation: "xy=123",
+				fieldType:       "uint8",
+				fieldValidation: "in=1 2 3",
 			},
-			expectedErr: types.NewValidationError("parser validation xy=123 type string unsupported validation xy"),
-		},
-		{
-			name: "invalid string operation",
-			args: args{
-				fieldName:       "xpto",
-				fieldType:       "string",
-				fieldValidation: "lt=123",
-			},
-			expectedErr: types.NewValidationError("parser validation lt=123 type string unsupported validation lt"),
+			expectedErr: types.NewValidationError("unsupported operation in type uint8"),
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := DefineTestElements(tt.args.fieldName, tt.args.fieldType, tt.args.fieldValidation)
+			validation := AssertParserValidation(t, tt.args.fieldValidation)
+			_, err := DefineTestElements(tt.args.fieldName, tt.args.fieldType, validation)
 			var valErr types.ValidationError
 			if !errors.As(err, &valErr) {
 				t.Errorf("DefineTestElements() error = %v, wantErr %v", err, tt.expectedErr)
