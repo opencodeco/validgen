@@ -43,17 +43,14 @@ func TestBuildFileValidator(t *testing.T) {
 					},
 					ValidatorFuncCode: `
 func UserValidate(obj *User) []error {
-	var errs []error
-
-	if !(obj.FirstName != "") {
-		errs = append(errs, types.NewValidationError("FirstName is required"))
-	}
-
-	if !(obj.MyAge != 0) {
-		errs = append(errs, types.NewValidationError("MyAge is required"))
-	}
-
-	return errs
+var errs []error
+if !(obj.FirstName != "") {
+errs = append(errs, types.NewValidationError("FirstName is required"))
+}
+if !(obj.MyAge != 0) {
+errs = append(errs, types.NewValidationError("MyAge is required"))
+}
+return errs
 }`,
 				},
 			},
@@ -67,17 +64,15 @@ import (
 
 func UserValidate(obj *User) []error {
 	var errs []error
-
 	if !(obj.FirstName != "") {
 		errs = append(errs, types.NewValidationError("FirstName is required"))
 	}
-
 	if !(obj.MyAge != 0) {
 		errs = append(errs, types.NewValidationError("MyAge is required"))
 	}
-
 	return errs
-}`,
+}
+`,
 		},
 		{
 			name: "FirstName must have 5 characters or more",
@@ -98,13 +93,11 @@ func UserValidate(obj *User) []error {
 					},
 					ValidatorFuncCode: `
 func UserValidate(obj *User) []error {
-	var errs []error
-
-	if !(len(obj.FirstName) >= 5) {
-		errs = append(errs, types.NewValidationError("FirstName length must be >= 5"))
-	}
-
-	return errs
+var errs []error
+if !(len(obj.FirstName) >= 5) {
+errs = append(errs, types.NewValidationError("FirstName length must be >= 5"))
+}
+return errs
 }`,
 				},
 			},
@@ -118,13 +111,12 @@ import (
 
 func UserValidate(obj *User) []error {
 	var errs []error
-
 	if !(len(obj.FirstName) >= 5) {
 		errs = append(errs, types.NewValidationError("FirstName length must be >= 5"))
 	}
-
 	return errs
-}`,
+}
+`,
 		},
 	}
 
