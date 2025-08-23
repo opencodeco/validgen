@@ -8,32 +8,24 @@ import (
 
 func AddressValidate(obj *Address) []error {
 	var errs []error
-
 	if !(obj.Street != "") {
 		errs = append(errs, types.NewValidationError("Street is required"))
 	}
-
 	if !(obj.City != "") {
 		errs = append(errs, types.NewValidationError("City is required"))
 	}
-
 	return errs
 }
-
 func Type1Validate(obj *Type1) []error {
 	var errs []error
-
 	if !(obj.FirstName != "") {
 		errs = append(errs, types.NewValidationError("FirstName is required"))
 	}
-
 	if !(obj.LastName != "") {
 		errs = append(errs, types.NewValidationError("LastName is required"))
 	}
-
 	if !(obj.Age != 0) {
 		errs = append(errs, types.NewValidationError("Age is required"))
 	}
-
 	return errs
 }

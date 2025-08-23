@@ -8,18 +8,14 @@ import (
 
 func UserValidate(obj *User) []error {
 	var errs []error
-
 	if !(obj.FirstName != "") {
 		errs = append(errs, types.NewValidationError("FirstName is required"))
 	}
-
 	if !(obj.LastName != "") {
 		errs = append(errs, types.NewValidationError("LastName is required"))
 	}
-
 	if !(obj.Age != 0) {
 		errs = append(errs, types.NewValidationError("Age is required"))
 	}
-
 	return errs
 }

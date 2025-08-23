@@ -8,18 +8,14 @@ import (
 
 func UserValidate(obj *User) []error {
 	var errs []error
-
 	if !(obj.Email1 != "") {
 		errs = append(errs, types.NewValidationError("Email1 is required"))
 	}
-
 	if !(types.IsValidEmail(obj.Email1) == true) {
 		errs = append(errs, types.NewValidationError("Email1 must be a valid email"))
 	}
-
 	if !(types.IsValidEmail(obj.Email2) == true) {
 		errs = append(errs, types.NewValidationError("Email2 must be a valid email"))
 	}
-
 	return errs
 }
