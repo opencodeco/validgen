@@ -10,11 +10,9 @@ import (
 	"github.com/opencodeco/validgen/internal/common"
 )
 
-var funcValidatorTpl = `
-func {{.StructName}}Validate(obj *{{.StructName}}) []error {
-	var errs []error
-{{range .Fields}}{{buildValidationCode .FieldName .Type .Validations}}{{end}}
-	return errs
+var funcValidatorTpl = `func {{.StructName}}Validate(obj *{{.StructName}}) []error {
+var errs []error
+{{range .Fields}}{{buildValidationCode .FieldName .Type .Validations}}{{end}}return errs
 }
 `
 
@@ -91,10 +89,9 @@ func (gv *genValidations) buildIfCode(fieldName, fieldType string, fieldValidati
 	}
 
 	return fmt.Sprintf(
-		`
-	if !(%s) {
-		errs = append(errs, types.NewValidationError("%s"))
-	}
+		`if !(%s) {
+errs = append(errs, types.NewValidationError("%s"))
+}
 `, booleanCondition, testElements.errorMessage), nil
 }
 
@@ -112,8 +109,5 @@ func (gv *genValidations) buildIfNestedCode(fieldName, fieldType string) (string
 	funcName := fieldType + "Validate"
 	fieldParam := "&obj." + fieldName
 
-	return fmt.Sprintf(
-		`
-	errs = append(errs, %s(%s)...)
-`, funcName, fieldParam), nil
+	return fmt.Sprintf("errs = append(errs, %s(%s)...)\n", funcName, fieldParam), nil
 }
