@@ -25,10 +25,9 @@ func TestBuildValidationCode(t *testing.T) {
 				fieldType:       "string",
 				fieldValidation: "eq=abc",
 			},
-			want: `
-	if !(obj.strField == "abc") {
-		errs = append(errs, types.NewValidationError("strField must be equal to 'abc'"))
-	}
+			want: `if !(obj.strField == "abc") {
+errs = append(errs, types.NewValidationError("strField must be equal to 'abc'"))
+}
 `,
 		},
 		{
@@ -38,10 +37,9 @@ func TestBuildValidationCode(t *testing.T) {
 				fieldType:       "uint8",
 				fieldValidation: "gte=123",
 			},
-			want: `
-	if !(obj.intField >= 123) {
-		errs = append(errs, types.NewValidationError("intField must be >= 123"))
-	}
+			want: `if !(obj.intField >= 123) {
+errs = append(errs, types.NewValidationError("intField must be >= 123"))
+}
 `,
 		},
 		{
@@ -51,10 +49,9 @@ func TestBuildValidationCode(t *testing.T) {
 				fieldType:       "string",
 				fieldValidation: "in=a b c",
 			},
-			want: `
-	if !(obj.strField == "a" || obj.strField == "b" || obj.strField == "c") {
-		errs = append(errs, types.NewValidationError("strField must be one of 'a' 'b' 'c'"))
-	}
+			want: `if !(obj.strField == "a" || obj.strField == "b" || obj.strField == "c") {
+errs = append(errs, types.NewValidationError("strField must be one of 'a' 'b' 'c'"))
+}
 `,
 		},
 		{
@@ -64,10 +61,9 @@ func TestBuildValidationCode(t *testing.T) {
 				fieldType:       "string",
 				fieldValidation: "nin=a b c",
 			},
-			want: `
-	if !(obj.strField != "a" && obj.strField != "b" && obj.strField != "c") {
-		errs = append(errs, types.NewValidationError("strField must not be one of 'a' 'b' 'c'"))
-	}
+			want: `if !(obj.strField != "a" && obj.strField != "b" && obj.strField != "c") {
+errs = append(errs, types.NewValidationError("strField must not be one of 'a' 'b' 'c'"))
+}
 `,
 		},
 		{
@@ -77,10 +73,9 @@ func TestBuildValidationCode(t *testing.T) {
 				fieldType:       "[]string",
 				fieldValidation: "required",
 			},
-			want: `
-	if !(len(obj.strField) != 0) {
-		errs = append(errs, types.NewValidationError("strField must not be empty"))
-	}
+			want: `if !(len(obj.strField) != 0) {
+errs = append(errs, types.NewValidationError("strField must not be empty"))
+}
 `,
 		},
 		{
@@ -90,10 +85,9 @@ func TestBuildValidationCode(t *testing.T) {
 				fieldType:       "[]string",
 				fieldValidation: "min=2",
 			},
-			want: `
-	if !(len(obj.strField) >= 2) {
-		errs = append(errs, types.NewValidationError("strField must have at least 2 elements"))
-	}
+			want: `if !(len(obj.strField) >= 2) {
+errs = append(errs, types.NewValidationError("strField must have at least 2 elements"))
+}
 `,
 		},
 		{
@@ -103,10 +97,9 @@ func TestBuildValidationCode(t *testing.T) {
 				fieldType:       "[]string",
 				fieldValidation: "max=5",
 			},
-			want: `
-	if !(len(obj.strField) <= 5) {
-		errs = append(errs, types.NewValidationError("strField must have at most 5 elements"))
-	}
+			want: `if !(len(obj.strField) <= 5) {
+errs = append(errs, types.NewValidationError("strField must have at most 5 elements"))
+}
 `,
 		},
 		{
@@ -116,10 +109,9 @@ func TestBuildValidationCode(t *testing.T) {
 				fieldType:       "[]string",
 				fieldValidation: "len=3",
 			},
-			want: `
-	if !(len(obj.strField) == 3) {
-		errs = append(errs, types.NewValidationError("strField must have exactly 3 elements"))
-	}
+			want: `if !(len(obj.strField) == 3) {
+errs = append(errs, types.NewValidationError("strField must have exactly 3 elements"))
+}
 `,
 		},
 		{
@@ -129,10 +121,9 @@ func TestBuildValidationCode(t *testing.T) {
 				fieldType:       "[]string",
 				fieldValidation: "in=a b c",
 			},
-			want: `
-	if !(types.SlicesContains(obj.strField, "a") || types.SlicesContains(obj.strField, "b") || types.SlicesContains(obj.strField, "c")) {
-		errs = append(errs, types.NewValidationError("strField elements must be one of 'a' 'b' 'c'"))
-	}
+			want: `if !(types.SlicesContains(obj.strField, "a") || types.SlicesContains(obj.strField, "b") || types.SlicesContains(obj.strField, "c")) {
+errs = append(errs, types.NewValidationError("strField elements must be one of 'a' 'b' 'c'"))
+}
 `,
 		},
 		{
@@ -142,13 +133,13 @@ func TestBuildValidationCode(t *testing.T) {
 				fieldType:       "[]string",
 				fieldValidation: "nin=a b c",
 			},
-			want: `
-	if !(!types.SlicesContains(obj.strField, "a") && !types.SlicesContains(obj.strField, "b") && !types.SlicesContains(obj.strField, "c")) {
-		errs = append(errs, types.NewValidationError("strField elements must not be one of 'a' 'b' 'c'"))
-	}
+			want: `if !(!types.SlicesContains(obj.strField, "a") && !types.SlicesContains(obj.strField, "b") && !types.SlicesContains(obj.strField, "c")) {
+errs = append(errs, types.NewValidationError("strField elements must not be one of 'a' 'b' 'c'"))
+}
 `,
 		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			gv := genValidations{}
@@ -183,9 +174,7 @@ func TestBuildValidationCodeWithNestedStructsAndSlices(t *testing.T) {
 				fieldType:       "main.NestedStructType",
 				fieldValidation: "required",
 			},
-			want: `
-	errs = append(errs, NestedStructTypeValidate(&obj.Field)...)
-`,
+			want: "errs = append(errs, NestedStructTypeValidate(&obj.Field)...)\n",
 		},
 		{
 			name: "if code with nested struct in another package",
@@ -194,9 +183,7 @@ func TestBuildValidationCodeWithNestedStructsAndSlices(t *testing.T) {
 				fieldType:       "mypkg.NestedStructType",
 				fieldValidation: "required",
 			},
-			want: `
-	errs = append(errs, mypkg.NestedStructTypeValidate(&obj.Field)...)
-`,
+			want: "errs = append(errs, mypkg.NestedStructTypeValidate(&obj.Field)...)\n",
 		},
 		{
 			name: "if code with required slice of string",
@@ -205,10 +192,9 @@ func TestBuildValidationCodeWithNestedStructsAndSlices(t *testing.T) {
 				fieldType:       "[]string",
 				fieldValidation: "required",
 			},
-			want: `
-	if !(len(obj.Field) != 0) {
-		errs = append(errs, types.NewValidationError("Field must not be empty"))
-	}
+			want: `if !(len(obj.Field) != 0) {
+errs = append(errs, types.NewValidationError("Field must not be empty"))
+}
 `,
 		},
 		{
@@ -218,13 +204,13 @@ func TestBuildValidationCodeWithNestedStructsAndSlices(t *testing.T) {
 				fieldType:       "[]string",
 				fieldValidation: "min=2",
 			},
-			want: `
-	if !(len(obj.Field) >= 2) {
-		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
-	}
+			want: `if !(len(obj.Field) >= 2) {
+errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+}
 `,
 		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			gv := genValidations{
