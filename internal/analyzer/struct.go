@@ -13,7 +13,7 @@ type Struct struct {
 }
 
 type FieldValidations struct {
-	Validations []string
+	Validations []*Validation
 }
 
 func (s *Struct) PrintInfo() {

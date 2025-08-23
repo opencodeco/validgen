@@ -1,7 +1,6 @@
 package codegenerator
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/opencodeco/validgen/internal/analyzer"
@@ -23,7 +22,7 @@ type TestElements struct {
 	errorMessage   string
 }
 
-func DefineTestElements(fieldName, fieldType, fieldValidation string) (TestElements, error) {
+func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.Validation) (TestElements, error) {
 
 	type ConditionTable struct {
 		loperand     string
@@ -55,19 +54,14 @@ func DefineTestElements(fieldName, fieldType, fieldValidation string) (TestEleme
 		"nin,[]string":           {"", "", `!types.SlicesContains({{.Name}}, "{{.Target}}")`, "{{.Name}} elements must not be one of {{.Targets}}"},
 	}
 
-	validation, err := analyzer.ParserValidation(fieldValidation)
-	if err != nil {
-		return TestElements{}, types.NewValidationError("%s", fmt.Errorf("parser validation %s type %s %w", fieldValidation, fieldType, err).Error())
-	}
-
-	condition, ok := conditionTable[validation.Operation+","+fieldType]
+	condition, ok := conditionTable[fieldValidation.Operation+","+fieldType]
 	if !ok {
-		return TestElements{}, types.NewValidationError("unsupported validation %s type %s", fieldValidation, fieldType)
+		return TestElements{}, types.NewValidationError("unsupported operation %s type %s", fieldValidation.Operation, fieldType)
 	}
 
-	if validation.Operation == EqIgnoreCaseOp || validation.Operation == NeqIgnoreCaseOp {
-		for i := range validation.Values {
-			validation.Values[i] = strings.ToLower(validation.Values[i])
+	if fieldValidation.Operation == EqIgnoreCaseOp || fieldValidation.Operation == NeqIgnoreCaseOp {
+		for i := range fieldValidation.Values {
+			fieldValidation.Values[i] = strings.ToLower(fieldValidation.Values[i])
 		}
 	}
 
@@ -75,13 +69,13 @@ func DefineTestElements(fieldName, fieldType, fieldValidation string) (TestEleme
 	targetValue := ""
 	targetValues := ""
 
-	switch validation.ExpectedValues {
+	switch fieldValidation.ExpectedValues {
 	case analyzer.ZERO_VALUE:
 		roperands = append(roperands, replaceNameAndTargetWithPrefix(condition.roperand, fieldName, condition.roperand))
 		targetValue = condition.roperand
 		targetValues = "'" + condition.roperand + "' "
 	case analyzer.ONE_VALUE, analyzer.MANY_VALUES:
-		for _, value := range validation.Values {
+		for _, value := range fieldValidation.Values {
 			roperands = append(roperands, replaceNameAndTargetWithPrefix(condition.roperand, fieldName, value))
 			targetValue = value
 			targetValues += "'" + value + "' "
@@ -89,7 +83,7 @@ func DefineTestElements(fieldName, fieldType, fieldValidation string) (TestEleme
 	}
 
 	var concatOperator string
-	switch validation.Operation {
+	switch fieldValidation.Operation {
 	case InOp:
 		concatOperator = "||"
 	case NotInOp:

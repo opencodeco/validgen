@@ -1,10 +1,12 @@
 package analyzer
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
 	"github.com/opencodeco/validgen/internal/parser"
+	"github.com/opencodeco/validgen/types"
 )
 
 const validTag = "valid"
@@ -16,13 +18,22 @@ func AnalyzeStructs(structs []*parser.Struct) ([]*Struct, error) {
 		analyzedStruct := &Struct{
 			Struct: *st,
 		}
-		for _, fd := range st.Fields {
+		for i, fd := range st.Fields {
 			fieldValidations, hasValidTag := parseFieldValidations(fd.Tag)
 			if hasValidTag {
 				analyzedStruct.HasValidTag = true
 			}
 
-			analyzedStruct.FieldsValidations = append(analyzedStruct.FieldsValidations, FieldValidations{fieldValidations})
+			analyzedStruct.FieldsValidations = append(analyzedStruct.FieldsValidations, FieldValidations{})
+
+			for _, validation := range fieldValidations {
+				val, err := ParserValidation(validation)
+				if err != nil {
+					return nil, types.NewValidationError("%s", fmt.Errorf("parser validation %s %w", validation, err).Error())
+				}
+
+				analyzedStruct.FieldsValidations[i].Validations = append(analyzedStruct.FieldsValidations[i].Validations, val)
+			}
 		}
 
 		result = append(result, analyzedStruct)
