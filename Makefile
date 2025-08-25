@@ -8,27 +8,33 @@ BENCH_TIME=5s
 all: clean unittests build endtoendtests benchtests cmpbenchtests
 
 clean:
+	@echo "Cleaning"
 	rm -Rf $(BIN_DIR)/
 
 unittests:
+	@echo "Running unit tests"
 	go clean -testcache
 	go test -v ./...
 
 benchtests: build
+	@echo "Running bench tests"
 	find tests/bench/ -name '*_validator.go' -exec rm \{} \;
 	$(VALIDGEN_BIN) tests/bench
 	go clean -testcache
 	go test -bench=. -v -benchmem -benchtime=$(BENCH_TIME) ./tests/bench
 
 build: clean
+	@echo "Building"
 	go build -o $(VALIDGEN_BIN) .
 
 endtoendtests: build
+	@echo "Running endtoend tests"
 	find tests/endtoend/ -name 'validator__.go' -exec rm \{} \;
 	$(VALIDGEN_BIN) tests/endtoend
 	cd tests/endtoend; go run .
 
 cmpbenchtests: build
+	@echo "Running cmp bench tests"
 	rm -f tests/cmpbenchtests/generated_tests/*
 	cd tests/cmpbenchtests; go run .
 	$(VALIDGEN_BIN) tests/cmpbenchtests/generated_tests
