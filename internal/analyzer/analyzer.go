@@ -29,7 +29,7 @@ func AnalyzeStructs(structs []*parser.Struct) ([]*Struct, error) {
 			for _, validation := range fieldValidations {
 				val, err := ParserValidation(validation)
 				if err != nil {
-					return nil, types.NewValidationError("%s", fmt.Errorf("parser validation %s %w", validation, err).Error())
+					return nil, types.NewValidationError("%s", fmt.Errorf("parser validation %s: %w", validation, err))
 				}
 
 				analyzedStruct.FieldsValidations[i].Validations = append(analyzedStruct.FieldsValidations[i].Validations, val)
