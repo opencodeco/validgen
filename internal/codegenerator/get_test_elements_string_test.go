@@ -180,7 +180,8 @@ func TestDefineTestElementsWithStringFields(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			fieldType := "string"
 			wantErr := false
-			got, err := DefineTestElements(tt.args.fieldName, fieldType, tt.args.fieldValidation)
+			validation := AssertParserValidation(t, tt.args.fieldValidation)
+			got, err := DefineTestElements(tt.args.fieldName, fieldType, validation)
 			if (err != nil) != wantErr {
 				t.Errorf("DefineTestElements() error = %v, wantErr %v", err, wantErr)
 				return

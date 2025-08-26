@@ -6,6 +6,7 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/opencodeco/validgen/internal/analyzer"
 	"github.com/opencodeco/validgen/internal/common"
 )
 
@@ -25,7 +26,7 @@ type structTpl struct {
 type fieldTpl struct {
 	FieldName   string
 	Type        string
-	Validations []string
+	Validations []*analyzer.Validation
 }
 
 func (gv *genValidations) BuildFuncValidatorCode() (string, error) {
@@ -49,7 +50,7 @@ func (gv *genValidations) BuildFuncValidatorCode() (string, error) {
 	return code.String(), nil
 }
 
-func (gv *genValidations) buildValidationCode(fieldName, fieldType string, fieldValidations []string) (string, error) {
+func (gv *genValidations) buildValidationCode(fieldName, fieldType string, fieldValidations []*analyzer.Validation) (string, error) {
 
 	tests := ""
 	for _, fieldValidation := range fieldValidations {
@@ -74,7 +75,7 @@ func (gv *genValidations) buildValidationCode(fieldName, fieldType string, field
 	return tests, nil
 }
 
-func (gv *genValidations) buildIfCode(fieldName, fieldType, fieldValidation string) (string, error) {
+func (gv *genValidations) buildIfCode(fieldName, fieldType string, fieldValidation *analyzer.Validation) (string, error) {
 	testElements, err := DefineTestElements(fieldName, fieldType, fieldValidation)
 	if err != nil {
 		return "", fmt.Errorf("field %s: %w", fieldName, err)

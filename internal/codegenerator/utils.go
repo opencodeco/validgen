@@ -15,6 +15,7 @@ func StructToTpl(st *analyzer.Struct) *structTpl {
 			Type:        field.Type,
 			Validations: st.FieldsValidations[i].Validations,
 		}
+
 		stTpl.Fields = append(stTpl.Fields, fldTpl)
 	}
 

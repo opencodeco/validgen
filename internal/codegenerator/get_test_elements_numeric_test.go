@@ -66,7 +66,8 @@ func TestDefineTestElementsWithNumericFields(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := DefineTestElements(tt.args.fieldName, tt.args.fieldType, tt.args.fieldValidation)
+			validation := AssertParserValidation(t, tt.args.fieldValidation)
+			got, err := DefineTestElements(tt.args.fieldName, tt.args.fieldType, validation)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("DefineTestElements() error = %v, wantErr %v", err, tt.wantErr)
 				return

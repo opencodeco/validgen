@@ -152,7 +152,8 @@ func TestBuildValidationCode(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			gv := genValidations{}
-			got, err := gv.buildValidationCode(tt.args.fieldName, tt.args.fieldType, []string{tt.args.fieldValidation})
+			validation := AssertParserValidation(t, tt.args.fieldValidation)
+			got, err := gv.buildValidationCode(tt.args.fieldName, tt.args.fieldType, []*analyzer.Validation{validation})
 			if err != nil {
 				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, nil)
 				return
@@ -235,7 +236,8 @@ func TestBuildValidationCodeWithNestedStructsAndSlices(t *testing.T) {
 				StructsWithValidation: map[string]struct{}{},
 			}
 			gv.StructsWithValidation[tt.args.fieldType] = struct{}{}
-			got, err := gv.buildValidationCode(tt.args.fieldName, tt.args.fieldType, []string{tt.args.fieldValidation})
+			validation := AssertParserValidation(t, tt.args.fieldValidation)
+			got, err := gv.buildValidationCode(tt.args.fieldName, tt.args.fieldType, []*analyzer.Validation{validation})
 			if err != nil {
 				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, nil)
 				return

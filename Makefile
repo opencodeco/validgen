@@ -1,36 +1,40 @@
+.PHONY: clean unittests benchtests build endtoendtests cmpbenchtests
+
 BIN_DIR=bin
 BIN_NAME=validgen
 VALIDGEN_BIN=$(BIN_DIR)/$(BIN_NAME)
 BENCH_TIME=5s
 
-.PHONY: clean
+all: clean unittests build endtoendtests benchtests cmpbenchtests
+
 clean:
+	@echo "Cleaning"
 	rm -Rf $(BIN_DIR)/
 
-.PHONY: unittests
 unittests:
+	@echo "Running unit tests"
 	go clean -testcache
 	go test -v ./...
 
-.PHONY: benchtests
 benchtests: build
+	@echo "Running bench tests"
 	find tests/bench/ -name '*_validator.go' -exec rm \{} \;
 	$(VALIDGEN_BIN) tests/bench
 	go clean -testcache
 	go test -bench=. -v -benchmem -benchtime=$(BENCH_TIME) ./tests/bench
 
-.PHONY: build
 build: clean
+	@echo "Building"
 	go build -o $(VALIDGEN_BIN) .
 
-.PHONY: endtoendtests
 endtoendtests: build
+	@echo "Running endtoend tests"
 	find tests/endtoend/ -name 'validator__.go' -exec rm \{} \;
 	$(VALIDGEN_BIN) tests/endtoend
 	cd tests/endtoend; go run .
 
-.PHONY: cmpbenchtests
 cmpbenchtests: build
+	@echo "Running cmp bench tests"
 	rm -f tests/cmpbenchtests/generated_tests/*
 	cd tests/cmpbenchtests; go run .
 	$(VALIDGEN_BIN) tests/cmpbenchtests/generated_tests
