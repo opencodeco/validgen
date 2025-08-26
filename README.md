@@ -6,15 +6,17 @@ ValidGen born to solve that gap. Instead of use reflection, ValidGen uses the co
 
 At this time it is an unstable project and should not be used in production environments.
 
-# How to build ValidGen
+## How to build ValidGen
 
 The following requirements are needed to build the project:
+
 - Git
 - Go >= 1.24
 - Make
 
 The steps to build are:
-```
+
+```bash
 # Clone the project repository
 git clone git@github.com:opencodeco/validgen.git
 
@@ -27,7 +29,7 @@ make build
 
 After that the executable will be in `bin/validgen`.
 
-# Validations
+## Validations
 
 The following validations will be implemented:
 
@@ -67,11 +69,11 @@ The following table shows the validations and possible types, where "I" means "I
 | required        | I      | W             | W       | I     | W     | W   | W    | W        |
 | email           | I      | -             | -       | -     | -     | -   | -    | -        |
 
-# Steps to run the unit tests
+## Steps to run the unit tests
 
 The steps to run the unit tests are:
 
-```
+```bash
 # Enter in the project root folder
 cd validgen
 
@@ -79,11 +81,11 @@ cd validgen
 make unittests
 ```
 
-# Steps to run the benchmark tests
+## Steps to run the benchmark tests
 
 The steps to run the benchmark tests are:
 
-```
+```bash
 # Enter in the project root folder
 cd validgen
 
@@ -91,11 +93,11 @@ cd validgen
 make benchtests
 ```
 
-# Steps to run the end-to-end tests
+## Steps to run the end-to-end tests
 
 The steps to run the end-to-end tests are:
 
-```
+```bash
 # Enter in the project root folder
 cd validgen
 
@@ -103,67 +105,66 @@ cd validgen
 make endtoendtests
 ```
 
-# Steps to run the examples
+## Steps to run the examples
 
 All examples are in the `_examples` folder.
 
-## Steps to run test01
+### Steps to run test01
 
 Test01 aims to be a case where all the files are in the same package (in this case, the main package).
 
-```
+```bash
 # Runs validgen to generate structs validator code
 ./bin/validgen _examples/test01
 ```
 
 After that the file `user_validator.go` will be generated. This file contains UserValidate function that is responsible to check if User object has a valid content.
 
-```
+```bash
 # Execute the test
 cd _examples/test01
 go run .
 ```
 
-## Steps to run test02
+### Steps to run test02
 
 Test02 aims to be an example where the structs to be validated are in another package (structsinpkg in this test).
 
-```
+```bash
 # Runs validgen to generate structs validator code
 ./bin/validgen _examples/test02
 ```
 
 After that the file `user_validator.go` will be generated. This file contains UserValidate function that is responsible to check if User object has a valid content.
 
-```
+```bash
 # Execute the test
 cd _examples/test02
 go run .
 ```
 
-## Steps to run test03
+### Steps to run test03
 
 Test03 aims to be an example where the structs to be validated use min and max tags.
 
-```
+```bash
 # Runs validgen to generate structs validator code
 ./bin/validgen _examples/test03
 ```
 
 After that the file `user_validator.go` will be generated. This file contains UserValidate function that is responsible to check if User object has a valid content.
 
-```
+```bash
 # Execute the test
 cd _examples/test03
 go run .
 ```
 
-
-# Steps to run the benchmark tests comparing ValidGen and Validator
+## Steps to run the benchmark tests comparing ValidGen and Validator
 
 The steps to run the benchmark tests are:
 
-```
+```bash
 # Enter in the project root folder
 cd validgen
 
@@ -171,14 +172,13 @@ cd validgen
 make cmpbenchtests
 ```
 
-
 The command `make cmpbenchtests` invoke the following command:
 
 `go test -bench=. -v -benchmem -benchtime=5s ./tests/cmpbenchtests/generated_tests`
 
 The setup used was:
 
-```
+```bash
 goos: darwin
 goarch: arm64
 pkg: github.com/opencodeco/validgen/tests/cmpbenchtests/generated_tests
@@ -200,34 +200,31 @@ The following table as the performance results:
 | StringIn       | 5.000 ns/op | 49.75 ns/op | 9.95x       |
 | StringEmail    | 167.4 ns/op | 436.3 ns/op | 2.60x       |
 
-
 The following table as the raw results:
 
 | Test name                           | Iterations    | Nanoseconds per operation | Number os bytes allocated per operation | Number of allocations per operation |
-| -                                   | -:            | -:                        | -:                                      | -:                                  | 
-| BenchmarkValidGenStringRequired-12  |	1.000.000.000 |          5.000 ns/op      |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidatorStringRequired-12 | 149.656.641	  |        40.12 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidGenStringEq-12        | 1.000.000.000 |          5.000 ns/op	  |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidatorStringEq-12       | 150.419.842	  |         39.90 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidGenStringEqIC-12      | 401.652.991	  |         14.96 ns/op	      |        8 B/op	                        |       1 allocs/op                   |
-| BenchmarkValidatorStringEqIC-12     | 147.517.011	  |         40.63 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidGenStringNeq-12       | 1.000.000.000 |          5.000 ns/op	  |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidatorStringNeq-12      | 147.375.966   |         40.65 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidGenStringNeqIC-12     | 1.000.000.000 |          5.000 ns/op	  |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidatorStringNeqIC-12    | 146.089.116	  |         41.05 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidGenStringLen-12       | 1.000.000.000 |          5.000 ns/op	  |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidatorStringLen-12      | 135.221.859	  |         44.35 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidGenStringMax-12       | 1.000.000.000 |          5.000 ns/op	  |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidatorStringMax-12      | 133.947.687	  |         45.15 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidGenStringMin-12       | 1.000.000.000 |          5.000 ns/op	  |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidatorStringMin-12      | 133.335.433	  |         45.10 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidGenStringIn-12        | 1.000.000.000 |          5.000 ns/op	  |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidatorStringIn-12       | 120.405.889	  |         49.75 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidGenStringEmail-12     | 35.513.684	  |        167.4 ns/op	      |        0 B/op	                        |       0 allocs/op                   |
-| BenchmarkValidatorStringEmail-12    | 13.740.566	  |        436.3 ns/op	      |       88 B/op	                        |       5 allocs/op                   |
+| -                                   | -:            | -:                        | -:                                      | -:                                  |
+| BenchmarkValidGenStringRequired-12  | 1.000.000.000 |          5.000 ns/op      |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidatorStringRequired-12 | 149.656.641   |        40.12 ns/op        |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidGenStringEq-12        | 1.000.000.000 |          5.000 ns/op      |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidatorStringEq-12       | 150.419.842   |         39.90 ns/op       |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidGenStringEqIC-12      | 401.652.991   |         14.96 ns/op       |        8 B/op                           |       1 allocs/op                   |
+| BenchmarkValidatorStringEqIC-12     | 147.517.011   |         40.63 ns/op       |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidGenStringNeq-12       | 1.000.000.000 |          5.000 ns/op      |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidatorStringNeq-12      | 147.375.966   |         40.65 ns/op       |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidGenStringNeqIC-12     | 1.000.000.000 |          5.000 ns/op      |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidatorStringNeqIC-12    | 146.089.116   |         41.05 ns/op       |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidGenStringLen-12       | 1.000.000.000 |          5.000 ns/op      |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidatorStringLen-12      | 135.221.859   |         44.35 ns/op       |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidGenStringMax-12       | 1.000.000.000 |          5.000 ns/op      |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidatorStringMax-12      | 133.947.687   |         45.15 ns/op       |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidGenStringMin-12       | 1.000.000.000 |          5.000 ns/op      |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidatorStringMin-12      | 133.335.433   |         45.10 ns/op       |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidGenStringIn-12        | 1.000.000.000 |          5.000 ns/op      |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidatorStringIn-12       | 120.405.889   |         49.75 ns/op       |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidGenStringEmail-12     | 35.513.684    |        167.4 ns/op        |        0 B/op                           |       0 allocs/op                   |
+| BenchmarkValidatorStringEmail-12    | 13.740.566    |        436.3 ns/op        |       88 B/op                           |       5 allocs/op                   |
 
+## License
 
-
-# License
-
-ValidGen uses [MIT License](LICENSE). 
+ValidGen uses [MIT License](LICENSE).
