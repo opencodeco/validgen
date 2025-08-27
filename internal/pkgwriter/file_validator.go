@@ -3,6 +3,7 @@ package pkgwriter
 import (
 	"bytes"
 	"fmt"
+	"go/format"
 	"os"
 	"text/template"
 
@@ -60,5 +61,10 @@ func BuildFileValidatorCode(pkg *codegenerator.Pkg) (string, error) {
 		return "", err
 	}
 
-	return code.String(), nil
+	formattedCode, err := format.Source(code.Bytes())
+	if err != nil {
+		return "", err
+	}
+
+	return string(formattedCode), nil
 }

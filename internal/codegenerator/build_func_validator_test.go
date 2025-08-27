@@ -47,19 +47,15 @@ func TestBuildFuncValidatorCode(t *testing.T) {
 					},
 				},
 			},
-			want: `
-func UserValidate(obj *User) []error {
-	var errs []error
-
-	if !(obj.FirstName != "") {
-		errs = append(errs, types.NewValidationError("FirstName is required"))
-	}
-
-	if !(obj.MyAge != 0) {
-		errs = append(errs, types.NewValidationError("MyAge is required"))
-	}
-
-	return errs
+			want: `func UserValidate(obj *User) []error {
+var errs []error
+if !(obj.FirstName != "") {
+errs = append(errs, types.NewValidationError("FirstName is required"))
+}
+if !(obj.MyAge != 0) {
+errs = append(errs, types.NewValidationError("MyAge is required"))
+}
+return errs
 }
 `,
 		},
@@ -85,15 +81,12 @@ func UserValidate(obj *User) []error {
 					},
 				},
 			},
-			want: `
-func UserValidate(obj *User) []error {
-	var errs []error
-
-	if !(len(obj.FirstName) >= 5) {
-		errs = append(errs, types.NewValidationError("FirstName length must be >= 5"))
-	}
-
-	return errs
+			want: `func UserValidate(obj *User) []error {
+var errs []error
+if !(len(obj.FirstName) >= 5) {
+errs = append(errs, types.NewValidationError("FirstName length must be >= 5"))
+}
+return errs
 }
 `,
 		},
