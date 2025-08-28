@@ -7,6 +7,7 @@ import (
 type MyStruct struct {
 	FieldStr1 string `valid:"required"`
 	FieldStr2 string `valid:"required,eqfield=FieldStr1"`
+	FieldStr3 string `valid:"required,neqfield=FieldStr1"`
 }
 
 func cmp_between_fields_tests() {
@@ -17,9 +18,11 @@ func cmp_between_fields_tests() {
 	v := &MyStruct{
 		FieldStr1: "abc",
 		FieldStr2: "def",
+		FieldStr3: "abc",
 	}
 	expectedMsgErrors = []string{
 		"FieldStr2 must be equal to FieldStr1",
+		"FieldStr3 must not be equal to FieldStr1",
 	}
 	errs = MyStructValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
@@ -30,6 +33,7 @@ func cmp_between_fields_tests() {
 	v = &MyStruct{
 		FieldStr1: "abc",
 		FieldStr2: "abc",
+		FieldStr3: "def",
 	}
 	expectedMsgErrors = nil
 	errs = MyStructValidate(v)

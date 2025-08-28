@@ -63,6 +63,12 @@ func MyStructValidate(obj *MyStruct) []error {
 	if !(obj.FieldStr2 == obj.FieldStr1) {
 		errs = append(errs, types.NewValidationError("FieldStr2 must be equal to FieldStr1"))
 	}
+	if !(obj.FieldStr3 != "") {
+		errs = append(errs, types.NewValidationError("FieldStr3 is required"))
+	}
+	if !(obj.FieldStr3 != obj.FieldStr1) {
+		errs = append(errs, types.NewValidationError("FieldStr3 must not be equal to FieldStr1"))
+	}
 	return errs
 }
 func SliceStringValidate(obj *SliceString) []error {
