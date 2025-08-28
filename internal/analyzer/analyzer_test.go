@@ -34,6 +34,26 @@ func TestAnalyzeStructsWithValidFieldOperations(t *testing.T) {
 			fType: "uint8",
 			op:    "neqfield",
 		},
+		{
+			name:  "valid gtefield between uint8",
+			fType: "uint8",
+			op:    "gtefield",
+		},
+		{
+			name:  "valid gtfield between uint8",
+			fType: "uint8",
+			op:    "gtfield",
+		},
+		{
+			name:  "valid ltefield between uint8",
+			fType: "uint8",
+			op:    "ltefield",
+		},
+		{
+			name:  "valid ltfield between uint8",
+			fType: "uint8",
+			op:    "ltfield",
+		},
 	}
 
 	for _, tt := range tests {

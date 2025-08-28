@@ -38,6 +38,9 @@ func ParserValidation(fieldValidation string) (*Validation, error) {
 		"email":           ZERO_VALUE,
 		"eqfield":         ONE_VALUE,
 		"neqfield":        ONE_VALUE,
+		"gtefield":        ONE_VALUE,
+		"gtfield":         ONE_VALUE,
+		"ltefield":        ONE_VALUE,
 		"ltfield":         ONE_VALUE,
 	}
 

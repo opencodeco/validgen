@@ -75,11 +75,11 @@ The following table shows the validations and possible types, where "I" means "I
 | required        | I      | W                          | W       | I     | W     | W   | W    | W        |
 | email           | I      | -                          | -       | -     | -     | -   | -    | -        |
 | eqfield         | I      | I                          | W       | -     | -     | -   | W    | W        |
-| neqfield        | I      | W                          | W       | -     | -     | -   | W    | W        |
-| gtefield        | -      | W                          | -       | -     | -     | -   | W    | W        |
-| gtfield         | -      | W                          | -       | -     | -     | -   | W    | W        |
-| ltefield        | -      | W                          | -       | -     | -     | -   | W    | W        |
-| ltfield         | -      | W                          | -       | -     | -     | -   | W    | W        |
+| neqfield        | I      | I                          | W       | -     | -     | -   | W    | W        |
+| gtefield        | -      | I                          | -       | -     | -     | -   | W    | W        |
+| gtfield         | -      | I                          | -       | -     | -     | -   | W    | W        |
+| ltefield        | -      | I                          | -       | -     | -     | -   | W    | W        |
+| ltfield         | -      | I                          | -       | -     | -     | -   | W    | W        |
 
 ## Steps to run the unit tests
 

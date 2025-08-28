@@ -57,6 +57,10 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 		"neqfield,string":        {"{{.Name}}", "!=", `obj.{{.Target}}`, "{{.Name}} must not be equal to {{.Target}}"},
 		"eqfield,uint8":          {"{{.Name}}", "==", `obj.{{.Target}}`, "{{.Name}} must be equal to {{.Target}}"},
 		"neqfield,uint8":         {"{{.Name}}", "!=", `obj.{{.Target}}`, "{{.Name}} must not be equal to {{.Target}}"},
+		"gtefield,uint8":         {"{{.Name}}", ">=", `obj.{{.Target}}`, "{{.Name}} must be >= {{.Target}}"},
+		"gtfield,uint8":          {"{{.Name}}", ">", `obj.{{.Target}}`, "{{.Name}} must be > {{.Target}}"},
+		"ltefield,uint8":         {"{{.Name}}", "<=", `obj.{{.Target}}`, "{{.Name}} must be <= {{.Target}}"},
+		"ltfield,uint8":          {"{{.Name}}", "<", `obj.{{.Target}}`, "{{.Name}} must be < {{.Target}}"},
 	}
 
 	condition, ok := conditionTable[fieldValidation.Operation+","+fieldType]

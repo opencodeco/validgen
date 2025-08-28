@@ -76,6 +76,66 @@ func TestDefineTestElementsBetweenFields(t *testing.T) {
 				errorMessage:   "myfield1 must not be equal to myfield2",
 			},
 		},
+		{
+			name: "uint8 field must be greater than or equal",
+			args: args{
+				fieldName:       "myfield1",
+				fieldType:       "uint8",
+				fieldValidation: "gtefield=myfield2",
+			},
+			want: TestElements{
+				leftOperand:    "obj.myfield1",
+				operator:       ">=",
+				rightOperands:  []string{"obj.myfield2"},
+				concatOperator: "",
+				errorMessage:   "myfield1 must be >= myfield2",
+			},
+		},
+		{
+			name: "uint8 field must be greater than",
+			args: args{
+				fieldName:       "myfield1",
+				fieldType:       "uint8",
+				fieldValidation: "gtfield=myfield2",
+			},
+			want: TestElements{
+				leftOperand:    "obj.myfield1",
+				operator:       ">",
+				rightOperands:  []string{"obj.myfield2"},
+				concatOperator: "",
+				errorMessage:   "myfield1 must be > myfield2",
+			},
+		},
+		{
+			name: "uint8 fields must less than or equal",
+			args: args{
+				fieldName:       "myfield1",
+				fieldType:       "uint8",
+				fieldValidation: "ltefield=myfield2",
+			},
+			want: TestElements{
+				leftOperand:    "obj.myfield1",
+				operator:       "<=",
+				rightOperands:  []string{"obj.myfield2"},
+				concatOperator: "",
+				errorMessage:   "myfield1 must be <= myfield2",
+			},
+		},
+		{
+			name: "uint8 fields must less than",
+			args: args{
+				fieldName:       "myfield1",
+				fieldType:       "uint8",
+				fieldValidation: "ltfield=myfield2",
+			},
+			want: TestElements{
+				leftOperand:    "obj.myfield1",
+				operator:       "<",
+				rightOperands:  []string{"obj.myfield2"},
+				concatOperator: "",
+				errorMessage:   "myfield1 must be < myfield2",
+			},
+		},
 	}
 
 	for _, tt := range tests {

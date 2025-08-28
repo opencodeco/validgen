@@ -83,13 +83,17 @@ func analyzeFieldOperations(structs []*Struct) error {
 		"ltfield":  {},
 	}
 
-	// For string type, eqfield and nefield.
-	// For uint8 type, eqfield, gtefield, gtfield, ltefield, ltfield and nefield.
+	// For string type, eqfield and neqfield.
+	// For uint8 type, eqfield, gtefield, gtfield, ltefield, ltfield and neqfield.
 	fieldOperationsByType := map[string]struct{}{
 		"string,eqfield":  {},
 		"string,neqfield": {},
 		"uint8,eqfield":   {},
 		"uint8,neqfield":  {},
+		"uint8,gtefield":  {},
+		"uint8,gtfield":   {},
+		"uint8,ltefield":  {},
+		"uint8,ltfield":   {},
 	}
 
 	for _, st := range structs {
