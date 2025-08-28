@@ -52,6 +52,19 @@ func AllTypes2Validate(obj *AllTypes2) []error {
 	}
 	return errs
 }
+func MyStructValidate(obj *MyStruct) []error {
+	var errs []error
+	if !(obj.FieldStr1 != "") {
+		errs = append(errs, types.NewValidationError("FieldStr1 is required"))
+	}
+	if !(obj.FieldStr2 != "") {
+		errs = append(errs, types.NewValidationError("FieldStr2 is required"))
+	}
+	if !(obj.FieldStr2 == obj.FieldStr1) {
+		errs = append(errs, types.NewValidationError("FieldStr2 must be equal to FieldStr1"))
+	}
+	return errs
+}
 func SliceStringValidate(obj *SliceString) []error {
 	var errs []error
 	if !(len(obj.TypesRequired) != 0) {
