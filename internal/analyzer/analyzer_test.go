@@ -24,6 +24,16 @@ func TestAnalyzeStructsWithValidFieldOperations(t *testing.T) {
 			fType: "string",
 			op:    "neqfield",
 		},
+		{
+			name:  "valid eqfield between uint8",
+			fType: "uint8",
+			op:    "eqfield",
+		},
+		{
+			name:  "valid neqfield between uint8",
+			fType: "uint8",
+			op:    "neqfield",
+		},
 	}
 
 	for _, tt := range tests {

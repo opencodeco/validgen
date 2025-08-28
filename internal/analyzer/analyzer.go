@@ -88,6 +88,8 @@ func analyzeFieldOperations(structs []*Struct) error {
 	fieldOperationsByType := map[string]struct{}{
 		"string,eqfield":  {},
 		"string,neqfield": {},
+		"uint8,eqfield":   {},
+		"uint8,neqfield":  {},
 	}
 
 	for _, st := range structs {

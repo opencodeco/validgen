@@ -52,22 +52,41 @@ func AllTypes2Validate(obj *AllTypes2) []error {
 	}
 	return errs
 }
-func MyStructValidate(obj *MyStruct) []error {
+func CmpStringFieldsValidate(obj *CmpStringFields) []error {
 	var errs []error
-	if !(obj.FieldStr1 != "") {
-		errs = append(errs, types.NewValidationError("FieldStr1 is required"))
+	if !(obj.Field1 != "") {
+		errs = append(errs, types.NewValidationError("Field1 is required"))
 	}
-	if !(obj.FieldStr2 != "") {
-		errs = append(errs, types.NewValidationError("FieldStr2 is required"))
+	if !(obj.Field2 != "") {
+		errs = append(errs, types.NewValidationError("Field2 is required"))
 	}
-	if !(obj.FieldStr2 == obj.FieldStr1) {
-		errs = append(errs, types.NewValidationError("FieldStr2 must be equal to FieldStr1"))
+	if !(obj.Field2 == obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field2 must be equal to Field1"))
 	}
-	if !(obj.FieldStr3 != "") {
-		errs = append(errs, types.NewValidationError("FieldStr3 is required"))
+	if !(obj.Field3 != "") {
+		errs = append(errs, types.NewValidationError("Field3 is required"))
 	}
-	if !(obj.FieldStr3 != obj.FieldStr1) {
-		errs = append(errs, types.NewValidationError("FieldStr3 must not be equal to FieldStr1"))
+	if !(obj.Field3 != obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field3 must not be equal to Field1"))
+	}
+	return errs
+}
+func CmpUint8FieldsValidate(obj *CmpUint8Fields) []error {
+	var errs []error
+	if !(obj.Field1 != 0) {
+		errs = append(errs, types.NewValidationError("Field1 is required"))
+	}
+	if !(obj.Field2 != 0) {
+		errs = append(errs, types.NewValidationError("Field2 is required"))
+	}
+	if !(obj.Field2 == obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field2 must be equal to Field1"))
+	}
+	if !(obj.Field3 != 0) {
+		errs = append(errs, types.NewValidationError("Field3 is required"))
+	}
+	if !(obj.Field3 != obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field3 must not be equal to Field1"))
 	}
 	return errs
 }

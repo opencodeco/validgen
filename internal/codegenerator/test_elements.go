@@ -55,6 +55,8 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 		"nin,[]string":           {"", "", `!types.SlicesContains({{.Name}}, "{{.Target}}")`, "{{.Name}} elements must not be one of {{.Targets}}"},
 		"eqfield,string":         {"{{.Name}}", "==", `obj.{{.Target}}`, "{{.Name}} must be equal to {{.Target}}"},
 		"neqfield,string":        {"{{.Name}}", "!=", `obj.{{.Target}}`, "{{.Name}} must not be equal to {{.Target}}"},
+		"eqfield,uint8":          {"{{.Name}}", "==", `obj.{{.Target}}`, "{{.Name}} must be equal to {{.Target}}"},
+		"neqfield,uint8":         {"{{.Name}}", "!=", `obj.{{.Target}}`, "{{.Name}} must not be equal to {{.Target}}"},
 	}
 
 	condition, ok := conditionTable[fieldValidation.Operation+","+fieldType]
