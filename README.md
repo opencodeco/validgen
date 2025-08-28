@@ -48,6 +48,12 @@ The following validations will be implemented:
 - nin (not in): must not be one of the following values
 - required (required): is required
 - email (email): must be a valid email format (empty is valid for optional fields)
+- eqfield (equal field): field must be equal to another field
+- neqfield (not equal field): field must not be equal to another field
+- gtefield (greater than or equal field): field must be greater than or equal to another field
+- gtfield (greater than field): field must be greater than another field
+- ltefield (less than or equal field): field must be less than or equal to another field
+- ltfield (less than field): field must be less than another field
 
 The following table shows the validations and possible types, where "I" means "Implemented", "W" means "Will be implemented" and "-" means "Will not be implemented":
 
@@ -68,6 +74,12 @@ The following table shows the validations and possible types, where "I" means "I
 | nin             | I      | W             | W       | I     | W     | W   | -    | W        |
 | required        | I      | W             | W       | I     | W     | W   | W    | W        |
 | email           | I      | -             | -       | -     | -     | -   | -    | -        |
+| eqfield         | I      | W             | W       | -     | -     | -   | W    | W        |
+| neqfield        | I      | W             | W       | -     | -     | -   | W    | W        |
+| gtefield        | -      | W             | -       | -     | -     | -   | W    | W        |
+| gtfield         | -      | W             | -       | -     | -     | -   | W    | W        |
+| ltefield        | -      | W             | -       | -     | -     | -   | W    | W        |
+| ltfield         | -      | W             | -       | -     | -     | -   | W    | W        |
 
 ## Steps to run the unit tests
 
