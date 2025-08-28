@@ -97,13 +97,13 @@ func analyzeFieldOperations(structs []*Struct) error {
 				fd1Name := fd.FieldName
 				fd2Name := val.Values[0]
 
-				// Check if field exits.
+				// Check if field exists.
 				f2Type, ok := fieldsType[fd2Name]
 				if !ok {
 					return types.NewValidationError("operation %s: undefined field %s", op, fd2Name)
 				}
 
-				// Check if fields has the same type.
+				// Check if fields have the same type.
 				if fd.Type != f2Type {
 					return types.NewValidationError("operation %s: mismatched types between %s and %s", op, fd1Name, fd2Name)
 				}
