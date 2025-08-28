@@ -74,28 +74,6 @@ func parseFieldValidations(fieldTag string) ([]string, bool) {
 
 func analyzeFieldOperations(structs []*Struct) error {
 
-	fieldOperations := map[string]struct{}{
-		"eqfield":  {},
-		"neqfield": {},
-		"gtefield": {},
-		"gtfield":  {},
-		"ltefield": {},
-		"ltfield":  {},
-	}
-
-	// For string type, eqfield and neqfield.
-	// For uint8 type, eqfield, gtefield, gtfield, ltefield, ltfield and neqfield.
-	fieldOperationsByType := map[string]struct{}{
-		"string,eqfield":  {},
-		"string,neqfield": {},
-		"uint8,eqfield":   {},
-		"uint8,neqfield":  {},
-		"uint8,gtefield":  {},
-		"uint8,gtfield":   {},
-		"uint8,ltefield":  {},
-		"uint8,ltfield":   {},
-	}
-
 	for _, st := range structs {
 		fieldsType := map[string]string{}
 		for _, fd := range st.Fields {
@@ -106,13 +84,13 @@ func analyzeFieldOperations(structs []*Struct) error {
 			for _, val := range st.FieldsValidations[i].Validations {
 				// Check if is a field operation.
 				op := val.Operation
-				if _, ok := fieldOperations[op]; !ok {
+				if !isFieldOperation(op) {
 					continue
 				}
 
 				// Check if is a valid operation for a type.
 				fd1Type := fd.Type
-				if _, ok := fieldOperationsByType[fd1Type+","+op]; !ok {
+				if !isValidFieldOperationByType(fd1Type, op) {
 					return types.NewValidationError("invalid operation %s to %s type", op, fd1Type)
 				}
 
@@ -134,4 +112,38 @@ func analyzeFieldOperations(structs []*Struct) error {
 	}
 
 	return nil
+}
+
+func isFieldOperation(op string) bool {
+	fieldOperations := map[string]struct{}{
+		"eqfield":  {},
+		"neqfield": {},
+		"gtefield": {},
+		"gtfield":  {},
+		"ltefield": {},
+		"ltfield":  {},
+	}
+
+	_, ok := fieldOperations[op]
+
+	return ok
+}
+
+func isValidFieldOperationByType(fieldType, op string) bool {
+	// For string type, eqfield and neqfield.
+	// For uint8 type, eqfield, gtefield, gtfield, ltefield, ltfield and neqfield.
+	fieldOperationsByType := map[string]struct{}{
+		"string,eqfield":  {},
+		"string,neqfield": {},
+		"uint8,eqfield":   {},
+		"uint8,neqfield":  {},
+		"uint8,gtefield":  {},
+		"uint8,gtfield":   {},
+		"uint8,ltefield":  {},
+		"uint8,ltfield":   {},
+	}
+
+	_, ok := fieldOperationsByType[fieldType+","+op]
+
+	return ok
 }
