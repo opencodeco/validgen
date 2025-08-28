@@ -87,24 +87,22 @@ func TestAnalyzeStructsWithValidFieldOperations(t *testing.T) {
 func TestAnalyzeStructsWithInvalidFieldOperations(t *testing.T) {
 	tests := []struct {
 		name    string
-		arg     []*parser.Struct
+		arg     *parser.Struct
 		wantErr error
 	}{
 		{
 			name: "mismatched types between fields",
-			arg: []*parser.Struct{
-				{
-					Fields: []parser.Field{
-						{
-							FieldName: "Field1",
-							Type:      "string",
-							Tag:       `valid:"eqfield=Field2"`,
-						},
-						{
-							FieldName: "Field2",
-							Type:      "uint8",
-							Tag:       ``,
-						},
+			arg: &parser.Struct{
+				Fields: []parser.Field{
+					{
+						FieldName: "Field1",
+						Type:      "string",
+						Tag:       `valid:"eqfield=Field2"`,
+					},
+					{
+						FieldName: "Field2",
+						Type:      "uint8",
+						Tag:       ``,
 					},
 				},
 			},
@@ -112,14 +110,12 @@ func TestAnalyzeStructsWithInvalidFieldOperations(t *testing.T) {
 		},
 		{
 			name: "undefined field",
-			arg: []*parser.Struct{
-				{
-					Fields: []parser.Field{
-						{
-							FieldName: "Field1",
-							Type:      "string",
-							Tag:       `valid:"eqfield=Field2"`,
-						},
+			arg: &parser.Struct{
+				Fields: []parser.Field{
+					{
+						FieldName: "Field1",
+						Type:      "string",
+						Tag:       `valid:"eqfield=Field2"`,
 					},
 				},
 			},
@@ -127,19 +123,17 @@ func TestAnalyzeStructsWithInvalidFieldOperations(t *testing.T) {
 		},
 		{
 			name: "invalid operation to string type",
-			arg: []*parser.Struct{
-				{
-					Fields: []parser.Field{
-						{
-							FieldName: "Field1",
-							Type:      "string",
-							Tag:       `valid:"ltfield=Field2"`,
-						},
-						{
-							FieldName: "Field2",
-							Type:      "uint8",
-							Tag:       ``,
-						},
+			arg: &parser.Struct{
+				Fields: []parser.Field{
+					{
+						FieldName: "Field1",
+						Type:      "string",
+						Tag:       `valid:"ltfield=Field2"`,
+					},
+					{
+						FieldName: "Field2",
+						Type:      "uint8",
+						Tag:       ``,
 					},
 				},
 			},
@@ -149,7 +143,7 @@ func TestAnalyzeStructsWithInvalidFieldOperations(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := AnalyzeStructs(tt.arg)
+			_, err := AnalyzeStructs([]*parser.Struct{tt.arg})
 			if err != tt.wantErr {
 				t.Errorf("AnalyzeStructs() error = %v, wantErr %v", err, tt.wantErr)
 				return
