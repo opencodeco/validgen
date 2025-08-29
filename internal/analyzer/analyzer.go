@@ -90,7 +90,7 @@ func analyzeFieldOperations(structs []*Struct) error {
 
 				// Check if is a valid operation for a type.
 				fd1Type := fd.Type
-				if !isValidFieldOperationByType(fd1Type, op) {
+				if !isValidFieldOperationByType(op, fd1Type) {
 					return types.NewValidationError("invalid operation %s to %s type", op, fd1Type)
 				}
 
@@ -112,38 +112,4 @@ func analyzeFieldOperations(structs []*Struct) error {
 	}
 
 	return nil
-}
-
-func isFieldOperation(op string) bool {
-	fieldOperations := map[string]struct{}{
-		"eqfield":  {},
-		"neqfield": {},
-		"gtefield": {},
-		"gtfield":  {},
-		"ltefield": {},
-		"ltfield":  {},
-	}
-
-	_, ok := fieldOperations[op]
-
-	return ok
-}
-
-func isValidFieldOperationByType(fieldType, op string) bool {
-	// For string type, eqfield and neqfield.
-	// For uint8 type, eqfield, gtefield, gtfield, ltefield, ltfield and neqfield.
-	fieldOperationsByType := map[string]struct{}{
-		"string,eqfield":  {},
-		"string,neqfield": {},
-		"uint8,eqfield":   {},
-		"uint8,neqfield":  {},
-		"uint8,gtefield":  {},
-		"uint8,gtfield":   {},
-		"uint8,ltefield":  {},
-		"uint8,ltfield":   {},
-	}
-
-	_, ok := fieldOperationsByType[fieldType+","+op]
-
-	return ok
 }
