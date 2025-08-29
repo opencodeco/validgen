@@ -84,13 +84,13 @@ func analyzeFieldOperations(structs []*Struct) error {
 			for _, val := range st.FieldsValidations[i].Validations {
 				// Check if is a field operation.
 				op := val.Operation
-				if !isFieldOperation(op) {
+				if !operations[op].IsFieldOperation {
 					continue
 				}
 
 				// Check if is a valid operation for a type.
 				fd1Type := fd.Type
-				if !isValidFieldOperationByType(op, fd1Type) {
+				if !operations[op].ValidTypes[fd1Type] {
 					return types.NewValidationError("invalid operation %s to %s type", op, fd1Type)
 				}
 
