@@ -56,7 +56,7 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"uint8": true,
+			"string": true,
 		},
 	},
 	"max": {
@@ -64,7 +64,7 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"uint8": true,
+			"string": true,
 		},
 	},
 	"eq_ignore_case": {
