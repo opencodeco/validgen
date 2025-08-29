@@ -53,6 +53,14 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 		"len,[]string":           {"len({{.Name}})", "==", `{{.Target}}`, "{{.Name}} must have exactly {{.Target}} elements"},
 		"in,[]string":            {"", "", `types.SlicesContains({{.Name}}, "{{.Target}}")`, "{{.Name}} elements must be one of {{.Targets}}"},
 		"nin,[]string":           {"", "", `!types.SlicesContains({{.Name}}, "{{.Target}}")`, "{{.Name}} elements must not be one of {{.Targets}}"},
+		"eqfield,string":         {"{{.Name}}", "==", `obj.{{.Target}}`, "{{.Name}} must be equal to {{.Target}}"},
+		"neqfield,string":        {"{{.Name}}", "!=", `obj.{{.Target}}`, "{{.Name}} must not be equal to {{.Target}}"},
+		"eqfield,uint8":          {"{{.Name}}", "==", `obj.{{.Target}}`, "{{.Name}} must be equal to {{.Target}}"},
+		"neqfield,uint8":         {"{{.Name}}", "!=", `obj.{{.Target}}`, "{{.Name}} must not be equal to {{.Target}}"},
+		"gtefield,uint8":         {"{{.Name}}", ">=", `obj.{{.Target}}`, "{{.Name}} must be >= {{.Target}}"},
+		"gtfield,uint8":          {"{{.Name}}", ">", `obj.{{.Target}}`, "{{.Name}} must be > {{.Target}}"},
+		"ltefield,uint8":         {"{{.Name}}", "<=", `obj.{{.Target}}`, "{{.Name}} must be <= {{.Target}}"},
+		"ltfield,uint8":          {"{{.Name}}", "<", `obj.{{.Target}}`, "{{.Name}} must be < {{.Target}}"},
 	}
 
 	condition, ok := conditionTable[fieldValidation.Operation+","+fieldType]

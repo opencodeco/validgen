@@ -6,14 +6,6 @@ import (
 	"github.com/opencodeco/validgen/types"
 )
 
-type CountValues int
-
-const (
-	ZERO_VALUE CountValues = iota
-	ONE_VALUE
-	MANY_VALUES
-)
-
 type Validation struct {
 	Operation      string
 	ExpectedValues CountValues
@@ -21,30 +13,13 @@ type Validation struct {
 }
 
 func ParserValidation(fieldValidation string) (*Validation, error) {
-
-	expectedValuesCount := map[string]CountValues{
-		"eq":              ONE_VALUE,
-		"required":        ZERO_VALUE,
-		"gte":             ONE_VALUE,
-		"lte":             ONE_VALUE,
-		"min":             ONE_VALUE,
-		"max":             ONE_VALUE,
-		"eq_ignore_case":  ONE_VALUE,
-		"len":             ONE_VALUE,
-		"neq":             ONE_VALUE,
-		"neq_ignore_case": ONE_VALUE,
-		"in":              MANY_VALUES,
-		"nin":             MANY_VALUES,
-		"email":           ZERO_VALUE,
-	}
-
 	validation, values, err := parserValidationString(fieldValidation)
 	if err != nil {
 		return nil, err
 	}
 
-	valuesCount, ok := expectedValuesCount[validation]
-	if !ok {
+	valuesCount := operations[validation].CountValues
+	if valuesCount == UNDEFINED {
 		return nil, types.NewValidationError("unsupported validation %s", validation)
 	}
 

@@ -90,6 +90,45 @@ return errs
 }
 `,
 		},
+		{
+			name: "Field op",
+			fields: fields{
+				Struct: &analyzer.Struct{
+					Struct: parser.Struct{
+						PackageName: "main",
+						StructName:  "TestStruct",
+						Fields: []parser.Field{
+							{
+								FieldName: "Field1",
+								Type:      "string",
+								Tag:       ``,
+							},
+							{
+								FieldName: "Field2",
+								Type:      "string",
+								Tag:       `validate:"neqfield=Field1"`,
+							},
+						},
+					},
+					FieldsValidations: []analyzer.FieldValidations{
+						{
+							Validations: []*analyzer.Validation{},
+						},
+						{
+							Validations: []*analyzer.Validation{AssertParserValidation(t, "neqfield=Field1")},
+						},
+					},
+				},
+			},
+			want: `func TestStructValidate(obj *TestStruct) []error {
+var errs []error
+if !(obj.Field2 != obj.Field1) {
+errs = append(errs, types.NewValidationError("Field2 must not be equal to Field1"))
+}
+return errs
+}
+`,
+		},
 	}
 
 	for _, tt := range tests {

@@ -52,6 +52,38 @@ func AllTypes2Validate(obj *AllTypes2) []error {
 	}
 	return errs
 }
+func CmpStringFieldsValidate(obj *CmpStringFields) []error {
+	var errs []error
+	if !(obj.Field2eq1 == obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field2eq1 must be equal to Field1"))
+	}
+	if !(obj.Field3neq1 != obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field3neq1 must not be equal to Field1"))
+	}
+	return errs
+}
+func CmpUint8FieldsValidate(obj *CmpUint8Fields) []error {
+	var errs []error
+	if !(obj.Field2eq1 == obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field2eq1 must be equal to Field1"))
+	}
+	if !(obj.Field3neq1 != obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field3neq1 must not be equal to Field1"))
+	}
+	if !(obj.Field5gte4 >= obj.Field4) {
+		errs = append(errs, types.NewValidationError("Field5gte4 must be >= Field4"))
+	}
+	if !(obj.Field6gt4 > obj.Field4) {
+		errs = append(errs, types.NewValidationError("Field6gt4 must be > Field4"))
+	}
+	if !(obj.Field7lte4 <= obj.Field4) {
+		errs = append(errs, types.NewValidationError("Field7lte4 must be <= Field4"))
+	}
+	if !(obj.Field8lt4 < obj.Field4) {
+		errs = append(errs, types.NewValidationError("Field8lt4 must be < Field4"))
+	}
+	return errs
+}
 func SliceStringValidate(obj *SliceString) []error {
 	var errs []error
 	if !(len(obj.TypesRequired) != 0) {
