@@ -96,12 +96,30 @@ func Test_ValidParserValidation(t *testing.T) {
 			},
 		},
 		{
-			name:       "email validation without value",
+			name:       "email validation",
 			validation: "email",
 			want: &Validation{
 				Operation:      "email",
 				ExpectedValues: ZERO_VALUE,
 				Values:         []string{},
+			},
+		},
+		{
+			name:       "operation between inner fields",
+			validation: "eqfield=field123",
+			want: &Validation{
+				Operation:      "eqfield",
+				ExpectedValues: ONE_VALUE,
+				Values:         []string{"field123"},
+			},
+		},
+		{
+			name:       "operation between nested fields",
+			validation: "eqfield=Nested.field123",
+			want: &Validation{
+				Operation:      "eqfield",
+				ExpectedValues: ONE_VALUE,
+				Values:         []string{"Nested.field123"},
 			},
 		},
 	}
