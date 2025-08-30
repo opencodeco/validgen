@@ -91,7 +91,7 @@ return errs
 `,
 		},
 		{
-			name: "Field op",
+			name: "Field inner op",
 			fields: fields{
 				Struct: &analyzer.Struct{
 					Struct: parser.Struct{
@@ -124,6 +124,45 @@ return errs
 var errs []error
 if !(obj.Field2 != obj.Field1) {
 errs = append(errs, types.NewValidationError("Field2 must not be equal to Field1"))
+}
+return errs
+}
+`,
+		},
+		{
+			name: "Field nested op",
+			fields: fields{
+				Struct: &analyzer.Struct{
+					Struct: parser.Struct{
+						PackageName: "main",
+						StructName:  "TestStruct",
+						Fields: []parser.Field{
+							{
+								FieldName: "Field1",
+								Type:      "string",
+								Tag:       `validate:"neqfield=Nested.Field2"`,
+							},
+							{
+								FieldName: "Nested",
+								Type:      "NestedStruct",
+								Tag:       ``,
+							},
+						},
+					},
+					FieldsValidations: []analyzer.FieldValidations{
+						{
+							Validations: []*analyzer.Validation{AssertParserValidation(t, "neqfield=Nested.Field2")},
+						},
+						{
+							Validations: []*analyzer.Validation{},
+						},
+					},
+				},
+			},
+			want: `func TestStructValidate(obj *TestStruct) []error {
+var errs []error
+if !(obj.Field1 != obj.Nested.Field2) {
+errs = append(errs, types.NewValidationError("Field1 must not be equal to Nested.Field2"))
 }
 return errs
 }
