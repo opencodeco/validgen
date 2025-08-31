@@ -35,3 +35,7 @@ func ExtractPackage(fieldType string) string {
 	}
 	return ""
 }
+
+func Key(values ...string) string {
+	return strings.Join(values, ".")
+}

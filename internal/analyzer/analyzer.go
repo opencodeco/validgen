@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/opencodeco/validgen/internal/common"
 	"github.com/opencodeco/validgen/internal/parser"
 	"github.com/opencodeco/validgen/types"
 )
@@ -78,7 +79,7 @@ func analyzeFieldOperations(structs []*Struct) error {
 	fieldsType := map[string]string{}
 	for _, st := range structs {
 		for _, fd := range st.Fields {
-			fieldsType[st.PackageName+"."+st.StructName+"."+fd.FieldName] = fd.Type
+			fieldsType[common.Key(st.PackageName, st.StructName, fd.FieldName)] = fd.Type
 		}
 	}
 
@@ -105,14 +106,14 @@ func analyzeFieldOperations(structs []*Struct) error {
 				qualifiedField, qualifiedNestedField, ok := strings.Cut(fd2Name, ".")
 				if !ok {
 					// If the operation is with an inner field, assume it's in the same struct.
-					fd2NameToSearch = st.PackageName + "." + st.StructName + "." + fd2Name
+					fd2NameToSearch = common.Key(st.PackageName, st.StructName, fd2Name)
 				} else {
 					// If the field is qualified with a nested field, use its type.
-					qFieldType, ok := fieldsType[st.PackageName+"."+st.StructName+"."+qualifiedField]
+					qFieldType, ok := fieldsType[common.Key(st.PackageName, st.StructName, qualifiedField)]
 					if !ok {
 						return types.NewValidationError("operation %s: undefined nested field %s", op, qualifiedField)
 					}
-					fd2NameToSearch = qFieldType + "." + qualifiedNestedField
+					fd2NameToSearch = common.Key(qFieldType, qualifiedNestedField)
 				}
 
 				f2Type, ok := fieldsType[fd2NameToSearch]
