@@ -36,6 +36,6 @@ func ExtractPackage(fieldType string) string {
 	return ""
 }
 
-func Key(values ...string) string {
+func KeyPath(values ...string) string {
 	return strings.Join(values, ".")
 }

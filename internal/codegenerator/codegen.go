@@ -16,7 +16,7 @@ func GenerateCode(structs []*analyzer.Struct) (map[string]*Pkg, error) {
 	usedPkgs := map[string]struct{}{}
 
 	for _, st := range structs {
-		structsWithValidation[common.Key(st.PackageName, st.StructName)] = struct{}{}
+		structsWithValidation[common.KeyPath(st.PackageName, st.StructName)] = struct{}{}
 		usedPkgs[st.PackageName] = struct{}{}
 	}
 
@@ -36,7 +36,7 @@ func GenerateCode(structs []*analyzer.Struct) (map[string]*Pkg, error) {
 			return nil, err
 		}
 
-		pkdId := common.Key(st.Path, st.PackageName)
+		pkdId := common.KeyPath(st.Path, st.PackageName)
 		pkg, ok := pkgs[pkdId]
 		if !ok {
 			pkg = &Pkg{
