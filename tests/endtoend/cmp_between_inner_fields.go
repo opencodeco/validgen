@@ -4,25 +4,25 @@ import (
 	"log"
 )
 
-func cmp_between_fields_tests() {
-	cmp_between_string_fields_tests()
-	cmp_between_uint8_fields_tests()
+func cmp_between_inner_fields_tests() {
+	cmp_between_inner_string_fields_tests()
+	cmp_between_inner_uint8_fields_tests()
 
-	log.Println("cmp between fields tests ok")
+	log.Println("cmp between inner fields tests ok")
 }
 
-type CmpStringFields struct {
+type CmpInnerStringFields struct {
 	Field1     string
 	Field2eq1  string `valid:"eqfield=Field1"`
 	Field3neq1 string `valid:"neqfield=Field1"`
 }
 
-func cmp_between_string_fields_tests() {
+func cmp_between_inner_string_fields_tests() {
 	var expectedMsgErrors []string
 	var errs []error
 
 	// Test case 1: All failure scenarios
-	v := &CmpStringFields{
+	v := &CmpInnerStringFields{
 		Field1:     "abc",
 		Field2eq1:  "def",
 		Field3neq1: "abc",
@@ -31,27 +31,27 @@ func cmp_between_string_fields_tests() {
 		"Field2eq1 must be equal to Field1",
 		"Field3neq1 must not be equal to Field1",
 	}
-	errs = CmpStringFieldsValidate(v)
+	errs = CmpInnerStringFieldsValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
 	// Test case 2: All valid input
-	v = &CmpStringFields{
+	v = &CmpInnerStringFields{
 		Field1:     "abc",
 		Field2eq1:  "abc",
 		Field3neq1: "def",
 	}
 	expectedMsgErrors = nil
-	errs = CmpStringFieldsValidate(v)
+	errs = CmpInnerStringFieldsValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
-	log.Println("cmp between string fields tests ok")
+	log.Println("cmp between inner string fields tests ok")
 }
 
-type CmpUint8Fields struct {
+type CmpInnerUint8Fields struct {
 	Field1     uint8
 	Field2eq1  uint8 `valid:"eqfield=Field1"`
 	Field3neq1 uint8 `valid:"neqfield=Field1"`
@@ -62,12 +62,12 @@ type CmpUint8Fields struct {
 	Field8lt4  uint8 `valid:"ltfield=Field4"`
 }
 
-func cmp_between_uint8_fields_tests() {
+func cmp_between_inner_uint8_fields_tests() {
 	var expectedMsgErrors []string
 	var errs []error
 
 	// Test case 1: All failure scenarios
-	v := &CmpUint8Fields{
+	v := &CmpInnerUint8Fields{
 		Field1:     1,
 		Field2eq1:  2,
 		Field3neq1: 1,
@@ -85,13 +85,13 @@ func cmp_between_uint8_fields_tests() {
 		"Field7lte4 must be <= Field4",
 		"Field8lt4 must be < Field4",
 	}
-	errs = CmpUint8FieldsValidate(v)
+	errs = CmpInnerUint8FieldsValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
 	// Test case 2: All valid input
-	v = &CmpUint8Fields{
+	v = &CmpInnerUint8Fields{
 		Field1:     1,
 		Field2eq1:  1,
 		Field3neq1: 2,
@@ -102,10 +102,10 @@ func cmp_between_uint8_fields_tests() {
 		Field8lt4:  9,
 	}
 	expectedMsgErrors = nil
-	errs = CmpUint8FieldsValidate(v)
+	errs = CmpInnerUint8FieldsValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
-	log.Println("cmp between uint8 fields tests ok")
+	log.Println("cmp between inner uint8 fields tests ok")
 }

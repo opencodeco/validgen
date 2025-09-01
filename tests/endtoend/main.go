@@ -37,7 +37,8 @@ func main() {
 	string_tests()
 	nested_struct_tests()
 	slice_string_tests()
-	cmp_between_fields_tests()
+	cmp_between_inner_fields_tests()
+	cmp_between_nested_fields_tests()
 
 	log.Println("finishing tests")
 }

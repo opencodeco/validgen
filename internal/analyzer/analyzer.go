@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/opencodeco/validgen/internal/common"
 	"github.com/opencodeco/validgen/internal/parser"
 	"github.com/opencodeco/validgen/types"
 )
@@ -74,12 +75,15 @@ func parseFieldValidations(fieldTag string) ([]string, bool) {
 
 func analyzeFieldOperations(structs []*Struct) error {
 
+	// Map all fields and their types.
+	fieldsType := map[string]string{}
 	for _, st := range structs {
-		fieldsType := map[string]string{}
 		for _, fd := range st.Fields {
-			fieldsType[fd.FieldName] = fd.Type
+			fieldsType[common.KeyPath(st.PackageName, st.StructName, fd.FieldName)] = fd.Type
 		}
+	}
 
+	for _, st := range structs {
 		for i, fd := range st.Fields {
 			for _, val := range st.FieldsValidations[i].Validations {
 				// Check if is a field operation.
@@ -88,17 +92,31 @@ func analyzeFieldOperations(structs []*Struct) error {
 					continue
 				}
 
-				// Check if is a valid operation for a type.
+				// Check if is a valid operation for this type.
 				fd1Type := fd.Type
 				if !operations[op].ValidTypes[fd1Type] {
-					return types.NewValidationError("invalid operation %s to %s type", op, fd1Type)
+					return types.NewValidationError("operation %s: invalid %s type", op, fd1Type)
 				}
 
 				fd1Name := fd.FieldName
 				fd2Name := val.Values[0]
 
 				// Check if field exists.
-				f2Type, ok := fieldsType[fd2Name]
+				fd2NameToSearch := ""
+				qualifiedField, qualifiedNestedField, ok := strings.Cut(fd2Name, ".")
+				if !ok {
+					// If the operation is with an inner field, assume it's in the same struct.
+					fd2NameToSearch = common.KeyPath(st.PackageName, st.StructName, fd2Name)
+				} else {
+					// If the field is qualified with a nested field, use its type.
+					qFieldType, ok := fieldsType[common.KeyPath(st.PackageName, st.StructName, qualifiedField)]
+					if !ok {
+						return types.NewValidationError("operation %s: undefined nested field %s", op, qualifiedField)
+					}
+					fd2NameToSearch = common.KeyPath(qFieldType, qualifiedNestedField)
+				}
+
+				f2Type, ok := fieldsType[fd2NameToSearch]
 				if !ok {
 					return types.NewValidationError("operation %s: undefined field %s", op, fd2Name)
 				}
