@@ -65,7 +65,7 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 
 	condition, ok := conditionTable[fieldValidation.Operation+","+fieldType]
 	if !ok {
-		return TestElements{}, types.NewValidationError("unsupported operation %s type %s", fieldValidation.Operation, fieldType)
+		return TestElements{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s type %s", fieldValidation.Operation, fieldType)
 	}
 
 	normalizedValues := slices.Clone(fieldValidation.Values)
