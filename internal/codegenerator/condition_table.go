@@ -7,13 +7,20 @@ type Operation struct {
 	ConditionByType map[string]ConditionTable
 }
 
+// ConditionTable defines the template for generating a condition check for a specific type.
 type ConditionTable struct {
-	loperand       string
-	operator       string
-	roperand       string
+	// loperand is the left-hand side operand in the condition expression (e.g., the variable name).
+	loperand string
+	// operator is the comparison operator used in the condition (e.g., "==", "!=", ">=").
+	operator string
+	// roperand is the right-hand side operand in the condition expression (e.g., the target value).
+	roperand string
+	// concatOperator is an optional operator used to concatenate multiple conditions (e.g., "&&", "||").
 	concatOperator string
-	normalizeFunc  func(string) string
-	errorMessage   string
+	// normalizeFunc is an optional function to normalize the loperand or roperand before comparison.
+	normalizeFunc func(string) string
+	// errorMessage is the message to display when the condition fails.
+	errorMessage string
 }
 
 var operationTable = map[string]Operation{
