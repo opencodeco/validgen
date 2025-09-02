@@ -8,13 +8,6 @@ import (
 	"github.com/opencodeco/validgen/types"
 )
 
-const (
-	EqIgnoreCaseOp  = "eq_ignore_case"
-	NeqIgnoreCaseOp = "neq_ignore_case"
-	InOp            = "in"
-	NotInOp         = "nin"
-)
-
 type TestElements struct {
 	leftOperand    string
 	operator       string
@@ -25,53 +18,20 @@ type TestElements struct {
 
 func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.Validation) (TestElements, error) {
 
-	type ConditionTable struct {
-		loperand     string
-		operator     string
-		roperand     string
-		errorMessage string
+	op, ok := operationTable[fieldValidation.Operation]
+	if !ok {
+		return TestElements{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s", fieldValidation.Operation)
 	}
 
-	conditionTable := map[string]ConditionTable{
-		"eq,string":              {"{{.Name}}", "==", `"{{.Target}}"`, "{{.Name}} must be equal to '{{.Target}}'"},
-		"required,string":        {"{{.Name}}", "!=", `""`, "{{.Name}} is required"},
-		"required,uint8":         {"{{.Name}}", "!=", `0`, "{{.Name}} is required"},
-		"gte,uint8":              {"{{.Name}}", ">=", `{{.Target}}`, "{{.Name}} must be >= {{.Target}}"},
-		"lte,uint8":              {"{{.Name}}", "<=", `{{.Target}}`, "{{.Name}} must be <= {{.Target}}"},
-		"min,string":             {"len({{.Name}})", ">=", `{{.Target}}`, "{{.Name}} length must be >= {{.Target}}"},
-		"max,string":             {"len({{.Name}})", "<=", `{{.Target}}`, "{{.Name}} length must be <= {{.Target}}"},
-		"eq_ignore_case,string":  {"types.ToLower({{.Name}})", "==", `"{{.Target}}"`, "{{.Name}} must be equal to '{{.Target}}'"},
-		"len,string":             {"len({{.Name}})", "==", `{{.Target}}`, "{{.Name}} length must be {{.Target}}"},
-		"neq,string":             {"{{.Name}}", "!=", `"{{.Target}}"`, "{{.Name}} must not be equal to '{{.Target}}'"},
-		"neq_ignore_case,string": {"types.ToLower({{.Name}})", "!=", `"{{.Target}}"`, "{{.Name}} must not be equal to '{{.Target}}'"},
-		"in,string":              {"{{.Name}}", "==", `"{{.Target}}"`, "{{.Name}} must be one of {{.Targets}}"},
-		"nin,string":             {"{{.Name}}", "!=", `"{{.Target}}"`, "{{.Name}} must not be one of {{.Targets}}"},
-		"email,string":           {"types.IsValidEmail({{.Name}})", "==", `true`, "{{.Name}} must be a valid email"},
-		"required,[]string":      {"len({{.Name}})", "!=", `0`, "{{.Name}} must not be empty"},
-		"min,[]string":           {"len({{.Name}})", ">=", `{{.Target}}`, "{{.Name}} must have at least {{.Target}} elements"},
-		"max,[]string":           {"len({{.Name}})", "<=", `{{.Target}}`, "{{.Name}} must have at most {{.Target}} elements"},
-		"len,[]string":           {"len({{.Name}})", "==", `{{.Target}}`, "{{.Name}} must have exactly {{.Target}} elements"},
-		"in,[]string":            {"", "", `types.SlicesContains({{.Name}}, "{{.Target}}")`, "{{.Name}} elements must be one of {{.Targets}}"},
-		"nin,[]string":           {"", "", `!types.SlicesContains({{.Name}}, "{{.Target}}")`, "{{.Name}} elements must not be one of {{.Targets}}"},
-		"eqfield,string":         {"{{.Name}}", "==", `obj.{{.Target}}`, "{{.Name}} must be equal to {{.Target}}"},
-		"neqfield,string":        {"{{.Name}}", "!=", `obj.{{.Target}}`, "{{.Name}} must not be equal to {{.Target}}"},
-		"eqfield,uint8":          {"{{.Name}}", "==", `obj.{{.Target}}`, "{{.Name}} must be equal to {{.Target}}"},
-		"neqfield,uint8":         {"{{.Name}}", "!=", `obj.{{.Target}}`, "{{.Name}} must not be equal to {{.Target}}"},
-		"gtefield,uint8":         {"{{.Name}}", ">=", `obj.{{.Target}}`, "{{.Name}} must be >= {{.Target}}"},
-		"gtfield,uint8":          {"{{.Name}}", ">", `obj.{{.Target}}`, "{{.Name}} must be > {{.Target}}"},
-		"ltefield,uint8":         {"{{.Name}}", "<=", `obj.{{.Target}}`, "{{.Name}} must be <= {{.Target}}"},
-		"ltfield,uint8":          {"{{.Name}}", "<", `obj.{{.Target}}`, "{{.Name}} must be < {{.Target}}"},
-	}
-
-	condition, ok := conditionTable[fieldValidation.Operation+","+fieldType]
+	condition, ok := op.ConditionByType[fieldType]
 	if !ok {
 		return TestElements{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s type %s", fieldValidation.Operation, fieldType)
 	}
 
 	normalizedValues := slices.Clone(fieldValidation.Values)
-	if fieldValidation.Operation == EqIgnoreCaseOp || fieldValidation.Operation == NeqIgnoreCaseOp {
+	if condition.normalizeFunc != nil {
 		for i := range normalizedValues {
-			normalizedValues[i] = strings.ToLower(normalizedValues[i])
+			normalizedValues[i] = condition.normalizeFunc(normalizedValues[i])
 		}
 	}
 
@@ -92,17 +52,7 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 		}
 	}
 
-	var concatOperator string
-	switch fieldValidation.Operation {
-	case InOp:
-		concatOperator = "||"
-	case NotInOp:
-		concatOperator = "&&"
-	default:
-		concatOperator = ""
-	}
-
-	if len(roperands) > 1 && concatOperator == "" {
+	if len(roperands) > 1 && condition.concatOperator == "" {
 		return TestElements{}, types.NewValidationError("missed concat operator")
 	}
 
@@ -115,7 +65,7 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 		leftOperand:    replaceNameAndTargetWithPrefix(condition.loperand, fieldName, targetValue),
 		operator:       condition.operator,
 		rightOperands:  roperands,
-		concatOperator: concatOperator,
+		concatOperator: condition.concatOperator,
 		errorMessage:   errorMsg,
 	}, nil
 }
