@@ -138,6 +138,30 @@ errs = append(errs, types.NewValidationError("strField elements must not be one 
 }
 `,
 		},
+		{
+			name: "inner field operation",
+			args: args{
+				fieldName:       "field1",
+				fieldType:       "string",
+				fieldValidation: "eqfield=field2",
+			},
+			want: `if !(obj.field1 == obj.field2) {
+errs = append(errs, types.NewValidationError("field1 must be equal to field2"))
+}
+`,
+		},
+		{
+			name: "nested field operation",
+			args: args{
+				fieldName:       "field1",
+				fieldType:       "string",
+				fieldValidation: "eqfield=Nested.field2",
+			},
+			want: `if !(obj.field1 == obj.Nested.field2) {
+errs = append(errs, types.NewValidationError("field1 must be equal to Nested.field2"))
+}
+`,
+		},
 	}
 
 	for _, tt := range tests {
@@ -168,25 +192,25 @@ func TestBuildValidationCodeWithNestedStructsAndSlices(t *testing.T) {
 		want string
 	}{
 		{
-			name: "if code with nested struct",
+			name: "test code with inner struct",
 			args: args{
 				fieldName:       "Field",
-				fieldType:       "main.NestedStructType",
+				fieldType:       "main.InnerStructType",
 				fieldValidation: "required",
 			},
-			want: "errs = append(errs, NestedStructTypeValidate(&obj.Field)...)\n",
+			want: "errs = append(errs, InnerStructTypeValidate(&obj.Field)...)\n",
 		},
 		{
-			name: "if code with nested struct in another package",
+			name: "test code with inner struct in another package",
 			args: args{
 				fieldName:       "Field",
-				fieldType:       "mypkg.NestedStructType",
+				fieldType:       "mypkg.InnerStructType",
 				fieldValidation: "required",
 			},
-			want: "errs = append(errs, mypkg.NestedStructTypeValidate(&obj.Field)...)\n",
+			want: "errs = append(errs, mypkg.InnerStructTypeValidate(&obj.Field)...)\n",
 		},
 		{
-			name: "if code with required slice of string",
+			name: "test code with required slice of string",
 			args: args{
 				fieldName:       "Field",
 				fieldType:       "[]string",
@@ -198,7 +222,7 @@ errs = append(errs, types.NewValidationError("Field must not be empty"))
 `,
 		},
 		{
-			name: "if code with min slice of string",
+			name: "test code with min slice of string",
 			args: args{
 				fieldName:       "Field",
 				fieldType:       "[]string",

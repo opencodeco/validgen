@@ -52,7 +52,7 @@ func AllTypes2Validate(obj *AllTypes2) []error {
 	}
 	return errs
 }
-func CmpStringFieldsValidate(obj *CmpStringFields) []error {
+func CmpInnerStringFieldsValidate(obj *CmpInnerStringFields) []error {
 	var errs []error
 	if !(obj.Field2eq1 == obj.Field1) {
 		errs = append(errs, types.NewValidationError("Field2eq1 must be equal to Field1"))
@@ -62,7 +62,7 @@ func CmpStringFieldsValidate(obj *CmpStringFields) []error {
 	}
 	return errs
 }
-func CmpUint8FieldsValidate(obj *CmpUint8Fields) []error {
+func CmpInnerUint8FieldsValidate(obj *CmpInnerUint8Fields) []error {
 	var errs []error
 	if !(obj.Field2eq1 == obj.Field1) {
 		errs = append(errs, types.NewValidationError("Field2eq1 must be equal to Field1"))
@@ -81,6 +81,38 @@ func CmpUint8FieldsValidate(obj *CmpUint8Fields) []error {
 	}
 	if !(obj.Field8lt4 < obj.Field4) {
 		errs = append(errs, types.NewValidationError("Field8lt4 must be < Field4"))
+	}
+	return errs
+}
+func CmpNestedStringFieldsValidate(obj *CmpNestedStringFields) []error {
+	var errs []error
+	if !(obj.Field1eqNestedField1 == obj.Nested.Field1) {
+		errs = append(errs, types.NewValidationError("Field1eqNestedField1 must be equal to Nested.Field1"))
+	}
+	if !(obj.Field2neqNestedField1 != obj.Nested.Field1) {
+		errs = append(errs, types.NewValidationError("Field2neqNestedField1 must not be equal to Nested.Field1"))
+	}
+	return errs
+}
+func CmpNestedUint8FieldsValidate(obj *CmpNestedUint8Fields) []error {
+	var errs []error
+	if !(obj.Field1eqNestedField1 == obj.Nested.Field1) {
+		errs = append(errs, types.NewValidationError("Field1eqNestedField1 must be equal to Nested.Field1"))
+	}
+	if !(obj.Field2neqNestedField1 != obj.Nested.Field1) {
+		errs = append(errs, types.NewValidationError("Field2neqNestedField1 must not be equal to Nested.Field1"))
+	}
+	if !(obj.Field3gteNestedField2 >= obj.Nested.Field2) {
+		errs = append(errs, types.NewValidationError("Field3gteNestedField2 must be >= Nested.Field2"))
+	}
+	if !(obj.Field4gtNestedField2 > obj.Nested.Field2) {
+		errs = append(errs, types.NewValidationError("Field4gtNestedField2 must be > Nested.Field2"))
+	}
+	if !(obj.Field5lteNestedField2 <= obj.Nested.Field2) {
+		errs = append(errs, types.NewValidationError("Field5lteNestedField2 must be <= Nested.Field2"))
+	}
+	if !(obj.Field6ltNestedField2 < obj.Nested.Field2) {
+		errs = append(errs, types.NewValidationError("Field6ltNestedField2 must be < Nested.Field2"))
 	}
 	return errs
 }

@@ -186,7 +186,7 @@ func extractFieldTypeAndTag(packageName, fieldType, fieldTag string) (string, st
 	rFieldType := fieldType
 
 	if !common.IsGoType(fieldType) {
-		rFieldType = packageName + "." + fieldType
+		rFieldType = common.KeyPath(packageName, fieldType)
 	}
 	rFieldTag := ""
 	if fieldTag != "" {
@@ -201,7 +201,7 @@ func extractSliceFieldTypeAndTag(packageName, fieldType, fieldTag string) (strin
 	rFieldType := fieldType
 
 	if !common.IsGoType(fieldType) {
-		rFieldType = packageName + "." + fieldType
+		rFieldType = common.KeyPath(packageName, fieldType)
 	}
 
 	rFieldType = "[]" + rFieldType
@@ -216,7 +216,7 @@ func extractSliceFieldTypeAndTag(packageName, fieldType, fieldTag string) (strin
 }
 
 func extractNestedFieldTypeAndTag(nestedPkgName, fieldType, fieldTag string) (string, string) {
-	rFieldType := nestedPkgName + "." + fieldType
+	rFieldType := common.KeyPath(nestedPkgName, fieldType)
 	rFieldTag, _ := strconv.Unquote(fieldTag)
 
 	return rFieldType, rFieldTag
