@@ -18,13 +18,11 @@ func AnalyzeStructs(structs []*parser.Struct) ([]*Struct, error) {
 		return nil, err
 	}
 
-	err = checkForInvalidOperations(result)
-	if err != nil {
+	if err := checkForInvalidOperations(result); err != nil {
 		return nil, err
 	}
 
-	err = analyzeFieldOperations(result)
-	if err != nil {
+	if err := analyzeFieldOperations(result); err != nil {
 		return nil, err
 	}
 
