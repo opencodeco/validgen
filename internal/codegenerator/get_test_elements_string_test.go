@@ -66,7 +66,7 @@ func TestDefineTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "eq_ignore_case=AbC",
 			},
 			want: TestElements{
-				conditions:   []string{`types.EqualFold(obj.myStrField,"AbC")`},
+				conditions:   []string{`types.EqualFold(obj.myStrField, "AbC")`},
 				errorMessage: "myStrField must be equal to 'AbC'",
 			},
 		},

@@ -105,7 +105,7 @@ var operationTable = map[string]Operation{
 		Name: "eq_ignore_case",
 		ConditionByType: map[string]ConditionTable{
 			"string": {
-				operation:      `types.EqualFold({{.Name}},"{{.Target}}")`,
+				operation:      `types.EqualFold({{.Name}}, "{{.Target}}")`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be equal to '{{.Target}}'",
 			},
