@@ -10,8 +10,8 @@ import (
 // This avoids recompiling the regex on every validation call
 var emailRegex = regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
 
-func ToLower(str string) string {
-	return strings.ToLower(str)
+func EqualFold(s, t string) bool {
+	return strings.EqualFold(s, t)
 }
 
 // IsValidEmail validates if a string is a valid email format

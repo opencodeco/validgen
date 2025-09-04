@@ -25,7 +25,7 @@ func TestDefineTestElementsWithInvalidOperations(t *testing.T) {
 				fieldType:       "uint8",
 				fieldValidation: "in=1 2 3",
 			},
-			expectedErr: types.NewValidationError("unsupported operation in type uint8"),
+			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation in type uint8"),
 		},
 	}
 

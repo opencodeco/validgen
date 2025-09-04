@@ -8,14 +8,14 @@ import (
 
 func ValidGenStringEmailStructValidate(obj *ValidGenStringEmailStruct) []error {
 	var errs []error
-	if !(types.IsValidEmail(obj.Field) == true) {
+	if !(types.IsValidEmail(obj.Field)) {
 		errs = append(errs, types.NewValidationError("Field must be a valid email"))
 	}
 	return errs
 }
 func ValidGenStringEqICStructValidate(obj *ValidGenStringEqICStruct) []error {
 	var errs []error
-	if !(types.ToLower(obj.Field) == "abc") {
+	if !(types.EqualFold(obj.Field, "abc")) {
 		errs = append(errs, types.NewValidationError("Field must be equal to 'abc'"))
 	}
 	return errs
@@ -57,7 +57,7 @@ func ValidGenStringMinStructValidate(obj *ValidGenStringMinStruct) []error {
 }
 func ValidGenStringNeqICStructValidate(obj *ValidGenStringNeqICStruct) []error {
 	var errs []error
-	if !(types.ToLower(obj.Field) != "abc") {
+	if !(!types.EqualFold(obj.Field, "abc")) {
 		errs = append(errs, types.NewValidationError("Field must not be equal to 'abc'"))
 	}
 	return errs

@@ -22,10 +22,8 @@ func TestDefineTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "eq=abc",
 			},
 			want: TestElements{
-				leftOperand:   "obj.myfield1",
-				operator:      "==",
-				rightOperands: []string{`"abc"`},
-				errorMessage:  "myfield1 must be equal to 'abc'",
+				conditions:   []string{`obj.myfield1 == "abc"`},
+				errorMessage: "myfield1 must be equal to 'abc'",
 			},
 		},
 		{
@@ -35,10 +33,8 @@ func TestDefineTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "required",
 			},
 			want: TestElements{
-				leftOperand:   "obj.myfield1",
-				operator:      "!=",
-				rightOperands: []string{`""`},
-				errorMessage:  "myfield1 is required",
+				conditions:   []string{`obj.myfield1 != ""`},
+				errorMessage: "myfield1 is required",
 			},
 		},
 		{
@@ -48,10 +44,8 @@ func TestDefineTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "min=5",
 			},
 			want: TestElements{
-				leftOperand:   "len(obj.myfield5)",
-				operator:      ">=",
-				rightOperands: []string{`5`},
-				errorMessage:  "myfield5 length must be >= 5",
+				conditions:   []string{`len(obj.myfield5) >= 5`},
+				errorMessage: "myfield5 length must be >= 5",
 			},
 		},
 		{
@@ -61,10 +55,8 @@ func TestDefineTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "max=10",
 			},
 			want: TestElements{
-				leftOperand:   "len(obj.myfield6)",
-				operator:      "<=",
-				rightOperands: []string{`10`},
-				errorMessage:  "myfield6 length must be <= 10",
+				conditions:   []string{`len(obj.myfield6) <= 10`},
+				errorMessage: "myfield6 length must be <= 10",
 			},
 		},
 		{
@@ -74,10 +66,8 @@ func TestDefineTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "eq_ignore_case=AbC",
 			},
 			want: TestElements{
-				leftOperand:   "types.ToLower(obj.myStrField)",
-				operator:      "==",
-				rightOperands: []string{`"abc"`},
-				errorMessage:  "myStrField must be equal to 'abc'",
+				conditions:   []string{`types.EqualFold(obj.myStrField, "AbC")`},
+				errorMessage: "myStrField must be equal to 'AbC'",
 			},
 		},
 		{
@@ -87,10 +77,8 @@ func TestDefineTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "len=8",
 			},
 			want: TestElements{
-				leftOperand:   "len(obj.myStrField)",
-				operator:      "==",
-				rightOperands: []string{`8`},
-				errorMessage:  "myStrField length must be 8",
+				conditions:   []string{`len(obj.myStrField) == 8`},
+				errorMessage: "myStrField length must be 8",
 			},
 		},
 		{
@@ -100,10 +88,8 @@ func TestDefineTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "neq=abc",
 			},
 			want: TestElements{
-				leftOperand:   "obj.MyFieldNotEqual",
-				operator:      "!=",
-				rightOperands: []string{`"abc"`},
-				errorMessage:  "MyFieldNotEqual must not be equal to 'abc'",
+				conditions:   []string{`obj.MyFieldNotEqual != "abc"`},
+				errorMessage: "MyFieldNotEqual must not be equal to 'abc'",
 			},
 		},
 		{
@@ -113,10 +99,8 @@ func TestDefineTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "neq_ignore_case=AbC",
 			},
 			want: TestElements{
-				leftOperand:   "types.ToLower(obj.MyFieldNotEqual)",
-				operator:      "!=",
-				rightOperands: []string{`"abc"`},
-				errorMessage:  "MyFieldNotEqual must not be equal to 'abc'",
+				conditions:   []string{`!types.EqualFold(obj.MyFieldNotEqual, "AbC")`},
+				errorMessage: "MyFieldNotEqual must not be equal to 'AbC'",
 			},
 		},
 		{
@@ -126,9 +110,7 @@ func TestDefineTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "in=a b c",
 			},
 			want: TestElements{
-				leftOperand:    "obj.InField",
-				operator:       "==",
-				rightOperands:  []string{`"a"`, `"b"`, `"c"`},
+				conditions:     []string{`obj.InField == "a"`, `obj.InField == "b"`, `obj.InField == "c"`},
 				concatOperator: "||",
 				errorMessage:   "InField must be one of 'a' 'b' 'c'",
 			},
@@ -140,9 +122,7 @@ func TestDefineTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "in=' a ' ' b ' ' c '",
 			},
 			want: TestElements{
-				leftOperand:    "obj.InField",
-				operator:       "==",
-				rightOperands:  []string{`" a "`, `" b "`, `" c "`},
+				conditions:     []string{`obj.InField == " a "`, `obj.InField == " b "`, `obj.InField == " c "`},
 				concatOperator: "||",
 				errorMessage:   "InField must be one of ' a ' ' b ' ' c '",
 			},
@@ -154,9 +134,7 @@ func TestDefineTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "nin=a b c",
 			},
 			want: TestElements{
-				leftOperand:    "obj.NotInField",
-				operator:       "!=",
-				rightOperands:  []string{`"a"`, `"b"`, `"c"`},
+				conditions:     []string{`obj.NotInField != "a"`, `obj.NotInField != "b"`, `obj.NotInField != "c"`},
 				concatOperator: "&&",
 				errorMessage:   "NotInField must not be one of 'a' 'b' 'c'",
 			},
@@ -168,10 +146,8 @@ func TestDefineTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "email",
 			},
 			want: TestElements{
-				leftOperand:   "types.IsValidEmail(obj.EmailField)",
-				operator:      "==",
-				rightOperands: []string{`true`},
-				errorMessage:  "EmailField must be a valid email",
+				conditions:   []string{`types.IsValidEmail(obj.EmailField)`},
+				errorMessage: "EmailField must be a valid email",
 			},
 		},
 	}

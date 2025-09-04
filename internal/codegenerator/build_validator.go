@@ -80,12 +80,12 @@ func (gv *genValidations) buildIfCode(fieldName, fieldType string, fieldValidati
 	}
 
 	booleanCondition := ""
-	for _, roperand := range testElements.rightOperands {
+	for _, condition := range testElements.conditions {
 		if booleanCondition != "" {
 			booleanCondition += " " + testElements.concatOperator + " "
 		}
 
-		booleanCondition += strings.TrimSpace(fmt.Sprintf("%s %s %s", testElements.leftOperand, testElements.operator, roperand))
+		booleanCondition += condition
 	}
 
 	return fmt.Sprintf(

@@ -18,8 +18,11 @@ func AnalyzeStructs(structs []*parser.Struct) ([]*Struct, error) {
 		return nil, err
 	}
 
-	err = analyzeFieldOperations(result)
-	if err != nil {
+	if err := checkForInvalidOperations(result); err != nil {
+		return nil, err
+	}
+
+	if err := analyzeFieldOperations(result); err != nil {
 		return nil, err
 	}
 
@@ -73,6 +76,29 @@ func parseFieldValidations(fieldTag string) ([]string, bool) {
 	return fieldValidations, hasValidTag
 }
 
+func checkForInvalidOperations(structs []*Struct) error {
+
+	for _, st := range structs {
+		for i, fd := range st.Fields {
+			for _, val := range st.FieldsValidations[i].Validations {
+				// Check if is a valid operation.
+				op := val.Operation
+				if operations[op].Name == "" {
+					return types.NewValidationError("unsupported operation %s", op)
+				}
+
+				// Check if is a valid operation for this type.
+				fdType := fd.Type
+				if common.IsGoType(fdType) && !operations[op].ValidTypes[fdType] {
+					return types.NewValidationError("operation %s: invalid %s type", op, fdType)
+				}
+			}
+		}
+	}
+
+	return nil
+}
+
 func analyzeFieldOperations(structs []*Struct) error {
 
 	// Map all fields and their types.
@@ -90,12 +116,6 @@ func analyzeFieldOperations(structs []*Struct) error {
 				op := val.Operation
 				if !operations[op].IsFieldOperation {
 					continue
-				}
-
-				// Check if is a valid operation for this type.
-				fd1Type := fd.Type
-				if !operations[op].ValidTypes[fd1Type] {
-					return types.NewValidationError("operation %s: invalid %s type", op, fd1Type)
 				}
 
 				fd1Name := fd.FieldName

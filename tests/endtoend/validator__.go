@@ -146,7 +146,7 @@ func StringTypeValidate(obj *StringType) []error {
 	if !(obj.FieldEq == "aabbcc") {
 		errs = append(errs, types.NewValidationError("FieldEq must be equal to 'aabbcc'"))
 	}
-	if !(types.ToLower(obj.FieldEqIC) == "yes") {
+	if !(types.EqualFold(obj.FieldEqIC, "yes")) {
 		errs = append(errs, types.NewValidationError("FieldEqIC must be equal to 'yes'"))
 	}
 	if !(len(obj.FieldMinMax) >= 5) {
@@ -161,7 +161,7 @@ func StringTypeValidate(obj *StringType) []error {
 	if !(obj.FieldNeq != "cba") {
 		errs = append(errs, types.NewValidationError("FieldNeq must not be equal to 'cba'"))
 	}
-	if !(types.ToLower(obj.FieldNeqIC) != "yes") {
+	if !(!types.EqualFold(obj.FieldNeqIC, "yes")) {
 		errs = append(errs, types.NewValidationError("FieldNeqIC must not be equal to 'yes'"))
 	}
 	if !(obj.FieldIn == "ab" || obj.FieldIn == "bc" || obj.FieldIn == "cd") {
@@ -173,10 +173,10 @@ func StringTypeValidate(obj *StringType) []error {
 	if !(obj.EmailReq != "") {
 		errs = append(errs, types.NewValidationError("EmailReq is required"))
 	}
-	if !(types.IsValidEmail(obj.EmailReq) == true) {
+	if !(types.IsValidEmail(obj.EmailReq)) {
 		errs = append(errs, types.NewValidationError("EmailReq must be a valid email"))
 	}
-	if !(types.IsValidEmail(obj.EmailOpt) == true) {
+	if !(types.IsValidEmail(obj.EmailOpt)) {
 		errs = append(errs, types.NewValidationError("EmailOpt must be a valid email"))
 	}
 	return errs
