@@ -1,7 +1,6 @@
 package codegenerator
 
 import (
-	"slices"
 	"strings"
 
 	"github.com/opencodeco/validgen/internal/analyzer"
@@ -28,13 +27,7 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 		return TestElements{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s type %s", fieldValidation.Operation, fieldType)
 	}
 
-	normalizedValues := slices.Clone(fieldValidation.Values)
-	if condition.normalizeFunc != nil {
-		for i := range normalizedValues {
-			normalizedValues[i] = condition.normalizeFunc(normalizedValues[i])
-		}
-	}
-
+	values := fieldValidation.Values
 	roperands := []string{}
 	targetValue := ""
 	targetValues := ""
@@ -45,7 +38,7 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 		targetValue = condition.roperand
 		targetValues = "'" + condition.roperand + "' "
 	case analyzer.ONE_VALUE, analyzer.MANY_VALUES:
-		for _, value := range normalizedValues {
+		for _, value := range values {
 			roperands = append(roperands, replaceNameAndTargetWithPrefix(condition.roperand, fieldName, value))
 			targetValue = value
 			targetValues += "'" + value + "' "

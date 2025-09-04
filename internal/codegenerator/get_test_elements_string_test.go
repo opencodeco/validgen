@@ -74,10 +74,10 @@ func TestDefineTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "eq_ignore_case=AbC",
 			},
 			want: TestElements{
-				leftOperand:   "types.ToLower(obj.myStrField)",
-				operator:      "==",
-				rightOperands: []string{`"abc"`},
-				errorMessage:  "myStrField must be equal to 'abc'",
+				leftOperand:   `types.EqualFold(obj.myStrField,"AbC")`,
+				operator:      "",
+				rightOperands: []string{``},
+				errorMessage:  "myStrField must be equal to 'AbC'",
 			},
 		},
 		{
@@ -113,10 +113,10 @@ func TestDefineTestElementsWithStringFields(t *testing.T) {
 				fieldValidation: "neq_ignore_case=AbC",
 			},
 			want: TestElements{
-				leftOperand:   "types.ToLower(obj.MyFieldNotEqual)",
-				operator:      "!=",
-				rightOperands: []string{`"abc"`},
-				errorMessage:  "MyFieldNotEqual must not be equal to 'abc'",
+				leftOperand:   `!types.EqualFold(obj.MyFieldNotEqual, "AbC")`,
+				operator:      "",
+				rightOperands: []string{``},
+				errorMessage:  "MyFieldNotEqual must not be equal to 'AbC'",
 			},
 		},
 		{

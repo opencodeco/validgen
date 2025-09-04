@@ -5,11 +5,11 @@ import "log"
 type StringType struct {
 	FieldReq    string `valid:"required"`
 	FieldEq     string `valid:"eq=aabbcc"`
-	FieldEqIC   string `valid:"eq_ignore_case=YeS"`
+	FieldEqIC   string `valid:"eq_ignore_case=yes"`
 	FieldMinMax string `valid:"min=5,max=10"`
 	FieldLen    string `valid:"len=8"`
 	FieldNeq    string `valid:"neq=cba"`
-	FieldNeqIC  string `valid:"neq_ignore_case=YeS"`
+	FieldNeqIC  string `valid:"neq_ignore_case=yes"`
 	FieldIn     string `valid:"in=ab bc cd"`
 	FieldNotIn  string `valid:"nin=xx yy zz"`
 	EmailReq    string `valid:"required,email"`
@@ -27,7 +27,7 @@ func string_tests() {
 		FieldMinMax: "1",
 		FieldLen:    "abcde",
 		FieldNeq:    "cba",
-		FieldNeqIC:  "yeS",
+		FieldNeqIC:  "yes",
 		FieldIn:     "abc",
 		FieldNotIn:  "zz",
 		EmailReq:    "invalid.email.format", // Invalid required email

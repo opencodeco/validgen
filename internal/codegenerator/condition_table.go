@@ -1,7 +1,5 @@
 package codegenerator
 
-import "strings"
-
 type Operation struct {
 	Name            string
 	ConditionByType map[string]ConditionTable
@@ -17,8 +15,6 @@ type ConditionTable struct {
 	roperand string
 	// concatOperator is an optional operator used to concatenate multiple conditions (e.g., "&&", "||").
 	concatOperator string
-	// normalizeFunc is an optional function to normalize the loperand or roperand before comparison.
-	normalizeFunc func(string) string
 	// errorMessage is the message to display when the condition fails.
 	errorMessage string
 }
@@ -32,7 +28,6 @@ var operationTable = map[string]Operation{
 				operator:       "==",
 				roperand:       `"{{.Target}}"`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must be equal to '{{.Target}}'",
 			},
 			"uint8": {
@@ -40,7 +35,6 @@ var operationTable = map[string]Operation{
 				operator:       "==",
 				roperand:       `{{.Target}}`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
 			},
 		},
@@ -53,7 +47,6 @@ var operationTable = map[string]Operation{
 				operator:       "!=",
 				roperand:       `""`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} is required",
 			},
 			"uint8": {
@@ -61,7 +54,6 @@ var operationTable = map[string]Operation{
 				operator:       "!=",
 				roperand:       `0`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} is required",
 			},
 			"[]string": {
@@ -69,7 +61,6 @@ var operationTable = map[string]Operation{
 				operator:       "!=",
 				roperand:       `0`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must not be empty",
 			},
 		},
@@ -82,7 +73,6 @@ var operationTable = map[string]Operation{
 				operator:       ">=",
 				roperand:       `{{.Target}}`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must be >= {{.Target}}",
 			},
 		},
@@ -95,7 +85,6 @@ var operationTable = map[string]Operation{
 				operator:       "<=",
 				roperand:       `{{.Target}}`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must be <= {{.Target}}",
 			},
 		},
@@ -108,7 +97,6 @@ var operationTable = map[string]Operation{
 				operator:       ">=",
 				roperand:       `{{.Target}}`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} length must be >= {{.Target}}",
 			},
 			"[]string": {
@@ -116,7 +104,6 @@ var operationTable = map[string]Operation{
 				operator:       ">=",
 				roperand:       `{{.Target}}`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must have at least {{.Target}} elements",
 			},
 		},
@@ -129,7 +116,6 @@ var operationTable = map[string]Operation{
 				operator:       "<=",
 				roperand:       `{{.Target}}`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} length must be <= {{.Target}}",
 			},
 			"[]string": {
@@ -137,7 +123,6 @@ var operationTable = map[string]Operation{
 				operator:       "<=",
 				roperand:       `{{.Target}}`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must have at most {{.Target}} elements",
 			},
 		},
@@ -146,11 +131,10 @@ var operationTable = map[string]Operation{
 		Name: "eq_ignore_case",
 		ConditionByType: map[string]ConditionTable{
 			"string": {
-				loperand:       "types.ToLower({{.Name}})",
-				operator:       "==",
-				roperand:       `"{{.Target}}"`,
+				loperand:       `types.EqualFold({{.Name}},"{{.Target}}")`,
+				operator:       "",
+				roperand:       ``,
 				concatOperator: "",
-				normalizeFunc:  strings.ToLower,
 				errorMessage:   "{{.Name}} must be equal to '{{.Target}}'",
 			},
 		},
@@ -163,7 +147,6 @@ var operationTable = map[string]Operation{
 				operator:       "==",
 				roperand:       `{{.Target}}`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} length must be {{.Target}}",
 			},
 			"[]string": {
@@ -171,7 +154,6 @@ var operationTable = map[string]Operation{
 				operator:       "==",
 				roperand:       `{{.Target}}`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must have exactly {{.Target}} elements",
 			},
 		},
@@ -184,7 +166,6 @@ var operationTable = map[string]Operation{
 				operator:       "!=",
 				roperand:       `"{{.Target}}"`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must not be equal to '{{.Target}}'",
 			},
 		},
@@ -193,11 +174,10 @@ var operationTable = map[string]Operation{
 		Name: "neq_ignore_case",
 		ConditionByType: map[string]ConditionTable{
 			"string": {
-				loperand:       "types.ToLower({{.Name}})",
-				operator:       "!=",
-				roperand:       `"{{.Target}}"`,
+				loperand:       `!types.EqualFold({{.Name}}, "{{.Target}}")`,
+				operator:       "",
+				roperand:       "",
 				concatOperator: "",
-				normalizeFunc:  strings.ToLower,
 				errorMessage:   "{{.Name}} must not be equal to '{{.Target}}'",
 			},
 		},
@@ -210,7 +190,6 @@ var operationTable = map[string]Operation{
 				operator:       "==",
 				roperand:       `"{{.Target}}"`,
 				concatOperator: "||",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must be one of {{.Targets}}",
 			},
 			"[]string": {
@@ -218,7 +197,6 @@ var operationTable = map[string]Operation{
 				operator:       "",
 				roperand:       `types.SlicesContains({{.Name}}, "{{.Target}}")`,
 				concatOperator: "||",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
 			},
 		},
@@ -231,7 +209,6 @@ var operationTable = map[string]Operation{
 				operator:       "!=",
 				roperand:       `"{{.Target}}"`,
 				concatOperator: "&&",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must not be one of {{.Targets}}",
 			},
 			"[]string": {
@@ -239,7 +216,6 @@ var operationTable = map[string]Operation{
 				operator:       "",
 				roperand:       `!types.SlicesContains({{.Name}}, "{{.Target}}")`,
 				concatOperator: "&&",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
 			},
 		},
@@ -252,7 +228,6 @@ var operationTable = map[string]Operation{
 				operator:       "==",
 				roperand:       `true`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must be a valid email",
 			},
 		},
@@ -265,7 +240,6 @@ var operationTable = map[string]Operation{
 				operator:       "==",
 				roperand:       `obj.{{.Target}}`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
 			},
 			"uint8": {
@@ -273,7 +247,6 @@ var operationTable = map[string]Operation{
 				operator:       "==",
 				roperand:       `obj.{{.Target}}`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
 			},
 		},
@@ -286,7 +259,6 @@ var operationTable = map[string]Operation{
 				operator:       "!=",
 				roperand:       `obj.{{.Target}}`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
 			},
 			"uint8": {
@@ -294,7 +266,6 @@ var operationTable = map[string]Operation{
 				operator:       "!=",
 				roperand:       `obj.{{.Target}}`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
 			},
 		},
@@ -307,7 +278,6 @@ var operationTable = map[string]Operation{
 				operator:       ">=",
 				roperand:       `obj.{{.Target}}`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must be >= {{.Target}}",
 			},
 		},
@@ -320,7 +290,6 @@ var operationTable = map[string]Operation{
 				operator:       ">",
 				roperand:       `obj.{{.Target}}`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must be > {{.Target}}",
 			},
 		},
@@ -333,7 +302,6 @@ var operationTable = map[string]Operation{
 				operator:       "<=",
 				roperand:       `obj.{{.Target}}`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must be <= {{.Target}}",
 			},
 		},
@@ -346,7 +314,6 @@ var operationTable = map[string]Operation{
 				operator:       "<",
 				roperand:       `obj.{{.Target}}`,
 				concatOperator: "",
-				normalizeFunc:  nil,
 				errorMessage:   "{{.Name}} must be < {{.Target}}",
 			},
 		},
