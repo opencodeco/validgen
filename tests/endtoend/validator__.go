@@ -173,10 +173,10 @@ func StringTypeValidate(obj *StringType) []error {
 	if !(obj.EmailReq != "") {
 		errs = append(errs, types.NewValidationError("EmailReq is required"))
 	}
-	if !(types.IsValidEmail(obj.EmailReq) == true) {
+	if !(types.IsValidEmail(obj.EmailReq)) {
 		errs = append(errs, types.NewValidationError("EmailReq must be a valid email"))
 	}
-	if !(types.IsValidEmail(obj.EmailOpt) == true) {
+	if !(types.IsValidEmail(obj.EmailOpt)) {
 		errs = append(errs, types.NewValidationError("EmailOpt must be a valid email"))
 	}
 	return errs

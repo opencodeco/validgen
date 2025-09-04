@@ -24,10 +24,8 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 				fieldValidation: "required",
 			},
 			want: TestElements{
-				leftOperand:   "len(obj.myfield)",
-				operator:      "!=",
-				rightOperands: []string{`0`},
-				errorMessage:  "myfield must not be empty",
+				conditions:   []string{`len(obj.myfield) != 0`},
+				errorMessage: "myfield must not be empty",
 			},
 		},
 		{
@@ -38,10 +36,8 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 				fieldValidation: "min=2",
 			},
 			want: TestElements{
-				leftOperand:   "len(obj.myfield)",
-				operator:      ">=",
-				rightOperands: []string{`2`},
-				errorMessage:  "myfield must have at least 2 elements",
+				conditions:   []string{`len(obj.myfield) >= 2`},
+				errorMessage: "myfield must have at least 2 elements",
 			},
 		},
 		{
@@ -52,10 +48,8 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 				fieldValidation: "max=5",
 			},
 			want: TestElements{
-				leftOperand:   "len(obj.myfield)",
-				operator:      "<=",
-				rightOperands: []string{`5`},
-				errorMessage:  "myfield must have at most 5 elements",
+				conditions:   []string{`len(obj.myfield) <= 5`},
+				errorMessage: "myfield must have at most 5 elements",
 			},
 		},
 		{
@@ -66,10 +60,8 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 				fieldValidation: "len=3",
 			},
 			want: TestElements{
-				leftOperand:   "len(obj.myfield)",
-				operator:      "==",
-				rightOperands: []string{`3`},
-				errorMessage:  "myfield must have exactly 3 elements",
+				conditions:   []string{`len(obj.myfield) == 3`},
+				errorMessage: "myfield must have exactly 3 elements",
 			},
 		},
 		{
@@ -80,9 +72,7 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 				fieldValidation: "in=a b c",
 			},
 			want: TestElements{
-				leftOperand:    "",
-				operator:       "",
-				rightOperands:  []string{`types.SlicesContains(obj.myfield, "a")`, `types.SlicesContains(obj.myfield, "b")`, `types.SlicesContains(obj.myfield, "c")`},
+				conditions:     []string{`types.SlicesContains(obj.myfield, "a")`, `types.SlicesContains(obj.myfield, "b")`, `types.SlicesContains(obj.myfield, "c")`},
 				concatOperator: "||",
 				errorMessage:   "myfield elements must be one of 'a' 'b' 'c'",
 			},
@@ -95,9 +85,7 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 				fieldValidation: "in=' a ' ' b ' ' c '",
 			},
 			want: TestElements{
-				leftOperand:    "",
-				operator:       "",
-				rightOperands:  []string{`types.SlicesContains(obj.myfield, " a ")`, `types.SlicesContains(obj.myfield, " b ")`, `types.SlicesContains(obj.myfield, " c ")`},
+				conditions:     []string{`types.SlicesContains(obj.myfield, " a ")`, `types.SlicesContains(obj.myfield, " b ")`, `types.SlicesContains(obj.myfield, " c ")`},
 				concatOperator: "||",
 				errorMessage:   "myfield elements must be one of ' a ' ' b ' ' c '",
 			},
@@ -110,9 +98,7 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 				fieldValidation: "nin=a b c",
 			},
 			want: TestElements{
-				leftOperand:    "",
-				operator:       "",
-				rightOperands:  []string{`!types.SlicesContains(obj.myfield, "a")`, `!types.SlicesContains(obj.myfield, "b")`, `!types.SlicesContains(obj.myfield, "c")`},
+				conditions:     []string{`!types.SlicesContains(obj.myfield, "a")`, `!types.SlicesContains(obj.myfield, "b")`, `!types.SlicesContains(obj.myfield, "c")`},
 				concatOperator: "&&",
 				errorMessage:   "myfield elements must not be one of 'a' 'b' 'c'",
 			},
@@ -125,9 +111,7 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 				fieldValidation: "nin=' a ' ' b ' ' c '",
 			},
 			want: TestElements{
-				leftOperand:    "",
-				operator:       "",
-				rightOperands:  []string{`!types.SlicesContains(obj.myfield, " a ")`, `!types.SlicesContains(obj.myfield, " b ")`, `!types.SlicesContains(obj.myfield, " c ")`},
+				conditions:     []string{`!types.SlicesContains(obj.myfield, " a ")`, `!types.SlicesContains(obj.myfield, " b ")`, `!types.SlicesContains(obj.myfield, " c ")`},
 				concatOperator: "&&",
 				errorMessage:   "myfield elements must not be one of ' a ' ' b ' ' c '",
 			},

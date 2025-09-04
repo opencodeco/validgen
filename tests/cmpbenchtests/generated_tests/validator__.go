@@ -8,7 +8,7 @@ import (
 
 func ValidGenStringEmailStructValidate(obj *ValidGenStringEmailStruct) []error {
 	var errs []error
-	if !(types.IsValidEmail(obj.Field) == true) {
+	if !(types.IsValidEmail(obj.Field)) {
 		errs = append(errs, types.NewValidationError("Field must be a valid email"))
 	}
 	return errs

@@ -8,9 +8,7 @@ import (
 )
 
 type TestElements struct {
-	leftOperand    string
-	operator       string
-	rightOperands  []string
+	conditions     []string
 	concatOperator string
 	errorMessage   string
 }
@@ -34,12 +32,12 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 
 	switch fieldValidation.ExpectedValues {
 	case analyzer.ZERO_VALUE:
-		roperands = append(roperands, replaceNameAndTargetWithPrefix(condition.roperand, fieldName, condition.roperand))
-		targetValue = condition.roperand
-		targetValues = "'" + condition.roperand + "' "
+		roperands = append(roperands, replaceNameAndTargetWithPrefix(condition.operation, fieldName, condition.operation))
+		targetValue = condition.operation
+		targetValues = "'" + condition.operation + "' "
 	case analyzer.ONE_VALUE, analyzer.MANY_VALUES:
 		for _, value := range values {
-			roperands = append(roperands, replaceNameAndTargetWithPrefix(condition.roperand, fieldName, value))
+			roperands = append(roperands, replaceNameAndTargetWithPrefix(condition.operation, fieldName, value))
 			targetValue = value
 			targetValues += "'" + value + "' "
 		}
@@ -55,9 +53,7 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 	errorMsg = replaceTargetInErrors(errorMsg, targetValue, targetValues)
 
 	return TestElements{
-		leftOperand:    replaceNameAndTargetWithPrefix(condition.loperand, fieldName, targetValue),
-		operator:       condition.operator,
-		rightOperands:  roperands,
+		conditions:     roperands,
 		concatOperator: condition.concatOperator,
 		errorMessage:   errorMsg,
 	}, nil
