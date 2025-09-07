@@ -52,6 +52,16 @@ func AllTypes2Validate(obj *AllTypes2) []error {
 	}
 	return errs
 }
+func ArrayStringValidate(obj *ArrayString) []error {
+	var errs []error
+	if !(types.SlicesContains(obj.TypesIn[:], "a") || types.SlicesContains(obj.TypesIn[:], "b") || types.SlicesContains(obj.TypesIn[:], "c")) {
+		errs = append(errs, types.NewValidationError("TypesIn elements must be one of 'a' 'b' 'c'"))
+	}
+	if !(!types.SlicesContains(obj.TypesNotIn[:], "a") && !types.SlicesContains(obj.TypesNotIn[:], "b") && !types.SlicesContains(obj.TypesNotIn[:], "c")) {
+		errs = append(errs, types.NewValidationError("TypesNotIn elements must not be one of 'a' 'b' 'c'"))
+	}
+	return errs
+}
 func CmpInnerStringFieldsValidate(obj *CmpInnerStringFields) []error {
 	var errs []error
 	if !(obj.Field2eq1 == obj.Field1) {
