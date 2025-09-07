@@ -159,6 +159,11 @@ var operationTable = map[string]Operation{
 				concatOperator: "||",
 				errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
 			},
+			"[N]string": {
+				operation:      `types.SlicesContains({{.Name}}[:], "{{.Target}}")`,
+				concatOperator: "||",
+				errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+			},
 		},
 	},
 	"nin": {
@@ -171,6 +176,11 @@ var operationTable = map[string]Operation{
 			},
 			"[]string": {
 				operation:      `!types.SlicesContains({{.Name}}, "{{.Target}}")`,
+				concatOperator: "&&",
+				errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+			},
+			"[N]string": {
+				operation:      `!types.SlicesContains({{.Name}}[:], "{{.Target}}")`,
 				concatOperator: "&&",
 				errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
 			},

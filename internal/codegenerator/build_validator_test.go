@@ -138,6 +138,32 @@ errs = append(errs, types.NewValidationError("strField elements must not be one 
 }
 `,
 		},
+
+		{
+			name: "In array string",
+			args: args{
+				fieldName:       "strField",
+				fieldType:       "[N]string",
+				fieldValidation: "in=a b c",
+			},
+			want: `if !(types.SlicesContains(obj.strField[:], "a") || types.SlicesContains(obj.strField[:], "b") || types.SlicesContains(obj.strField[:], "c")) {
+errs = append(errs, types.NewValidationError("strField elements must be one of 'a' 'b' 'c'"))
+}
+`,
+		},
+		{
+			name: "Not in array string",
+			args: args{
+				fieldName:       "strField",
+				fieldType:       "[N]string",
+				fieldValidation: "nin=a b c",
+			},
+			want: `if !(!types.SlicesContains(obj.strField[:], "a") && !types.SlicesContains(obj.strField[:], "b") && !types.SlicesContains(obj.strField[:], "c")) {
+errs = append(errs, types.NewValidationError("strField elements must not be one of 'a' 'b' 'c'"))
+}
+`,
+		},
+
 		{
 			name: "inner field operation",
 			args: args{
