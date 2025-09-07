@@ -161,7 +161,11 @@ func appendFields(structType *ast.StructType, packageName string, cstruct *Struc
 
 		case *ast.ArrayType:
 			fieldType = v.Elt.(*ast.Ident).Name
-			fieldType, fieldTag = extractSliceFieldTypeAndTag(packageName, fieldType, fieldTag)
+			arraySize := ""
+			if v.Len != nil {
+				arraySize = v.Len.(*ast.BasicLit).Value
+			}
+			fieldType, fieldTag = extractSliceFieldTypeAndTag(packageName, fieldType, arraySize, fieldTag)
 			appendFieldNames = true
 
 		case *ast.SelectorExpr:
@@ -197,14 +201,18 @@ func extractFieldTypeAndTag(packageName, fieldType, fieldTag string) (string, st
 	return rFieldType, rFieldTag
 }
 
-func extractSliceFieldTypeAndTag(packageName, fieldType, fieldTag string) (string, string) {
+func extractSliceFieldTypeAndTag(packageName, fieldType, fieldSize, fieldTag string) (string, string) {
 	rFieldType := fieldType
 
 	if !common.IsGoType(fieldType) {
 		rFieldType = common.KeyPath(packageName, fieldType)
 	}
 
-	rFieldType = "[]" + rFieldType
+	if fieldSize != "" {
+		fieldSize = "N"
+	}
+
+	rFieldType = "[" + fieldSize + "]" + rFieldType
 
 	rFieldTag := ""
 	if fieldTag != "" {
