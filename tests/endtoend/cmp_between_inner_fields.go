@@ -5,6 +5,8 @@ import (
 )
 
 func cmp_between_inner_fields_tests() {
+	log.Println("starting between inner fields tests")
+
 	cmp_between_inner_string_fields_tests()
 	cmp_between_inner_uint8_fields_tests()
 
@@ -18,6 +20,8 @@ type CmpInnerStringFields struct {
 }
 
 func cmp_between_inner_string_fields_tests() {
+	log.Println("starting between inner string fields tests")
+
 	var expectedMsgErrors []string
 	var errs []error
 
@@ -63,6 +67,8 @@ type CmpInnerUint8Fields struct {
 }
 
 func cmp_between_inner_uint8_fields_tests() {
+	log.Println("starting between inner uint8 fields tests")
+
 	var expectedMsgErrors []string
 	var errs []error
 

@@ -10,6 +10,8 @@ type ArrayString struct {
 }
 
 func array_string_tests() {
+	log.Println("starting array string tests")
+
 	var expectedMsgErrors []string
 	var errs []error
 

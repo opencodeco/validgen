@@ -14,6 +14,8 @@ type SliceString struct {
 }
 
 func slice_string_tests() {
+	log.Println("starting slice string tests")
+
 	var expectedMsgErrors []string
 	var errs []error
 
