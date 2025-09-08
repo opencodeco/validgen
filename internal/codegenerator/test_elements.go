@@ -36,15 +36,22 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 		targetValue = condition.operation
 		targetValues = "'" + condition.operation + "' "
 	case analyzer.ONE_VALUE, analyzer.MANY_VALUES:
+		basicType := strings.TrimPrefix(fieldType, "[N]")
+		basicType = strings.TrimPrefix(basicType, "[]")
+		valuesAsNumericSlice, valuesAsStringSlice := normalizeSlicesAsCode(basicType, values)
+
 		for _, value := range values {
-			roperands = append(roperands, replaceNameAndTargetWithPrefix(condition.operation, fieldName, value))
+			operation := replaceNameAndTargetWithPrefix(condition.operation, fieldName, value)
+			operation = replaceSlicesTargets(operation, valuesAsStringSlice, valuesAsNumericSlice)
+			roperands = append(roperands, operation)
 			targetValue = value
 			targetValues += "'" + value + "' "
 		}
 	}
 
 	if len(roperands) > 1 && condition.concatOperator == "" {
-		return TestElements{}, types.NewValidationError("missed concat operator")
+		// REFACTOR!
+		roperands = roperands[:1]
 	}
 
 	targetValues = strings.TrimSpace(targetValues)
@@ -73,9 +80,37 @@ func replaceNameAndTargetWithoutPrefix(text, name, target string) string {
 	return text
 }
 
+func replaceSlicesTargets(text, stringTargets, numericTargets string) string {
+	text = strings.ReplaceAll(text, "{{.TargetsAsStringSlice}}", stringTargets)
+	text = strings.ReplaceAll(text, "{{.TargetsAsNumericSlice}}", numericTargets)
+
+	return text
+}
+
 func replaceTargetInErrors(text, target, targets string) string {
 	text = strings.ReplaceAll(text, "{{.Target}}", target)
 	text = strings.ReplaceAll(text, "{{.Targets}}", targets)
 
 	return text
+}
+
+func normalizeSlicesAsCode(basicType string, values []string) (string, string) {
+
+	valuesAsNumericSlice := "[]" + basicType + "{"
+	valuesAsStringSlice := "[]" + basicType + "{"
+
+	for i, value := range values {
+		if i != 0 {
+			valuesAsNumericSlice += ", "
+			valuesAsStringSlice += ", "
+		}
+
+		valuesAsNumericSlice += value
+		valuesAsStringSlice += "\"" + value + "\""
+	}
+
+	valuesAsNumericSlice += "}"
+	valuesAsStringSlice += "}"
+
+	return valuesAsNumericSlice, valuesAsStringSlice
 }

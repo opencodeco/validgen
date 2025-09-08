@@ -72,8 +72,8 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 				fieldValidation: "in=a b c",
 			},
 			want: TestElements{
-				conditions:     []string{`types.SlicesContains(obj.myfield, "a")`, `types.SlicesContains(obj.myfield, "b")`, `types.SlicesContains(obj.myfield, "c")`},
-				concatOperator: "||",
+				conditions:     []string{`types.SliceOnlyContains(obj.myfield, []string{"a", "b", "c"})`},
+				concatOperator: "",
 				errorMessage:   "myfield elements must be one of 'a' 'b' 'c'",
 			},
 		},
@@ -85,8 +85,8 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 				fieldValidation: "in=' a ' ' b ' ' c '",
 			},
 			want: TestElements{
-				conditions:     []string{`types.SlicesContains(obj.myfield, " a ")`, `types.SlicesContains(obj.myfield, " b ")`, `types.SlicesContains(obj.myfield, " c ")`},
-				concatOperator: "||",
+				conditions:     []string{`types.SliceOnlyContains(obj.myfield, []string{" a ", " b ", " c "})`},
+				concatOperator: "",
 				errorMessage:   "myfield elements must be one of ' a ' ' b ' ' c '",
 			},
 		},
@@ -98,8 +98,8 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 				fieldValidation: "nin=a b c",
 			},
 			want: TestElements{
-				conditions:     []string{`!types.SlicesContains(obj.myfield, "a")`, `!types.SlicesContains(obj.myfield, "b")`, `!types.SlicesContains(obj.myfield, "c")`},
-				concatOperator: "&&",
+				conditions:     []string{`types.SliceNotContains(obj.myfield, []string{"a", "b", "c"})`},
+				concatOperator: "",
 				errorMessage:   "myfield elements must not be one of 'a' 'b' 'c'",
 			},
 		},
@@ -111,8 +111,8 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 				fieldValidation: "nin=' a ' ' b ' ' c '",
 			},
 			want: TestElements{
-				conditions:     []string{`!types.SlicesContains(obj.myfield, " a ")`, `!types.SlicesContains(obj.myfield, " b ")`, `!types.SlicesContains(obj.myfield, " c ")`},
-				concatOperator: "&&",
+				conditions:     []string{`types.SliceNotContains(obj.myfield, []string{" a ", " b ", " c "})`},
+				concatOperator: "",
 				errorMessage:   "myfield elements must not be one of ' a ' ' b ' ' c '",
 			},
 		},

@@ -121,7 +121,7 @@ errs = append(errs, types.NewValidationError("strField must have exactly 3 eleme
 				fieldType:       "[]string",
 				fieldValidation: "in=a b c",
 			},
-			want: `if !(types.SlicesContains(obj.strField, "a") || types.SlicesContains(obj.strField, "b") || types.SlicesContains(obj.strField, "c")) {
+			want: `if !(types.SliceOnlyContains(obj.strField, []string{"a", "b", "c"})) {
 errs = append(errs, types.NewValidationError("strField elements must be one of 'a' 'b' 'c'"))
 }
 `,
@@ -133,7 +133,7 @@ errs = append(errs, types.NewValidationError("strField elements must be one of '
 				fieldType:       "[]string",
 				fieldValidation: "nin=a b c",
 			},
-			want: `if !(!types.SlicesContains(obj.strField, "a") && !types.SlicesContains(obj.strField, "b") && !types.SlicesContains(obj.strField, "c")) {
+			want: `if !(types.SliceNotContains(obj.strField, []string{"a", "b", "c"})) {
 errs = append(errs, types.NewValidationError("strField elements must not be one of 'a' 'b' 'c'"))
 }
 `,
@@ -146,7 +146,7 @@ errs = append(errs, types.NewValidationError("strField elements must not be one 
 				fieldType:       "[N]string",
 				fieldValidation: "in=a b c",
 			},
-			want: `if !(types.SlicesContains(obj.strField[:], "a") || types.SlicesContains(obj.strField[:], "b") || types.SlicesContains(obj.strField[:], "c")) {
+			want: `if !(types.SliceOnlyContains(obj.strField[:], []string{"a", "b", "c"})) {
 errs = append(errs, types.NewValidationError("strField elements must be one of 'a' 'b' 'c'"))
 }
 `,
@@ -158,7 +158,7 @@ errs = append(errs, types.NewValidationError("strField elements must be one of '
 				fieldType:       "[N]string",
 				fieldValidation: "nin=a b c",
 			},
-			want: `if !(!types.SlicesContains(obj.strField[:], "a") && !types.SlicesContains(obj.strField[:], "b") && !types.SlicesContains(obj.strField[:], "c")) {
+			want: `if !(types.SliceNotContains(obj.strField[:], []string{"a", "b", "c"})) {
 errs = append(errs, types.NewValidationError("strField elements must not be one of 'a' 'b' 'c'"))
 }
 `,
