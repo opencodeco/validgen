@@ -32,7 +32,7 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 
 	switch fieldValidation.ExpectedValues {
 	case analyzer.ZERO_VALUE:
-		roperands = append(roperands, replaceNameAndTargetWithPrefix(condition.operation, fieldName, condition.operation))
+		roperands = append(roperands, replaceNameAndTarget(condition.operation, fieldName, ""))
 		targetValue = condition.operation
 		targetValues = "'" + condition.operation + "' "
 	case analyzer.ONE_VALUE, analyzer.MANY_VALUES:
@@ -41,7 +41,7 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 		valuesAsNumericSlice, valuesAsStringSlice := normalizeSlicesAsCode(basicType, values)
 
 		for _, value := range values {
-			operation := replaceNameAndTargetWithPrefix(condition.operation, fieldName, value)
+			operation := replaceNameAndTarget(condition.operation, fieldName, value)
 			operation = replaceSlicesTargets(operation, valuesAsStringSlice, valuesAsNumericSlice)
 			roperands = append(roperands, operation)
 			targetValue = value
@@ -56,7 +56,7 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 
 	targetValues = strings.TrimSpace(targetValues)
 	errorMsg := condition.errorMessage
-	errorMsg = replaceNameAndTargetWithoutPrefix(errorMsg, fieldName, targetValue)
+	errorMsg = replaceNameAndTarget(errorMsg, fieldName, targetValue)
 	errorMsg = replaceTargetInErrors(errorMsg, targetValue, targetValues)
 
 	return TestElements{
@@ -66,14 +66,7 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 	}, nil
 }
 
-func replaceNameAndTargetWithPrefix(text, name, target string) string {
-	text = strings.ReplaceAll(text, "{{.Name}}", "obj."+name)
-	text = strings.ReplaceAll(text, "{{.Target}}", target)
-
-	return text
-}
-
-func replaceNameAndTargetWithoutPrefix(text, name, target string) string {
+func replaceNameAndTarget(text, name, target string) string {
 	text = strings.ReplaceAll(text, "{{.Name}}", name)
 	text = strings.ReplaceAll(text, "{{.Target}}", target)
 

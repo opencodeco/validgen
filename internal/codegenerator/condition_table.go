@@ -20,12 +20,12 @@ var operationTable = map[string]Operation{
 		Name: "eq",
 		ConditionByType: map[string]ConditionTable{
 			"string": {
-				operation:      `{{.Name}} == "{{.Target}}"`,
+				operation:      `obj.{{.Name}} == "{{.Target}}"`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be equal to '{{.Target}}'",
 			},
 			"uint8": {
-				operation:      `{{.Name}} == {{.Target}}`,
+				operation:      `obj.{{.Name}} == {{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
 			},
@@ -35,17 +35,17 @@ var operationTable = map[string]Operation{
 		Name: "required",
 		ConditionByType: map[string]ConditionTable{
 			"string": {
-				operation:      `{{.Name}} != ""`,
+				operation:      `obj.{{.Name}} != ""`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} is required",
 			},
 			"uint8": {
-				operation:      `{{.Name}} != 0`,
+				operation:      `obj.{{.Name}} != 0`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} is required",
 			},
 			"[]string": {
-				operation:      `len({{.Name}}) != 0`,
+				operation:      `len(obj.{{.Name}}) != 0`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must not be empty",
 			},
@@ -55,7 +55,7 @@ var operationTable = map[string]Operation{
 		Name: "gte",
 		ConditionByType: map[string]ConditionTable{
 			"uint8": {
-				operation:      `{{.Name}} >= {{.Target}}`,
+				operation:      `obj.{{.Name}} >= {{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be >= {{.Target}}",
 			},
@@ -65,7 +65,7 @@ var operationTable = map[string]Operation{
 		Name: "lte",
 		ConditionByType: map[string]ConditionTable{
 			"uint8": {
-				operation:      `{{.Name}} <= {{.Target}}`,
+				operation:      `obj.{{.Name}} <= {{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be <= {{.Target}}",
 			},
@@ -75,12 +75,12 @@ var operationTable = map[string]Operation{
 		Name: "min",
 		ConditionByType: map[string]ConditionTable{
 			"string": {
-				operation:      `len({{.Name}}) >= {{.Target}}`,
+				operation:      `len(obj.{{.Name}}) >= {{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} length must be >= {{.Target}}",
 			},
 			"[]string": {
-				operation:      `len({{.Name}}) >= {{.Target}}`,
+				operation:      `len(obj.{{.Name}}) >= {{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must have at least {{.Target}} elements",
 			},
@@ -90,12 +90,12 @@ var operationTable = map[string]Operation{
 		Name: "max",
 		ConditionByType: map[string]ConditionTable{
 			"string": {
-				operation:      `len({{.Name}}) <= {{.Target}}`,
+				operation:      `len(obj.{{.Name}}) <= {{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} length must be <= {{.Target}}",
 			},
 			"[]string": {
-				operation:      `len({{.Name}}) <= {{.Target}}`,
+				operation:      `len(obj.{{.Name}}) <= {{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must have at most {{.Target}} elements",
 			},
@@ -105,7 +105,7 @@ var operationTable = map[string]Operation{
 		Name: "eq_ignore_case",
 		ConditionByType: map[string]ConditionTable{
 			"string": {
-				operation:      `types.EqualFold({{.Name}}, "{{.Target}}")`,
+				operation:      `types.EqualFold(obj.{{.Name}}, "{{.Target}}")`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be equal to '{{.Target}}'",
 			},
@@ -115,12 +115,12 @@ var operationTable = map[string]Operation{
 		Name: "len",
 		ConditionByType: map[string]ConditionTable{
 			"string": {
-				operation:      `len({{.Name}}) == {{.Target}}`,
+				operation:      `len(obj.{{.Name}}) == {{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} length must be {{.Target}}",
 			},
 			"[]string": {
-				operation:      `len({{.Name}}) == {{.Target}}`,
+				operation:      `len(obj.{{.Name}}) == {{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must have exactly {{.Target}} elements",
 			},
@@ -130,7 +130,7 @@ var operationTable = map[string]Operation{
 		Name: "neq",
 		ConditionByType: map[string]ConditionTable{
 			"string": {
-				operation:      `{{.Name}} != "{{.Target}}"`,
+				operation:      `obj.{{.Name}} != "{{.Target}}"`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must not be equal to '{{.Target}}'",
 			},
@@ -140,7 +140,7 @@ var operationTable = map[string]Operation{
 		Name: "neq_ignore_case",
 		ConditionByType: map[string]ConditionTable{
 			"string": {
-				operation:      `!types.EqualFold({{.Name}}, "{{.Target}}")`,
+				operation:      `!types.EqualFold(obj.{{.Name}}, "{{.Target}}")`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must not be equal to '{{.Target}}'",
 			},
@@ -150,17 +150,17 @@ var operationTable = map[string]Operation{
 		Name: "in",
 		ConditionByType: map[string]ConditionTable{
 			"string": {
-				operation:      `{{.Name}} == "{{.Target}}"`,
+				operation:      `obj.{{.Name}} == "{{.Target}}"`,
 				concatOperator: "||",
 				errorMessage:   "{{.Name}} must be one of {{.Targets}}",
 			},
 			"[]string": {
-				operation:      `types.SliceOnlyContains({{.Name}}, {{.TargetsAsStringSlice}})`,
+				operation:      `types.SliceOnlyContains(obj.{{.Name}}, {{.TargetsAsStringSlice}})`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
 			},
 			"[N]string": {
-				operation:      `types.SliceOnlyContains({{.Name}}[:], {{.TargetsAsStringSlice}})`,
+				operation:      `types.SliceOnlyContains(obj.{{.Name}}[:], {{.TargetsAsStringSlice}})`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
 			},
@@ -170,17 +170,17 @@ var operationTable = map[string]Operation{
 		Name: "nin",
 		ConditionByType: map[string]ConditionTable{
 			"string": {
-				operation:      `{{.Name}} != "{{.Target}}"`,
+				operation:      `obj.{{.Name}} != "{{.Target}}"`,
 				concatOperator: "&&",
 				errorMessage:   "{{.Name}} must not be one of {{.Targets}}",
 			},
 			"[]string": {
-				operation:      `types.SliceNotContains({{.Name}}, {{.TargetsAsStringSlice}})`,
+				operation:      `types.SliceNotContains(obj.{{.Name}}, {{.TargetsAsStringSlice}})`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
 			},
 			"[N]string": {
-				operation:      `types.SliceNotContains({{.Name}}[:], {{.TargetsAsStringSlice}})`,
+				operation:      `types.SliceNotContains(obj.{{.Name}}[:], {{.TargetsAsStringSlice}})`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
 			},
@@ -190,7 +190,7 @@ var operationTable = map[string]Operation{
 		Name: "email",
 		ConditionByType: map[string]ConditionTable{
 			"string": {
-				operation:      `types.IsValidEmail({{.Name}})`,
+				operation:      `types.IsValidEmail(obj.{{.Name}})`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be a valid email",
 			},
@@ -200,12 +200,12 @@ var operationTable = map[string]Operation{
 		Name: "eqfield",
 		ConditionByType: map[string]ConditionTable{
 			"string": {
-				operation:      `{{.Name}} == obj.{{.Target}}`,
+				operation:      `obj.{{.Name}} == obj.{{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
 			},
 			"uint8": {
-				operation:      `{{.Name}} == obj.{{.Target}}`,
+				operation:      `obj.{{.Name}} == obj.{{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
 			},
@@ -215,12 +215,12 @@ var operationTable = map[string]Operation{
 		Name: "neqfield",
 		ConditionByType: map[string]ConditionTable{
 			"string": {
-				operation:      `{{.Name}} != obj.{{.Target}}`,
+				operation:      `obj.{{.Name}} != obj.{{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
 			},
 			"uint8": {
-				operation:      `{{.Name}} != obj.{{.Target}}`,
+				operation:      `obj.{{.Name}} != obj.{{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
 			},
@@ -230,7 +230,7 @@ var operationTable = map[string]Operation{
 		Name: "gtefield",
 		ConditionByType: map[string]ConditionTable{
 			"uint8": {
-				operation:      `{{.Name}} >= obj.{{.Target}}`,
+				operation:      `obj.{{.Name}} >= obj.{{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be >= {{.Target}}",
 			},
@@ -240,7 +240,7 @@ var operationTable = map[string]Operation{
 		Name: "gtfield",
 		ConditionByType: map[string]ConditionTable{
 			"uint8": {
-				operation:      `{{.Name}} > obj.{{.Target}}`,
+				operation:      `obj.{{.Name}} > obj.{{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be > {{.Target}}",
 			},
@@ -250,7 +250,7 @@ var operationTable = map[string]Operation{
 		Name: "ltefield",
 		ConditionByType: map[string]ConditionTable{
 			"uint8": {
-				operation:      `{{.Name}} <= obj.{{.Target}}`,
+				operation:      `obj.{{.Name}} <= obj.{{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be <= {{.Target}}",
 			},
@@ -260,7 +260,7 @@ var operationTable = map[string]Operation{
 		Name: "ltfield",
 		ConditionByType: map[string]ConditionTable{
 			"uint8": {
-				operation:      `{{.Name}} < obj.{{.Target}}`,
+				operation:      `obj.{{.Name}} < obj.{{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be < {{.Target}}",
 			},
