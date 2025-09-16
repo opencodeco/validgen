@@ -52,6 +52,16 @@ func AllTypes2Validate(obj *AllTypes2) []error {
 	}
 	return errs
 }
+func ArrayStringValidate(obj *ArrayString) []error {
+	var errs []error
+	if !(types.SliceOnlyContains(obj.TypesIn[:], []string{"a", "b", "c"})) {
+		errs = append(errs, types.NewValidationError("TypesIn elements must be one of 'a' 'b' 'c'"))
+	}
+	if !(types.SliceNotContains(obj.TypesNotIn[:], []string{"a", "b", "c"})) {
+		errs = append(errs, types.NewValidationError("TypesNotIn elements must not be one of 'a' 'b' 'c'"))
+	}
+	return errs
+}
 func CmpInnerStringFieldsValidate(obj *CmpInnerStringFields) []error {
 	var errs []error
 	if !(obj.Field2eq1 == obj.Field1) {
@@ -130,10 +140,10 @@ func SliceStringValidate(obj *SliceString) []error {
 	if !(len(obj.TypesLen) == 3) {
 		errs = append(errs, types.NewValidationError("TypesLen must have exactly 3 elements"))
 	}
-	if !(types.SlicesContains(obj.TypesIn, "a") || types.SlicesContains(obj.TypesIn, "b") || types.SlicesContains(obj.TypesIn, "c")) {
+	if !(types.SliceOnlyContains(obj.TypesIn, []string{"a", "b", "c"})) {
 		errs = append(errs, types.NewValidationError("TypesIn elements must be one of 'a' 'b' 'c'"))
 	}
-	if !(!types.SlicesContains(obj.TypesNotIn, "a") && !types.SlicesContains(obj.TypesNotIn, "b") && !types.SlicesContains(obj.TypesNotIn, "c")) {
+	if !(types.SliceNotContains(obj.TypesNotIn, []string{"a", "b", "c"})) {
 		errs = append(errs, types.NewValidationError("TypesNotIn elements must not be one of 'a' 'b' 'c'"))
 	}
 	return errs

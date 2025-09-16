@@ -26,6 +26,22 @@ func IsValidEmail(email string) bool {
 	return emailRegex.MatchString(email)
 }
 
-func SlicesContains[S ~[]E, E comparable](s S, v E) bool {
-	return slices.Contains(s, v)
+func SliceOnlyContains[S ~[]E, V ~[]E, E comparable](s S, v V) bool {
+	for _, item := range s {
+		if !slices.Contains(v, item) {
+			return false
+		}
+	}
+
+	return true
+}
+
+func SliceNotContains[S ~[]E, V ~[]E, E comparable](s S, v V) bool {
+	for _, item := range s {
+		if slices.Contains(v, item) {
+			return false
+		}
+	}
+
+	return true
 }

@@ -32,24 +32,31 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 
 	switch fieldValidation.ExpectedValues {
 	case analyzer.ZERO_VALUE:
-		roperands = append(roperands, replaceNameAndTargetWithPrefix(condition.operation, fieldName, condition.operation))
+		roperands = append(roperands, replaceNameAndTarget(condition.operation, fieldName, ""))
 		targetValue = condition.operation
 		targetValues = "'" + condition.operation + "' "
 	case analyzer.ONE_VALUE, analyzer.MANY_VALUES:
+		basicType := strings.TrimPrefix(fieldType, "[N]")
+		basicType = strings.TrimPrefix(basicType, "[]")
+		valuesAsNumericSlice, valuesAsStringSlice := normalizeSlicesAsCode(basicType, values)
+
 		for _, value := range values {
-			roperands = append(roperands, replaceNameAndTargetWithPrefix(condition.operation, fieldName, value))
+			operation := replaceNameAndTarget(condition.operation, fieldName, value)
+			operation = replaceSlicesTargets(operation, valuesAsStringSlice, valuesAsNumericSlice)
+			roperands = append(roperands, operation)
 			targetValue = value
 			targetValues += "'" + value + "' "
 		}
 	}
 
 	if len(roperands) > 1 && condition.concatOperator == "" {
-		return TestElements{}, types.NewValidationError("missed concat operator")
+		// REFACTOR!
+		roperands = roperands[:1]
 	}
 
 	targetValues = strings.TrimSpace(targetValues)
 	errorMsg := condition.errorMessage
-	errorMsg = replaceNameAndTargetWithoutPrefix(errorMsg, fieldName, targetValue)
+	errorMsg = replaceNameAndTarget(errorMsg, fieldName, targetValue)
 	errorMsg = replaceTargetInErrors(errorMsg, targetValue, targetValues)
 
 	return TestElements{
@@ -59,16 +66,16 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 	}, nil
 }
 
-func replaceNameAndTargetWithPrefix(text, name, target string) string {
-	text = strings.ReplaceAll(text, "{{.Name}}", "obj."+name)
+func replaceNameAndTarget(text, name, target string) string {
+	text = strings.ReplaceAll(text, "{{.Name}}", name)
 	text = strings.ReplaceAll(text, "{{.Target}}", target)
 
 	return text
 }
 
-func replaceNameAndTargetWithoutPrefix(text, name, target string) string {
-	text = strings.ReplaceAll(text, "{{.Name}}", name)
-	text = strings.ReplaceAll(text, "{{.Target}}", target)
+func replaceSlicesTargets(text, stringTargets, numericTargets string) string {
+	text = strings.ReplaceAll(text, "{{.TargetsAsStringSlice}}", stringTargets)
+	text = strings.ReplaceAll(text, "{{.TargetsAsNumericSlice}}", numericTargets)
 
 	return text
 }
@@ -78,4 +85,25 @@ func replaceTargetInErrors(text, target, targets string) string {
 	text = strings.ReplaceAll(text, "{{.Targets}}", targets)
 
 	return text
+}
+
+func normalizeSlicesAsCode(basicType string, values []string) (string, string) {
+
+	valuesAsNumericSlice := "[]" + basicType + "{"
+	valuesAsStringSlice := "[]" + basicType + "{"
+
+	for i, value := range values {
+		if i != 0 {
+			valuesAsNumericSlice += ", "
+			valuesAsStringSlice += ", "
+		}
+
+		valuesAsNumericSlice += value
+		valuesAsStringSlice += "\"" + value + "\""
+	}
+
+	valuesAsNumericSlice += "}"
+	valuesAsStringSlice += "}"
+
+	return valuesAsNumericSlice, valuesAsStringSlice
 }

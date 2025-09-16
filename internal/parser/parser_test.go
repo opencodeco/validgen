@@ -282,6 +282,41 @@ func TestParseStructsOk(t *testing.T) {
 				},
 			},
 		},
+
+		{
+			name: "Array of strings",
+			args: args{
+				fullpath: "example/main.go",
+				src: "package main\n" +
+					"type AllTypes struct {\n" +
+					"	FirstName string `valid:\"required\"`\n" +
+					"	Types   [5]string `valid:\"in=a b c\"`\n" +
+					"}\n" +
+
+					"func main() {\n" +
+					"}\n",
+			},
+			want: []*Struct{
+				{
+					StructName:  "AllTypes",
+					Path:        "./example",
+					PackageName: "main",
+					Fields: []Field{
+						{
+							FieldName: "FirstName",
+							Type:      "string",
+							Tag:       "valid:\"required\"",
+						},
+						{
+							FieldName: "Types",
+							Type:      "[N]string",
+							Tag:       "valid:\"in=a b c\"",
+						},
+					},
+					Imports: map[string]Import{},
+				},
+			},
+		},
 	}
 
 	for _, tt := range tests {

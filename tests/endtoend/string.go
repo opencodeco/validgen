@@ -17,6 +17,8 @@ type StringType struct {
 }
 
 func string_tests() {
+	log.Println("starting string tests")
+
 	var expectedMsgErrors []string
 	var errs []error
 

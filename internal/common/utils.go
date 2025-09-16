@@ -4,6 +4,7 @@ import "strings"
 
 func IsGoType(fieldType string) bool {
 	fieldType = strings.TrimPrefix(fieldType, "[]")
+	fieldType = strings.TrimPrefix(fieldType, "[N]")
 
 	goTypes := map[string]struct{}{
 		"string": {},

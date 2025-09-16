@@ -108,8 +108,9 @@ var operations = map[string]Operation{
 		CountValues:      MANY_VALUES,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string":   true,
-			"[]string": true,
+			"string":    true,
+			"[]string":  true,
+			"[N]string": true,
 		},
 	},
 	"nin": {
@@ -117,8 +118,9 @@ var operations = map[string]Operation{
 		CountValues:      MANY_VALUES,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string":   true,
-			"[]string": true,
+			"string":    true,
+			"[]string":  true,
+			"[N]string": true,
 		},
 	},
 	"email": {

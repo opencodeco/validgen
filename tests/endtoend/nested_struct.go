@@ -24,6 +24,8 @@ type UserWithStructInPkg struct {
 }
 
 func nested_struct_tests() {
+	log.Println("starting nested struct tests")
+
 	nested_struct_tests1()
 	nested_struct_tests2()
 
@@ -31,6 +33,8 @@ func nested_struct_tests() {
 }
 
 func nested_struct_tests1() {
+	log.Println("starting nested struct tests 1")
+
 	var expectedMsgErrors []string
 	var errs []error
 
@@ -70,6 +74,8 @@ func nested_struct_tests1() {
 }
 
 func nested_struct_tests2() {
+	log.Println("starting nested struct tests 2")
+
 	var expectedMsgErrors []string
 	var errs []error
 
