@@ -317,6 +317,41 @@ func TestParseStructsOk(t *testing.T) {
 				},
 			},
 		},
+
+		{
+			name: "Boolean type",
+			args: args{
+				fullpath: "example/main.go",
+				src: "package main\n" +
+					"type AllTypes struct {\n" +
+					"	IsCorrect    bool `valid:\"eq=true\"`\n" +
+					"	IsNotCorrect bool `valid:\"eq=false\"`\n" +
+					"}\n" +
+
+					"func main() {\n" +
+					"}\n",
+			},
+			want: []*Struct{
+				{
+					StructName:  "AllTypes",
+					Path:        "./example",
+					PackageName: "main",
+					Fields: []Field{
+						{
+							FieldName: "IsCorrect",
+							Type:      "bool",
+							Tag:       "valid:\"eq=true\"",
+						},
+						{
+							FieldName: "IsNotCorrect",
+							Type:      "bool",
+							Tag:       "valid:\"eq=false\"",
+						},
+					},
+					Imports: map[string]Import{},
+				},
+			},
+		},
 	}
 
 	for _, tt := range tests {
