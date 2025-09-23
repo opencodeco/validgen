@@ -62,6 +62,26 @@ func ArrayStringValidate(obj *ArrayString) []error {
 	}
 	return errs
 }
+func BoolTypeValidate(obj *BoolType) []error {
+	var errs []error
+	if !(obj.FieldEqTrue == true) {
+		errs = append(errs, types.NewValidationError("FieldEqTrue must be equal to true"))
+	}
+	if !(obj.FieldNeqFalse != false) {
+		errs = append(errs, types.NewValidationError("FieldNeqFalse must not be equal to false"))
+	}
+	return errs
+}
+func CmpInnerBoolFieldsValidate(obj *CmpInnerBoolFields) []error {
+	var errs []error
+	if !(obj.Field2eq1 == obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field2eq1 must be equal to Field1"))
+	}
+	if !(obj.Field3neq1 != obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field3neq1 must not be equal to Field1"))
+	}
+	return errs
+}
 func CmpInnerStringFieldsValidate(obj *CmpInnerStringFields) []error {
 	var errs []error
 	if !(obj.Field2eq1 == obj.Field1) {

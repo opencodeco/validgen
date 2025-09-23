@@ -9,6 +9,7 @@ func cmp_between_inner_fields_tests() {
 
 	cmp_between_inner_string_fields_tests()
 	cmp_between_inner_uint8_fields_tests()
+	cmp_between_inner_bool_fields_tests()
 
 	log.Println("cmp between inner fields tests ok")
 }
@@ -114,4 +115,46 @@ func cmp_between_inner_uint8_fields_tests() {
 	}
 
 	log.Println("cmp between inner uint8 fields tests ok")
+}
+
+type CmpInnerBoolFields struct {
+	Field1     bool
+	Field2eq1  bool `valid:"eqfield=Field1"`
+	Field3neq1 bool `valid:"neqfield=Field1"`
+}
+
+func cmp_between_inner_bool_fields_tests() {
+	log.Println("starting between inner bool fields tests")
+
+	var expectedMsgErrors []string
+	var errs []error
+
+	// Test case 1: All failure scenarios
+	v := &CmpInnerBoolFields{
+		Field1:     true,
+		Field2eq1:  false,
+		Field3neq1: true,
+	}
+	expectedMsgErrors = []string{
+		"Field2eq1 must be equal to Field1",
+		"Field3neq1 must not be equal to Field1",
+	}
+	errs = CmpInnerBoolFieldsValidate(v)
+	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
+		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
+	}
+
+	// Test case 2: All valid input
+	v = &CmpInnerBoolFields{
+		Field1:     true,
+		Field2eq1:  true,
+		Field3neq1: false,
+	}
+	expectedMsgErrors = nil
+	errs = CmpInnerBoolFieldsValidate(v)
+	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
+		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
+	}
+
+	log.Println("cmp between inner bool fields tests ok")
 }
