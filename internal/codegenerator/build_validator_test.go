@@ -188,6 +188,19 @@ errs = append(errs, types.NewValidationError("field1 must be equal to Nested.fie
 }
 `,
 		},
+
+		{
+			name: "if code with bool",
+			args: args{
+				fieldName:       "boolField",
+				fieldType:       "bool",
+				fieldValidation: "eq=true",
+			},
+			want: `if !(obj.boolField == true) {
+errs = append(errs, types.NewValidationError("boolField must be equal to true"))
+}
+`,
+		},
 	}
 
 	for _, tt := range tests {
