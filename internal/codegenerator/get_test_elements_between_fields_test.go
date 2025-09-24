@@ -120,6 +120,33 @@ func TestDefineTestElementsBetweenInnerFields(t *testing.T) {
 				errorMessage:   "myfield1 must be < myfield2",
 			},
 		},
+
+		{
+			name: "inner bool fields must be equal",
+			args: args{
+				fieldName:       "myfield1",
+				fieldType:       "bool",
+				fieldValidation: "eqfield=myfield2",
+			},
+			want: TestElements{
+				conditions:     []string{`obj.myfield1 == obj.myfield2`},
+				concatOperator: "",
+				errorMessage:   "myfield1 must be equal to myfield2",
+			},
+		},
+		{
+			name: "inner bool fields must not be equal",
+			args: args{
+				fieldName:       "myfield1",
+				fieldType:       "bool",
+				fieldValidation: "neqfield=myfield2",
+			},
+			want: TestElements{
+				conditions:     []string{`obj.myfield1 != obj.myfield2`},
+				concatOperator: "",
+				errorMessage:   "myfield1 must not be equal to myfield2",
+			},
+		},
 	}
 
 	for _, tt := range tests {

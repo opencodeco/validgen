@@ -24,6 +24,7 @@ var operations = map[string]Operation{
 		ValidTypes: map[string]bool{
 			"string": true,
 			"uint8":  true,
+			"bool":   true,
 		},
 	},
 	"required": {
@@ -93,6 +94,7 @@ var operations = map[string]Operation{
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
 			"string": true,
+			"bool":   true,
 		},
 	},
 	"neq_ignore_case": {
@@ -138,6 +140,7 @@ var operations = map[string]Operation{
 		ValidTypes: map[string]bool{
 			"string": true,
 			"uint8":  true,
+			"bool":   true,
 		},
 	},
 	"neqfield": {
@@ -147,6 +150,7 @@ var operations = map[string]Operation{
 		ValidTypes: map[string]bool{
 			"string": true,
 			"uint8":  true,
+			"bool":   true,
 		},
 	},
 	"gtefield": {

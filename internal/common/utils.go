@@ -8,7 +8,7 @@ func IsGoType(fieldType string) bool {
 
 	goTypes := map[string]struct{}{
 		"string": {},
-		// "bool":       {},
+		"bool":   {},
 		// "int":        {},
 		// "int8":       {},
 		// "int16":      {},

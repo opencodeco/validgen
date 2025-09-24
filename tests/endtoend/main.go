@@ -40,6 +40,7 @@ func main() {
 	array_string_tests()
 	cmp_between_inner_fields_tests()
 	cmp_between_nested_fields_tests()
+	bool_tests()
 
 	log.Println("finishing tests")
 }

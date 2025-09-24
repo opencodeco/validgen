@@ -70,9 +70,9 @@ The following table shows the validations and possible types, where "I" means "I
 | len             | I      | -                          | -       | I     | -     | W   | -    | -        |
 | max             | I      | -                          | -       | I     | -     | W   | W    | W        |
 | min             | I      | -                          | -       | I     | -     | W   | W    | W        |
-| in              | I      | W                          | W       | I     | I     | W   | -    | W        |
-| nin             | I      | W                          | W       | I     | I     | W   | -    | W        |
-| required        | I      | W                          | W       | I     | -     | W   | W    | W        |
+| in              | I      | W                          | -       | I     | I     | W   | -    | W        |
+| nin             | I      | W                          | -       | I     | I     | W   | -    | W        |
+| required        | I      | W                          | -       | I     | -     | W   | W    | W        |
 | email           | I      | -                          | -       | -     | -     | -   | -    | -        |
 | eqfield         | I      | I                          | W       | -     | -     | -   | W    | W        |
 | neqfield        | I      | I                          | W       | -     | -     | -   | W    | W        |

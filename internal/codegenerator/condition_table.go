@@ -29,6 +29,11 @@ var operationTable = map[string]Operation{
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
 			},
+			"bool": {
+				operation:      `obj.{{.Name}} == {{.Target}}`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
+			},
 		},
 	},
 	"required": {
@@ -134,6 +139,11 @@ var operationTable = map[string]Operation{
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must not be equal to '{{.Target}}'",
 			},
+			"bool": {
+				operation:      `obj.{{.Name}} != {{.Target}}`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
+			},
 		},
 	},
 	"neq_ignore_case": {
@@ -209,6 +219,11 @@ var operationTable = map[string]Operation{
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
 			},
+			"bool": {
+				operation:      `obj.{{.Name}} == obj.{{.Target}}`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
+			},
 		},
 	},
 	"neqfield": {
@@ -220,6 +235,11 @@ var operationTable = map[string]Operation{
 				errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
 			},
 			"uint8": {
+				operation:      `obj.{{.Name}} != obj.{{.Target}}`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
+			},
+			"bool": {
 				operation:      `obj.{{.Name}} != obj.{{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
