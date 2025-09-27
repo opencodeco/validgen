@@ -3,6 +3,11 @@ package common
 import "strings"
 
 func IsGoType(fieldType string) bool {
+	if strings.HasPrefix(fieldType, "map[") {
+		// REFACTOR!
+		return true
+	}
+
 	fieldType = strings.TrimPrefix(fieldType, "[]")
 	fieldType = strings.TrimPrefix(fieldType, "[N]")
 
@@ -23,6 +28,7 @@ func IsGoType(fieldType string) bool {
 		// "float64":    {},
 		// "complex64":  {},
 		// "complex128": {},
+		"map": {},
 	}
 
 	_, ok := goTypes[fieldType]
