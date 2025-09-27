@@ -15,5 +15,5 @@ func NewValidationError(format string, a ...any) error {
 }
 
 func (e ValidationError) Error() string {
-	return fmt.Sprintf("%s", e.Msg)
+	return e.Msg
 }

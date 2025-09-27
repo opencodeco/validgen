@@ -172,6 +172,11 @@ func appendFields(structType *ast.StructType, packageName string, cstruct *Struc
 			nestedPkgName := v.X.(*ast.Ident).Name
 			fieldType, fieldTag = extractNestedFieldTypeAndTag(nestedPkgName, v.Sel.Name, fieldTag)
 			appendFieldNames = true
+
+		case *ast.MapType:
+			fieldType = fmt.Sprintf("map[%s]", v.Key.(*ast.Ident).Name)
+			_, fieldTag = extractFieldTypeAndTag(packageName, fieldType, fieldTag)
+			appendFieldNames = true
 		}
 
 		if appendFieldNames {
@@ -192,6 +197,7 @@ func extractFieldTypeAndTag(packageName, fieldType, fieldTag string) (string, st
 	if !common.IsGoType(fieldType) {
 		rFieldType = common.KeyPath(packageName, fieldType)
 	}
+
 	rFieldTag := ""
 	if fieldTag != "" {
 		rFieldTag = fieldTag

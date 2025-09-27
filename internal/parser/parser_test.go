@@ -352,6 +352,47 @@ func TestParseStructsOk(t *testing.T) {
 				},
 			},
 		},
+
+		{
+			name: "Map type",
+			args: args{
+				fullpath: "example/main.go",
+				src: "package main\n" +
+					"type AllTypes struct {\n" +
+					"	MapField1    map[string]string `valid:\"required\"`\n" +
+					"	MapField2    map[string]uint8 `valid:\"len=3\"`\n" +
+					"	MapField3    map[uint8]string `valid:\"max=5\"`\n" +
+					"}\n" +
+
+					"func main() {\n" +
+					"}\n",
+			},
+			want: []*Struct{
+				{
+					StructName:  "AllTypes",
+					Path:        "./example",
+					PackageName: "main",
+					Fields: []Field{
+						{
+							FieldName: "MapField1",
+							Type:      "map[string]",
+							Tag:       "valid:\"required\"",
+						},
+						{
+							FieldName: "MapField2",
+							Type:      "map[string]",
+							Tag:       "valid:\"len=3\"",
+						},
+						{
+							FieldName: "MapField3",
+							Type:      "map[uint8]",
+							Tag:       "valid:\"max=5\"",
+						},
+					},
+					Imports: map[string]Import{},
+				},
+			},
+		},
 	}
 
 	for _, tt := range tests {

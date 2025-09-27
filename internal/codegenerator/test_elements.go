@@ -36,8 +36,12 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 		targetValue = condition.operation
 		targetValues = "'" + condition.operation + "' "
 	case analyzer.ONE_VALUE, analyzer.MANY_VALUES:
+		// TODO: refactor: When parsing, divide the type into Literal Type (array, map, etc.), Elemental Type (base type), and size (for arrays).
+		// Code below split basic type from slices and maps
 		basicType := strings.TrimPrefix(fieldType, "[N]")
 		basicType = strings.TrimPrefix(basicType, "[]")
+		basicType = strings.TrimPrefix(basicType, "map[")
+		basicType = strings.TrimSuffix(basicType, "]")
 		valuesAsNumericSlice, valuesAsStringSlice := normalizeSlicesAsCode(basicType, values)
 
 		for _, value := range values {
@@ -90,7 +94,7 @@ func replaceTargetInErrors(text, target, targets string) string {
 func normalizeSlicesAsCode(basicType string, values []string) (string, string) {
 
 	valuesAsNumericSlice := "[]" + basicType + "{"
-	valuesAsStringSlice := "[]" + basicType + "{"
+	valuesAsStringSlice := "[]" + "string" + "{"
 
 	for i, value := range values {
 		if i != 0 {

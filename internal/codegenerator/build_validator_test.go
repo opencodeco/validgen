@@ -201,6 +201,32 @@ errs = append(errs, types.NewValidationError("boolField must be equal to true"))
 }
 `,
 		},
+
+		// Map type
+		{
+			name: "if code with string map",
+			args: args{
+				fieldName:       "mapField",
+				fieldType:       "map[string]",
+				fieldValidation: "len=3",
+			},
+			want: `if !(len(obj.mapField) == 3) {
+errs = append(errs, types.NewValidationError("mapField must have exactly 3 elements"))
+}
+`,
+		},
+		{
+			name: "if code with uint8 map",
+			args: args{
+				fieldName:       "mapField",
+				fieldType:       "map[uint8]",
+				fieldValidation: "len=3",
+			},
+			want: `if !(len(obj.mapField) == 3) {
+errs = append(errs, types.NewValidationError("mapField must have exactly 3 elements"))
+}
+`,
+		},
 	}
 
 	for _, tt := range tests {

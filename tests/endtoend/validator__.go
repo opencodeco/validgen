@@ -146,6 +146,50 @@ func CmpNestedUint8FieldsValidate(obj *CmpNestedUint8Fields) []error {
 	}
 	return errs
 }
+func MapStringValidate(obj *MapString) []error {
+	var errs []error
+	if !(len(obj.FieldRequired) >= 1) {
+		errs = append(errs, types.NewValidationError("FieldRequired must not be empty"))
+	}
+	if !(len(obj.FieldMin) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMin must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMax) <= 5) {
+		errs = append(errs, types.NewValidationError("FieldMax must have at most 5 elements"))
+	}
+	if !(len(obj.FieldLen) == 3) {
+		errs = append(errs, types.NewValidationError("FieldLen must have exactly 3 elements"))
+	}
+	if !(types.MapOnlyContains(obj.FieldIn, []string{"a", "b", "c"})) {
+		errs = append(errs, types.NewValidationError("FieldIn elements must be one of 'a' 'b' 'c'"))
+	}
+	if !(types.MapNotContains(obj.FieldNotIn, []string{"a", "b", "c"})) {
+		errs = append(errs, types.NewValidationError("FieldNotIn elements must not be one of 'a' 'b' 'c'"))
+	}
+	return errs
+}
+func MapUint8Validate(obj *MapUint8) []error {
+	var errs []error
+	if !(len(obj.FieldRequired) >= 1) {
+		errs = append(errs, types.NewValidationError("FieldRequired must not be empty"))
+	}
+	if !(len(obj.FieldMin) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMin must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMax) <= 5) {
+		errs = append(errs, types.NewValidationError("FieldMax must have at most 5 elements"))
+	}
+	if !(len(obj.FieldLen) == 3) {
+		errs = append(errs, types.NewValidationError("FieldLen must have exactly 3 elements"))
+	}
+	if !(types.MapOnlyContains(obj.FieldIn, []uint8{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldIn elements must be one of '1' '2' '3'"))
+	}
+	if !(types.MapNotContains(obj.FieldNotIn, []uint8{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNotIn elements must not be one of '1' '2' '3'"))
+	}
+	return errs
+}
 func SliceStringValidate(obj *SliceString) []error {
 	var errs []error
 	if !(len(obj.TypesRequired) != 0) {

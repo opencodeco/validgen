@@ -41,6 +41,8 @@ func main() {
 	cmp_between_inner_fields_tests()
 	cmp_between_nested_fields_tests()
 	bool_tests()
+	map_string_tests()
+	map_uint8_tests()
 
 	log.Println("finishing tests")
 }
