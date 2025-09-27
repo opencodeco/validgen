@@ -2,14 +2,10 @@ package common
 
 import "strings"
 
-func IsGoType(fieldType string) bool {
-	if strings.HasPrefix(fieldType, "map[") {
-		// REFACTOR!
+func IsGoType(fieldType FieldType) bool {
+	if fieldType.ComposedType == "map" {
 		return true
 	}
-
-	fieldType = strings.TrimPrefix(fieldType, "[]")
-	fieldType = strings.TrimPrefix(fieldType, "[N]")
 
 	goTypes := map[string]struct{}{
 		"string": {},
@@ -28,10 +24,9 @@ func IsGoType(fieldType string) bool {
 		// "float64":    {},
 		// "complex64":  {},
 		// "complex128": {},
-		"map": {},
 	}
 
-	_, ok := goTypes[fieldType]
+	_, ok := goTypes[fieldType.BaseType]
 
 	return ok
 }
