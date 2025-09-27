@@ -3,6 +3,8 @@ package codegenerator
 import (
 	"reflect"
 	"testing"
+
+	"github.com/opencodeco/validgen/internal/common"
 )
 
 func TestDefineTestElementsWithBoolFields(t *testing.T) {
@@ -41,7 +43,7 @@ func TestDefineTestElementsWithBoolFields(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			fieldType := "bool"
+			fieldType := common.FieldType{BaseType: "bool"}
 			wantErr := false
 			validation := AssertParserValidation(t, tt.args.fieldValidation)
 			got, err := DefineTestElements(tt.args.fieldName, fieldType, validation)

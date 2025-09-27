@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/opencodeco/validgen/internal/common"
 	"github.com/opencodeco/validgen/internal/parser"
 )
 
@@ -195,7 +196,7 @@ func TestValidFieldOperationsByType(t *testing.T) {
 					Fields: []parser.Field{
 						{
 							FieldName: "Field",
-							Type:      tt.fieldType,
+							Type:      common.FieldType{BaseType: tt.fieldType},
 							Tag:       fmt.Sprintf(`valid:"%s"`, tt.op),
 						},
 					},

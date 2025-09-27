@@ -3,12 +3,14 @@ package codegenerator
 import (
 	"reflect"
 	"testing"
+
+	"github.com/opencodeco/validgen/internal/common"
 )
 
 func TestDefineTestElementsBetweenInnerFields(t *testing.T) {
 	type args struct {
 		fieldName       string
-		fieldType       string
+		fieldType       common.FieldType
 		fieldValidation string
 	}
 	tests := []struct {
@@ -20,7 +22,7 @@ func TestDefineTestElementsBetweenInnerFields(t *testing.T) {
 			name: "inner string fields must be equal",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "string",
+				fieldType:       common.FieldType{BaseType: "string"},
 				fieldValidation: "eqfield=myfield2",
 			},
 			want: TestElements{
@@ -33,7 +35,7 @@ func TestDefineTestElementsBetweenInnerFields(t *testing.T) {
 			name: "inner string fields must not be equal",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "string",
+				fieldType:       common.FieldType{BaseType: "string"},
 				fieldValidation: "neqfield=myfield2",
 			},
 			want: TestElements{
@@ -46,7 +48,7 @@ func TestDefineTestElementsBetweenInnerFields(t *testing.T) {
 			name: "inner uint8 fields must be equal",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "uint8",
+				fieldType:       common.FieldType{BaseType: "uint8"},
 				fieldValidation: "eqfield=myfield2",
 			},
 			want: TestElements{
@@ -59,7 +61,7 @@ func TestDefineTestElementsBetweenInnerFields(t *testing.T) {
 			name: "inner uint8 fields must not be equal",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "uint8",
+				fieldType:       common.FieldType{BaseType: "uint8"},
 				fieldValidation: "neqfield=myfield2",
 			},
 			want: TestElements{
@@ -72,7 +74,7 @@ func TestDefineTestElementsBetweenInnerFields(t *testing.T) {
 			name: "inner uint8 field must be greater than or equal",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "uint8",
+				fieldType:       common.FieldType{BaseType: "uint8"},
 				fieldValidation: "gtefield=myfield2",
 			},
 			want: TestElements{
@@ -85,7 +87,7 @@ func TestDefineTestElementsBetweenInnerFields(t *testing.T) {
 			name: "inner uint8 field must be greater than",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "uint8",
+				fieldType:       common.FieldType{BaseType: "uint8"},
 				fieldValidation: "gtfield=myfield2",
 			},
 			want: TestElements{
@@ -98,7 +100,7 @@ func TestDefineTestElementsBetweenInnerFields(t *testing.T) {
 			name: "inner uint8 fields must less than or equal",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "uint8",
+				fieldType:       common.FieldType{BaseType: "uint8"},
 				fieldValidation: "ltefield=myfield2",
 			},
 			want: TestElements{
@@ -111,7 +113,7 @@ func TestDefineTestElementsBetweenInnerFields(t *testing.T) {
 			name: "inner uint8 fields must less than",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "uint8",
+				fieldType:       common.FieldType{BaseType: "uint8"},
 				fieldValidation: "ltfield=myfield2",
 			},
 			want: TestElements{
@@ -125,7 +127,7 @@ func TestDefineTestElementsBetweenInnerFields(t *testing.T) {
 			name: "inner bool fields must be equal",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "bool",
+				fieldType:       common.FieldType{BaseType: "bool"},
 				fieldValidation: "eqfield=myfield2",
 			},
 			want: TestElements{
@@ -138,7 +140,7 @@ func TestDefineTestElementsBetweenInnerFields(t *testing.T) {
 			name: "inner bool fields must not be equal",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "bool",
+				fieldType:       common.FieldType{BaseType: "bool"},
 				fieldValidation: "neqfield=myfield2",
 			},
 			want: TestElements{
@@ -168,7 +170,7 @@ func TestDefineTestElementsBetweenInnerFields(t *testing.T) {
 func TestDefineTestElementsBetweenNestedFields(t *testing.T) {
 	type args struct {
 		fieldName       string
-		fieldType       string
+		fieldType       common.FieldType
 		fieldValidation string
 	}
 	tests := []struct {
@@ -180,7 +182,7 @@ func TestDefineTestElementsBetweenNestedFields(t *testing.T) {
 			name: "nested string fields must be equal",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "string",
+				fieldType:       common.FieldType{BaseType: "string"},
 				fieldValidation: "eqfield=nested.myfield2",
 			},
 			want: TestElements{
@@ -193,7 +195,7 @@ func TestDefineTestElementsBetweenNestedFields(t *testing.T) {
 			name: "nested string fields must not be equal",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "string",
+				fieldType:       common.FieldType{BaseType: "string"},
 				fieldValidation: "neqfield=nested.myfield2",
 			},
 			want: TestElements{
@@ -206,7 +208,7 @@ func TestDefineTestElementsBetweenNestedFields(t *testing.T) {
 			name: "nested uint8 fields must be equal",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "uint8",
+				fieldType:       common.FieldType{BaseType: "uint8"},
 				fieldValidation: "eqfield=nested.myfield2",
 			},
 			want: TestElements{
@@ -219,7 +221,7 @@ func TestDefineTestElementsBetweenNestedFields(t *testing.T) {
 			name: "nested uint8 fields must not be equal",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "uint8",
+				fieldType:       common.FieldType{BaseType: "uint8"},
 				fieldValidation: "neqfield=nested.myfield2",
 			},
 			want: TestElements{
@@ -232,7 +234,7 @@ func TestDefineTestElementsBetweenNestedFields(t *testing.T) {
 			name: "nested uint8 field must be greater than or equal",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "uint8",
+				fieldType:       common.FieldType{BaseType: "uint8"},
 				fieldValidation: "gtefield=nested.myfield2",
 			},
 			want: TestElements{
@@ -245,7 +247,7 @@ func TestDefineTestElementsBetweenNestedFields(t *testing.T) {
 			name: "nested uint8 field must be greater than",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "uint8",
+				fieldType:       common.FieldType{BaseType: "uint8"},
 				fieldValidation: "gtfield=nested.myfield2",
 			},
 			want: TestElements{
@@ -258,7 +260,7 @@ func TestDefineTestElementsBetweenNestedFields(t *testing.T) {
 			name: "nested uint8 fields must less than or equal",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "uint8",
+				fieldType:       common.FieldType{BaseType: "uint8"},
 				fieldValidation: "ltefield=nested.myfield2",
 			},
 			want: TestElements{
@@ -271,7 +273,7 @@ func TestDefineTestElementsBetweenNestedFields(t *testing.T) {
 			name: "nested uint8 fields must less than",
 			args: args{
 				fieldName:       "myfield1",
-				fieldType:       "uint8",
+				fieldType:       common.FieldType{BaseType: "uint8"},
 				fieldValidation: "ltfield=nested.myfield2",
 			},
 			want: TestElements{

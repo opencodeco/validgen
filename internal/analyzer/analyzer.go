@@ -89,8 +89,8 @@ func checkForInvalidOperations(structs []*Struct) error {
 
 				// Check if is a valid operation for this type.
 				fdType := fd.Type
-				if common.IsGoType(fdType) && !operations[op].ValidTypes[fdType] {
-					return types.NewValidationError("operation %s: invalid %s type", op, fdType)
+				if common.IsGoType(fdType) && !operations[op].ValidTypes[fdType.ToString()] {
+					return types.NewValidationError("operation %s: invalid %s type", op, fdType.BaseType)
 				}
 			}
 		}
@@ -102,7 +102,7 @@ func checkForInvalidOperations(structs []*Struct) error {
 func analyzeFieldOperations(structs []*Struct) error {
 
 	// Map all fields and their types.
-	fieldsType := map[string]string{}
+	fieldsType := map[string]common.FieldType{}
 	for _, st := range structs {
 		for _, fd := range st.Fields {
 			fieldsType[common.KeyPath(st.PackageName, st.StructName, fd.FieldName)] = fd.Type
@@ -133,7 +133,7 @@ func analyzeFieldOperations(structs []*Struct) error {
 					if !ok {
 						return types.NewValidationError("operation %s: undefined nested field %s", op, qualifiedField)
 					}
-					fd2NameToSearch = common.KeyPath(qFieldType, qualifiedNestedField)
+					fd2NameToSearch = common.KeyPath(qFieldType.BaseType, qualifiedNestedField)
 				}
 
 				f2Type, ok := fieldsType[fd2NameToSearch]

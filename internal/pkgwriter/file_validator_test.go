@@ -5,6 +5,7 @@ import (
 
 	"github.com/opencodeco/validgen/internal/analyzer"
 	"github.com/opencodeco/validgen/internal/codegenerator"
+	"github.com/opencodeco/validgen/internal/common"
 	"github.com/opencodeco/validgen/internal/parser"
 	"github.com/sergi/go-diff/diffmatchpatch"
 )
@@ -30,12 +31,12 @@ func TestBuildFileValidator(t *testing.T) {
 							Fields: []parser.Field{
 								{
 									FieldName: "FirstName",
-									Type:      "string",
+									Type:      common.FieldType{BaseType: "string"},
 									Tag:       `validate:"required"`,
 								},
 								{
 									FieldName: "MyAge",
-									Type:      "uint8",
+									Type:      common.FieldType{BaseType: "uint8"},
 									Tag:       `validate:"required"`,
 								},
 							},
@@ -85,7 +86,7 @@ func UserValidate(obj *User) []error {
 							Fields: []parser.Field{
 								{
 									FieldName: "FirstName",
-									Type:      "string",
+									Type:      common.FieldType{BaseType: "string"},
 									Tag:       `validate:"min=5"`,
 								},
 							},

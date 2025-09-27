@@ -3,12 +3,14 @@ package codegenerator
 import (
 	"reflect"
 	"testing"
+
+	"github.com/opencodeco/validgen/internal/common"
 )
 
 func TestDefineTestElementsWithMapFields(t *testing.T) {
 	type args struct {
 		fieldName       string
-		fieldType       string
+		fieldType       common.FieldType
 		fieldValidation string
 	}
 	tests := []struct {
@@ -21,7 +23,7 @@ func TestDefineTestElementsWithMapFields(t *testing.T) {
 			name: "required string map",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "map[string]",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "map"},
 				fieldValidation: "required",
 			},
 			want: TestElements{
@@ -33,7 +35,7 @@ func TestDefineTestElementsWithMapFields(t *testing.T) {
 			name: "len string map",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "map[string]",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "map"},
 				fieldValidation: "len=3",
 			},
 			want: TestElements{
@@ -45,7 +47,7 @@ func TestDefineTestElementsWithMapFields(t *testing.T) {
 			name: "min string map",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "map[string]",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "map"},
 				fieldValidation: "min=2",
 			},
 			want: TestElements{
@@ -57,7 +59,7 @@ func TestDefineTestElementsWithMapFields(t *testing.T) {
 			name: "max string map",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "map[string]",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "map"},
 				fieldValidation: "max=5",
 			},
 			want: TestElements{
@@ -69,7 +71,7 @@ func TestDefineTestElementsWithMapFields(t *testing.T) {
 			name: "in string map",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "map[string]",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "map"},
 				fieldValidation: "in=1 2 3",
 			},
 			want: TestElements{
@@ -81,7 +83,7 @@ func TestDefineTestElementsWithMapFields(t *testing.T) {
 			name: "nin string map",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "map[string]",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "map"},
 				fieldValidation: "nin=1 2 3",
 			},
 			want: TestElements{
@@ -95,7 +97,7 @@ func TestDefineTestElementsWithMapFields(t *testing.T) {
 			name: "required uint8 map",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "map[uint8]",
+				fieldType:       common.FieldType{BaseType: "uint8", ComposedType: "map"},
 				fieldValidation: "required",
 			},
 			want: TestElements{
@@ -107,7 +109,7 @@ func TestDefineTestElementsWithMapFields(t *testing.T) {
 			name: "len uint8 map",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "map[uint8]",
+				fieldType:       common.FieldType{BaseType: "uint8", ComposedType: "map"},
 				fieldValidation: "len=3",
 			},
 			want: TestElements{
@@ -119,7 +121,7 @@ func TestDefineTestElementsWithMapFields(t *testing.T) {
 			name: "min uint8 map",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "map[uint8]",
+				fieldType:       common.FieldType{BaseType: "uint8", ComposedType: "map"},
 				fieldValidation: "min=2",
 			},
 			want: TestElements{
@@ -131,7 +133,7 @@ func TestDefineTestElementsWithMapFields(t *testing.T) {
 			name: "max uint8 map",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "map[uint8]",
+				fieldType:       common.FieldType{BaseType: "uint8", ComposedType: "map"},
 				fieldValidation: "max=5",
 			},
 			want: TestElements{
@@ -143,7 +145,7 @@ func TestDefineTestElementsWithMapFields(t *testing.T) {
 			name: "in uint8 map",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "map[uint8]",
+				fieldType:       common.FieldType{BaseType: "uint8", ComposedType: "map"},
 				fieldValidation: "in=1 2 3",
 			},
 			want: TestElements{
@@ -155,7 +157,7 @@ func TestDefineTestElementsWithMapFields(t *testing.T) {
 			name: "nin uint8 map",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "map[uint8]",
+				fieldType:       common.FieldType{BaseType: "uint8", ComposedType: "map"},
 				fieldValidation: "nin=1 2 3",
 			},
 			want: TestElements{
