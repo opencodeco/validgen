@@ -55,7 +55,7 @@ func (gv *genValidations) buildValidationCode(fieldName string, fieldType common
 		var testCode = ""
 		var err error
 
-		if common.IsGoType(fieldType) {
+		if fieldType.IsGoType() {
 			testCode, err = gv.buildIfCode(fieldName, fieldType, fieldValidation)
 			if err != nil {
 				return "", err

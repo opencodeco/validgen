@@ -197,7 +197,7 @@ func appendFields(structType *ast.StructType, packageName string, cstruct *Struc
 func extractFieldTypeAndTag(packageName string, fieldType common.FieldType, fieldTag string) (common.FieldType, string) {
 	rFieldType := fieldType
 
-	if !common.IsGoType(fieldType) {
+	if !fieldType.IsGoType() {
 		rFieldType.BaseType = common.KeyPath(packageName, fieldType.BaseType)
 	}
 
