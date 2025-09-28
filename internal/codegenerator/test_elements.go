@@ -32,7 +32,7 @@ func DefineTestElements(fieldName string, fieldType common.FieldType, fieldValid
 	targetValues := ""
 
 	switch fieldValidation.ExpectedValues {
-	case analyzer.ZERO_VALUE:
+	case analyzer.ZERO_VALUE: // REFACTOR: codegenerator should inform how many values are expected
 		roperands = append(roperands, replaceNameAndTarget(condition.operation, fieldName, ""))
 		targetValue = condition.operation
 		targetValues = "'" + condition.operation + "' "
