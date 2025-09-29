@@ -116,13 +116,6 @@ func TestFieldType_IsGoType(t *testing.T) {
 			},
 			want: false,
 		},
-		// {
-		// 	name: "pointer to basic type",
-		// 	args: args{
-		// 		fieldType: FieldType{BaseType: "*string", ComposedType: "", Size: ""},
-		// 	},
-		// 	want: true,
-		// },
 		{
 			name: "struct type",
 			args: args{
@@ -130,20 +123,6 @@ func TestFieldType_IsGoType(t *testing.T) {
 			},
 			want: false,
 		},
-		// {
-		// 	name: "interface type",
-		// 	args: args{
-		// 		fieldType: FieldType{BaseType: "interface{}", ComposedType: "", Size: ""},
-		// 	},
-		// 	want: true,
-		// },
-		// {
-		// 	name: "complex type",
-		// 	args: args{
-		// 		fieldType: FieldType{BaseType: "map[string][]*MyType", ComposedType: "", Size: ""},
-		// 	},
-		// 	want: true,
-		// },
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
