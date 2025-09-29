@@ -55,6 +55,7 @@ The following validations will be implemented:
 - ltefield (less than or equal field): field must be less than or equal to another field
 - ltfield (less than field): field must be less than another field
 
+## Validations Table 
 The following table shows the validations and possible types, where "I" means "Implemented", "W" means "Will be implemented" and "-" means "Will not be implemented":
 
 | Validation/Type | String | Numeric types (uint8 only) | Boolean | Slice | Array | Map | Time | Duration |
@@ -236,6 +237,10 @@ The following table as the raw results:
 | BenchmarkValidatorStringIn-12       | 120.405.889   |         49.75 ns/op       |        0 B/op                           |       0 allocs/op                   |
 | BenchmarkValidGenStringEmail-12     | 35.513.684    |        167.4 ns/op        |        0 B/op                           |       0 allocs/op                   |
 | BenchmarkValidatorStringEmail-12    | 13.740.566    |        436.3 ns/op        |       88 B/op                           |       5 allocs/op                   |
+
+## Contribute
+
+You can find instructions on how to contribute code and bug reports in the [CONTRIBUTING guide](CONTRIBUTING.md).
 
 ## License
 
