@@ -70,6 +70,12 @@ func BoolTypeValidate(obj *BoolType) []error {
 	if !(obj.FieldNeqFalse != false) {
 		errs = append(errs, types.NewValidationError("FieldNeqFalse must not be equal to false"))
 	}
+	if !(obj.FieldEqFieldEqTrue == obj.FieldEqTrue) {
+		errs = append(errs, types.NewValidationError("FieldEqFieldEqTrue must be equal to FieldEqTrue"))
+	}
+	if !(obj.FieldNeqFieldEqTrue != obj.FieldEqTrue) {
+		errs = append(errs, types.NewValidationError("FieldNeqFieldEqTrue must not be equal to FieldEqTrue"))
+	}
 	return errs
 }
 func CmpInnerBoolFieldsValidate(obj *CmpInnerBoolFields) []error {
