@@ -16,13 +16,12 @@
 * Describe the expected vs. actual behavior
 * Include your OS, Go Version, and any relevant environment details.
 * Provide logs, screenshots, or error messages if available
-* You can check our Issue_Template here (link to issue_template?) [REVIEW]
 
 ## Requesting features
 Feature requests are always welcome. Note that not all requests will receive an immediate response.
 
 ### Before submitting a feature request:
-* Before submitting, **please check the validations table** below to see whether a specific validation is already implemented, planned, or will not be implemented.
+* Before submitting, **please check the [Validations Table](README.md#validations-table)** in the README to see whether a specific validation is already implemented, planned, or will not be implemented.
 * Check that the feature hasn't already been requested. Look at all issues with titles that might be related to the feature.
 * Make sure you are running the latest version of the code, as the feature may already have been added. 
 
@@ -32,4 +31,14 @@ Feature requests are always welcome. Note that not all requests will receive an 
 * Include any relevant context, examples, or use cases to help us understand the need.
 * Make sure your request is not a duplicate by searching the issue tracker first.
 
+## Contributing code
 
+### Before submitting a pull request:
+* Familiarise yourself with the code base [here](.github/copilot-instructions.md) to get you started.
+
+### When submitting a pull request:
+* Create a new branch in your fork with a descriptive name, preferably including the issue number or the feature you are working on (e.g., 71-feat-contribution-guide).
+* Make sure that the changes have been thoroughly tested!
+* Open the Pull Request against the main branch of the original repository.
+* Keep your commits clear and focused; small, self-contained changes are easier to review.
+* If your PR updates documentation or adds new files, make sure all relevant files are included.
