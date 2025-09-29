@@ -55,17 +55,22 @@ The following validations will be implemented:
 - ltefield (less than or equal field): field must be less than or equal to another field
 - ltfield (less than field): field must be less than another field
 
-The following table shows the validations and possible types, where "I" means "Implemented", "W" means "Will be implemented" and "-" means "Will not be implemented":
+The following table shows the validations and possible types, where:
+
+- "I" means "Implemented"
+- "W" means "Will be implemented"
+- "P" means "Partial implemented"
+- "-" means "Will not be implemented"
 
 | Validation/Type | String | Numeric types (uint8 only) | Boolean | Slice | Array | Map | Time | Duration |
 | -               | -      | -                          | -       | -     | -     | -   | -    | -        |
-| eq              | I      | W                          | W       | -     | -     | -   | W    | W        |
+| eq              | I      | W                          | I       | -     | -     | -   | W    | W        |
 | eq_ignore_case  | I      | -                          | -       | -     | -     | -   | -    | -        |
 | gt              | -      | W                          | -       | -     | -     | -   | W    | W        |
 | gte             | -      | I                          | -       | -     | -     | -   | W    | W        |
 | lt              | -      | W                          | -       | -     | -     | -   | W    | W        |
 | lte             | -      | I                          | -       | -     | -     | -   | W    | W        |
-| neq             | I      | W                          | W       | -     | -     | -   | W    | W        |
+| neq             | I      | W                          | I       | -     | -     | -   | W    | W        |
 | neq_ignore_case | I      | -                          | -       | -     | -     | -   | -    | -        |
 | len             | I      | -                          | -       | I     | -     | W   | -    | -        |
 | max             | I      | -                          | -       | I     | -     | W   | W    | W        |
@@ -74,8 +79,8 @@ The following table shows the validations and possible types, where "I" means "I
 | nin             | I      | W                          | -       | I     | I     | W   | -    | W        |
 | required        | I      | W                          | -       | I     | -     | W   | W    | W        |
 | email           | I      | -                          | -       | -     | -     | -   | -    | -        |
-| eqfield         | I      | I                          | W       | -     | -     | -   | W    | W        |
-| neqfield        | I      | I                          | W       | -     | -     | -   | W    | W        |
+| eqfield         | I      | I                          | I       | -     | -     | -   | W    | W        |
+| neqfield        | I      | I                          | I       | -     | -     | -   | W    | W        |
 | gtefield        | -      | I                          | -       | -     | -     | -   | W    | W        |
 | gtfield         | -      | I                          | -       | -     | -     | -   | W    | W        |
 | ltefield        | -      | I                          | -       | -     | -     | -   | W    | W        |
