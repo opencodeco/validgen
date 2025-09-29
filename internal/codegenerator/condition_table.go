@@ -54,6 +54,16 @@ var operationTable = map[string]Operation{
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must not be empty",
 			},
+			"map[string]": {
+				operation:      `len(obj.{{.Name}}) >= 1`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must not be empty",
+			},
+			"map[uint8]": {
+				operation:      `len(obj.{{.Name}}) >= 1`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must not be empty",
+			},
 		},
 	},
 	"gte": {
@@ -89,6 +99,16 @@ var operationTable = map[string]Operation{
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must have at least {{.Target}} elements",
 			},
+			"map[string]": {
+				operation:      `len(obj.{{.Name}}) >= {{.Target}}`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must have at least {{.Target}} elements",
+			},
+			"map[uint8]": {
+				operation:      `len(obj.{{.Name}}) >= {{.Target}}`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must have at least {{.Target}} elements",
+			},
 		},
 	},
 	"max": {
@@ -100,6 +120,16 @@ var operationTable = map[string]Operation{
 				errorMessage:   "{{.Name}} length must be <= {{.Target}}",
 			},
 			"[]string": {
+				operation:      `len(obj.{{.Name}}) <= {{.Target}}`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must have at most {{.Target}} elements",
+			},
+			"map[string]": {
+				operation:      `len(obj.{{.Name}}) <= {{.Target}}`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must have at most {{.Target}} elements",
+			},
+			"map[uint8]": {
 				operation:      `len(obj.{{.Name}}) <= {{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must have at most {{.Target}} elements",
@@ -125,6 +155,16 @@ var operationTable = map[string]Operation{
 				errorMessage:   "{{.Name}} length must be {{.Target}}",
 			},
 			"[]string": {
+				operation:      `len(obj.{{.Name}}) == {{.Target}}`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must have exactly {{.Target}} elements",
+			},
+			"map[string]": {
+				operation:      `len(obj.{{.Name}}) == {{.Target}}`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must have exactly {{.Target}} elements",
+			},
+			"map[uint8]": {
 				operation:      `len(obj.{{.Name}}) == {{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must have exactly {{.Target}} elements",
@@ -174,6 +214,16 @@ var operationTable = map[string]Operation{
 				concatOperator: "",
 				errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
 			},
+			"map[string]": {
+				operation:      `types.MapOnlyContains(obj.{{.Name}}, {{.TargetsAsStringSlice}})`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+			},
+			"map[uint8]": {
+				operation:      `types.MapOnlyContains(obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+			},
 		},
 	},
 	"nin": {
@@ -191,6 +241,16 @@ var operationTable = map[string]Operation{
 			},
 			"[N]string": {
 				operation:      `types.SliceNotContains(obj.{{.Name}}[:], {{.TargetsAsStringSlice}})`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+			},
+			"map[string]": {
+				operation:      `types.MapNotContains(obj.{{.Name}}, {{.TargetsAsStringSlice}})`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+			},
+			"map[uint8]": {
+				operation:      `types.MapNotContains(obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
 			},

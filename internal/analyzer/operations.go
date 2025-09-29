@@ -32,9 +32,11 @@ var operations = map[string]Operation{
 		CountValues:      ZERO_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string":   true,
-			"uint8":    true,
-			"[]string": true,
+			"string":      true,
+			"uint8":       true,
+			"[]string":    true,
+			"map[string]": true,
+			"map[uint8]":  true,
 		},
 	},
 	"gte": {
@@ -58,8 +60,10 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string":   true,
-			"[]string": true,
+			"string":      true,
+			"[]string":    true,
+			"map[string]": true,
+			"map[uint8]":  true,
 		},
 	},
 	"max": {
@@ -67,8 +71,10 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string":   true,
-			"[]string": true,
+			"string":      true,
+			"[]string":    true,
+			"map[string]": true,
+			"map[uint8]":  true,
 		},
 	},
 	"eq_ignore_case": {
@@ -84,8 +90,10 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string":   true,
-			"[]string": true,
+			"string":      true,
+			"[]string":    true,
+			"map[string]": true,
+			"map[uint8]":  true,
 		},
 	},
 	"neq": {
@@ -110,9 +118,11 @@ var operations = map[string]Operation{
 		CountValues:      MANY_VALUES,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string":    true,
-			"[]string":  true,
-			"[N]string": true,
+			"string":      true,
+			"[]string":    true,
+			"[N]string":   true,
+			"map[string]": true,
+			"map[uint8]":  true,
 		},
 	},
 	"nin": {
@@ -120,9 +130,11 @@ var operations = map[string]Operation{
 		CountValues:      MANY_VALUES,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string":    true,
-			"[]string":  true,
-			"[N]string": true,
+			"string":      true,
+			"[]string":    true,
+			"[N]string":   true,
+			"map[string]": true,
+			"map[uint8]":  true,
 		},
 	},
 	"email": {
