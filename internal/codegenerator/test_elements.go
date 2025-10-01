@@ -21,7 +21,7 @@ func DefineTestElements(fieldName string, fieldType common.FieldType, fieldValid
 		return TestElements{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s", fieldValidation.Operation)
 	}
 
-	condition, ok := op.ConditionByType[fieldType.ToString()]
+	condition, ok := op.ConditionByType[fieldType.ToNormalizedString()]
 	if !ok {
 		return TestElements{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s type %s", fieldValidation.Operation, fieldType.BaseType)
 	}
