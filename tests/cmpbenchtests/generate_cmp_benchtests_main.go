@@ -2,9 +2,9 @@ package main
 
 import (
 	"bytes"
-	"html/template"
 	"log"
 	"os"
+	"text/template"
 )
 
 type BenchTests struct {
