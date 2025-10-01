@@ -3,12 +3,14 @@ package codegenerator
 import (
 	"reflect"
 	"testing"
+
+	"github.com/opencodeco/validgen/internal/common"
 )
 
 func TestDefineTestElementsWithSliceFields(t *testing.T) {
 	type args struct {
 		fieldName       string
-		fieldType       string
+		fieldType       common.FieldType
 		fieldValidation string
 	}
 	tests := []struct {
@@ -20,7 +22,7 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 			name: "Required slice string",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "[]string",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "[]"},
 				fieldValidation: "required",
 			},
 			want: TestElements{
@@ -32,7 +34,7 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 			name: "Min slice string",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "[]string",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "[]"},
 				fieldValidation: "min=2",
 			},
 			want: TestElements{
@@ -44,7 +46,7 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 			name: "Max slice string",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "[]string",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "[]"},
 				fieldValidation: "max=5",
 			},
 			want: TestElements{
@@ -56,7 +58,7 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 			name: "Len slice string",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "[]string",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "[]"},
 				fieldValidation: "len=3",
 			},
 			want: TestElements{
@@ -68,7 +70,7 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 			name: "In slice string with spaces",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "[]string",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "[]"},
 				fieldValidation: "in=a b c",
 			},
 			want: TestElements{
@@ -81,7 +83,7 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 			name: "In slice string with '",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "[]string",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "[]"},
 				fieldValidation: "in=' a ' ' b ' ' c '",
 			},
 			want: TestElements{
@@ -94,7 +96,7 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 			name: "Not in slice string with spaces",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "[]string",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "[]"},
 				fieldValidation: "nin=a b c",
 			},
 			want: TestElements{
@@ -107,7 +109,7 @@ func TestDefineTestElementsWithSliceFields(t *testing.T) {
 			name: "Not in slice string with '",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "[]string",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "[]"},
 				fieldValidation: "nin=' a ' ' b ' ' c '",
 			},
 			want: TestElements{

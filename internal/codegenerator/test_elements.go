@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/opencodeco/validgen/internal/analyzer"
+	"github.com/opencodeco/validgen/internal/common"
 	"github.com/opencodeco/validgen/types"
 )
 
@@ -13,16 +14,16 @@ type TestElements struct {
 	errorMessage   string
 }
 
-func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.Validation) (TestElements, error) {
+func DefineTestElements(fieldName string, fieldType common.FieldType, fieldValidation *analyzer.Validation) (TestElements, error) {
 
 	op, ok := operationTable[fieldValidation.Operation]
 	if !ok {
 		return TestElements{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s", fieldValidation.Operation)
 	}
 
-	condition, ok := op.ConditionByType[fieldType]
+	condition, ok := op.ConditionByType[fieldType.ToString()]
 	if !ok {
-		return TestElements{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s type %s", fieldValidation.Operation, fieldType)
+		return TestElements{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s type %s", fieldValidation.Operation, fieldType.BaseType)
 	}
 
 	values := fieldValidation.Values
@@ -31,18 +32,12 @@ func DefineTestElements(fieldName, fieldType string, fieldValidation *analyzer.V
 	targetValues := ""
 
 	switch fieldValidation.ExpectedValues {
-	case analyzer.ZERO_VALUE:
+	case analyzer.ZERO_VALUE: // REFACTOR: codegenerator should inform how many values are expected
 		roperands = append(roperands, replaceNameAndTarget(condition.operation, fieldName, ""))
 		targetValue = condition.operation
 		targetValues = "'" + condition.operation + "' "
 	case analyzer.ONE_VALUE, analyzer.MANY_VALUES:
-		// TODO: refactor: When parsing, divide the type into Literal Type (array, map, etc.), Elemental Type (base type), and size (for arrays).
-		// Code below split basic type from slices and maps
-		basicType := strings.TrimPrefix(fieldType, "[N]")
-		basicType = strings.TrimPrefix(basicType, "[]")
-		basicType = strings.TrimPrefix(basicType, "map[")
-		basicType = strings.TrimSuffix(basicType, "]")
-		valuesAsNumericSlice, valuesAsStringSlice := normalizeSlicesAsCode(basicType, values)
+		valuesAsNumericSlice, valuesAsStringSlice := normalizeSlicesAsCode(fieldType.BaseType, values)
 
 		for _, value := range values {
 			operation := replaceNameAndTarget(condition.operation, fieldName, value)

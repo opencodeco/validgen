@@ -3,12 +3,14 @@ package codegenerator
 import (
 	"reflect"
 	"testing"
+
+	"github.com/opencodeco/validgen/internal/common"
 )
 
 func TestDefineTestElementsWithArrayFields(t *testing.T) {
 	type args struct {
 		fieldName       string
-		fieldType       string
+		fieldType       common.FieldType
 		fieldValidation string
 	}
 	tests := []struct {
@@ -20,7 +22,7 @@ func TestDefineTestElementsWithArrayFields(t *testing.T) {
 			name: "In array string with spaces",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "[N]string",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "[N]"},
 				fieldValidation: "in=a b c",
 			},
 			want: TestElements{
@@ -33,7 +35,7 @@ func TestDefineTestElementsWithArrayFields(t *testing.T) {
 			name: "In array string with '",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "[N]string",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "[N]"},
 				fieldValidation: "in=' a ' ' b ' ' c '",
 			},
 			want: TestElements{
@@ -46,7 +48,7 @@ func TestDefineTestElementsWithArrayFields(t *testing.T) {
 			name: "Not in array string with spaces",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "[N]string",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "[N]"},
 				fieldValidation: "nin=a b c",
 			},
 			want: TestElements{
@@ -59,7 +61,7 @@ func TestDefineTestElementsWithArrayFields(t *testing.T) {
 			name: "Not in array string with '",
 			args: args{
 				fieldName:       "myfield",
-				fieldType:       "[N]string",
+				fieldType:       common.FieldType{BaseType: "string", ComposedType: "[N]"},
 				fieldValidation: "nin=' a ' ' b ' ' c '",
 			},
 			want: TestElements{

@@ -4,6 +4,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/opencodeco/validgen/internal/common"
 	"github.com/sergi/go-diff/diffmatchpatch"
 )
 
@@ -52,27 +53,27 @@ func TestParseStructsOk(t *testing.T) {
 					Fields: []Field{
 						{
 							FieldName: "FirstName",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "", Size: ""},
 							Tag:       "valid:\"required\"",
 						},
 						{
 							FieldName: "LastName",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "", Size: ""},
 							Tag:       "valid:\"required\"",
 						},
 						{
 							FieldName: "Age",
-							Type:      "uint8",
+							Type:      common.FieldType{BaseType: "uint8", ComposedType: "", Size: ""},
 							Tag:       "valid:\"gte=18,lte=130\"",
 						},
 						{
 							FieldName: "UserName",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "", Size: ""},
 							Tag:       "valid:\"min=5,max=10\"",
 						},
 						{
 							FieldName: "Optional",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "", Size: ""},
 							Tag:       "",
 						},
 					},
@@ -106,12 +107,12 @@ func TestParseStructsOk(t *testing.T) {
 					Fields: []Field{
 						{
 							FieldName: "FirstName",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "", Size: ""},
 							Tag:       "valid:\"required\"",
 						},
 						{
 							FieldName: "LastName",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "", Size: ""},
 							Tag:       "valid:\"required\"",
 						},
 					},
@@ -124,12 +125,12 @@ func TestParseStructsOk(t *testing.T) {
 					Fields: []Field{
 						{
 							FieldName: "Field1",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "", Size: ""},
 							Tag:       "",
 						},
 						{
 							FieldName: "Field2",
-							Type:      "uint8",
+							Type:      common.FieldType{BaseType: "uint8", ComposedType: "", Size: ""},
 							Tag:       "",
 						},
 					},
@@ -161,17 +162,17 @@ func TestParseStructsOk(t *testing.T) {
 					Fields: []Field{
 						{
 							FieldName: "FirstName",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "", Size: ""},
 							Tag:       "valid:\"required\"",
 						},
 						{
 							FieldName: "LastName",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "", Size: ""},
 							Tag:       "valid:\"required\"",
 						},
 						{
 							FieldName: "Address",
-							Type:      "inpkg.TypeAddress",
+							Type:      common.FieldType{BaseType: "inpkg.TypeAddress", ComposedType: "", Size: ""},
 							Tag:       "valid:\"required\"",
 						},
 					},
@@ -211,17 +212,17 @@ func TestParseStructsOk(t *testing.T) {
 					Fields: []Field{
 						{
 							FieldName: "FirstName",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "", Size: ""},
 							Tag:       "valid:\"required\"",
 						},
 						{
 							FieldName: "LastName",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "", Size: ""},
 							Tag:       "valid:\"required\"",
 						},
 						{
 							FieldName: "Address",
-							Type:      "main.TypeAddress",
+							Type:      common.FieldType{BaseType: "main.TypeAddress", ComposedType: "", Size: ""},
 							Tag:       "valid:\"required\"",
 						},
 					},
@@ -234,12 +235,12 @@ func TestParseStructsOk(t *testing.T) {
 					Fields: []Field{
 						{
 							FieldName: "Street",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "", Size: ""},
 							Tag:       "valid:\"required\"",
 						},
 						{
 							FieldName: "City",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "", Size: ""},
 							Tag:       "valid:\"required\"",
 						},
 					},
@@ -269,12 +270,12 @@ func TestParseStructsOk(t *testing.T) {
 					Fields: []Field{
 						{
 							FieldName: "FirstName",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "", Size: ""},
 							Tag:       "valid:\"required\"",
 						},
 						{
 							FieldName: "Types",
-							Type:      "[]string",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "[]", Size: ""},
 							Tag:       "valid:\"required\"",
 						},
 					},
@@ -304,12 +305,12 @@ func TestParseStructsOk(t *testing.T) {
 					Fields: []Field{
 						{
 							FieldName: "FirstName",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "", Size: ""},
 							Tag:       "valid:\"required\"",
 						},
 						{
 							FieldName: "Types",
-							Type:      "[N]string",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "[N]", Size: "5"},
 							Tag:       "valid:\"in=a b c\"",
 						},
 					},
@@ -339,12 +340,12 @@ func TestParseStructsOk(t *testing.T) {
 					Fields: []Field{
 						{
 							FieldName: "IsCorrect",
-							Type:      "bool",
+							Type:      common.FieldType{BaseType: "bool", ComposedType: "", Size: ""},
 							Tag:       "valid:\"eq=true\"",
 						},
 						{
 							FieldName: "IsNotCorrect",
-							Type:      "bool",
+							Type:      common.FieldType{BaseType: "bool", ComposedType: "", Size: ""},
 							Tag:       "valid:\"eq=false\"",
 						},
 					},
@@ -375,17 +376,17 @@ func TestParseStructsOk(t *testing.T) {
 					Fields: []Field{
 						{
 							FieldName: "MapField1",
-							Type:      "map[string]",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "map", Size: ""},
 							Tag:       "valid:\"required\"",
 						},
 						{
 							FieldName: "MapField2",
-							Type:      "map[string]",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "map", Size: ""},
 							Tag:       "valid:\"len=3\"",
 						},
 						{
 							FieldName: "MapField3",
-							Type:      "map[uint8]",
+							Type:      common.FieldType{BaseType: "uint8", ComposedType: "map", Size: ""},
 							Tag:       "valid:\"max=5\"",
 						},
 					},
@@ -423,7 +424,7 @@ func structsToString(structs []*Struct) string {
 		result += "Path: " + s.Path + "\n"
 		result += "PackageName: " + s.PackageName + "\n"
 		for _, f := range s.Fields {
-			result += "  Field: " + f.FieldName + " Type: " + f.Type + " Tag: " + f.Tag + "\n"
+			result += "  Field: " + f.FieldName + " Type: " + f.Type.ToString() + " Tag: " + f.Tag + "\n"
 		}
 		for _, v := range s.Imports {
 			result += "  Import: " + v.Name + " Path: " + v.Path + "\n"
