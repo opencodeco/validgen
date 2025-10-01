@@ -89,7 +89,7 @@ func checkForInvalidOperations(structs []*Struct) error {
 
 				// Check if is a valid operation for this type.
 				fdType := fd.Type
-				if fdType.IsGoType() && !operations[op].ValidTypes[fdType.ToString()] {
+				if fdType.IsGoType() && !operations[op].ValidTypes[fdType.ToNormalizedString()] {
 					return types.NewValidationError("operation %s: invalid %s type", op, fdType.BaseType)
 				}
 			}

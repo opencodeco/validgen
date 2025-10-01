@@ -31,8 +31,18 @@ func TestAnalyzeStructsWithValidInnerFieldOperations(t *testing.T) {
 			op:    "eqfield",
 		},
 		{
+			name:  "valid eqfield between int",
+			fType: "int",
+			op:    "eqfield",
+		},
+		{
 			name:  "valid neqfield between uint8",
 			fType: "uint8",
+			op:    "neqfield",
+		},
+		{
+			name:  "valid neqfield between int",
+			fType: "int",
 			op:    "neqfield",
 		},
 		{
@@ -41,8 +51,18 @@ func TestAnalyzeStructsWithValidInnerFieldOperations(t *testing.T) {
 			op:    "gtefield",
 		},
 		{
+			name:  "valid gtefield between int",
+			fType: "int",
+			op:    "gtefield",
+		},
+		{
 			name:  "valid gtfield between uint8",
 			fType: "uint8",
+			op:    "gtfield",
+		},
+		{
+			name:  "valid gtfield between int",
+			fType: "int",
 			op:    "gtfield",
 		},
 		{
@@ -51,8 +71,18 @@ func TestAnalyzeStructsWithValidInnerFieldOperations(t *testing.T) {
 			op:    "ltefield",
 		},
 		{
+			name:  "valid ltefield between int",
+			fType: "int",
+			op:    "ltefield",
+		},
+		{
 			name:  "valid ltfield between uint8",
 			fType: "uint8",
+			op:    "ltfield",
+		},
+		{
+			name:  "valid ltfield between int",
+			fType: "int",
 			op:    "ltfield",
 		},
 	}
