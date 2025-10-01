@@ -59,31 +59,32 @@ The following table shows the validations and possible types, where:
 
 - "I" means "Implemented"
 - "W" means "Will be implemented"
+- "P" means "Partially implemented"
 - "-" means "Will not be implemented"
 
-| Validation/Type | String | Numeric types (uint8 only) | Boolean | Slice | Array | Map | Time | Duration |
-| -               | -      | -                          | -       | -     | -     | -   | -    | -        |
-| eq              | I      | W                          | I       | -     | -     | -   | W    | W        |
-| eq_ignore_case  | I      | -                          | -       | -     | -     | -   | -    | -        |
-| gt              | -      | W                          | -       | -     | -     | -   | W    | W        |
-| gte             | -      | I                          | -       | -     | -     | -   | W    | W        |
-| lt              | -      | W                          | -       | -     | -     | -   | W    | W        |
-| lte             | -      | I                          | -       | -     | -     | -   | W    | W        |
-| neq             | I      | W                          | I       | -     | -     | -   | W    | W        |
-| neq_ignore_case | I      | -                          | -       | -     | -     | -   | -    | -        |
-| len             | I      | -                          | -       | I     | -     | W   | -    | -        |
-| max             | I      | -                          | -       | I     | -     | W   | W    | W        |
-| min             | I      | -                          | -       | I     | -     | W   | W    | W        |
-| in              | I      | W                          | -       | I     | I     | W   | -    | W        |
-| nin             | I      | W                          | -       | I     | I     | W   | -    | W        |
-| required        | I      | W                          | -       | I     | -     | W   | W    | W        |
-| email           | I      | -                          | -       | -     | -     | -   | -    | -        |
-| eqfield         | I      | I                          | I       | -     | -     | -   | W    | W        |
-| neqfield        | I      | I                          | I       | -     | -     | -   | W    | W        |
-| gtefield        | -      | I                          | -       | -     | -     | -   | W    | W        |
-| gtfield         | -      | I                          | -       | -     | -     | -   | W    | W        |
-| ltefield        | -      | I                          | -       | -     | -     | -   | W    | W        |
-| ltfield         | -      | I                          | -       | -     | -     | -   | W    | W        |
+| Validation/Type | String | Numeric types (integers) | Boolean | Slice | Array | Map | Time | Duration |
+| -               | -      | -                        | -       | -     | -     | -   | -    | -        |
+| eq              | I      | I                        | I       | -     | -     | -   | W    | W        |
+| eq_ignore_case  | I      | -                        | -       | -     | -     | -   | -    | -        |
+| gt              | -      | I                        | -       | -     | -     | -   | W    | W        |
+| gte             | -      | I                        | -       | -     | -     | -   | W    | W        |
+| lt              | -      | I                        | -       | -     | -     | -   | W    | W        |
+| lte             | -      | I                        | -       | -     | -     | -   | W    | W        |
+| neq             | I      | I                        | I       | -     | -     | -   | W    | W        |
+| neq_ignore_case | I      | -                        | -       | -     | -     | -   | -    | -        |
+| len             | I      | -                        | -       | I     | -     | W   | -    | -        |
+| max             | I      | -                        | -       | I     | -     | W   | W    | W        |
+| min             | I      | -                        | -       | I     | -     | W   | W    | W        |
+| in              | I      | I                        | -       | I     | I     | W   | -    | W        |
+| nin             | I      | I                        | -       | I     | I     | W   | -    | W        |
+| required        | I      | I                        | -       | I     | -     | W   | W    | W        |
+| email           | I      | -                        | -       | -     | -     | -   | -    | -        |
+| eqfield         | I      | P                        | I       | -     | -     | -   | W    | W        |
+| neqfield        | I      | P                        | I       | -     | -     | -   | W    | W        |
+| gtefield        | -      | P                        | -       | -     | -     | -   | W    | W        |
+| gtfield         | -      | P                        | -       | -     | -     | -   | W    | W        |
+| ltefield        | -      | P                        | -       | -     | -     | -   | W    | W        |
+| ltfield         | -      | P                        | -       | -     | -     | -   | W    | W        |
 
 ## Steps to run the unit tests
 
