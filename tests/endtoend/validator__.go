@@ -196,6 +196,316 @@ func MapUint8Validate(obj *MapUint8) []error {
 	}
 	return errs
 }
+func NumericTypeintValidate(obj *NumericTypeint) []error {
+	var errs []error
+	if !(obj.FieldReq != 0) {
+		errs = append(errs, types.NewValidationError("FieldReq is required"))
+	}
+	if !(obj.FieldEq == 5) {
+		errs = append(errs, types.NewValidationError("FieldEq must be equal to 5"))
+	}
+	if !(obj.FieldNeq != 5) {
+		errs = append(errs, types.NewValidationError("FieldNeq must not be equal to 5"))
+	}
+	if !(obj.FieldGt > 10) {
+		errs = append(errs, types.NewValidationError("FieldGt must be > 10"))
+	}
+	if !(obj.FieldGte >= 10) {
+		errs = append(errs, types.NewValidationError("FieldGte must be >= 10"))
+	}
+	if !(obj.FieldLt < 10) {
+		errs = append(errs, types.NewValidationError("FieldLt must be < 10"))
+	}
+	if !(obj.FieldLte <= 10) {
+		errs = append(errs, types.NewValidationError("FieldLte must be <= 10"))
+	}
+	if !(obj.FieldIn == 5 || obj.FieldIn == 6 || obj.FieldIn == 7) {
+		errs = append(errs, types.NewValidationError("FieldIn must be one of '5' '6' '7'"))
+	}
+	if !(obj.FieldNotIn != 8 && obj.FieldNotIn != 9 && obj.FieldNotIn != 10) {
+		errs = append(errs, types.NewValidationError("FieldNotIn must not be one of '8' '9' '10'"))
+	}
+	return errs
+}
+func NumericTypeint16Validate(obj *NumericTypeint16) []error {
+	var errs []error
+	if !(obj.FieldReq != 0) {
+		errs = append(errs, types.NewValidationError("FieldReq is required"))
+	}
+	if !(obj.FieldEq == 5) {
+		errs = append(errs, types.NewValidationError("FieldEq must be equal to 5"))
+	}
+	if !(obj.FieldNeq != 5) {
+		errs = append(errs, types.NewValidationError("FieldNeq must not be equal to 5"))
+	}
+	if !(obj.FieldGt > 10) {
+		errs = append(errs, types.NewValidationError("FieldGt must be > 10"))
+	}
+	if !(obj.FieldGte >= 10) {
+		errs = append(errs, types.NewValidationError("FieldGte must be >= 10"))
+	}
+	if !(obj.FieldLt < 10) {
+		errs = append(errs, types.NewValidationError("FieldLt must be < 10"))
+	}
+	if !(obj.FieldLte <= 10) {
+		errs = append(errs, types.NewValidationError("FieldLte must be <= 10"))
+	}
+	if !(obj.FieldIn == 5 || obj.FieldIn == 6 || obj.FieldIn == 7) {
+		errs = append(errs, types.NewValidationError("FieldIn must be one of '5' '6' '7'"))
+	}
+	if !(obj.FieldNotIn != 8 && obj.FieldNotIn != 9 && obj.FieldNotIn != 10) {
+		errs = append(errs, types.NewValidationError("FieldNotIn must not be one of '8' '9' '10'"))
+	}
+	return errs
+}
+func NumericTypeint32Validate(obj *NumericTypeint32) []error {
+	var errs []error
+	if !(obj.FieldReq != 0) {
+		errs = append(errs, types.NewValidationError("FieldReq is required"))
+	}
+	if !(obj.FieldEq == 5) {
+		errs = append(errs, types.NewValidationError("FieldEq must be equal to 5"))
+	}
+	if !(obj.FieldNeq != 5) {
+		errs = append(errs, types.NewValidationError("FieldNeq must not be equal to 5"))
+	}
+	if !(obj.FieldGt > 10) {
+		errs = append(errs, types.NewValidationError("FieldGt must be > 10"))
+	}
+	if !(obj.FieldGte >= 10) {
+		errs = append(errs, types.NewValidationError("FieldGte must be >= 10"))
+	}
+	if !(obj.FieldLt < 10) {
+		errs = append(errs, types.NewValidationError("FieldLt must be < 10"))
+	}
+	if !(obj.FieldLte <= 10) {
+		errs = append(errs, types.NewValidationError("FieldLte must be <= 10"))
+	}
+	if !(obj.FieldIn == 5 || obj.FieldIn == 6 || obj.FieldIn == 7) {
+		errs = append(errs, types.NewValidationError("FieldIn must be one of '5' '6' '7'"))
+	}
+	if !(obj.FieldNotIn != 8 && obj.FieldNotIn != 9 && obj.FieldNotIn != 10) {
+		errs = append(errs, types.NewValidationError("FieldNotIn must not be one of '8' '9' '10'"))
+	}
+	return errs
+}
+func NumericTypeint64Validate(obj *NumericTypeint64) []error {
+	var errs []error
+	if !(obj.FieldReq != 0) {
+		errs = append(errs, types.NewValidationError("FieldReq is required"))
+	}
+	if !(obj.FieldEq == 5) {
+		errs = append(errs, types.NewValidationError("FieldEq must be equal to 5"))
+	}
+	if !(obj.FieldNeq != 5) {
+		errs = append(errs, types.NewValidationError("FieldNeq must not be equal to 5"))
+	}
+	if !(obj.FieldGt > 10) {
+		errs = append(errs, types.NewValidationError("FieldGt must be > 10"))
+	}
+	if !(obj.FieldGte >= 10) {
+		errs = append(errs, types.NewValidationError("FieldGte must be >= 10"))
+	}
+	if !(obj.FieldLt < 10) {
+		errs = append(errs, types.NewValidationError("FieldLt must be < 10"))
+	}
+	if !(obj.FieldLte <= 10) {
+		errs = append(errs, types.NewValidationError("FieldLte must be <= 10"))
+	}
+	if !(obj.FieldIn == 5 || obj.FieldIn == 6 || obj.FieldIn == 7) {
+		errs = append(errs, types.NewValidationError("FieldIn must be one of '5' '6' '7'"))
+	}
+	if !(obj.FieldNotIn != 8 && obj.FieldNotIn != 9 && obj.FieldNotIn != 10) {
+		errs = append(errs, types.NewValidationError("FieldNotIn must not be one of '8' '9' '10'"))
+	}
+	return errs
+}
+func NumericTypeint8Validate(obj *NumericTypeint8) []error {
+	var errs []error
+	if !(obj.FieldReq != 0) {
+		errs = append(errs, types.NewValidationError("FieldReq is required"))
+	}
+	if !(obj.FieldEq == 5) {
+		errs = append(errs, types.NewValidationError("FieldEq must be equal to 5"))
+	}
+	if !(obj.FieldNeq != 5) {
+		errs = append(errs, types.NewValidationError("FieldNeq must not be equal to 5"))
+	}
+	if !(obj.FieldGt > 10) {
+		errs = append(errs, types.NewValidationError("FieldGt must be > 10"))
+	}
+	if !(obj.FieldGte >= 10) {
+		errs = append(errs, types.NewValidationError("FieldGte must be >= 10"))
+	}
+	if !(obj.FieldLt < 10) {
+		errs = append(errs, types.NewValidationError("FieldLt must be < 10"))
+	}
+	if !(obj.FieldLte <= 10) {
+		errs = append(errs, types.NewValidationError("FieldLte must be <= 10"))
+	}
+	if !(obj.FieldIn == 5 || obj.FieldIn == 6 || obj.FieldIn == 7) {
+		errs = append(errs, types.NewValidationError("FieldIn must be one of '5' '6' '7'"))
+	}
+	if !(obj.FieldNotIn != 8 && obj.FieldNotIn != 9 && obj.FieldNotIn != 10) {
+		errs = append(errs, types.NewValidationError("FieldNotIn must not be one of '8' '9' '10'"))
+	}
+	return errs
+}
+func NumericTypeuintValidate(obj *NumericTypeuint) []error {
+	var errs []error
+	if !(obj.FieldReq != 0) {
+		errs = append(errs, types.NewValidationError("FieldReq is required"))
+	}
+	if !(obj.FieldEq == 5) {
+		errs = append(errs, types.NewValidationError("FieldEq must be equal to 5"))
+	}
+	if !(obj.FieldNeq != 5) {
+		errs = append(errs, types.NewValidationError("FieldNeq must not be equal to 5"))
+	}
+	if !(obj.FieldGt > 10) {
+		errs = append(errs, types.NewValidationError("FieldGt must be > 10"))
+	}
+	if !(obj.FieldGte >= 10) {
+		errs = append(errs, types.NewValidationError("FieldGte must be >= 10"))
+	}
+	if !(obj.FieldLt < 10) {
+		errs = append(errs, types.NewValidationError("FieldLt must be < 10"))
+	}
+	if !(obj.FieldLte <= 10) {
+		errs = append(errs, types.NewValidationError("FieldLte must be <= 10"))
+	}
+	if !(obj.FieldIn == 5 || obj.FieldIn == 6 || obj.FieldIn == 7) {
+		errs = append(errs, types.NewValidationError("FieldIn must be one of '5' '6' '7'"))
+	}
+	if !(obj.FieldNotIn != 8 && obj.FieldNotIn != 9 && obj.FieldNotIn != 10) {
+		errs = append(errs, types.NewValidationError("FieldNotIn must not be one of '8' '9' '10'"))
+	}
+	return errs
+}
+func NumericTypeuint16Validate(obj *NumericTypeuint16) []error {
+	var errs []error
+	if !(obj.FieldReq != 0) {
+		errs = append(errs, types.NewValidationError("FieldReq is required"))
+	}
+	if !(obj.FieldEq == 5) {
+		errs = append(errs, types.NewValidationError("FieldEq must be equal to 5"))
+	}
+	if !(obj.FieldNeq != 5) {
+		errs = append(errs, types.NewValidationError("FieldNeq must not be equal to 5"))
+	}
+	if !(obj.FieldGt > 10) {
+		errs = append(errs, types.NewValidationError("FieldGt must be > 10"))
+	}
+	if !(obj.FieldGte >= 10) {
+		errs = append(errs, types.NewValidationError("FieldGte must be >= 10"))
+	}
+	if !(obj.FieldLt < 10) {
+		errs = append(errs, types.NewValidationError("FieldLt must be < 10"))
+	}
+	if !(obj.FieldLte <= 10) {
+		errs = append(errs, types.NewValidationError("FieldLte must be <= 10"))
+	}
+	if !(obj.FieldIn == 5 || obj.FieldIn == 6 || obj.FieldIn == 7) {
+		errs = append(errs, types.NewValidationError("FieldIn must be one of '5' '6' '7'"))
+	}
+	if !(obj.FieldNotIn != 8 && obj.FieldNotIn != 9 && obj.FieldNotIn != 10) {
+		errs = append(errs, types.NewValidationError("FieldNotIn must not be one of '8' '9' '10'"))
+	}
+	return errs
+}
+func NumericTypeuint32Validate(obj *NumericTypeuint32) []error {
+	var errs []error
+	if !(obj.FieldReq != 0) {
+		errs = append(errs, types.NewValidationError("FieldReq is required"))
+	}
+	if !(obj.FieldEq == 5) {
+		errs = append(errs, types.NewValidationError("FieldEq must be equal to 5"))
+	}
+	if !(obj.FieldNeq != 5) {
+		errs = append(errs, types.NewValidationError("FieldNeq must not be equal to 5"))
+	}
+	if !(obj.FieldGt > 10) {
+		errs = append(errs, types.NewValidationError("FieldGt must be > 10"))
+	}
+	if !(obj.FieldGte >= 10) {
+		errs = append(errs, types.NewValidationError("FieldGte must be >= 10"))
+	}
+	if !(obj.FieldLt < 10) {
+		errs = append(errs, types.NewValidationError("FieldLt must be < 10"))
+	}
+	if !(obj.FieldLte <= 10) {
+		errs = append(errs, types.NewValidationError("FieldLte must be <= 10"))
+	}
+	if !(obj.FieldIn == 5 || obj.FieldIn == 6 || obj.FieldIn == 7) {
+		errs = append(errs, types.NewValidationError("FieldIn must be one of '5' '6' '7'"))
+	}
+	if !(obj.FieldNotIn != 8 && obj.FieldNotIn != 9 && obj.FieldNotIn != 10) {
+		errs = append(errs, types.NewValidationError("FieldNotIn must not be one of '8' '9' '10'"))
+	}
+	return errs
+}
+func NumericTypeuint64Validate(obj *NumericTypeuint64) []error {
+	var errs []error
+	if !(obj.FieldReq != 0) {
+		errs = append(errs, types.NewValidationError("FieldReq is required"))
+	}
+	if !(obj.FieldEq == 5) {
+		errs = append(errs, types.NewValidationError("FieldEq must be equal to 5"))
+	}
+	if !(obj.FieldNeq != 5) {
+		errs = append(errs, types.NewValidationError("FieldNeq must not be equal to 5"))
+	}
+	if !(obj.FieldGt > 10) {
+		errs = append(errs, types.NewValidationError("FieldGt must be > 10"))
+	}
+	if !(obj.FieldGte >= 10) {
+		errs = append(errs, types.NewValidationError("FieldGte must be >= 10"))
+	}
+	if !(obj.FieldLt < 10) {
+		errs = append(errs, types.NewValidationError("FieldLt must be < 10"))
+	}
+	if !(obj.FieldLte <= 10) {
+		errs = append(errs, types.NewValidationError("FieldLte must be <= 10"))
+	}
+	if !(obj.FieldIn == 5 || obj.FieldIn == 6 || obj.FieldIn == 7) {
+		errs = append(errs, types.NewValidationError("FieldIn must be one of '5' '6' '7'"))
+	}
+	if !(obj.FieldNotIn != 8 && obj.FieldNotIn != 9 && obj.FieldNotIn != 10) {
+		errs = append(errs, types.NewValidationError("FieldNotIn must not be one of '8' '9' '10'"))
+	}
+	return errs
+}
+func NumericTypeuint8Validate(obj *NumericTypeuint8) []error {
+	var errs []error
+	if !(obj.FieldReq != 0) {
+		errs = append(errs, types.NewValidationError("FieldReq is required"))
+	}
+	if !(obj.FieldEq == 5) {
+		errs = append(errs, types.NewValidationError("FieldEq must be equal to 5"))
+	}
+	if !(obj.FieldNeq != 5) {
+		errs = append(errs, types.NewValidationError("FieldNeq must not be equal to 5"))
+	}
+	if !(obj.FieldGt > 10) {
+		errs = append(errs, types.NewValidationError("FieldGt must be > 10"))
+	}
+	if !(obj.FieldGte >= 10) {
+		errs = append(errs, types.NewValidationError("FieldGte must be >= 10"))
+	}
+	if !(obj.FieldLt < 10) {
+		errs = append(errs, types.NewValidationError("FieldLt must be < 10"))
+	}
+	if !(obj.FieldLte <= 10) {
+		errs = append(errs, types.NewValidationError("FieldLte must be <= 10"))
+	}
+	if !(obj.FieldIn == 5 || obj.FieldIn == 6 || obj.FieldIn == 7) {
+		errs = append(errs, types.NewValidationError("FieldIn must be one of '5' '6' '7'"))
+	}
+	if !(obj.FieldNotIn != 8 && obj.FieldNotIn != 9 && obj.FieldNotIn != 10) {
+		errs = append(errs, types.NewValidationError("FieldNotIn must not be one of '8' '9' '10'"))
+	}
+	return errs
+}
 func SliceStringValidate(obj *SliceString) []error {
 	var errs []error
 	if !(len(obj.TypesRequired) != 0) {

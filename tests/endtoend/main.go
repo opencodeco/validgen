@@ -43,6 +43,7 @@ func main() {
 	bool_tests()
 	map_string_tests()
 	map_uint8_tests()
+	numeric_tests()
 
 	log.Println("finishing tests")
 }
