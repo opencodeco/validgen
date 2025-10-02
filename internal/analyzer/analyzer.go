@@ -78,6 +78,12 @@ func parseFieldValidations(fieldTag string) ([]string, bool) {
 
 func checkForInvalidOperations(structs []*Struct) error {
 
+	structsWithValidation := map[string]bool{}
+
+	for _, st := range structs {
+		structsWithValidation[common.KeyPath(st.PackageName, st.StructName)] = true
+	}
+
 	for _, st := range structs {
 		for i, fd := range st.Fields {
 			for _, val := range st.FieldsValidations[i].Validations {
@@ -87,9 +93,19 @@ func checkForInvalidOperations(structs []*Struct) error {
 					return types.NewValidationError("unsupported operation %s", op)
 				}
 
-				// Check if is a valid operation for this type.
+				// If is a custom struct, check if it has validations.
 				fdType := fd.Type
-				if fdType.IsGoType() && !operations[op].ValidTypes[fdType.ToNormalizedString()] {
+				if structsWithValidation[fdType.BaseType] {
+					continue
+				}
+
+				// If has a validation, must be for a go type.
+				if !fdType.IsGoType() {
+					return types.NewValidationError("unsupported operation %s with unknown go type %s", op, fdType.BaseType)
+				}
+
+				// Check if is a valid operation for this type.
+				if !operations[op].ValidTypes[fdType.ToNormalizedString()] {
 					return types.NewValidationError("operation %s: invalid %s type", op, fdType.BaseType)
 				}
 			}
