@@ -225,8 +225,8 @@ func TestValidFieldOperationsByType(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		basicTypes := common.FromNormalizedToBasicTypes(tt.fieldType)
-		for _, fieldType := range basicTypes {
+		fieldTypes, _ := common.FromNormalizedToFieldTypes(tt.fieldType)
+		for _, fieldType := range fieldTypes {
 			testName := fmt.Sprintf("valid %s %s", fieldType, tt.op)
 			t.Run(testName, func(t *testing.T) {
 				arg := []*parser.Struct{
@@ -234,7 +234,7 @@ func TestValidFieldOperationsByType(t *testing.T) {
 						Fields: []parser.Field{
 							{
 								FieldName: "Field",
-								Type:      common.FieldType{BaseType: fieldType},
+								Type:      fieldType,
 								Tag:       fmt.Sprintf(`valid:"%s"`, tt.op),
 							},
 						},
