@@ -117,7 +117,7 @@ func FromNormalizedToBasicTypes(t string) []string {
 	}
 
 	// Try to remove [N]
-	if t[0] == '[' {
+	if len(t) > 0 && t[0] == '[' {
 		closeBracketIndex := strings.Index(t, "]")
 		if closeBracketIndex == -1 {
 			return []string{"invalid"}
