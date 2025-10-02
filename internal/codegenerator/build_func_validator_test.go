@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/opencodeco/validgen/internal/analyzer"
+	"github.com/opencodeco/validgen/internal/common"
 	"github.com/opencodeco/validgen/internal/parser"
 	"github.com/sergi/go-diff/diffmatchpatch"
 )
@@ -27,12 +28,12 @@ func TestBuildFuncValidatorCode(t *testing.T) {
 						Fields: []parser.Field{
 							{
 								FieldName: "FirstName",
-								Type:      "string",
+								Type:      common.FieldType{BaseType: "string"},
 								Tag:       `validate:"required"`,
 							},
 							{
 								FieldName: "MyAge",
-								Type:      "uint8",
+								Type:      common.FieldType{BaseType: "uint8"},
 								Tag:       `validate:"required"`,
 							},
 						},
@@ -69,7 +70,7 @@ return errs
 						Fields: []parser.Field{
 							{
 								FieldName: "FirstName",
-								Type:      "string",
+								Type:      common.FieldType{BaseType: "string"},
 								Tag:       `validate:"min=5"`,
 							},
 						},
@@ -100,12 +101,12 @@ return errs
 						Fields: []parser.Field{
 							{
 								FieldName: "Field1",
-								Type:      "string",
+								Type:      common.FieldType{BaseType: "string"},
 								Tag:       ``,
 							},
 							{
 								FieldName: "Field2",
-								Type:      "string",
+								Type:      common.FieldType{BaseType: "string"},
 								Tag:       `validate:"neqfield=Field1"`,
 							},
 						},
@@ -139,12 +140,12 @@ return errs
 						Fields: []parser.Field{
 							{
 								FieldName: "Field1",
-								Type:      "string",
+								Type:      common.FieldType{BaseType: "string"},
 								Tag:       `validate:"neqfield=Nested.Field2"`,
 							},
 							{
 								FieldName: "Nested",
-								Type:      "NestedStruct",
+								Type:      common.FieldType{BaseType: "NestedStruct"},
 								Tag:       ``,
 							},
 						},

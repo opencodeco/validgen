@@ -147,7 +147,7 @@ func appendFields(structType *ast.StructType, packageName string, cstruct *Struc
 
 	for _, field := range structType.Fields.List {
 		appendFieldNames := false
-		fieldType := ""
+		fieldType := common.FieldType{}
 		fieldTag := ""
 		if field.Tag != nil {
 			fieldTag = field.Tag.Value
@@ -155,22 +155,30 @@ func appendFields(structType *ast.StructType, packageName string, cstruct *Struc
 
 		switch v := field.Type.(type) {
 		case *ast.Ident:
-			fieldType = v.Name
+			fieldType.BaseType = v.Name
 			fieldType, fieldTag = extractFieldTypeAndTag(packageName, fieldType, fieldTag)
 			appendFieldNames = true
 
 		case *ast.ArrayType:
-			fieldType = v.Elt.(*ast.Ident).Name
-			arraySize := ""
+			fieldType.ComposedType = "[]"
+			fieldType.BaseType = v.Elt.(*ast.Ident).Name
+			fieldType.Size = ""
 			if v.Len != nil {
-				arraySize = v.Len.(*ast.BasicLit).Value
+				fieldType.Size = v.Len.(*ast.BasicLit).Value
+				fieldType.ComposedType = "[N]"
 			}
-			fieldType, fieldTag = extractSliceFieldTypeAndTag(packageName, fieldType, arraySize, fieldTag)
+			fieldType, fieldTag = extractFieldTypeAndTag(packageName, fieldType, fieldTag)
 			appendFieldNames = true
 
 		case *ast.SelectorExpr:
 			nestedPkgName := v.X.(*ast.Ident).Name
 			fieldType, fieldTag = extractNestedFieldTypeAndTag(nestedPkgName, v.Sel.Name, fieldTag)
+			appendFieldNames = true
+
+		case *ast.MapType:
+			fieldType.ComposedType = "map"
+			fieldType.BaseType = v.Key.(*ast.Ident).Name
+			_, fieldTag = extractFieldTypeAndTag(packageName, fieldType, fieldTag)
 			appendFieldNames = true
 		}
 
@@ -186,33 +194,12 @@ func appendFields(structType *ast.StructType, packageName string, cstruct *Struc
 	}
 }
 
-func extractFieldTypeAndTag(packageName, fieldType, fieldTag string) (string, string) {
+func extractFieldTypeAndTag(packageName string, fieldType common.FieldType, fieldTag string) (common.FieldType, string) {
 	rFieldType := fieldType
 
-	if !common.IsGoType(fieldType) {
-		rFieldType = common.KeyPath(packageName, fieldType)
+	if !fieldType.IsGoType() {
+		rFieldType.BaseType = common.KeyPath(packageName, fieldType.BaseType)
 	}
-	rFieldTag := ""
-	if fieldTag != "" {
-		rFieldTag = fieldTag
-		rFieldTag, _ = strconv.Unquote(rFieldTag)
-	}
-
-	return rFieldType, rFieldTag
-}
-
-func extractSliceFieldTypeAndTag(packageName, fieldType, fieldSize, fieldTag string) (string, string) {
-	rFieldType := fieldType
-
-	if !common.IsGoType(fieldType) {
-		rFieldType = common.KeyPath(packageName, fieldType)
-	}
-
-	if fieldSize != "" {
-		fieldSize = "N"
-	}
-
-	rFieldType = "[" + fieldSize + "]" + rFieldType
 
 	rFieldTag := ""
 	if fieldTag != "" {
@@ -223,9 +210,13 @@ func extractSliceFieldTypeAndTag(packageName, fieldType, fieldSize, fieldTag str
 	return rFieldType, rFieldTag
 }
 
-func extractNestedFieldTypeAndTag(nestedPkgName, fieldType, fieldTag string) (string, string) {
-	rFieldType := common.KeyPath(nestedPkgName, fieldType)
+func extractNestedFieldTypeAndTag(nestedPkgName, baseType, fieldTag string) (common.FieldType, string) {
+	rFieldType := common.KeyPath(nestedPkgName, baseType)
 	rFieldTag, _ := strconv.Unquote(fieldTag)
 
-	return rFieldType, rFieldTag
+	return common.FieldType{
+		BaseType:     rFieldType,
+		ComposedType: "",
+		Size:         "",
+	}, rFieldTag
 }

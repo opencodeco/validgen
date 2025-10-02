@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/opencodeco/validgen/internal/common"
 	"github.com/opencodeco/validgen/internal/parser"
 	"github.com/opencodeco/validgen/types"
 )
@@ -63,12 +64,12 @@ func TestAnalyzeStructsWithValidInnerFieldOperations(t *testing.T) {
 					Fields: []parser.Field{
 						{
 							FieldName: "Field1",
-							Type:      tt.fType,
+							Type:      common.FieldType{BaseType: tt.fType},
 							Tag:       fmt.Sprintf(`valid:"%s=Field2"`, tt.op),
 						},
 						{
 							FieldName: "Field2",
-							Type:      tt.fType,
+							Type:      common.FieldType{BaseType: tt.fType},
 							Tag:       ``,
 						},
 					},
@@ -141,12 +142,12 @@ func TestAnalyzeStructsWithValidNestedFieldOperations(t *testing.T) {
 					Fields: []parser.Field{
 						{
 							FieldName: "Field1",
-							Type:      tt.fType,
+							Type:      common.FieldType{BaseType: tt.fType},
 							Tag:       fmt.Sprintf(`valid:"%s=Nested.Field2"`, tt.op),
 						},
 						{
 							FieldName: "Nested",
-							Type:      "main.NestedStruct",
+							Type:      common.FieldType{BaseType: "main.NestedStruct"},
 							Tag:       ``,
 						},
 					},
@@ -157,7 +158,7 @@ func TestAnalyzeStructsWithValidNestedFieldOperations(t *testing.T) {
 					Fields: []parser.Field{
 						{
 							FieldName: "Field2",
-							Type:      tt.fType,
+							Type:      common.FieldType{BaseType: tt.fType},
 							Tag:       ``,
 						},
 					},
@@ -185,12 +186,12 @@ func TestAnalyzeStructsWithInvalidInnerFieldOperations(t *testing.T) {
 				Fields: []parser.Field{
 					{
 						FieldName: "Field1",
-						Type:      "string",
+						Type:      common.FieldType{BaseType: "string"},
 						Tag:       `valid:"eqfield=Field2"`,
 					},
 					{
 						FieldName: "Field2",
-						Type:      "uint8",
+						Type:      common.FieldType{BaseType: "uint8"},
 						Tag:       ``,
 					},
 				},
@@ -203,7 +204,7 @@ func TestAnalyzeStructsWithInvalidInnerFieldOperations(t *testing.T) {
 				Fields: []parser.Field{
 					{
 						FieldName: "Field1",
-						Type:      "string",
+						Type:      common.FieldType{BaseType: "string"},
 						Tag:       `valid:"eqfield=Field2"`,
 					},
 				},
@@ -216,12 +217,12 @@ func TestAnalyzeStructsWithInvalidInnerFieldOperations(t *testing.T) {
 				Fields: []parser.Field{
 					{
 						FieldName: "Field1",
-						Type:      "string",
+						Type:      common.FieldType{BaseType: "string"},
 						Tag:       `valid:"ltfield=Field2"`,
 					},
 					{
 						FieldName: "Field2",
-						Type:      "string",
+						Type:      common.FieldType{BaseType: "string"},
 						Tag:       ``,
 					},
 				},
@@ -256,12 +257,12 @@ func TestAnalyzeStructsWithInvalidNestedFieldOperations(t *testing.T) {
 					Fields: []parser.Field{
 						{
 							FieldName: "Field1",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string"},
 							Tag:       `valid:"eqfield=Nested.Field2"`,
 						},
 						{
 							FieldName: "Nested",
-							Type:      "main.NestedStruct",
+							Type:      common.FieldType{BaseType: "main.NestedStruct"},
 							Tag:       ``,
 						},
 					},
@@ -272,7 +273,7 @@ func TestAnalyzeStructsWithInvalidNestedFieldOperations(t *testing.T) {
 					Fields: []parser.Field{
 						{
 							FieldName: "Field2",
-							Type:      "uint8",
+							Type:      common.FieldType{BaseType: "uint8"},
 							Tag:       ``,
 						},
 					},
@@ -289,7 +290,7 @@ func TestAnalyzeStructsWithInvalidNestedFieldOperations(t *testing.T) {
 					Fields: []parser.Field{
 						{
 							FieldName: "Field1",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string"},
 							Tag:       `valid:"eqfield=Nested.Field2"`,
 						},
 					},
@@ -306,12 +307,12 @@ func TestAnalyzeStructsWithInvalidNestedFieldOperations(t *testing.T) {
 					Fields: []parser.Field{
 						{
 							FieldName: "Field1",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string"},
 							Tag:       `valid:"ltfield=Nested.Field2"`,
 						},
 						{
 							FieldName: "Nested",
-							Type:      "main.NestedStruct",
+							Type:      common.FieldType{BaseType: "main.NestedStruct"},
 							Tag:       ``,
 						},
 					},
@@ -322,7 +323,7 @@ func TestAnalyzeStructsWithInvalidNestedFieldOperations(t *testing.T) {
 					Fields: []parser.Field{
 						{
 							FieldName: "Field2",
-							Type:      "string",
+							Type:      common.FieldType{BaseType: "string"},
 							Tag:       ``,
 						},
 					},

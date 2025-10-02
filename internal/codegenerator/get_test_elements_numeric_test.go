@@ -3,12 +3,14 @@ package codegenerator
 import (
 	"reflect"
 	"testing"
+
+	"github.com/opencodeco/validgen/internal/common"
 )
 
 func TestDefineTestElementsWithNumericFields(t *testing.T) {
 	type args struct {
 		fieldName       string
-		fieldType       string
+		fieldType       common.FieldType
 		fieldValidation string
 	}
 	tests := []struct {
@@ -21,7 +23,7 @@ func TestDefineTestElementsWithNumericFields(t *testing.T) {
 			name: "Required uint8",
 			args: args{
 				fieldName:       "myfield2",
-				fieldType:       "uint8",
+				fieldType:       common.FieldType{BaseType: "uint8"},
 				fieldValidation: "required",
 			},
 			want: TestElements{
@@ -34,7 +36,7 @@ func TestDefineTestElementsWithNumericFields(t *testing.T) {
 			name: "uint8 >= 0",
 			args: args{
 				fieldName:       "myfield3",
-				fieldType:       "uint8",
+				fieldType:       common.FieldType{BaseType: "uint8"},
 				fieldValidation: "gte=0",
 			},
 			want: TestElements{
@@ -47,7 +49,7 @@ func TestDefineTestElementsWithNumericFields(t *testing.T) {
 			name: "uint8 <= 130",
 			args: args{
 				fieldName:       "myfield4",
-				fieldType:       "uint8",
+				fieldType:       common.FieldType{BaseType: "uint8"},
 				fieldValidation: "lte=130",
 			},
 			want: TestElements{

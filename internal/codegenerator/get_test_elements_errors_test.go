@@ -4,13 +4,14 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/opencodeco/validgen/internal/common"
 	"github.com/opencodeco/validgen/types"
 )
 
 func TestDefineTestElementsWithInvalidOperations(t *testing.T) {
 	type args struct {
 		fieldName       string
-		fieldType       string
+		fieldType       common.FieldType
 		fieldValidation string
 	}
 	tests := []struct {
@@ -22,7 +23,7 @@ func TestDefineTestElementsWithInvalidOperations(t *testing.T) {
 			name: "invalid uint8 operation",
 			args: args{
 				fieldName:       "xpto",
-				fieldType:       "uint8",
+				fieldType:       common.FieldType{BaseType: "uint8"},
 				fieldValidation: "in=1 2 3",
 			},
 			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation in type uint8"),

@@ -1,5 +1,7 @@
 package parser
 
+import "github.com/opencodeco/validgen/internal/common"
+
 type Struct struct {
 	StructName  string
 	Path        string
@@ -10,7 +12,7 @@ type Struct struct {
 
 type Field struct {
 	FieldName string
-	Type      string
+	Type      common.FieldType
 	Tag       string
 }
 
