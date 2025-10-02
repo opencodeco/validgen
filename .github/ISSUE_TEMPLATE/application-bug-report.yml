@@ -1,9 +1,8 @@
----
 name: Application bug report
-about: Create a bug report to help us fix an issue with Validgen
-title: ''
-labels: ''
-assignees: ''
+description: Create a bug report to help us fix an issue with Validgen
+title: Application bug report
+labels: []
+assignees: []
 
 body:
   - type: markdown
