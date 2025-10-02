@@ -1,9 +1,8 @@
----
 name: Feature request
-about: Suggest an idea for validgen
-title: ''
+description: Suggest an idea for validgen
+title: Feature request
 labels: ["enhancement"]
-assignees: ''
+assignees: []
 
 body:
   - type: markdown
@@ -21,7 +20,7 @@ body:
           required: true
 
   - type: checkboxes
-    id: read_contributing
+    id: read_validation_table
     attributes:
       label: Pre-check
       options:
