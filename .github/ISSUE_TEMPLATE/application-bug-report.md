@@ -5,7 +5,6 @@ title: ''
 labels: ''
 assignees: ''
 
-
 body:
   - type: markdown
     attributes:
@@ -26,7 +25,7 @@ body:
     attributes:
       label: Check for duplicates
       options:
-        - label: I have searched for duplicate [issues] https://github.com/opencodeco/validgen/issues (both open and closed).
+        - label: I have searched for duplicate [issues](https://github.com/opencodeco/validgen/issues) (both open and closed).
           required: true
 
   - type: dropdown

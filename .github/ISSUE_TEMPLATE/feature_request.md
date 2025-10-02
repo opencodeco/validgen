@@ -2,19 +2,52 @@
 name: Feature request
 about: Suggest an idea for validgen
 title: ''
-labels: ''
+labels: ["enhancement"]
 assignees: ''
 
----
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for submitting a feature request for ValidGen.
+        Please provide as much information as possible. Fields marked with an asterisk (*) are required.
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+  - type: checkboxes
+    id: read_contributing
+    attributes:
+      label: Pre-check
+      options:
+        - label: I have read the [Contributing guide](../CONTRIBUTING.md)
+          required: true
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+  - type: checkboxes
+    id: read_contributing
+    attributes:
+      label: Pre-check
+      options:
+        - label: I have checked the [Validation Table](../README.md#validations-table)
+          required: true
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+  - type: checkboxes
+    id: check_duplicates
+    attributes:
+      label: Check for existing feature requests
+      options:
+        - label: I have searched for duplicate or similar feature requests in the [issue tracker](https://github.com/opencodeco/validgen/issues).
+          required: true
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed feature
+      description: Describe clearly what you would like ValidGen to do.
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional context
+      description: Any other context, screenshots, or references that may help.
+    validations:
+      required: false
