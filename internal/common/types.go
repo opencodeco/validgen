@@ -1,7 +1,5 @@
 package common
 
-import "strings"
-
 type FieldType struct {
 	ComposedType string // array ([N]), map (map) or slice ([])
 	BaseType     string // base type (e.g. string, int, etc.)
@@ -88,62 +86,4 @@ func (ft FieldType) ToNormalizedString() string {
 	return ft.NormalizeBaseType().String()
 }
 
-func FromNormalizedToBasicTypes(t string) []string {
-	switch t {
-	case "<STRING>":
-		return []string{"string"}
-	case "<BOOL>":
-		return []string{"bool"}
-	case "<INT>":
-		return []string{"int", "int8", "int16", "int32", "int64", "uint", "uint8", "uint16", "uint32", "uint64"}
-	case "<FLOAT>":
-		return []string{"float32", "float64"}
-	case "map[<STRING>]":
-		return []string{"map[string]"}
-	case "map[<BOOL>]":
-		return []string{"map[bool]"}
-	case "map[<INT>]":
-		return []string{"map[int]", "map[int8]", "map[int16]", "map[int32]", "map[int64]", "map[uint]", "map[uint8]", "map[uint16]", "map[uint32]", "map[uint64]"}
-	case "map[<FLOAT>]":
-		return []string{"map[float32]", "map[float64]"}
-	case "[]<STRING>":
-		return []string{"[]string"}
-	case "[]<BOOL>":
-		return []string{"[]bool"}
-	case "[]<INT>":
-		return []string{"[]int", "[]int8", "[]int16", "[]int32", "[]int64", "[]uint", "[]uint8", "[]uint16", "[]uint32", "[]uint64"}
-	case "[]<FLOAT>":
-		return []string{"[]float32", "[]float64"}
-	}
-
-	// Try to remove [N]
-	if len(t) > 0 && t[0] == '[' {
-		closeBracketIndex := strings.Index(t, "]")
-		if closeBracketIndex == -1 {
-			return []string{"invalid"}
-		}
-
-		size := t[1:closeBracketIndex]
-		basicType := t[closeBracketIndex+1:]
-		sizeInType := "[" + size + "]"
-		result := []string{}
-		switch basicType {
-		case "<STRING>":
-			result = []string{"[N]string"}
-		case "<BOOL>":
-			result = []string{"[N]bool"}
-		case "<INT>":
-			result = []string{"[N]int", "[N]int8", "[N]int16", "[N]int32", "[N]int64", "[N]uint", "[N]uint8", "[N]uint16", "[N]uint32", "[N]uint64"}
-		case "<FLOAT>":
-			result = []string{"[N]float32", "[N]float64"}
-		}
-
-		for i := range result {
-			result[i] = strings.ReplaceAll(result[i], "[N]", sizeInType)
-		}
-
-		return result
-	}
-
-	return []string{"invalid"}
-}
+// TODO: precisa funcao abaixo?
