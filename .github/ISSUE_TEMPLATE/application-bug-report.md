@@ -1,38 +1,78 @@
 ---
 name: Application bug report
-about: Create a bug report to help us fix an issue with validgen
+about: Create a bug report to help us fix an issue with Validgen
 title: ''
 labels: ''
 assignees: ''
 
----
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue with ValidGen.
+        Please try to fill in as much of the form below as possible. Fields marked with an asterisk (*) are required.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+  - type: checkboxes
+    id: read_getting_started
+    attributes:
+      label: Pre-check
+      options:
+        - label: I have read the [Contributing guide](../CONTRIBUTING.md)
+          required: true
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+  - type: checkboxes
+    id: check_duplicates
+    attributes:
+      label: Check for duplicates
+      options:
+        - label: I have searched for duplicate [issues] https://github.com/opencodeco/validgen/issues (both open and closed).
+          required: true
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Your platform
+      options:
+        - Windows
+        - Linux
+        - MacOS
+      default: 0
+    validations:
+      required: true
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: Describe clearly what you expected ValidGen to do.
+      placeholder: E.g., ValidGen should generate code X or validate input Y correctly.
+    validations:
+      required: true
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+      description: Describe clearly what actually happened in ValidGen.
+      placeholder: E.g., ValidGen crashes or produces incorrect output.
+    validations:
+      required: true
 
-**Additional context**
-Add any other context about the problem here.
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Provide step-by-step instructions to reproduce the bug.
+      placeholder: What you did first, second, etc.
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional context
+      description: Any extra information, logs, or screenshots that may help.
+      placeholder: Add context here...
+    validations:
+      required: false
