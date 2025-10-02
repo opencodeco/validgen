@@ -2,7 +2,7 @@ name: Feature request
 description: Suggest an idea for validgen
 title: Feature request
 labels: ["enhancement"]
-assignees: ''
+assignees: []
 
 body:
   - type: markdown
