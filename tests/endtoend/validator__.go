@@ -506,6 +506,28 @@ func NumericTypeuint8Validate(obj *NumericTypeuint8) []error {
 	}
 	return errs
 }
+func SliceIntegerValidate(obj *SliceInteger) []error {
+	var errs []error
+	if !(len(obj.TypesRequired) != 0) {
+		errs = append(errs, types.NewValidationError("TypesRequired must not be empty"))
+	}
+	if !(len(obj.TypesMin) >= 2) {
+		errs = append(errs, types.NewValidationError("TypesMin must have at least 2 elements"))
+	}
+	if !(len(obj.TypesMax) <= 5) {
+		errs = append(errs, types.NewValidationError("TypesMax must have at most 5 elements"))
+	}
+	if !(len(obj.TypesLen) == 3) {
+		errs = append(errs, types.NewValidationError("TypesLen must have exactly 3 elements"))
+	}
+	if !(types.SliceOnlyContains(obj.TypesIn, []int{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("TypesIn elements must be one of '1' '2' '3'"))
+	}
+	if !(types.SliceNotContains(obj.TypesNotIn, []int{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("TypesNotIn elements must not be one of '1' '2' '3'"))
+	}
+	return errs
+}
 func SliceStringValidate(obj *SliceString) []error {
 	var errs []error
 	if !(len(obj.TypesRequired) != 0) {

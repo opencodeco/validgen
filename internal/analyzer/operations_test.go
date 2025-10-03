@@ -91,6 +91,10 @@ func TestValidFieldOperationsByType(t *testing.T) {
 			op:        "min=3",
 		},
 		{
+			fieldType: "[]<INT>",
+			op:        "min=3",
+		},
+		{
 			fieldType: "map[<INT>]",
 			op:        "min=3",
 		},
@@ -106,6 +110,10 @@ func TestValidFieldOperationsByType(t *testing.T) {
 		},
 		{
 			fieldType: "map[<STRING>]",
+			op:        "max=3",
+		},
+		{
+			fieldType: "[]<INT>",
 			op:        "max=3",
 		},
 		{
@@ -130,6 +138,10 @@ func TestValidFieldOperationsByType(t *testing.T) {
 		},
 		{
 			fieldType: "map[<STRING>]",
+			op:        "len=3",
+		},
+		{
+			fieldType: "[]<INT>",
 			op:        "len=3",
 		},
 		{

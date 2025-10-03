@@ -79,6 +79,7 @@ var operations = map[string]Operation{
 		ValidTypes: map[string]bool{
 			"<STRING>":      true,
 			"[]<STRING>":    true,
+			"[]<INT>":       true,
 			"map[<STRING>]": true,
 			"map[<INT>]":    true,
 		},
@@ -90,6 +91,7 @@ var operations = map[string]Operation{
 		ValidTypes: map[string]bool{
 			"<STRING>":      true,
 			"[]<STRING>":    true,
+			"[]<INT>":       true,
 			"map[<STRING>]": true,
 			"map[<INT>]":    true,
 		},
@@ -109,6 +111,7 @@ var operations = map[string]Operation{
 		ValidTypes: map[string]bool{
 			"<STRING>":      true,
 			"[]<STRING>":    true,
+			"[]<INT>":       true,
 			"map[<STRING>]": true,
 			"map[<INT>]":    true,
 		},
