@@ -239,7 +239,7 @@ func TestValidFieldOperationsByType(t *testing.T) {
 	for _, tt := range tests {
 		fieldTypes, _ := common.HelperFromNormalizedToFieldTypes(tt.fieldType)
 		for _, fieldType := range fieldTypes {
-			testName := fmt.Sprintf("valid %s %s", fieldType, tt.op)
+			testName := fmt.Sprintf("valid %s %s", fieldType.ToType(), tt.op)
 			t.Run(testName, func(t *testing.T) {
 				arg := []*parser.Struct{
 					{
