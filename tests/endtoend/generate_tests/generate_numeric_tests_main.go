@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -30,7 +31,7 @@ func main() {
 func (bt *NumericTests) GenerateFile(tplFile, output string) error {
 	tpl, err := os.ReadFile(tplFile)
 	if err != nil {
-		log.Fatalf("error reading %s: %s", tplFile, err)
+		return fmt.Errorf("error reading %s: %s", tplFile, err)
 	}
 
 	funcMap := template.FuncMap{
