@@ -8,7 +8,6 @@ const (
 	BoolType
 	IntType
 	FloatType
-	// ComplexType
 )
 
 func (n NormalizedBaseType) String() string {
@@ -19,10 +18,6 @@ func (n NormalizedBaseType) String() string {
 		return "<BOOL>"
 	case IntType:
 		return "<INT>"
-	case FloatType:
-		return "<FLOAT>"
-		// case ComplexType:
-		// 	return "<COMPLEX>"
 	}
 
 	return "<INVALID>"

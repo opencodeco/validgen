@@ -396,41 +396,6 @@ func TestParseStructsOk(t *testing.T) {
 		},
 
 		{
-			name: "Float32 type",
-			args: args{
-				fullpath: "example/main.go",
-				src: "package main\n" +
-					"type AllTypes struct {\n" +
-					"	IsEqual    float32 `valid:\"eq=1.2\"`\n" +
-					"	IsNotEqual float32 `valid:\"eq=3.4\"`\n" +
-					"}\n" +
-
-					"func main() {\n" +
-					"}\n",
-			},
-			want: []*Struct{
-				{
-					StructName:  "AllTypes",
-					Path:        "./example",
-					PackageName: "main",
-					Fields: []Field{
-						{
-							FieldName: "IsEqual",
-							Type:      common.FieldType{BaseType: "float32", ComposedType: "", Size: ""},
-							Tag:       "valid:\"eq=1.2\"",
-						},
-						{
-							FieldName: "IsNotEqual",
-							Type:      common.FieldType{BaseType: "float32", ComposedType: "", Size: ""},
-							Tag:       "valid:\"eq=3.4\"",
-						},
-					},
-					Imports: map[string]Import{},
-				},
-			},
-		},
-
-		{
 			name: "Slice type",
 			args: args{
 				fullpath: "example/main.go",
