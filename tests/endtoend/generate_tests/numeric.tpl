@@ -13,7 +13,7 @@ func numeric_tests() {
 }
 
 {{range .FieldTypes}}
-type NumericType{{.}} struct {
+type NumericType{{. | title }} struct {
 	FieldReq   {{.}} `valid:"required"`
 	FieldEq    {{.}} `valid:"eq=5"`
 	FieldNeq   {{.}} `valid:"neq=5"`
@@ -32,7 +32,7 @@ func numeric_{{.}}_tests() {
 	var errs []error
 
 	// Test case 1: All failure scenarios
-	v := &NumericType{{.}}{
+	v := &NumericType{{. | title }}{
 		FieldReq:   0,
 		FieldEq:    0,
 		FieldNeq:   5,
@@ -54,13 +54,13 @@ func numeric_{{.}}_tests() {
 		"FieldIn must be one of '5' '6' '7'",
 		"FieldNotIn must not be one of '8' '9' '10'",
 	}
-	errs = NumericType{{.}}Validate(v)
+	errs = NumericType{{. | title }}Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
 	// Test case 2: All valid input
-	v = &NumericType{{.}}{
+	v = &NumericType{{. | title }}{
 		FieldReq:   123,
 		FieldEq:    5,
 		FieldNeq:   2,
@@ -72,7 +72,7 @@ func numeric_{{.}}_tests() {
 		FieldNotIn: 12,
 	}
 	expectedMsgErrors = nil
-	errs = NumericType{{.}}Validate(v)
+	errs = NumericType{{. | title }}Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}

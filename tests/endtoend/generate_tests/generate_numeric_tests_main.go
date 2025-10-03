@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"log"
 	"os"
+	"strings"
 	"text/template"
 
 	"github.com/opencodeco/validgen/internal/common"
@@ -32,7 +33,11 @@ func (bt *NumericTests) GenerateFile(tplFile, output string) error {
 		log.Fatalf("error reading %s: %s", tplFile, err)
 	}
 
-	tmpl, err := template.New("NumericTest").Parse(string(tpl))
+	funcMap := template.FuncMap{
+		"title": strings.Title,
+	}
+
+	tmpl, err := template.New("NumericTest").Funcs(funcMap).Parse(string(tpl))
 	if err != nil {
 		return err
 	}

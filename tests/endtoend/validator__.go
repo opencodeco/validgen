@@ -196,7 +196,7 @@ func MapUint8Validate(obj *MapUint8) []error {
 	}
 	return errs
 }
-func NumericTypeintValidate(obj *NumericTypeint) []error {
+func NumericTypeIntValidate(obj *NumericTypeInt) []error {
 	var errs []error
 	if !(obj.FieldReq != 0) {
 		errs = append(errs, types.NewValidationError("FieldReq is required"))
@@ -227,7 +227,7 @@ func NumericTypeintValidate(obj *NumericTypeint) []error {
 	}
 	return errs
 }
-func NumericTypeint16Validate(obj *NumericTypeint16) []error {
+func NumericTypeInt16Validate(obj *NumericTypeInt16) []error {
 	var errs []error
 	if !(obj.FieldReq != 0) {
 		errs = append(errs, types.NewValidationError("FieldReq is required"))
@@ -258,7 +258,7 @@ func NumericTypeint16Validate(obj *NumericTypeint16) []error {
 	}
 	return errs
 }
-func NumericTypeint32Validate(obj *NumericTypeint32) []error {
+func NumericTypeInt32Validate(obj *NumericTypeInt32) []error {
 	var errs []error
 	if !(obj.FieldReq != 0) {
 		errs = append(errs, types.NewValidationError("FieldReq is required"))
@@ -289,7 +289,7 @@ func NumericTypeint32Validate(obj *NumericTypeint32) []error {
 	}
 	return errs
 }
-func NumericTypeint64Validate(obj *NumericTypeint64) []error {
+func NumericTypeInt64Validate(obj *NumericTypeInt64) []error {
 	var errs []error
 	if !(obj.FieldReq != 0) {
 		errs = append(errs, types.NewValidationError("FieldReq is required"))
@@ -320,7 +320,7 @@ func NumericTypeint64Validate(obj *NumericTypeint64) []error {
 	}
 	return errs
 }
-func NumericTypeint8Validate(obj *NumericTypeint8) []error {
+func NumericTypeInt8Validate(obj *NumericTypeInt8) []error {
 	var errs []error
 	if !(obj.FieldReq != 0) {
 		errs = append(errs, types.NewValidationError("FieldReq is required"))
@@ -351,7 +351,7 @@ func NumericTypeint8Validate(obj *NumericTypeint8) []error {
 	}
 	return errs
 }
-func NumericTypeuintValidate(obj *NumericTypeuint) []error {
+func NumericTypeUintValidate(obj *NumericTypeUint) []error {
 	var errs []error
 	if !(obj.FieldReq != 0) {
 		errs = append(errs, types.NewValidationError("FieldReq is required"))
@@ -382,7 +382,7 @@ func NumericTypeuintValidate(obj *NumericTypeuint) []error {
 	}
 	return errs
 }
-func NumericTypeuint16Validate(obj *NumericTypeuint16) []error {
+func NumericTypeUint16Validate(obj *NumericTypeUint16) []error {
 	var errs []error
 	if !(obj.FieldReq != 0) {
 		errs = append(errs, types.NewValidationError("FieldReq is required"))
@@ -413,7 +413,7 @@ func NumericTypeuint16Validate(obj *NumericTypeuint16) []error {
 	}
 	return errs
 }
-func NumericTypeuint32Validate(obj *NumericTypeuint32) []error {
+func NumericTypeUint32Validate(obj *NumericTypeUint32) []error {
 	var errs []error
 	if !(obj.FieldReq != 0) {
 		errs = append(errs, types.NewValidationError("FieldReq is required"))
@@ -444,7 +444,7 @@ func NumericTypeuint32Validate(obj *NumericTypeuint32) []error {
 	}
 	return errs
 }
-func NumericTypeuint64Validate(obj *NumericTypeuint64) []error {
+func NumericTypeUint64Validate(obj *NumericTypeUint64) []error {
 	var errs []error
 	if !(obj.FieldReq != 0) {
 		errs = append(errs, types.NewValidationError("FieldReq is required"))
@@ -475,7 +475,7 @@ func NumericTypeuint64Validate(obj *NumericTypeuint64) []error {
 	}
 	return errs
 }
-func NumericTypeuint8Validate(obj *NumericTypeuint8) []error {
+func NumericTypeUint8Validate(obj *NumericTypeUint8) []error {
 	var errs []error
 	if !(obj.FieldReq != 0) {
 		errs = append(errs, types.NewValidationError("FieldReq is required"))

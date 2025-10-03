@@ -22,7 +22,7 @@ func numeric_tests() {
 }
 
 
-type NumericTypeint struct {
+type NumericTypeInt struct {
 	FieldReq   int `valid:"required"`
 	FieldEq    int `valid:"eq=5"`
 	FieldNeq   int `valid:"neq=5"`
@@ -41,7 +41,7 @@ func numeric_int_tests() {
 	var errs []error
 
 	// Test case 1: All failure scenarios
-	v := &NumericTypeint{
+	v := &NumericTypeInt{
 		FieldReq:   0,
 		FieldEq:    0,
 		FieldNeq:   5,
@@ -63,13 +63,13 @@ func numeric_int_tests() {
 		"FieldIn must be one of '5' '6' '7'",
 		"FieldNotIn must not be one of '8' '9' '10'",
 	}
-	errs = NumericTypeintValidate(v)
+	errs = NumericTypeIntValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
 	// Test case 2: All valid input
-	v = &NumericTypeint{
+	v = &NumericTypeInt{
 		FieldReq:   123,
 		FieldEq:    5,
 		FieldNeq:   2,
@@ -81,7 +81,7 @@ func numeric_int_tests() {
 		FieldNotIn: 12,
 	}
 	expectedMsgErrors = nil
-	errs = NumericTypeintValidate(v)
+	errs = NumericTypeIntValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
@@ -89,7 +89,7 @@ func numeric_int_tests() {
 	log.Println("numeric int tests ok")
 }
 
-type NumericTypeint8 struct {
+type NumericTypeInt8 struct {
 	FieldReq   int8 `valid:"required"`
 	FieldEq    int8 `valid:"eq=5"`
 	FieldNeq   int8 `valid:"neq=5"`
@@ -108,7 +108,7 @@ func numeric_int8_tests() {
 	var errs []error
 
 	// Test case 1: All failure scenarios
-	v := &NumericTypeint8{
+	v := &NumericTypeInt8{
 		FieldReq:   0,
 		FieldEq:    0,
 		FieldNeq:   5,
@@ -130,13 +130,13 @@ func numeric_int8_tests() {
 		"FieldIn must be one of '5' '6' '7'",
 		"FieldNotIn must not be one of '8' '9' '10'",
 	}
-	errs = NumericTypeint8Validate(v)
+	errs = NumericTypeInt8Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
 	// Test case 2: All valid input
-	v = &NumericTypeint8{
+	v = &NumericTypeInt8{
 		FieldReq:   123,
 		FieldEq:    5,
 		FieldNeq:   2,
@@ -148,7 +148,7 @@ func numeric_int8_tests() {
 		FieldNotIn: 12,
 	}
 	expectedMsgErrors = nil
-	errs = NumericTypeint8Validate(v)
+	errs = NumericTypeInt8Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
@@ -156,7 +156,7 @@ func numeric_int8_tests() {
 	log.Println("numeric int8 tests ok")
 }
 
-type NumericTypeint16 struct {
+type NumericTypeInt16 struct {
 	FieldReq   int16 `valid:"required"`
 	FieldEq    int16 `valid:"eq=5"`
 	FieldNeq   int16 `valid:"neq=5"`
@@ -175,7 +175,7 @@ func numeric_int16_tests() {
 	var errs []error
 
 	// Test case 1: All failure scenarios
-	v := &NumericTypeint16{
+	v := &NumericTypeInt16{
 		FieldReq:   0,
 		FieldEq:    0,
 		FieldNeq:   5,
@@ -197,13 +197,13 @@ func numeric_int16_tests() {
 		"FieldIn must be one of '5' '6' '7'",
 		"FieldNotIn must not be one of '8' '9' '10'",
 	}
-	errs = NumericTypeint16Validate(v)
+	errs = NumericTypeInt16Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
 	// Test case 2: All valid input
-	v = &NumericTypeint16{
+	v = &NumericTypeInt16{
 		FieldReq:   123,
 		FieldEq:    5,
 		FieldNeq:   2,
@@ -215,7 +215,7 @@ func numeric_int16_tests() {
 		FieldNotIn: 12,
 	}
 	expectedMsgErrors = nil
-	errs = NumericTypeint16Validate(v)
+	errs = NumericTypeInt16Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
@@ -223,7 +223,7 @@ func numeric_int16_tests() {
 	log.Println("numeric int16 tests ok")
 }
 
-type NumericTypeint32 struct {
+type NumericTypeInt32 struct {
 	FieldReq   int32 `valid:"required"`
 	FieldEq    int32 `valid:"eq=5"`
 	FieldNeq   int32 `valid:"neq=5"`
@@ -242,7 +242,7 @@ func numeric_int32_tests() {
 	var errs []error
 
 	// Test case 1: All failure scenarios
-	v := &NumericTypeint32{
+	v := &NumericTypeInt32{
 		FieldReq:   0,
 		FieldEq:    0,
 		FieldNeq:   5,
@@ -264,13 +264,13 @@ func numeric_int32_tests() {
 		"FieldIn must be one of '5' '6' '7'",
 		"FieldNotIn must not be one of '8' '9' '10'",
 	}
-	errs = NumericTypeint32Validate(v)
+	errs = NumericTypeInt32Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
 	// Test case 2: All valid input
-	v = &NumericTypeint32{
+	v = &NumericTypeInt32{
 		FieldReq:   123,
 		FieldEq:    5,
 		FieldNeq:   2,
@@ -282,7 +282,7 @@ func numeric_int32_tests() {
 		FieldNotIn: 12,
 	}
 	expectedMsgErrors = nil
-	errs = NumericTypeint32Validate(v)
+	errs = NumericTypeInt32Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
@@ -290,7 +290,7 @@ func numeric_int32_tests() {
 	log.Println("numeric int32 tests ok")
 }
 
-type NumericTypeint64 struct {
+type NumericTypeInt64 struct {
 	FieldReq   int64 `valid:"required"`
 	FieldEq    int64 `valid:"eq=5"`
 	FieldNeq   int64 `valid:"neq=5"`
@@ -309,7 +309,7 @@ func numeric_int64_tests() {
 	var errs []error
 
 	// Test case 1: All failure scenarios
-	v := &NumericTypeint64{
+	v := &NumericTypeInt64{
 		FieldReq:   0,
 		FieldEq:    0,
 		FieldNeq:   5,
@@ -331,13 +331,13 @@ func numeric_int64_tests() {
 		"FieldIn must be one of '5' '6' '7'",
 		"FieldNotIn must not be one of '8' '9' '10'",
 	}
-	errs = NumericTypeint64Validate(v)
+	errs = NumericTypeInt64Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
 	// Test case 2: All valid input
-	v = &NumericTypeint64{
+	v = &NumericTypeInt64{
 		FieldReq:   123,
 		FieldEq:    5,
 		FieldNeq:   2,
@@ -349,7 +349,7 @@ func numeric_int64_tests() {
 		FieldNotIn: 12,
 	}
 	expectedMsgErrors = nil
-	errs = NumericTypeint64Validate(v)
+	errs = NumericTypeInt64Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
@@ -357,7 +357,7 @@ func numeric_int64_tests() {
 	log.Println("numeric int64 tests ok")
 }
 
-type NumericTypeuint struct {
+type NumericTypeUint struct {
 	FieldReq   uint `valid:"required"`
 	FieldEq    uint `valid:"eq=5"`
 	FieldNeq   uint `valid:"neq=5"`
@@ -376,7 +376,7 @@ func numeric_uint_tests() {
 	var errs []error
 
 	// Test case 1: All failure scenarios
-	v := &NumericTypeuint{
+	v := &NumericTypeUint{
 		FieldReq:   0,
 		FieldEq:    0,
 		FieldNeq:   5,
@@ -398,13 +398,13 @@ func numeric_uint_tests() {
 		"FieldIn must be one of '5' '6' '7'",
 		"FieldNotIn must not be one of '8' '9' '10'",
 	}
-	errs = NumericTypeuintValidate(v)
+	errs = NumericTypeUintValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
 	// Test case 2: All valid input
-	v = &NumericTypeuint{
+	v = &NumericTypeUint{
 		FieldReq:   123,
 		FieldEq:    5,
 		FieldNeq:   2,
@@ -416,7 +416,7 @@ func numeric_uint_tests() {
 		FieldNotIn: 12,
 	}
 	expectedMsgErrors = nil
-	errs = NumericTypeuintValidate(v)
+	errs = NumericTypeUintValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
@@ -424,7 +424,7 @@ func numeric_uint_tests() {
 	log.Println("numeric uint tests ok")
 }
 
-type NumericTypeuint8 struct {
+type NumericTypeUint8 struct {
 	FieldReq   uint8 `valid:"required"`
 	FieldEq    uint8 `valid:"eq=5"`
 	FieldNeq   uint8 `valid:"neq=5"`
@@ -443,7 +443,7 @@ func numeric_uint8_tests() {
 	var errs []error
 
 	// Test case 1: All failure scenarios
-	v := &NumericTypeuint8{
+	v := &NumericTypeUint8{
 		FieldReq:   0,
 		FieldEq:    0,
 		FieldNeq:   5,
@@ -465,13 +465,13 @@ func numeric_uint8_tests() {
 		"FieldIn must be one of '5' '6' '7'",
 		"FieldNotIn must not be one of '8' '9' '10'",
 	}
-	errs = NumericTypeuint8Validate(v)
+	errs = NumericTypeUint8Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
 	// Test case 2: All valid input
-	v = &NumericTypeuint8{
+	v = &NumericTypeUint8{
 		FieldReq:   123,
 		FieldEq:    5,
 		FieldNeq:   2,
@@ -483,7 +483,7 @@ func numeric_uint8_tests() {
 		FieldNotIn: 12,
 	}
 	expectedMsgErrors = nil
-	errs = NumericTypeuint8Validate(v)
+	errs = NumericTypeUint8Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
@@ -491,7 +491,7 @@ func numeric_uint8_tests() {
 	log.Println("numeric uint8 tests ok")
 }
 
-type NumericTypeuint16 struct {
+type NumericTypeUint16 struct {
 	FieldReq   uint16 `valid:"required"`
 	FieldEq    uint16 `valid:"eq=5"`
 	FieldNeq   uint16 `valid:"neq=5"`
@@ -510,7 +510,7 @@ func numeric_uint16_tests() {
 	var errs []error
 
 	// Test case 1: All failure scenarios
-	v := &NumericTypeuint16{
+	v := &NumericTypeUint16{
 		FieldReq:   0,
 		FieldEq:    0,
 		FieldNeq:   5,
@@ -532,13 +532,13 @@ func numeric_uint16_tests() {
 		"FieldIn must be one of '5' '6' '7'",
 		"FieldNotIn must not be one of '8' '9' '10'",
 	}
-	errs = NumericTypeuint16Validate(v)
+	errs = NumericTypeUint16Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
 	// Test case 2: All valid input
-	v = &NumericTypeuint16{
+	v = &NumericTypeUint16{
 		FieldReq:   123,
 		FieldEq:    5,
 		FieldNeq:   2,
@@ -550,7 +550,7 @@ func numeric_uint16_tests() {
 		FieldNotIn: 12,
 	}
 	expectedMsgErrors = nil
-	errs = NumericTypeuint16Validate(v)
+	errs = NumericTypeUint16Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
@@ -558,7 +558,7 @@ func numeric_uint16_tests() {
 	log.Println("numeric uint16 tests ok")
 }
 
-type NumericTypeuint32 struct {
+type NumericTypeUint32 struct {
 	FieldReq   uint32 `valid:"required"`
 	FieldEq    uint32 `valid:"eq=5"`
 	FieldNeq   uint32 `valid:"neq=5"`
@@ -577,7 +577,7 @@ func numeric_uint32_tests() {
 	var errs []error
 
 	// Test case 1: All failure scenarios
-	v := &NumericTypeuint32{
+	v := &NumericTypeUint32{
 		FieldReq:   0,
 		FieldEq:    0,
 		FieldNeq:   5,
@@ -599,13 +599,13 @@ func numeric_uint32_tests() {
 		"FieldIn must be one of '5' '6' '7'",
 		"FieldNotIn must not be one of '8' '9' '10'",
 	}
-	errs = NumericTypeuint32Validate(v)
+	errs = NumericTypeUint32Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
 	// Test case 2: All valid input
-	v = &NumericTypeuint32{
+	v = &NumericTypeUint32{
 		FieldReq:   123,
 		FieldEq:    5,
 		FieldNeq:   2,
@@ -617,7 +617,7 @@ func numeric_uint32_tests() {
 		FieldNotIn: 12,
 	}
 	expectedMsgErrors = nil
-	errs = NumericTypeuint32Validate(v)
+	errs = NumericTypeUint32Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
@@ -625,7 +625,7 @@ func numeric_uint32_tests() {
 	log.Println("numeric uint32 tests ok")
 }
 
-type NumericTypeuint64 struct {
+type NumericTypeUint64 struct {
 	FieldReq   uint64 `valid:"required"`
 	FieldEq    uint64 `valid:"eq=5"`
 	FieldNeq   uint64 `valid:"neq=5"`
@@ -644,7 +644,7 @@ func numeric_uint64_tests() {
 	var errs []error
 
 	// Test case 1: All failure scenarios
-	v := &NumericTypeuint64{
+	v := &NumericTypeUint64{
 		FieldReq:   0,
 		FieldEq:    0,
 		FieldNeq:   5,
@@ -666,13 +666,13 @@ func numeric_uint64_tests() {
 		"FieldIn must be one of '5' '6' '7'",
 		"FieldNotIn must not be one of '8' '9' '10'",
 	}
-	errs = NumericTypeuint64Validate(v)
+	errs = NumericTypeUint64Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
 
 	// Test case 2: All valid input
-	v = &NumericTypeuint64{
+	v = &NumericTypeUint64{
 		FieldReq:   123,
 		FieldEq:    5,
 		FieldNeq:   2,
@@ -684,7 +684,7 @@ func numeric_uint64_tests() {
 		FieldNotIn: 12,
 	}
 	expectedMsgErrors = nil
-	errs = NumericTypeuint64Validate(v)
+	errs = NumericTypeUint64Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
 	}
