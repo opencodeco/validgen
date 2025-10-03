@@ -1,8 +1,11 @@
 package common
 
 import (
+	"errors"
 	"reflect"
 	"testing"
+
+	"github.com/opencodeco/validgen/types"
 )
 
 func TestFromNormalizedToBasicTypes(t *testing.T) {
@@ -95,6 +98,7 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 		name           string
 		normalizedType string
 		want           []FieldType
+		err            error
 	}{
 		{
 			"string type",
@@ -102,6 +106,7 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 			[]FieldType{
 				{BaseType: "string", ComposedType: "", Size: ""},
 			},
+			nil,
 		},
 		{
 			"bool type",
@@ -109,6 +114,7 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 			[]FieldType{
 				{BaseType: "bool", ComposedType: "", Size: ""},
 			},
+			nil,
 		},
 		{
 			"int type",
@@ -125,6 +131,7 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 				{BaseType: "uint32", ComposedType: "", Size: ""},
 				{BaseType: "uint64", ComposedType: "", Size: ""},
 			},
+			nil,
 		},
 		{
 			"map string type",
@@ -132,6 +139,7 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 			[]FieldType{
 				{BaseType: "string", ComposedType: "map", Size: ""},
 			},
+			nil,
 		},
 		{
 			"map bool type",
@@ -139,6 +147,7 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 			[]FieldType{
 				{BaseType: "bool", ComposedType: "map", Size: ""},
 			},
+			nil,
 		},
 		{
 			"map int type",
@@ -155,6 +164,7 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 				{BaseType: "uint32", ComposedType: "map", Size: ""},
 				{BaseType: "uint64", ComposedType: "map", Size: ""},
 			},
+			nil,
 		},
 		{
 			"slice string type",
@@ -162,12 +172,14 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 			[]FieldType{
 				{BaseType: "string", ComposedType: "[]", Size: ""},
 			},
+			nil,
 		},
 		{
 			"slice bool type", "[]<BOOL>",
 			[]FieldType{
 				{BaseType: "bool", ComposedType: "[]", Size: ""},
 			},
+			nil,
 		},
 		{
 			"slice int type",
@@ -184,6 +196,7 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 				{BaseType: "uint32", ComposedType: "[]", Size: ""},
 				{BaseType: "uint64", ComposedType: "[]", Size: ""},
 			},
+			nil,
 		},
 		{
 			"array string type",
@@ -191,6 +204,7 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 			[]FieldType{
 				{BaseType: "string", ComposedType: "[N]", Size: "3"},
 			},
+			nil,
 		},
 		{
 			"array bool type",
@@ -198,6 +212,7 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 			[]FieldType{
 				{BaseType: "bool", ComposedType: "[N]", Size: "3"},
 			},
+			nil,
 		},
 		{
 			"array int type",
@@ -214,17 +229,36 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 				{BaseType: "uint32", ComposedType: "[N]", Size: "3"},
 				{BaseType: "uint64", ComposedType: "[N]", Size: "3"},
 			},
+			nil,
+		},
+		{
+			"invalid type",
+			"<XPTO>",
+			nil,
+			types.NewValidationError("unknown normalized type <XPTO>"),
+		},
+		{
+			"invalid array type",
+			"[3]<XPTO>",
+			nil,
+			types.NewValidationError("invalid array base type <XPTO>"),
+		},
+		{
+			"malformed array type",
+			"[3)<STRING>",
+			nil,
+			types.NewValidationError("invalid array size [3)<STRING>"),
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := HelperFromNormalizedToFieldTypes(tt.normalizedType)
-			if err != nil {
-				t.Errorf("FromNormalizedToFieldTypes() error = %v, wantErr %v", err, nil)
+			if errors.Is(err, tt.err) == false {
+				t.Errorf("FromNormalizedToFieldTypes() error = %v, wantErr %v", err, tt.err)
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
+			if tt.err == nil && !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("FromNormalizedToFieldTypes() = %v, want %v", got, tt.want)
 			}
 		})

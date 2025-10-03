@@ -117,7 +117,7 @@ func HelperFromNormalizedToFieldTypes(t string) ([]FieldType, error) {
 	if len(t) > 0 && t[0] == '[' {
 		closeBracketIndex := strings.Index(t, "]")
 		if closeBracketIndex == -1 {
-			return nil, types.NewValidationError("invalid array size: %s", t)
+			return nil, types.NewValidationError("invalid array size %s", t)
 		}
 
 		size := t[1:closeBracketIndex]
@@ -141,9 +141,9 @@ func HelperFromNormalizedToFieldTypes(t string) ([]FieldType, error) {
 				{BaseType: "uint64", ComposedType: "[N]", Size: size},
 			}, nil
 		default:
-			return nil, types.NewValidationError("invalid array base type: %s", basicType)
+			return nil, types.NewValidationError("invalid array base type %s", basicType)
 		}
 	}
 
-	return nil, types.NewValidationError("invalid type: %s", t)
+	return nil, types.NewValidationError("unknown normalized type %s", t)
 }
