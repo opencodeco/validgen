@@ -500,7 +500,7 @@ func structsToString(structs []*Struct) string {
 		result += "Path: " + s.Path + "\n"
 		result += "PackageName: " + s.PackageName + "\n"
 		for _, f := range s.Fields {
-			result += "  Field: " + f.FieldName + " Type: " + f.Type.ToString() + " Tag: " + f.Tag + "\n"
+			result += "  Field: " + f.FieldName + " Type: " + f.Type.ToGenericType() + " Tag: " + f.Tag + "\n"
 		}
 		for _, v := range s.Imports {
 			result += "  Import: " + v.Name + " Path: " + v.Path + "\n"

@@ -1,5 +1,7 @@
 package common
 
+import "fmt"
+
 type FieldType struct {
 	ComposedType string // array ([N]), map (map) or slice ([])
 	BaseType     string // base type (e.g. string, int, etc.)
@@ -52,10 +54,23 @@ func (ft FieldType) NormalizeBaseType() NormalizedBaseType {
 	return normalizedBaseType[ft.BaseType]
 }
 
-func (ft FieldType) ToString() string {
+func (ft FieldType) ToGenericType() string {
 	switch ft.ComposedType {
 	case "[N]":
 		return "[N]" + ft.BaseType
+	case "[]":
+		return "[]" + ft.BaseType
+	case "map":
+		return "map[" + ft.BaseType + "]"
+	}
+
+	return ft.BaseType
+}
+
+func (ft FieldType) ToType() string {
+	switch ft.ComposedType {
+	case "[N]":
+		return fmt.Sprintf("[%s]%s", ft.Size, ft.BaseType)
 	case "[]":
 		return "[]" + ft.BaseType
 	case "map":
