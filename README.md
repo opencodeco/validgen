@@ -241,6 +241,10 @@ The following table as the raw results:
 | BenchmarkValidGenStringEmail-12     | 35.513.684    |        167.4 ns/op        |        0 B/op                           |       0 allocs/op                   |
 | BenchmarkValidatorStringEmail-12    | 13.740.566    |        436.3 ns/op        |       88 B/op                           |       5 allocs/op                   |
 
+## Contribute
+
+You can find instructions on how to contribute code and bug reports in the [CONTRIBUTING guide](CONTRIBUTING.md).
+
 ## License
 
 ValidGen uses [MIT License](LICENSE).
