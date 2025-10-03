@@ -17,7 +17,7 @@ func main() {
 	log.Println("Generating numeric test file")
 
 	numericTests := NumericTests{}
-	numericTests.FieldTypes = common.FromNormalizedToBasicTypes("<INT>")
+	numericTests.FieldTypes = common.HelperFromNormalizedToBasicTypes("<INT>")
 
 	if err := numericTests.GenerateFile("numeric.tpl", "./numeric.go"); err != nil {
 		log.Fatalf("error generation numeric file %s", err)

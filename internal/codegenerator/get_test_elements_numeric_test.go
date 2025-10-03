@@ -122,7 +122,7 @@ func TestDefineTestElementsWithNumericFields(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		basicTypes := common.FromNormalizedToBasicTypes("<INT>")
+		basicTypes := common.HelperFromNormalizedToBasicTypes("<INT>")
 		for _, fieldType := range basicTypes {
 			testName := fmt.Sprintf("%s with %s", tt.name, fieldType)
 			t.Run(testName, func(t *testing.T) {
