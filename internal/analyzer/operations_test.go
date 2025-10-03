@@ -15,199 +15,250 @@ func TestValidFieldOperationsByType(t *testing.T) {
 	}{
 		// eq operations
 		{
-			fieldType: "string",
+			fieldType: "<STRING>",
 			op:        "eq=abc",
 		},
 		{
-			fieldType: "uint8",
+			fieldType: "<INT>",
 			op:        "eq=123",
 		},
 		{
-			fieldType: "bool",
+			fieldType: "<BOOL>",
 			op:        "eq=true",
 		},
 
 		// required operations
 		{
-			fieldType: "string",
+			fieldType: "<STRING>",
 			op:        "required",
 		},
 		{
-			fieldType: "uint8",
+			fieldType: "<INT>",
 			op:        "required",
 		},
 		{
-			fieldType: "[]string",
+			fieldType: "[]<STRING>",
 			op:        "required",
 		},
 		{
-			fieldType: "map[string]",
+			fieldType: "[]<INT>",
 			op:        "required",
 		},
 		{
-			fieldType: "map[uint8]",
+			fieldType: "map[<STRING>]",
 			op:        "required",
+		},
+		{
+			fieldType: "map[<INT>]",
+			op:        "required",
+		},
+
+		// gt operations
+		{
+			fieldType: "<INT>",
+			op:        "gt=123",
 		},
 
 		// gte operations
 		{
-			fieldType: "uint8",
+			fieldType: "<INT>",
 			op:        "gte=123",
+		},
+
+		// lt operations
+		{
+			fieldType: "<INT>",
+			op:        "lt=123",
 		},
 
 		// lte operations
 		{
-			fieldType: "uint8",
+			fieldType: "<INT>",
 			op:        "lte=123",
 		},
 
 		// min operations
 		{
-			fieldType: "string",
+			fieldType: "<STRING>",
 			op:        "min=3",
 		},
 		{
-			fieldType: "[]string",
+			fieldType: "[]<STRING>",
 			op:        "min=3",
 		},
 		{
-			fieldType: "map[string]",
+			fieldType: "map[<STRING>]",
 			op:        "min=3",
 		},
 		{
-			fieldType: "map[uint8]",
+			fieldType: "[]<INT>",
+			op:        "min=3",
+		},
+		{
+			fieldType: "map[<INT>]",
 			op:        "min=3",
 		},
 
 		// max operations
 		{
-			fieldType: "string",
+			fieldType: "<STRING>",
 			op:        "max=3",
 		},
 		{
-			fieldType: "[]string",
+			fieldType: "[]<STRING>",
 			op:        "max=3",
 		},
 		{
-			fieldType: "map[string]",
+			fieldType: "map[<STRING>]",
 			op:        "max=3",
 		},
 		{
-			fieldType: "map[uint8]",
+			fieldType: "[]<INT>",
+			op:        "max=3",
+		},
+		{
+			fieldType: "map[<INT>]",
 			op:        "max=3",
 		},
 
 		// eq_ignore_case operations
 		{
-			fieldType: "string",
+			fieldType: "<STRING>",
 			op:        "eq_ignore_case=abc",
 		},
 
 		// len operations
 		{
-			fieldType: "string",
+			fieldType: "<STRING>",
 			op:        "len=3",
 		},
 		{
-			fieldType: "[]string",
+			fieldType: "[]<STRING>",
 			op:        "len=3",
 		},
 		{
-			fieldType: "map[string]",
+			fieldType: "map[<STRING>]",
 			op:        "len=3",
 		},
 		{
-			fieldType: "map[uint8]",
+			fieldType: "[]<INT>",
+			op:        "len=3",
+		},
+		{
+			fieldType: "map[<INT>]",
 			op:        "len=3",
 		},
 
 		// neq operations
 		{
-			fieldType: "string",
+			fieldType: "<STRING>",
 			op:        "neq=abc",
 		},
 		{
-			fieldType: "bool",
+			fieldType: "<INT>",
+			op:        "neq=123",
+		},
+		{
+			fieldType: "<BOOL>",
 			op:        "neq=true",
 		},
 
 		// neq_ignore_case operations
 		{
-			fieldType: "string",
+			fieldType: "<STRING>",
 			op:        "neq_ignore_case=abc",
 		},
 
 		// in operations
 		{
-			fieldType: "string",
+			fieldType: "<STRING>",
 			op:        "in=abc",
 		},
 		{
-			fieldType: "[]string",
+			fieldType: "[]<STRING>",
 			op:        "in=abc",
 		},
 		{
-			fieldType: "[5]string",
+			fieldType: "[5]<STRING>",
 			op:        "in=abc",
 		},
 		{
-			fieldType: "map[string]",
+			fieldType: "map[<STRING>]",
 			op:        "in=abc",
 		},
 		{
-			fieldType: "map[uint8]",
+			fieldType: "[]<INT>",
+			op:        "in=123",
+		},
+		{
+			fieldType: "[5]<INT>",
+			op:        "in=123",
+		},
+		{
+			fieldType: "map[<INT>]",
 			op:        "in=123",
 		},
 
 		// nin operations
 		{
-			fieldType: "string",
+			fieldType: "<STRING>",
 			op:        "nin=abc",
 		},
 		{
-			fieldType: "[]string",
+			fieldType: "[]<STRING>",
 			op:        "nin=abc",
 		},
 		{
-			fieldType: "[5]string",
+			fieldType: "[5]<STRING>",
 			op:        "nin=abc",
 		},
 		{
-			fieldType: "map[string]",
+			fieldType: "map[<STRING>]",
 			op:        "nin=abc",
 		},
 		{
-			fieldType: "map[uint8]",
+			fieldType: "[]<INT>",
+			op:        "nin=123",
+		},
+		{
+			fieldType: "[5]<INT>",
+			op:        "nin=123",
+		},
+		{
+			fieldType: "map[<INT>]",
 			op:        "nin=123",
 		},
 
 		// email operations
 		{
-			fieldType: "string",
+			fieldType: "<STRING>",
 			op:        "email",
 		},
 	}
 
 	for _, tt := range tests {
-		testName := fmt.Sprintf("valid %s %s", tt.fieldType, tt.op)
-		t.Run(testName, func(t *testing.T) {
-			arg := []*parser.Struct{
-				{
-					Fields: []parser.Field{
-						{
-							FieldName: "Field",
-							Type:      common.FieldType{BaseType: tt.fieldType},
-							Tag:       fmt.Sprintf(`valid:"%s"`, tt.op),
+		fieldTypes, _ := common.HelperFromNormalizedToFieldTypes(tt.fieldType)
+		for _, fieldType := range fieldTypes {
+			testName := fmt.Sprintf("valid %s %s", fieldType.ToType(), tt.op)
+			t.Run(testName, func(t *testing.T) {
+				arg := []*parser.Struct{
+					{
+						Fields: []parser.Field{
+							{
+								FieldName: "Field",
+								Type:      fieldType,
+								Tag:       fmt.Sprintf(`valid:"%s"`, tt.op),
+							},
 						},
 					},
-				},
-			}
+				}
 
-			_, err := AnalyzeStructs(arg)
-			if err != nil {
-				t.Errorf("AnalyzeStructs() error = %v, wantErr %v", err, nil)
-				return
-			}
-		})
+				_, err := AnalyzeStructs(arg)
+				if err != nil {
+					t.Errorf("AnalyzeStructs() error = %v, wantErr %v", err, nil)
+					return
+				}
+			})
+		}
 	}
 }

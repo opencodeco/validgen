@@ -22,9 +22,9 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string": true,
-			"uint8":  true,
-			"bool":   true,
+			"<STRING>": true,
+			"<INT>":    true,
+			"<BOOL>":   true,
 		},
 	},
 	"required": {
@@ -32,11 +32,20 @@ var operations = map[string]Operation{
 		CountValues:      ZERO_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string":      true,
-			"uint8":       true,
-			"[]string":    true,
-			"map[string]": true,
-			"map[uint8]":  true,
+			"<STRING>":      true,
+			"<INT>":         true,
+			"[]<STRING>":    true,
+			"[]<INT>":       true,
+			"map[<STRING>]": true,
+			"map[<INT>]":    true,
+		},
+	},
+	"gt": {
+		Name:             "gt",
+		CountValues:      ONE_VALUE,
+		IsFieldOperation: false,
+		ValidTypes: map[string]bool{
+			"<INT>": true,
 		},
 	},
 	"gte": {
@@ -44,7 +53,7 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"uint8": true,
+			"<INT>": true,
 		},
 	},
 	"lte": {
@@ -52,7 +61,15 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"uint8": true,
+			"<INT>": true,
+		},
+	},
+	"lt": {
+		Name:             "lt",
+		CountValues:      ONE_VALUE,
+		IsFieldOperation: false,
+		ValidTypes: map[string]bool{
+			"<INT>": true,
 		},
 	},
 	"min": {
@@ -60,10 +77,11 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string":      true,
-			"[]string":    true,
-			"map[string]": true,
-			"map[uint8]":  true,
+			"<STRING>":      true,
+			"[]<STRING>":    true,
+			"[]<INT>":       true,
+			"map[<STRING>]": true,
+			"map[<INT>]":    true,
 		},
 	},
 	"max": {
@@ -71,10 +89,11 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string":      true,
-			"[]string":    true,
-			"map[string]": true,
-			"map[uint8]":  true,
+			"<STRING>":      true,
+			"[]<STRING>":    true,
+			"[]<INT>":       true,
+			"map[<STRING>]": true,
+			"map[<INT>]":    true,
 		},
 	},
 	"eq_ignore_case": {
@@ -82,7 +101,7 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string": true,
+			"<STRING>": true,
 		},
 	},
 	"len": {
@@ -90,10 +109,11 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string":      true,
-			"[]string":    true,
-			"map[string]": true,
-			"map[uint8]":  true,
+			"<STRING>":      true,
+			"[]<STRING>":    true,
+			"[]<INT>":       true,
+			"map[<STRING>]": true,
+			"map[<INT>]":    true,
 		},
 	},
 	"neq": {
@@ -101,8 +121,9 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string": true,
-			"bool":   true,
+			"<STRING>": true,
+			"<BOOL>":   true,
+			"<INT>":    true,
 		},
 	},
 	"neq_ignore_case": {
@@ -110,7 +131,7 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string": true,
+			"<STRING>": true,
 		},
 	},
 	"in": {
@@ -118,11 +139,14 @@ var operations = map[string]Operation{
 		CountValues:      MANY_VALUES,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string":      true,
-			"[]string":    true,
-			"[N]string":   true,
-			"map[string]": true,
-			"map[uint8]":  true,
+			"<STRING>":      true,
+			"<INT>":         true,
+			"[]<STRING>":    true,
+			"[]<INT>":       true,
+			"[N]<STRING>":   true,
+			"[N]<INT>":      true,
+			"map[<STRING>]": true,
+			"map[<INT>]":    true,
 		},
 	},
 	"nin": {
@@ -130,11 +154,14 @@ var operations = map[string]Operation{
 		CountValues:      MANY_VALUES,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string":      true,
-			"[]string":    true,
-			"[N]string":   true,
-			"map[string]": true,
-			"map[uint8]":  true,
+			"<STRING>":      true,
+			"<INT>":         true,
+			"[]<STRING>":    true,
+			"[]<INT>":       true,
+			"[N]<STRING>":   true,
+			"[N]<INT>":      true,
+			"map[<STRING>]": true,
+			"map[<INT>]":    true,
 		},
 	},
 	"email": {
@@ -142,7 +169,7 @@ var operations = map[string]Operation{
 		CountValues:      ZERO_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"string": true,
+			"<STRING>": true,
 		},
 	},
 	"eqfield": {
@@ -150,9 +177,9 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: true,
 		ValidTypes: map[string]bool{
-			"string": true,
-			"uint8":  true,
-			"bool":   true,
+			"<STRING>": true,
+			"<INT>":    true,
+			"<BOOL>":   true,
 		},
 	},
 	"neqfield": {
@@ -160,9 +187,9 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: true,
 		ValidTypes: map[string]bool{
-			"string": true,
-			"uint8":  true,
-			"bool":   true,
+			"<STRING>": true,
+			"<INT>":    true,
+			"<BOOL>":   true,
 		},
 	},
 	"gtefield": {
@@ -170,7 +197,7 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: true,
 		ValidTypes: map[string]bool{
-			"uint8": true,
+			"<INT>": true,
 		},
 	},
 	"gtfield": {
@@ -178,7 +205,7 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: true,
 		ValidTypes: map[string]bool{
-			"uint8": true,
+			"<INT>": true,
 		},
 	},
 	"ltefield": {
@@ -186,7 +213,7 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: true,
 		ValidTypes: map[string]bool{
-			"uint8": true,
+			"<INT>": true,
 		},
 	},
 	"ltfield": {
@@ -194,7 +221,7 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: true,
 		ValidTypes: map[string]bool{
-			"uint8": true,
+			"<INT>": true,
 		},
 	},
 }

@@ -37,12 +37,14 @@ func main() {
 	string_tests()
 	nested_struct_tests()
 	slice_string_tests()
+	slice_integer_tests()
 	array_string_tests()
 	cmp_between_inner_fields_tests()
 	cmp_between_nested_fields_tests()
 	bool_tests()
 	map_string_tests()
 	map_uint8_tests()
+	numeric_tests()
 
 	log.Println("finishing tests")
 }

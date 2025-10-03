@@ -24,9 +24,9 @@ func TestDefineTestElementsWithInvalidOperations(t *testing.T) {
 			args: args{
 				fieldName:       "xpto",
 				fieldType:       common.FieldType{BaseType: "uint8"},
-				fieldValidation: "in=1 2 3",
+				fieldValidation: "min=1 2 3",
 			},
-			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation in type uint8"),
+			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation min type uint8"),
 		},
 	}
 

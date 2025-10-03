@@ -70,6 +70,32 @@ func TestDefineTestElementsWithArrayFields(t *testing.T) {
 				errorMessage:   "myfield elements must not be one of ' a ' ' b ' ' c '",
 			},
 		},
+		{
+			name: "In array int",
+			args: args{
+				fieldName:       "myfield",
+				fieldType:       common.FieldType{BaseType: "uint8", ComposedType: "[N]"},
+				fieldValidation: "in=1 2 3",
+			},
+			want: TestElements{
+				conditions:     []string{`types.SliceOnlyContains(obj.myfield[:], []uint8{1, 2, 3})`},
+				concatOperator: "",
+				errorMessage:   "myfield elements must be one of '1' '2' '3'",
+			},
+		},
+		{
+			name: "Not in array int",
+			args: args{
+				fieldName:       "myfield",
+				fieldType:       common.FieldType{BaseType: "uint8", ComposedType: "[N]"},
+				fieldValidation: "nin=1 2 3",
+			},
+			want: TestElements{
+				conditions:     []string{`types.SliceNotContains(obj.myfield[:], []uint8{1, 2, 3})`},
+				concatOperator: "",
+				errorMessage:   "myfield elements must not be one of '1' '2' '3'",
+			},
+		},
 	}
 
 	for _, tt := range tests {

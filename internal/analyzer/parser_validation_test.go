@@ -96,6 +96,15 @@ func Test_ValidParserValidation(t *testing.T) {
 			},
 		},
 		{
+			name:       "tag with multivalue with comma (10,20,30)",
+			validation: "in=10,20,30",
+			want: &Validation{
+				Operation:      "in",
+				ExpectedValues: MANY_VALUES,
+				Values:         []string{"10", "20", "30"},
+			},
+		},
+		{
 			name:       "email validation",
 			validation: "email",
 			want: &Validation{

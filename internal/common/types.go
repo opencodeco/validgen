@@ -1,5 +1,7 @@
 package common
 
+import "fmt"
+
 type FieldType struct {
 	ComposedType string // array ([N]), map (map) or slice ([])
 	BaseType     string // base type (e.g. string, int, etc.)
@@ -14,20 +16,16 @@ func (ft FieldType) IsGoType() bool {
 	goTypes := map[string]struct{}{
 		"string": {},
 		"bool":   {},
-		// "int":        {},
-		// "int8":       {},
-		// "int16":      {},
-		// "int32":      {},
-		// "int64":      {},
-		// "uint":       {},
-		"uint8": {},
-		// "uint16":     {},
-		// "uint32":     {},
-		// "uint64":     {},
-		// "float32":    {},
-		// "float64":    {},
-		// "complex64":  {},
-		// "complex128": {},
+		"int":    {},
+		"int8":   {},
+		"int16":  {},
+		"int32":  {},
+		"int64":  {},
+		"uint":   {},
+		"uint8":  {},
+		"uint16": {},
+		"uint32": {},
+		"uint64": {},
 	}
 
 	_, ok := goTypes[ft.BaseType]
@@ -35,7 +33,28 @@ func (ft FieldType) IsGoType() bool {
 	return ok
 }
 
-func (ft FieldType) ToString() string {
+func (ft FieldType) NormalizeBaseType() NormalizedBaseType {
+	// Base type grouping by type (e.g. string, bool, int and float)
+
+	normalizedBaseType := map[string]NormalizedBaseType{
+		"string": StringType,
+		"bool":   BoolType,
+		"int":    IntType,
+		"int8":   IntType,
+		"int16":  IntType,
+		"int32":  IntType,
+		"int64":  IntType,
+		"uint":   IntType,
+		"uint8":  IntType,
+		"uint16": IntType,
+		"uint32": IntType,
+		"uint64": IntType,
+	}
+
+	return normalizedBaseType[ft.BaseType]
+}
+
+func (ft FieldType) ToGenericType() string {
 	switch ft.ComposedType {
 	case "[N]":
 		return "[N]" + ft.BaseType
@@ -46,4 +65,30 @@ func (ft FieldType) ToString() string {
 	}
 
 	return ft.BaseType
+}
+
+func (ft FieldType) ToType() string {
+	switch ft.ComposedType {
+	case "[N]":
+		return fmt.Sprintf("[%s]%s", ft.Size, ft.BaseType)
+	case "[]":
+		return "[]" + ft.BaseType
+	case "map":
+		return "map[" + ft.BaseType + "]"
+	}
+
+	return ft.BaseType
+}
+
+func (ft FieldType) ToNormalizedString() string {
+	switch ft.ComposedType {
+	case "[N]":
+		return "[N]" + ft.NormalizeBaseType().String()
+	case "[]":
+		return "[]" + ft.NormalizeBaseType().String()
+	case "map":
+		return "map[" + ft.NormalizeBaseType().String() + "]"
+	}
+
+	return ft.NormalizeBaseType().String()
 }
