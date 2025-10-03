@@ -5,10 +5,11 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strings"
 	"text/template"
 
 	"github.com/opencodeco/validgen/internal/common"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 type NumericTests struct {
@@ -35,7 +36,7 @@ func (bt *NumericTests) GenerateFile(tplFile, output string) error {
 	}
 
 	funcMap := template.FuncMap{
-		"title": strings.Title,
+		"title": cases.Title(language.Und).String,
 	}
 
 	tmpl, err := template.New("NumericTest").Funcs(funcMap).Parse(string(tpl))
