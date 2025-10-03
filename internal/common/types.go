@@ -77,5 +77,3 @@ func (ft FieldType) ToNormalizedString() string {
 
 	return ft.NormalizeBaseType().String()
 }
-
-// TODO: precisa funcao abaixo?
