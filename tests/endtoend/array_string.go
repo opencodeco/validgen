@@ -9,7 +9,7 @@ type ArrayString struct {
 	TypesNotIn [8]string `valid:"nin=a b c"`
 }
 
-func array_string_tests() {
+func arrayStringTests() {
 	log.Println("starting array string tests")
 
 	var expectedMsgErrors []string

@@ -9,7 +9,7 @@ type BoolType struct {
 	FieldNeqFieldEqTrue bool `valid:"neqfield=FieldEqTrue"`
 }
 
-func bool_tests() {
+func boolTests() {
 	log.Println("starting bool tests")
 
 	var expectedMsgErrors []string

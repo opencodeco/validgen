@@ -4,19 +4,19 @@ package main
 
 import "log"
 
-func numeric_tests() {
+func numericTests() {
 	log.Println("starting numeric tests")
 
-	numeric_int_tests()
-	numeric_int8_tests()
-	numeric_int16_tests()
-	numeric_int32_tests()
-	numeric_int64_tests()
-	numeric_uint_tests()
-	numeric_uint8_tests()
-	numeric_uint16_tests()
-	numeric_uint32_tests()
-	numeric_uint64_tests()
+	numericIntTests()
+	numericInt8Tests()
+	numericInt16Tests()
+	numericInt32Tests()
+	numericInt64Tests()
+	numericUintTests()
+	numericUint8Tests()
+	numericUint16Tests()
+	numericUint32Tests()
+	numericUint64Tests()
 	
 	log.Println("numeric tests ok")
 }
@@ -34,7 +34,7 @@ type NumericTypeInt struct {
 	FieldNotIn int `valid:"nin=8 9 10"`
 }
 
-func numeric_int_tests() {
+func numericIntTests() {
 	log.Println("starting numeric int tests")
 
 	var expectedMsgErrors []string
@@ -101,7 +101,7 @@ type NumericTypeInt8 struct {
 	FieldNotIn int8 `valid:"nin=8 9 10"`
 }
 
-func numeric_int8_tests() {
+func numericInt8Tests() {
 	log.Println("starting numeric int8 tests")
 
 	var expectedMsgErrors []string
@@ -168,7 +168,7 @@ type NumericTypeInt16 struct {
 	FieldNotIn int16 `valid:"nin=8 9 10"`
 }
 
-func numeric_int16_tests() {
+func numericInt16Tests() {
 	log.Println("starting numeric int16 tests")
 
 	var expectedMsgErrors []string
@@ -235,7 +235,7 @@ type NumericTypeInt32 struct {
 	FieldNotIn int32 `valid:"nin=8 9 10"`
 }
 
-func numeric_int32_tests() {
+func numericInt32Tests() {
 	log.Println("starting numeric int32 tests")
 
 	var expectedMsgErrors []string
@@ -302,7 +302,7 @@ type NumericTypeInt64 struct {
 	FieldNotIn int64 `valid:"nin=8 9 10"`
 }
 
-func numeric_int64_tests() {
+func numericInt64Tests() {
 	log.Println("starting numeric int64 tests")
 
 	var expectedMsgErrors []string
@@ -369,7 +369,7 @@ type NumericTypeUint struct {
 	FieldNotIn uint `valid:"nin=8 9 10"`
 }
 
-func numeric_uint_tests() {
+func numericUintTests() {
 	log.Println("starting numeric uint tests")
 
 	var expectedMsgErrors []string
@@ -436,7 +436,7 @@ type NumericTypeUint8 struct {
 	FieldNotIn uint8 `valid:"nin=8 9 10"`
 }
 
-func numeric_uint8_tests() {
+func numericUint8Tests() {
 	log.Println("starting numeric uint8 tests")
 
 	var expectedMsgErrors []string
@@ -503,7 +503,7 @@ type NumericTypeUint16 struct {
 	FieldNotIn uint16 `valid:"nin=8 9 10"`
 }
 
-func numeric_uint16_tests() {
+func numericUint16Tests() {
 	log.Println("starting numeric uint16 tests")
 
 	var expectedMsgErrors []string
@@ -570,7 +570,7 @@ type NumericTypeUint32 struct {
 	FieldNotIn uint32 `valid:"nin=8 9 10"`
 }
 
-func numeric_uint32_tests() {
+func numericUint32Tests() {
 	log.Println("starting numeric uint32 tests")
 
 	var expectedMsgErrors []string
@@ -637,7 +637,7 @@ type NumericTypeUint64 struct {
 	FieldNotIn uint64 `valid:"nin=8 9 10"`
 }
 
-func numeric_uint64_tests() {
+func numericUint64Tests() {
 	log.Println("starting numeric uint64 tests")
 
 	var expectedMsgErrors []string

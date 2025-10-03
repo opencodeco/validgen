@@ -4,12 +4,12 @@ import (
 	"log"
 )
 
-func cmp_between_inner_fields_tests() {
+func cmpBetweenInnerFieldsTests() {
 	log.Println("starting between inner fields tests")
 
-	cmp_between_inner_string_fields_tests()
-	cmp_between_inner_uint8_fields_tests()
-	cmp_between_inner_bool_fields_tests()
+	cmpBetweenInnerStringFieldsTests()
+	cmpBetweenInnerUint8FieldsTests()
+	cmpBetweenInnerBoolFieldsTests()
 
 	log.Println("cmp between inner fields tests ok")
 }
@@ -20,7 +20,7 @@ type CmpInnerStringFields struct {
 	Field3neq1 string `valid:"neqfield=Field1"`
 }
 
-func cmp_between_inner_string_fields_tests() {
+func cmpBetweenInnerStringFieldsTests() {
 	log.Println("starting between inner string fields tests")
 
 	var expectedMsgErrors []string
@@ -67,7 +67,7 @@ type CmpInnerUint8Fields struct {
 	Field8lt4  uint8 `valid:"ltfield=Field4"`
 }
 
-func cmp_between_inner_uint8_fields_tests() {
+func cmpBetweenInnerUint8FieldsTests() {
 	log.Println("starting between inner uint8 fields tests")
 
 	var expectedMsgErrors []string
@@ -123,7 +123,7 @@ type CmpInnerBoolFields struct {
 	Field3neq1 bool `valid:"neqfield=Field1"`
 }
 
-func cmp_between_inner_bool_fields_tests() {
+func cmpBetweenInnerBoolFieldsTests() {
 	log.Println("starting between inner bool fields tests")
 
 	var expectedMsgErrors []string

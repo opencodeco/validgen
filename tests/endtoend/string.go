@@ -16,7 +16,7 @@ type StringType struct {
 	EmailOpt    string `valid:"email"`
 }
 
-func string_tests() {
+func stringTests() {
 	log.Println("starting string tests")
 
 	var expectedMsgErrors []string

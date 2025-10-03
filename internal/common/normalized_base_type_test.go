@@ -2,7 +2,7 @@ package common
 
 import "testing"
 
-func TestNormalizedBaseType_String(t *testing.T) {
+func TestNormalizedBaseTypeString(t *testing.T) {
 	tests := []struct {
 		name string
 		n    NormalizedBaseType

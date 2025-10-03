@@ -4,10 +4,10 @@ package main
 
 import "log"
 
-func numeric_tests() {
+func numericTests() {
 	log.Println("starting numeric tests")
 
-	{{range .FieldTypes}}numeric_{{.}}_tests()
+	{{range .FieldTypes}}numeric{{. | title }}Tests()
 	{{end}}
 	log.Println("numeric tests ok")
 }
@@ -25,7 +25,7 @@ type NumericType{{. | title }} struct {
 	FieldNotIn {{.}} `valid:"nin=8 9 10"`
 }
 
-func numeric_{{.}}_tests() {
+func numeric{{. | title }}Tests() {
 	log.Println("starting numeric {{.}} tests")
 
 	var expectedMsgErrors []string

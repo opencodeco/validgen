@@ -8,7 +8,7 @@ import (
 	"github.com/opencodeco/validgen/types"
 )
 
-func Test_ValidParserValidation(t *testing.T) {
+func TestValidParserValidation(t *testing.T) {
 	tests := []struct {
 		name       string
 		validation string
@@ -148,7 +148,7 @@ func Test_ValidParserValidation(t *testing.T) {
 	}
 }
 
-func Test_ParserInvalidValidation(t *testing.T) {
+func TestParserInvalidValidation(t *testing.T) {
 	tests := []struct {
 		name        string
 		validation  string

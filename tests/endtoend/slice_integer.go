@@ -13,7 +13,7 @@ type SliceInteger struct {
 	TypesNotIn    []int `valid:"nin=1 2 3"`
 }
 
-func slice_integer_tests() {
+func sliceIntegerTests() {
 	log.Println("starting slice integer tests")
 
 	var expectedMsgErrors []string

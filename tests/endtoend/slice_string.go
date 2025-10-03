@@ -13,7 +13,7 @@ type SliceString struct {
 	TypesNotIn    []string `valid:"nin=a b c"`
 }
 
-func slice_string_tests() {
+func sliceStringTests() {
 	log.Println("starting slice string tests")
 
 	var expectedMsgErrors []string

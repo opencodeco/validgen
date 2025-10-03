@@ -23,16 +23,16 @@ type UserWithStructInPkg struct {
 	Address   structsinpkg.Address `valid:"required"`
 }
 
-func nested_struct_tests() {
+func nestedStructTests() {
 	log.Println("starting nested struct tests")
 
-	nested_struct_tests1()
-	nested_struct_tests2()
+	nestedStructTests1()
+	nestedStructTests2()
 
 	log.Println("nested struct tests ok")
 }
 
-func nested_struct_tests1() {
+func nestedStructTests1() {
 	log.Println("starting nested struct tests 1")
 
 	var expectedMsgErrors []string
@@ -73,7 +73,7 @@ func nested_struct_tests1() {
 	log.Println("nested struct tests 1 ok")
 }
 
-func nested_struct_tests2() {
+func nestedStructTests2() {
 	log.Println("starting nested struct tests 2")
 
 	var expectedMsgErrors []string
