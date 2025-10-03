@@ -122,14 +122,13 @@ func HelperFromNormalizedToFieldTypes(t string) ([]FieldType, error) {
 
 		size := t[1:closeBracketIndex]
 		basicType := t[closeBracketIndex+1:]
-		result := []FieldType{}
 		switch basicType {
 		case "<STRING>":
-			result = []FieldType{{BaseType: "string", ComposedType: "[N]", Size: size}}
+			return []FieldType{{BaseType: "string", ComposedType: "[N]", Size: size}}, nil
 		case "<BOOL>":
-			result = []FieldType{{BaseType: "bool", ComposedType: "[N]", Size: size}}
+			return []FieldType{{BaseType: "bool", ComposedType: "[N]", Size: size}}, nil
 		case "<INT>":
-			result = []FieldType{
+			return []FieldType{
 				{BaseType: "int", ComposedType: "[N]", Size: size},
 				{BaseType: "int8", ComposedType: "[N]", Size: size},
 				{BaseType: "int16", ComposedType: "[N]", Size: size},
@@ -140,10 +139,10 @@ func HelperFromNormalizedToFieldTypes(t string) ([]FieldType, error) {
 				{BaseType: "uint16", ComposedType: "[N]", Size: size},
 				{BaseType: "uint32", ComposedType: "[N]", Size: size},
 				{BaseType: "uint64", ComposedType: "[N]", Size: size},
-			}
+			}, nil
+		default:
+			return nil, types.NewValidationError("invalid array base type: %s", basicType)
 		}
-
-		return result, nil
 	}
 
 	return nil, types.NewValidationError("invalid type: %s", t)
