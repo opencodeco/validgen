@@ -98,7 +98,10 @@ func parseStructs(fullpath, src string) ([]*Struct, error) {
 		case (*ast.TypeSpec):
 			currentStruct = extractStructDefinition(v.Name.Name, fullpath, packageName, imports)
 		case (*ast.StructType):
-			appendFields(v, packageName, currentStruct)
+			if err := appendFields(v, packageName, currentStruct); err != nil {
+				return false
+			}
+
 			structs = append(structs, currentStruct)
 		}
 
@@ -140,9 +143,9 @@ func extractStructDefinition(name, fullpath, packageName string, imports map[str
 	}
 }
 
-func appendFields(structType *ast.StructType, packageName string, cstruct *Struct) {
+func appendFields(structType *ast.StructType, packageName string, cstruct *Struct) error {
 	if structType.Fields == nil {
-		return
+		return nil
 	}
 
 	for _, field := range structType.Fields.List {
@@ -161,23 +164,44 @@ func appendFields(structType *ast.StructType, packageName string, cstruct *Struc
 
 		case *ast.ArrayType:
 			fieldType.ComposedType = "[]"
-			fieldType.BaseType = v.Elt.(*ast.Ident).Name
+			ident, ok := v.Elt.(*ast.Ident)
+			if !ok {
+				return fmt.Errorf("cannot find the identifier: %T", v.Elt)
+			}
+
+			fieldType.BaseType = ident.Name
 			fieldType.Size = ""
 			if v.Len != nil {
-				fieldType.Size = v.Len.(*ast.BasicLit).Value
+				// Array with fixed size
+				basicLit, ok := v.Len.(*ast.BasicLit)
+				if !ok {
+					return fmt.Errorf("cannot find the basic literal: %T", v.Len)
+				}
+
+				fieldType.Size = basicLit.Value
 				fieldType.ComposedType = "[N]"
 			}
 			fieldType, fieldTag = extractFieldTypeAndTag(packageName, fieldType, fieldTag)
 			appendFieldNames = true
 
 		case *ast.SelectorExpr:
-			nestedPkgName := v.X.(*ast.Ident).Name
+			ident, ok := v.X.(*ast.Ident)
+			if !ok {
+				return fmt.Errorf("cannot find the identifier: %T", v.X)
+			}
+
+			nestedPkgName := ident.Name
 			fieldType, fieldTag = extractNestedFieldTypeAndTag(nestedPkgName, v.Sel.Name, fieldTag)
 			appendFieldNames = true
 
 		case *ast.MapType:
+			ident, ok := v.Key.(*ast.Ident)
+			if !ok {
+				return fmt.Errorf("cannot find the identifier: %T", v.Key)
+			}
+
 			fieldType.ComposedType = "map"
-			fieldType.BaseType = v.Key.(*ast.Ident).Name
+			fieldType.BaseType = ident.Name
 			_, fieldTag = extractFieldTypeAndTag(packageName, fieldType, fieldTag)
 			appendFieldNames = true
 		}
@@ -192,6 +216,8 @@ func appendFields(structType *ast.StructType, packageName string, cstruct *Struc
 			}
 		}
 	}
+
+	return nil
 }
 
 func extractFieldTypeAndTag(packageName string, fieldType common.FieldType, fieldTag string) (common.FieldType, string) {
