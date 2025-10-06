@@ -17,10 +17,9 @@ func numericTests() {
 	numericUint16Tests()
 	numericUint32Tests()
 	numericUint64Tests()
-	
+
 	log.Println("numeric tests ok")
 }
-
 
 type NumericTypeInt struct {
 	FieldReq   int `valid:"required"`
@@ -691,4 +690,3 @@ func numericUint64Tests() {
 
 	log.Println("numeric uint64 tests ok")
 }
-
