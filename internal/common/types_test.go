@@ -1,6 +1,8 @@
 package common
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestFieldType_ToString(t *testing.T) {
 	type fields struct {
@@ -58,7 +60,7 @@ func TestFieldType_ToString(t *testing.T) {
 				BaseType:     tt.fields.BaseType,
 				Size:         tt.fields.Size,
 			}
-			if got := ft.ToString(); got != tt.want {
+			if got := ft.ToGenericType(); got != tt.want {
 				t.Errorf("FieldType.ToString() = %v, want %v", got, tt.want)
 			}
 		})

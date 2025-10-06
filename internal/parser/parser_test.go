@@ -394,6 +394,82 @@ func TestParseStructsOk(t *testing.T) {
 				},
 			},
 		},
+
+		{
+			name: "Slice type",
+			args: args{
+				fullpath: "example/main.go",
+				src: "package main\n" +
+					"type AllTypes struct {\n" +
+					"	SliceField1 []string `valid:\"required\"`\n" +
+					"	SliceField2 []uint8 `valid:\"len=3\"`\n" +
+					"	SliceField3 []string `valid:\"max=5\"`\n" +
+					"}\n" +
+
+					"func main() {\n" +
+					"}\n",
+			},
+			want: []*Struct{
+				{
+					StructName:  "AllTypes",
+					Path:        "./example",
+					PackageName: "main",
+					Fields: []Field{
+						{
+							FieldName: "SliceField1",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "[]", Size: ""},
+							Tag:       "valid:\"required\"",
+						},
+						{
+							FieldName: "SliceField2",
+							Type:      common.FieldType{BaseType: "uint8", ComposedType: "[]", Size: ""},
+							Tag:       "valid:\"len=3\"",
+						},
+						{
+							FieldName: "SliceField3",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "[]", Size: ""},
+							Tag:       "valid:\"max=5\"",
+						},
+					},
+					Imports: map[string]Import{},
+				},
+			},
+		},
+
+		{
+			name: "Array type",
+			args: args{
+				fullpath: "example/main.go",
+				src: "package main\n" +
+					"type AllTypes struct {\n" +
+					"	ArrayField1 [3]string `valid:\"in=1 2 3\"`\n" +
+					"	ArrayField2 [3]uint8 `valid:\"nin= 4 5 6\"`\n" +
+					"}\n" +
+
+					"func main() {\n" +
+					"}\n",
+			},
+			want: []*Struct{
+				{
+					StructName:  "AllTypes",
+					Path:        "./example",
+					PackageName: "main",
+					Fields: []Field{
+						{
+							FieldName: "ArrayField1",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "[N]", Size: "3"},
+							Tag:       "valid:\"in=1 2 3\"",
+						},
+						{
+							FieldName: "ArrayField2",
+							Type:      common.FieldType{BaseType: "uint8", ComposedType: "[N]", Size: "3"},
+							Tag:       "valid:\"nin= 4 5 6\"",
+						},
+					},
+					Imports: map[string]Import{},
+				},
+			},
+		},
 	}
 
 	for _, tt := range tests {
@@ -424,7 +500,7 @@ func structsToString(structs []*Struct) string {
 		result += "Path: " + s.Path + "\n"
 		result += "PackageName: " + s.PackageName + "\n"
 		for _, f := range s.Fields {
-			result += "  Field: " + f.FieldName + " Type: " + f.Type.ToString() + " Tag: " + f.Tag + "\n"
+			result += "  Field: " + f.FieldName + " Type: " + f.Type.ToGenericType() + " Tag: " + f.Tag + "\n"
 		}
 		for _, v := range s.Imports {
 			result += "  Import: " + v.Name + " Path: " + v.Path + "\n"

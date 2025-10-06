@@ -109,10 +109,15 @@ func parserManyValues(validation string, valuesCount CountValues, targets string
 		}, nil
 	}
 
+	// Break by commas or spaces.
+	targetValues = strings.ReplaceAll(targetValues, " ", ",")
+	values := strings.Split(targetValues, ",")
+	values = removeEmptyValues(values)
+
 	return &Validation{
 		Operation:      validation,
 		ExpectedValues: valuesCount,
-		Values:         removeEmptyValues(strings.Split(targetValues, " ")),
+		Values:         values,
 	}, nil
 }
 

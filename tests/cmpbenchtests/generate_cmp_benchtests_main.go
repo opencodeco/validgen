@@ -2,9 +2,10 @@ package main
 
 import (
 	"bytes"
-	"html/template"
+	"fmt"
 	"log"
 	"os"
+	"text/template"
 )
 
 type BenchTests struct {
@@ -112,12 +113,12 @@ func main() {
 func (bt *BenchTests) GenerateFile(tplFile, output string) error {
 	tpl, err := os.ReadFile(tplFile)
 	if err != nil {
-		log.Fatalf("error reading %s: %s", tplFile, err)
+		return fmt.Errorf("error reading %s: %s", tplFile, err)
 	}
 
 	tmpl, err := template.New("BenchTest").Parse(string(tpl))
 	if err != nil {
-		return err
+		return fmt.Errorf("error parsing template %s: %s", tplFile, err)
 	}
 
 	code := new(bytes.Buffer)
