@@ -242,6 +242,21 @@ The following table as the raw results:
 | BenchmarkValidGenStringEmail-12     | 35.513.684    |        167.4 ns/op        |        0 B/op                           |       0 allocs/op                   |
 | BenchmarkValidatorStringEmail-12    | 13.740.566    |        436.3 ns/op        |       88 B/op                           |       5 allocs/op                   |
 
+## Steps to run linters
+
+The steps to run all linters are:
+
+```bash
+# Enter in the project root folder
+cd validgen
+
+# Download and install golang-ci-lint (run just once)
+make setup
+
+# Run all enabled linters
+make lint
+```
+
 ## Contribute
 
 You can find instructions on how to contribute code and bug reports in the [CONTRIBUTING guide](CONTRIBUTING.md).
