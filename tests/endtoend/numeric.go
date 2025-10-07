@@ -691,4 +691,3 @@ func numericUint64Tests() {
 
 	log.Println("numeric uint64 tests ok")
 }
-
