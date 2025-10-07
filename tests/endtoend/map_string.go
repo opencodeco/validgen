@@ -13,7 +13,7 @@ type MapString struct {
 	FieldNotIn    map[string]string `valid:"nin=a b c"`
 }
 
-func map_string_tests() {
+func mapStringTests() {
 	log.Println("starting map string tests")
 
 	var expectedMsgErrors []string

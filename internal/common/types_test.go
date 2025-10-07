@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestFieldType_ToString(t *testing.T) {
+func TestFieldTypeToString(t *testing.T) {
 	type fields struct {
 		ComposedType string
 		BaseType     string
@@ -67,7 +67,7 @@ func TestFieldType_ToString(t *testing.T) {
 	}
 }
 
-func TestFieldType_IsGoType(t *testing.T) {
+func TestFieldTypeIsGoType(t *testing.T) {
 	type args struct {
 		fieldType FieldType
 	}

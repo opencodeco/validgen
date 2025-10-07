@@ -4,11 +4,11 @@ import (
 	"log"
 )
 
-func cmp_between_nested_fields_tests() {
+func cmpBetweenNestedFieldsTests() {
 	log.Println("starting between nested fields tests")
 
-	cmp_between_nested_string_fields_tests()
-	cmp_between_nested_uint8_fields_tests()
+	cmpBetweenNestedStringFieldsTests()
+	cmpBetweenNestedUint8FieldsTests()
 
 	log.Println("cmp between nested fields tests ok")
 }
@@ -23,7 +23,7 @@ type NestedStringFields struct {
 	Field1 string
 }
 
-func cmp_between_nested_string_fields_tests() {
+func cmpBetweenNestedStringFieldsTests() {
 	log.Println("starting between nested string fields tests")
 
 	var expectedMsgErrors []string
@@ -78,7 +78,7 @@ type NestedUint8Fields struct {
 	Field2 uint8
 }
 
-func cmp_between_nested_uint8_fields_tests() {
+func cmpBetweenNestedUint8FieldsTests() {
 	log.Println("starting between nested uint8 fields tests")
 
 	var expectedMsgErrors []string

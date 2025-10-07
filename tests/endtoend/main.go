@@ -31,25 +31,25 @@ type NoValidateInfo struct {
 func main() {
 	log.Println("starting tests")
 
-	all_types1_tests()
-	all_types2_tests()
-	struct_in_pkg_tests()
-	string_tests()
-	nested_struct_tests()
-	slice_string_tests()
-	slice_integer_tests()
-	array_string_tests()
-	cmp_between_inner_fields_tests()
-	cmp_between_nested_fields_tests()
-	bool_tests()
-	map_string_tests()
-	map_uint8_tests()
-	numeric_tests()
+	allTypes1Tests()
+	allTypes2Tests()
+	structInPkgTests()
+	stringTests()
+	nestedStructTests()
+	sliceStringTests()
+	sliceIntegerTests()
+	arrayStringTests()
+	cmpBetweenInnerFieldsTests()
+	cmpBetweenNestedFieldsTests()
+	boolTests()
+	mapStringTests()
+	mapUint8Tests()
+	numericTests()
 
 	log.Println("finishing tests")
 }
 
-func all_types1_tests() {
+func allTypes1Tests() {
 	var expectedMsgErrors []string
 	var errs []error
 
@@ -78,7 +78,7 @@ func all_types1_tests() {
 	log.Println("all_types1 tests ok")
 }
 
-func all_types2_tests() {
+func allTypes2Tests() {
 	var expectedMsgErrors []string
 	var errs []error
 
@@ -128,7 +128,7 @@ func all_types2_tests() {
 	log.Println("all_types2 tests ok")
 }
 
-func struct_in_pkg_tests() {
+func structInPkgTests() {
 	var expectedMsgErrors []string
 	var errs []error
 

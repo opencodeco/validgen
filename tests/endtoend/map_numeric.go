@@ -13,7 +13,7 @@ type MapUint8 struct {
 	FieldNotIn    map[uint8]string `valid:"nin=1 2 3"`
 }
 
-func map_uint8_tests() {
+func mapUint8Tests() {
 	log.Println("starting map uint8 tests")
 
 	var expectedMsgErrors []string
