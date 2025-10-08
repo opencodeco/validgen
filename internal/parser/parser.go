@@ -77,6 +77,7 @@ func parseFile(fullpath string) ([]*Struct, error) {
 
 func parseStructs(fullpath, src string) ([]*Struct, error) {
 
+	var err error
 	structs := []*Struct{}
 
 	filename := filepath.Base(fullpath)
@@ -98,7 +99,8 @@ func parseStructs(fullpath, src string) ([]*Struct, error) {
 		case (*ast.TypeSpec):
 			currentStruct = extractStructDefinition(v.Name.Name, fullpath, packageName, imports)
 		case (*ast.StructType):
-			if err := appendFields(v, packageName, currentStruct); err != nil {
+			err = appendFields(v, packageName, currentStruct)
+			if err != nil {
 				return false
 			}
 
@@ -108,7 +110,7 @@ func parseStructs(fullpath, src string) ([]*Struct, error) {
 		return true
 	})
 
-	return structs, nil
+	return structs, err
 }
 
 func extractPkgAndImports(f *ast.File) (string, map[string]Import) {
