@@ -39,6 +39,11 @@ func HelperFromNormalizedToFieldTypes(t string) ([]FieldType, error) {
 			{BaseType: "uint32"},
 			{BaseType: "uint64"},
 		}, nil
+	case "<FLOAT>":
+		return []FieldType{
+			{BaseType: "float32"},
+			{BaseType: "float64"},
+		}, nil
 	case "map[<STRING>]":
 		return []FieldType{{BaseType: "string", ComposedType: "map"}}, nil
 	case "map[<BOOL>]":
@@ -56,6 +61,11 @@ func HelperFromNormalizedToFieldTypes(t string) ([]FieldType, error) {
 			{BaseType: "uint32", ComposedType: "map"},
 			{BaseType: "uint64", ComposedType: "map"},
 		}, nil
+	case "map[<FLOAT>]":
+		return []FieldType{
+			{BaseType: "float32", ComposedType: "map"},
+			{BaseType: "float64", ComposedType: "map"},
+		}, nil
 	case "[]<STRING>":
 		return []FieldType{{BaseType: "string", ComposedType: "[]"}}, nil
 	case "[]<BOOL>":
@@ -72,6 +82,11 @@ func HelperFromNormalizedToFieldTypes(t string) ([]FieldType, error) {
 			{BaseType: "uint16", ComposedType: "[]"},
 			{BaseType: "uint32", ComposedType: "[]"},
 			{BaseType: "uint64", ComposedType: "[]"},
+		}, nil
+	case "[]<FLOAT>":
+		return []FieldType{
+			{BaseType: "float32", ComposedType: "[]"},
+			{BaseType: "float64", ComposedType: "[]"},
 		}, nil
 	}
 
@@ -101,6 +116,11 @@ func HelperFromNormalizedToFieldTypes(t string) ([]FieldType, error) {
 				{BaseType: "uint16", ComposedType: "[N]", Size: size},
 				{BaseType: "uint32", ComposedType: "[N]", Size: size},
 				{BaseType: "uint64", ComposedType: "[N]", Size: size},
+			}, nil
+		case "<FLOAT>":
+			return []FieldType{
+				{BaseType: "float32", ComposedType: "[N]", Size: size},
+				{BaseType: "float64", ComposedType: "[N]", Size: size},
 			}, nil
 		default:
 			return nil, types.NewValidationError("invalid array base type %s", basicType)
