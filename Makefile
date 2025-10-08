@@ -4,6 +4,8 @@ BIN_DIR=bin
 BIN_NAME=validgen
 VALIDGEN_BIN=$(BIN_DIR)/$(BIN_NAME)
 BENCH_TIME=5s
+GOLANGCILINT_PATH=$(HOME)/bin
+GOLANGCILINT_BIN=$(GOLANGCILINT_PATH)/golangci-lint
 
 all: clean unittests build endtoendtests benchtests cmpbenchtests
 
@@ -41,3 +43,12 @@ cmpbenchtests: build
 	$(VALIDGEN_BIN) tests/cmpbenchtests/generated_tests
 	go clean -testcache
 	go test -bench=. -v -benchmem -benchtime=$(BENCH_TIME) ./tests/cmpbenchtests/generated_tests
+
+setup:
+	@echo "Setting up"
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(GOLANGCILINT_PATH) v2.5.0
+	$(GOLANGCILINT_BIN) --version
+
+lint:
+	@echo "Linting"
+	$(GOLANGCILINT_BIN) run --timeout=5m
