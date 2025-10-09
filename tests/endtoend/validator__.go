@@ -196,6 +196,68 @@ func MapUint8Validate(obj *MapUint8) []error {
 	}
 	return errs
 }
+func NumericTypeFloat32Validate(obj *NumericTypeFloat32) []error {
+	var errs []error
+	if !(obj.FieldReq != 0) {
+		errs = append(errs, types.NewValidationError("FieldReq is required"))
+	}
+	if !(obj.FieldEq == 5.9) {
+		errs = append(errs, types.NewValidationError("FieldEq must be equal to 5.9"))
+	}
+	if !(obj.FieldNeq != 5.9) {
+		errs = append(errs, types.NewValidationError("FieldNeq must not be equal to 5.9"))
+	}
+	if !(obj.FieldGt > 10.1) {
+		errs = append(errs, types.NewValidationError("FieldGt must be > 10.1"))
+	}
+	if !(obj.FieldGte >= 10.1) {
+		errs = append(errs, types.NewValidationError("FieldGte must be >= 10.1"))
+	}
+	if !(obj.FieldLt < 9.9) {
+		errs = append(errs, types.NewValidationError("FieldLt must be < 9.9"))
+	}
+	if !(obj.FieldLte <= 9.9) {
+		errs = append(errs, types.NewValidationError("FieldLte must be <= 9.9"))
+	}
+	if !(obj.FieldIn == 5.1 || obj.FieldIn == 6.2 || obj.FieldIn == 7.3) {
+		errs = append(errs, types.NewValidationError("FieldIn must be one of '5.1' '6.2' '7.3'"))
+	}
+	if !(obj.FieldNotIn != 8.5 && obj.FieldNotIn != 9.6 && obj.FieldNotIn != 10.7) {
+		errs = append(errs, types.NewValidationError("FieldNotIn must not be one of '8.5' '9.6' '10.7'"))
+	}
+	return errs
+}
+func NumericTypeFloat64Validate(obj *NumericTypeFloat64) []error {
+	var errs []error
+	if !(obj.FieldReq != 0) {
+		errs = append(errs, types.NewValidationError("FieldReq is required"))
+	}
+	if !(obj.FieldEq == 5.9) {
+		errs = append(errs, types.NewValidationError("FieldEq must be equal to 5.9"))
+	}
+	if !(obj.FieldNeq != 5.9) {
+		errs = append(errs, types.NewValidationError("FieldNeq must not be equal to 5.9"))
+	}
+	if !(obj.FieldGt > 10.1) {
+		errs = append(errs, types.NewValidationError("FieldGt must be > 10.1"))
+	}
+	if !(obj.FieldGte >= 10.1) {
+		errs = append(errs, types.NewValidationError("FieldGte must be >= 10.1"))
+	}
+	if !(obj.FieldLt < 9.9) {
+		errs = append(errs, types.NewValidationError("FieldLt must be < 9.9"))
+	}
+	if !(obj.FieldLte <= 9.9) {
+		errs = append(errs, types.NewValidationError("FieldLte must be <= 9.9"))
+	}
+	if !(obj.FieldIn == 5.1 || obj.FieldIn == 6.2 || obj.FieldIn == 7.3) {
+		errs = append(errs, types.NewValidationError("FieldIn must be one of '5.1' '6.2' '7.3'"))
+	}
+	if !(obj.FieldNotIn != 8.5 && obj.FieldNotIn != 9.6 && obj.FieldNotIn != 10.7) {
+		errs = append(errs, types.NewValidationError("FieldNotIn must not be one of '8.5' '9.6' '10.7'"))
+	}
+	return errs
+}
 func NumericTypeIntValidate(obj *NumericTypeInt) []error {
 	var errs []error
 	if !(obj.FieldReq != 0) {

@@ -26,6 +26,13 @@ func main() {
 		log.Fatalf("error generation numeric int file %s", err)
 	}
 
+	numericTests = NumericTests{}
+	numericTests.FieldTypes = common.HelperFromNormalizedToBasicTypes("<FLOAT>")
+
+	if err := numericTests.GenerateFile("numeric_float.tpl", "./numeric_float.go"); err != nil {
+		log.Fatalf("error generation numeric float file %s", err)
+	}
+
 	log.Println("Generating done")
 }
 

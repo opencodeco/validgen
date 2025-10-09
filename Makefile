@@ -32,7 +32,7 @@ build: clean
 endtoendtests: build
 	@echo "Running endtoend tests"
 	find tests/endtoend/ -name 'validator__.go' -exec rm \{} \;
-	cd tests/endtoend/generate_tests/; rm -f numeric_int.go; go run generate_numeric_tests_main.go; mv numeric_int.go ..
+	cd tests/endtoend/generate_tests/; rm -f numeric_*.go; go run generate_numeric_tests_main.go; mv numeric_*.go ..
 	$(VALIDGEN_BIN) tests/endtoend
 	cd tests/endtoend; go run .
 

@@ -4,24 +4,24 @@ package main
 
 import "log"
 
-func numericIntTypeTests() {
-	log.Println("starting numeric int tests")
+func numericFloatTypeTests() {
+	log.Println("starting numeric float tests")
 
 	{{range .FieldTypes}}numeric{{. | title }}Tests()
 	{{end}}
-	log.Println("numeric int tests ok")
+	log.Println("numeric float tests ok")
 }
 {{range .FieldTypes}}
 type NumericType{{. | title }} struct {
 	FieldReq   {{.}} `valid:"required"`
-	FieldEq    {{.}} `valid:"eq=5"`
-	FieldNeq   {{.}} `valid:"neq=5"`
-	FieldGt    {{.}} `valid:"gt=10"`
-	FieldGte   {{.}} `valid:"gte=10"`
-	FieldLt    {{.}} `valid:"lt=10"`
-	FieldLte   {{.}} `valid:"lte=10"`
-	FieldIn    {{.}} `valid:"in=5 6 7"`
-	FieldNotIn {{.}} `valid:"nin=8 9 10"`
+	FieldEq    {{.}} `valid:"eq=5.9"`
+	FieldNeq   {{.}} `valid:"neq=5.9"`
+	FieldGt    {{.}} `valid:"gt=10.1"`
+	FieldGte   {{.}} `valid:"gte=10.1"`
+	FieldLt    {{.}} `valid:"lt=9.9"`
+	FieldLte   {{.}} `valid:"lte=9.9"`
+	FieldIn    {{.}} `valid:"in=5.1 6.2 7.3"`
+	FieldNotIn {{.}} `valid:"nin=8.5 9.6 10.7"`
 }
 
 func numeric{{. | title }}Tests() {
@@ -33,25 +33,25 @@ func numeric{{. | title }}Tests() {
 	// Test case 1: All failure scenarios
 	v := &NumericType{{. | title }}{
 		FieldReq:   0,
-		FieldEq:    0,
-		FieldNeq:   5,
-		FieldGt:    8,
-		FieldGte:   8,
-		FieldLt:    12,
-		FieldLte:   12,
-		FieldIn:    3,
-		FieldNotIn: 9,
+		FieldEq:    1.2,
+		FieldNeq:   5.9,
+		FieldGt:    8.1,
+		FieldGte:   8.1,
+		FieldLt:    12.2,
+		FieldLte:   12.2,
+		FieldIn:    3.123,
+		FieldNotIn: 9.6,
 	}
 	expectedMsgErrors = []string{
 		"FieldReq is required",
-		"FieldEq must be equal to 5",
-		"FieldNeq must not be equal to 5",
-		"FieldGt must be > 10",
-		"FieldGte must be >= 10",
-		"FieldLt must be < 10",
-		"FieldLte must be <= 10",
-		"FieldIn must be one of '5' '6' '7'",
-		"FieldNotIn must not be one of '8' '9' '10'",
+		"FieldEq must be equal to 5.9",
+		"FieldNeq must not be equal to 5.9",
+		"FieldGt must be > 10.1",
+		"FieldGte must be >= 10.1",
+		"FieldLt must be < 9.9",
+		"FieldLte must be <= 9.9",
+		"FieldIn must be one of '5.1' '6.2' '7.3'",
+		"FieldNotIn must not be one of '8.5' '9.6' '10.7'",
 	}
 	errs = NumericType{{. | title }}Validate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
@@ -61,14 +61,14 @@ func numeric{{. | title }}Tests() {
 	// Test case 2: All valid input
 	v = &NumericType{{. | title }}{
 		FieldReq:   123,
-		FieldEq:    5,
-		FieldNeq:   2,
-		FieldGt:    11,
-		FieldGte:   12,
-		FieldLt:    9,
-		FieldLte:   8,
-		FieldIn:    6,
-		FieldNotIn: 12,
+		FieldEq:    5.9,
+		FieldNeq:   2.4,
+		FieldGt:    11.1,
+		FieldGte:   12.1,
+		FieldLt:    9.1,
+		FieldLte:   8.1,
+		FieldIn:    6.2,
+		FieldNotIn: 12.4,
 	}
 	expectedMsgErrors = nil
 	errs = NumericType{{. | title }}Validate(v)
