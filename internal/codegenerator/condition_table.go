@@ -29,6 +29,11 @@ var operationTable = map[string]Operation{
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
 			},
+			"<FLOAT>": {
+				operation:      `obj.{{.Name}} == {{.Target}}`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
+			},
 			"<BOOL>": {
 				operation:      `obj.{{.Name}} == {{.Target}}`,
 				concatOperator: "",
@@ -45,6 +50,11 @@ var operationTable = map[string]Operation{
 				errorMessage:   "{{.Name}} is required",
 			},
 			"<INT>": {
+				operation:      `obj.{{.Name}} != 0`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} is required",
+			},
+			"<FLOAT>": {
 				operation:      `obj.{{.Name}} != 0`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} is required",
@@ -79,12 +89,22 @@ var operationTable = map[string]Operation{
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be >= {{.Target}}",
 			},
+			"<FLOAT>": {
+				operation:      `obj.{{.Name}} >= {{.Target}}`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must be >= {{.Target}}",
+			},
 		},
 	},
 	"gt": {
 		Name: "gt",
 		ConditionByType: map[string]ConditionTable{
 			"<INT>": {
+				operation:      `obj.{{.Name}} > {{.Target}}`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must be > {{.Target}}",
+			},
+			"<FLOAT>": {
 				operation:      `obj.{{.Name}} > {{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be > {{.Target}}",
@@ -99,12 +119,22 @@ var operationTable = map[string]Operation{
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be < {{.Target}}",
 			},
+			"<FLOAT>": {
+				operation:      `obj.{{.Name}} < {{.Target}}`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must be < {{.Target}}",
+			},
 		},
 	},
 	"lte": {
 		Name: "lte",
 		ConditionByType: map[string]ConditionTable{
 			"<INT>": {
+				operation:      `obj.{{.Name}} <= {{.Target}}`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must be <= {{.Target}}",
+			},
+			"<FLOAT>": {
 				operation:      `obj.{{.Name}} <= {{.Target}}`,
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must be <= {{.Target}}",
@@ -229,6 +259,11 @@ var operationTable = map[string]Operation{
 				concatOperator: "",
 				errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
 			},
+			"<FLOAT>": {
+				operation:      `obj.{{.Name}} != {{.Target}}`,
+				concatOperator: "",
+				errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
+			},
 		},
 	},
 	"neq_ignore_case": {
@@ -250,6 +285,11 @@ var operationTable = map[string]Operation{
 				errorMessage:   "{{.Name}} must be one of {{.Targets}}",
 			},
 			"<INT>": {
+				operation:      `obj.{{.Name}} == {{.Target}}`,
+				concatOperator: "||",
+				errorMessage:   "{{.Name}} must be one of {{.Targets}}",
+			},
+			"<FLOAT>": {
 				operation:      `obj.{{.Name}} == {{.Target}}`,
 				concatOperator: "||",
 				errorMessage:   "{{.Name}} must be one of {{.Targets}}",
@@ -299,7 +339,11 @@ var operationTable = map[string]Operation{
 				concatOperator: "&&",
 				errorMessage:   "{{.Name}} must not be one of {{.Targets}}",
 			},
-
+			"<FLOAT>": {
+				operation:      `obj.{{.Name}} != {{.Target}}`,
+				concatOperator: "&&",
+				errorMessage:   "{{.Name}} must not be one of {{.Targets}}",
+			},
 			"[]<STRING>": {
 				operation:      `types.SliceNotContains(obj.{{.Name}}, {{.TargetsAsStringSlice}})`,
 				concatOperator: "",

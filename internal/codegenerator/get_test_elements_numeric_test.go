@@ -8,7 +8,7 @@ import (
 	"github.com/opencodeco/validgen/internal/common"
 )
 
-func TestDefineTestElementsWithNumericFields(t *testing.T) {
+func TestDefineTestElementsWithIntegerFields(t *testing.T) {
 	type args struct {
 		fieldValidation string
 	}
@@ -123,6 +123,138 @@ func TestDefineTestElementsWithNumericFields(t *testing.T) {
 
 	for _, tt := range tests {
 		basicTypes := common.HelperFromNormalizedToBasicTypes("<INT>")
+		for _, fieldType := range basicTypes {
+			testName := fmt.Sprintf("%s with %s", tt.name, fieldType)
+			t.Run(testName, func(t *testing.T) {
+				validation := AssertParserValidation(t, tt.args.fieldValidation)
+				got, err := DefineTestElements("field", common.FieldType{BaseType: fieldType}, validation)
+				if (err != nil) != tt.wantErr {
+					t.Errorf("DefineTestElements() error = %v, wantErr %v", err, tt.wantErr)
+					return
+				}
+				if !reflect.DeepEqual(got, tt.want) {
+					t.Errorf("DefineTestElements() = %+v, want %+v", got, tt.want)
+				}
+			})
+		}
+	}
+}
+
+func TestDefineTestElementsWithFloatFields(t *testing.T) {
+	type args struct {
+		fieldValidation string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    TestElements
+		wantErr bool
+	}{
+		{
+			name: "required field",
+			args: args{
+				fieldValidation: "required",
+			},
+			want: TestElements{
+				conditions:   []string{`obj.field != 0`},
+				errorMessage: "field is required",
+			},
+			wantErr: false,
+		},
+		{
+			name: "field = 123.45",
+			args: args{
+				fieldValidation: "eq=123.45",
+			},
+			want: TestElements{
+				conditions:   []string{`obj.field == 123.45`},
+				errorMessage: "field must be equal to 123.45",
+			},
+			wantErr: false,
+		},
+		{
+			name: "field != 64.20",
+			args: args{
+				fieldValidation: "neq=64.20",
+			},
+			want: TestElements{
+				conditions:   []string{`obj.field != 64.20`},
+				errorMessage: "field must not be equal to 64.20",
+			},
+			wantErr: false,
+		},
+		{
+			name: "field > 10.10",
+			args: args{
+				fieldValidation: "gt=10.10",
+			},
+			want: TestElements{
+				conditions:   []string{`obj.field > 10.10`},
+				errorMessage: "field must be > 10.10",
+			},
+			wantErr: false,
+		},
+		{
+			name: "field >= 0.123",
+			args: args{
+				fieldValidation: "gte=0.123",
+			},
+			want: TestElements{
+				conditions:   []string{`obj.field >= 0.123`},
+				errorMessage: "field must be >= 0.123",
+			},
+			wantErr: false,
+		},
+		{
+			name: "field < 100.10",
+			args: args{
+				fieldValidation: "lt=100.10",
+			},
+			want: TestElements{
+				conditions:   []string{`obj.field < 100.10`},
+				errorMessage: "field must be < 100.10",
+			},
+			wantErr: false,
+		},
+		{
+			name: "field <= 130.50",
+			args: args{
+				fieldValidation: "lte=130.50",
+			},
+			want: TestElements{
+				conditions:   []string{`obj.field <= 130.50`},
+				errorMessage: "field must be <= 130.50",
+			},
+			wantErr: false,
+		},
+		{
+			name: "field in 10.1 20.2 30.3",
+			args: args{
+				fieldValidation: "in=10.1,20.2,30.3",
+			},
+			want: TestElements{
+				conditions:     []string{`obj.field == 10.1`, `obj.field == 20.2`, `obj.field == 30.3`},
+				concatOperator: "||",
+				errorMessage:   "field must be one of '10.1' '20.2' '30.3'",
+			},
+			wantErr: false,
+		},
+		{
+			name: "field not in 10.1 20.2 30.3",
+			args: args{
+				fieldValidation: "nin=10.1,20.2,30.3",
+			},
+			want: TestElements{
+				conditions:     []string{`obj.field != 10.1`, `obj.field != 20.2`, `obj.field != 30.3`},
+				concatOperator: "&&",
+				errorMessage:   "field must not be one of '10.1' '20.2' '30.3'",
+			},
+			wantErr: false,
+		},
+	}
+
+	for _, tt := range tests {
+		basicTypes := common.HelperFromNormalizedToBasicTypes("<FLOAT>")
 		for _, fieldType := range basicTypes {
 			testName := fmt.Sprintf("%s with %s", tt.name, fieldType)
 			t.Run(testName, func(t *testing.T) {
