@@ -89,7 +89,7 @@ func checkForInvalidOperations(structs []*Struct) error {
 			for _, val := range st.FieldsValidations[i].Validations {
 				// Check if is a valid operation.
 				op := val.Operation
-				if operations[op].Name == "" {
+				if !IsValidOperation(op) {
 					return types.NewValidationError("unsupported operation %s", op)
 				}
 
@@ -105,7 +105,7 @@ func checkForInvalidOperations(structs []*Struct) error {
 				}
 
 				// Check if is a valid operation for this type.
-				if !operations[op].ValidTypes[fdType.ToNormalizedString()] {
+				if !IsValidTypeOperation(op, fdType.ToNormalizedString()) {
 					return types.NewValidationError("operation %s: invalid %s type", op, fdType.BaseType)
 				}
 			}
@@ -130,7 +130,7 @@ func analyzeFieldOperations(structs []*Struct) error {
 			for _, val := range st.FieldsValidations[i].Validations {
 				// Check if is a field operation.
 				op := val.Operation
-				if !operations[op].IsFieldOperation {
+				if !IsFieldOperation(op) {
 					continue
 				}
 

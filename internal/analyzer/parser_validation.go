@@ -18,7 +18,7 @@ func ParserValidation(fieldValidation string) (*Validation, error) {
 		return nil, err
 	}
 
-	valuesCount := operations[validation].CountValues
+	valuesCount := CountValuesByOperation(validation)
 	if valuesCount == UNDEFINED {
 		return nil, types.NewValidationError("unsupported validation %s", validation)
 	}

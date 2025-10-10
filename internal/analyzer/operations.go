@@ -1,5 +1,7 @@
 package analyzer
 
+import "slices"
+
 type CountValues int
 
 const (
@@ -10,227 +12,148 @@ const (
 )
 
 type Operation struct {
-	Name             string
 	CountValues      CountValues
 	IsFieldOperation bool
-	ValidTypes       map[string]bool
+	ValidTypes       []string
 }
 
 var operations = map[string]Operation{
 	"eq": {
-		Name:             "eq",
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
-		ValidTypes: map[string]bool{
-			"<STRING>": true,
-			"<INT>":    true,
-			"<FLOAT>":  true,
-			"<BOOL>":   true,
-		},
+		ValidTypes:       []string{"<STRING>", "<INT>", "<FLOAT>", "<BOOL>"},
 	},
 	"required": {
-		Name:             "required",
 		CountValues:      ZERO_VALUE,
 		IsFieldOperation: false,
-		ValidTypes: map[string]bool{
-			"<STRING>":      true,
-			"<INT>":         true,
-			"<FLOAT>":       true,
-			"[]<STRING>":    true,
-			"[]<INT>":       true,
-			"map[<STRING>]": true,
-			"map[<INT>]":    true,
-		},
+		ValidTypes:       []string{"<STRING>", "<INT>", "<FLOAT>", "[]<STRING>", "[]<INT>", "map[<STRING>]", "map[<INT>]"},
 	},
 	"gt": {
-		Name:             "gt",
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
-		ValidTypes: map[string]bool{
-			"<INT>":   true,
-			"<FLOAT>": true,
-		},
+		ValidTypes:       []string{"<INT>", "<FLOAT>"},
 	},
 	"gte": {
-		Name:             "gte",
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
-		ValidTypes: map[string]bool{
-			"<INT>":   true,
-			"<FLOAT>": true,
-		},
+		ValidTypes:       []string{"<INT>", "<FLOAT>"},
 	},
 	"lte": {
-		Name:             "lte",
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
-		ValidTypes: map[string]bool{
-			"<INT>":   true,
-			"<FLOAT>": true,
-		},
+		ValidTypes:       []string{"<INT>", "<FLOAT>"},
 	},
 	"lt": {
-		Name:             "lt",
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
-		ValidTypes: map[string]bool{
-			"<INT>":   true,
-			"<FLOAT>": true,
-		},
+		ValidTypes:       []string{"<INT>", "<FLOAT>"},
 	},
 	"min": {
-		Name:             "min",
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
-		ValidTypes: map[string]bool{
-			"<STRING>":      true,
-			"[]<STRING>":    true,
-			"[]<INT>":       true,
-			"map[<STRING>]": true,
-			"map[<INT>]":    true,
-		},
+		ValidTypes:       []string{"<STRING>", "[]<STRING>", "[]<INT>", "map[<STRING>]", "map[<INT>]"},
 	},
 	"max": {
-		Name:             "max",
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
-		ValidTypes: map[string]bool{
-			"<STRING>":      true,
-			"[]<STRING>":    true,
-			"[]<INT>":       true,
-			"map[<STRING>]": true,
-			"map[<INT>]":    true,
-		},
+		ValidTypes:       []string{"<STRING>", "[]<STRING>", "[]<INT>", "map[<STRING>]", "map[<INT>]"},
 	},
 	"eq_ignore_case": {
-		Name:             "eq_ignore_case",
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
-		ValidTypes: map[string]bool{
-			"<STRING>": true,
-		},
+		ValidTypes:       []string{"<STRING>"},
 	},
 	"len": {
-		Name:             "len",
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
-		ValidTypes: map[string]bool{
-			"<STRING>":      true,
-			"[]<STRING>":    true,
-			"[]<INT>":       true,
-			"map[<STRING>]": true,
-			"map[<INT>]":    true,
-		},
+		ValidTypes:       []string{"<STRING>", "[]<STRING>", "[]<INT>", "map[<STRING>]", "map[<INT>]"},
 	},
 	"neq": {
-		Name:             "neq",
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
-		ValidTypes: map[string]bool{
-			"<STRING>": true,
-			"<BOOL>":   true,
-			"<INT>":    true,
-			"<FLOAT>":  true,
-		},
+		ValidTypes:       []string{"<STRING>", "<BOOL>", "<INT>", "<FLOAT>"},
 	},
 	"neq_ignore_case": {
-		Name:             "neq_ignore_case",
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
-		ValidTypes: map[string]bool{
-			"<STRING>": true,
-		},
+		ValidTypes:       []string{"<STRING>"},
 	},
 	"in": {
-		Name:             "in",
 		CountValues:      MANY_VALUES,
 		IsFieldOperation: false,
-		ValidTypes: map[string]bool{
-			"<STRING>":      true,
-			"<INT>":         true,
-			"<FLOAT>":       true,
-			"[]<STRING>":    true,
-			"[]<INT>":       true,
-			"[N]<STRING>":   true,
-			"[N]<INT>":      true,
-			"map[<STRING>]": true,
-			"map[<INT>]":    true,
-		},
+		ValidTypes:       []string{"<STRING>", "<INT>", "<FLOAT>", "[]<STRING>", "[]<INT>", "[N]<STRING>", "[N]<INT>", "map[<STRING>]", "map[<INT>]"},
 	},
 	"nin": {
-		Name:             "nin",
 		CountValues:      MANY_VALUES,
 		IsFieldOperation: false,
-		ValidTypes: map[string]bool{
-			"<STRING>":      true,
-			"<INT>":         true,
-			"<FLOAT>":       true,
-			"[]<STRING>":    true,
-			"[]<INT>":       true,
-			"[N]<STRING>":   true,
-			"[N]<INT>":      true,
-			"map[<STRING>]": true,
-			"map[<INT>]":    true,
-		},
+		ValidTypes:       []string{"<STRING>", "<INT>", "<FLOAT>", "[]<STRING>", "[]<INT>", "[N]<STRING>", "[N]<INT>", "map[<STRING>]", "map[<INT>]"},
 	},
 	"email": {
-		Name:             "email",
 		CountValues:      ZERO_VALUE,
 		IsFieldOperation: false,
-		ValidTypes: map[string]bool{
-			"<STRING>": true,
-		},
+		ValidTypes:       []string{"<STRING>"},
 	},
 	"eqfield": {
-		Name:             "eqfield",
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: true,
-		ValidTypes: map[string]bool{
-			"<STRING>": true,
-			"<INT>":    true,
-			"<BOOL>":   true,
-		},
+		ValidTypes:       []string{"<STRING>", "<INT>", "<BOOL>"},
 	},
 	"neqfield": {
-		Name:             "neqfield",
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: true,
-		ValidTypes: map[string]bool{
-			"<STRING>": true,
-			"<INT>":    true,
-			"<BOOL>":   true,
-		},
+		ValidTypes:       []string{"<STRING>", "<INT>", "<BOOL>"},
 	},
 	"gtefield": {
-		Name:             "gtefield",
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: true,
-		ValidTypes: map[string]bool{
-			"<INT>": true,
-		},
+		ValidTypes:       []string{"<INT>"},
 	},
 	"gtfield": {
-		Name:             "gtfield",
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: true,
-		ValidTypes: map[string]bool{
-			"<INT>": true,
-		},
+		ValidTypes:       []string{"<INT>"},
 	},
 	"ltefield": {
-		Name:             "ltefield",
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: true,
-		ValidTypes: map[string]bool{
-			"<INT>": true,
-		},
+		ValidTypes:       []string{"<INT>"},
 	},
 	"ltfield": {
-		Name:             "ltfield",
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: true,
-		ValidTypes: map[string]bool{
-			"<INT>": true,
-		},
+		ValidTypes:       []string{"<INT>"},
 	},
+}
+
+func IsValidOperation(op string) bool {
+	_, ok := operations[op]
+
+	return ok
+}
+
+func IsValidTypeOperation(op, fieldType string) bool {
+	operation, ok := operations[op]
+	if !ok {
+		return false
+	}
+
+	return slices.Contains(operation.ValidTypes, fieldType)
+}
+
+func IsFieldOperation(op string) bool {
+	operation, ok := operations[op]
+	if !ok {
+		return false
+	}
+
+	return operation.IsFieldOperation
+}
+
+func CountValuesByOperation(op string) CountValues {
+	operation, ok := operations[op]
+	if !ok {
+		return UNDEFINED
+	}
+
+	return operation.CountValues
 }
