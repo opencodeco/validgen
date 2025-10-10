@@ -5,7 +5,6 @@ import (
 
 	"github.com/opencodeco/validgen/internal/analyzer"
 	"github.com/opencodeco/validgen/internal/common"
-	"github.com/opencodeco/validgen/types"
 )
 
 type TestElements struct {
@@ -16,14 +15,9 @@ type TestElements struct {
 
 func DefineTestElements(fieldName string, fieldType common.FieldType, fieldValidation *analyzer.Validation) (TestElements, error) {
 
-	op, ok := operationTable[fieldValidation.Operation]
-	if !ok {
-		return TestElements{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s", fieldValidation.Operation)
-	}
-
-	condition, ok := op.ConditionByType[fieldType.ToNormalizedString()]
-	if !ok {
-		return TestElements{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s type %s", fieldValidation.Operation, fieldType.BaseType)
+	condition, err := GetConditionTable(fieldValidation.Operation, fieldType)
+	if err != nil {
+		return TestElements{}, err
 	}
 
 	values := fieldValidation.Values
