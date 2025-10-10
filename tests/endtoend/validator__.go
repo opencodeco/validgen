@@ -154,7 +154,7 @@ func CmpNestedUint8FieldsValidate(obj *CmpNestedUint8Fields) []error {
 }
 func MapStringValidate(obj *MapString) []error {
 	var errs []error
-	if !(len(obj.FieldRequired) >= 1) {
+	if !(len(obj.FieldRequired) != 0) {
 		errs = append(errs, types.NewValidationError("FieldRequired must not be empty"))
 	}
 	if !(len(obj.FieldMin) >= 2) {
@@ -176,7 +176,7 @@ func MapStringValidate(obj *MapString) []error {
 }
 func MapUint8Validate(obj *MapUint8) []error {
 	var errs []error
-	if !(len(obj.FieldRequired) >= 1) {
+	if !(len(obj.FieldRequired) != 0) {
 		errs = append(errs, types.NewValidationError("FieldRequired must not be empty"))
 	}
 	if !(len(obj.FieldMin) >= 2) {
