@@ -470,6 +470,41 @@ func TestParseStructsOk(t *testing.T) {
 				},
 			},
 		},
+
+		{
+			name: "Float type",
+			args: args{
+				fullpath: "example/main.go",
+				src: "package main\n" +
+					"type AllTypes struct {\n" +
+					"	Value1 float32 `valid:\"eq=123.45\"`\n" +
+					"	Value2 float64 `valid:\"neq=11.22\"`\n" +
+					"}\n" +
+
+					"func main() {\n" +
+					"}\n",
+			},
+			want: []*Struct{
+				{
+					StructName:  "AllTypes",
+					Path:        "./example",
+					PackageName: "main",
+					Fields: []Field{
+						{
+							FieldName: "Value1",
+							Type:      common.FieldType{BaseType: "float32", ComposedType: "", Size: ""},
+							Tag:       "valid:\"eq=123.45\"",
+						},
+						{
+							FieldName: "Value2",
+							Type:      common.FieldType{BaseType: "float64", ComposedType: "", Size: ""},
+							Tag:       "valid:\"neq=11.22\"",
+						},
+					},
+					Imports: map[string]Import{},
+				},
+			},
+		},
 	}
 
 	for _, tt := range tests {

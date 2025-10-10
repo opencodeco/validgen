@@ -33,6 +33,11 @@ func TestFromNormalizedToBasicTypes(t *testing.T) {
 			want: []string{"int", "int8", "int16", "int32", "int64", "uint", "uint8", "uint16", "uint32", "uint64"},
 		},
 		{
+			name: "float type",
+			args: args{t: "<FLOAT>"},
+			want: []string{"float32", "float64"},
+		},
+		{
 			name: "map string type",
 			args: args{t: "map[<STRING>]"},
 			want: []string{"map[string]"},
@@ -46,6 +51,11 @@ func TestFromNormalizedToBasicTypes(t *testing.T) {
 			name: "map int type",
 			args: args{t: "map[<INT>]"},
 			want: []string{"map[int]", "map[int8]", "map[int16]", "map[int32]", "map[int64]", "map[uint]", "map[uint8]", "map[uint16]", "map[uint32]", "map[uint64]"},
+		},
+		{
+			name: "map float type",
+			args: args{t: "map[<FLOAT>]"},
+			want: []string{"map[float32]", "map[float64]"},
 		},
 		{
 			name: "slice string type",
@@ -63,6 +73,11 @@ func TestFromNormalizedToBasicTypes(t *testing.T) {
 			want: []string{"[]int", "[]int8", "[]int16", "[]int32", "[]int64", "[]uint", "[]uint8", "[]uint16", "[]uint32", "[]uint64"},
 		},
 		{
+			name: "slice float type",
+			args: args{t: "[]<FLOAT>"},
+			want: []string{"[]float32", "[]float64"},
+		},
+		{
 			name: "array string type",
 			args: args{t: "[3]<STRING>"},
 			want: []string{"[3]string"},
@@ -76,6 +91,11 @@ func TestFromNormalizedToBasicTypes(t *testing.T) {
 			name: "array int type",
 			args: args{t: "[3]<INT>"},
 			want: []string{"[3]int", "[3]int8", "[3]int16", "[3]int32", "[3]int64", "[3]uint", "[3]uint8", "[3]uint16", "[3]uint32", "[3]uint64"},
+		},
+		{
+			name: "array float type",
+			args: args{t: "[3]<FLOAT>"},
+			want: []string{"[3]float32", "[3]float64"},
 		},
 		{
 			name: "invalid type",
@@ -134,6 +154,15 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 			nil,
 		},
 		{
+			"float type",
+			"<FLOAT>",
+			[]FieldType{
+				{BaseType: "float32", ComposedType: "", Size: ""},
+				{BaseType: "float64", ComposedType: "", Size: ""},
+			},
+			nil,
+		},
+		{
 			"map string type",
 			"map[<STRING>]",
 			[]FieldType{
@@ -163,6 +192,15 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 				{BaseType: "uint16", ComposedType: "map", Size: ""},
 				{BaseType: "uint32", ComposedType: "map", Size: ""},
 				{BaseType: "uint64", ComposedType: "map", Size: ""},
+			},
+			nil,
+		},
+		{
+			"map float type",
+			"map[<FLOAT>]",
+			[]FieldType{
+				{BaseType: "float32", ComposedType: "map", Size: ""},
+				{BaseType: "float64", ComposedType: "map", Size: ""},
 			},
 			nil,
 		},
@@ -199,6 +237,15 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 			nil,
 		},
 		{
+			"slice float type",
+			"[]<FLOAT>",
+			[]FieldType{
+				{BaseType: "float32", ComposedType: "[]", Size: ""},
+				{BaseType: "float64", ComposedType: "[]", Size: ""},
+			},
+			nil,
+		},
+		{
 			"array string type",
 			"[3]<STRING>",
 			[]FieldType{
@@ -228,6 +275,15 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 				{BaseType: "uint16", ComposedType: "[N]", Size: "3"},
 				{BaseType: "uint32", ComposedType: "[N]", Size: "3"},
 				{BaseType: "uint64", ComposedType: "[N]", Size: "3"},
+			},
+			nil,
+		},
+		{
+			"array float type",
+			"[3]<FLOAT>",
+			[]FieldType{
+				{BaseType: "float32", ComposedType: "[N]", Size: "3"},
+				{BaseType: "float64", ComposedType: "[N]", Size: "3"},
 			},
 			nil,
 		},

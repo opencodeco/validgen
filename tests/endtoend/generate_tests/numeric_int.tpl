@@ -4,14 +4,13 @@ package main
 
 import "log"
 
-func numericTests() {
-	log.Println("starting numeric tests")
+func numericIntTypeTests() {
+	log.Println("starting numeric int tests")
 
 	{{range .FieldTypes}}numeric{{. | title }}Tests()
 	{{end}}
-	log.Println("numeric tests ok")
+	log.Println("numeric int tests ok")
 }
-
 {{range .FieldTypes}}
 type NumericType{{. | title }} struct {
 	FieldReq   {{.}} `valid:"required"`

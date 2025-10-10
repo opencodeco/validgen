@@ -44,7 +44,8 @@ func main() {
 	boolTests()
 	mapStringTests()
 	mapUint8Tests()
-	numericTests()
+	numericIntTypeTests()
+	numericFloatTypeTests()
 
 	log.Println("finishing tests")
 }

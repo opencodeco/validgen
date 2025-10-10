@@ -24,6 +24,7 @@ var operations = map[string]Operation{
 		ValidTypes: map[string]bool{
 			"<STRING>": true,
 			"<INT>":    true,
+			"<FLOAT>":  true,
 			"<BOOL>":   true,
 		},
 	},
@@ -34,6 +35,7 @@ var operations = map[string]Operation{
 		ValidTypes: map[string]bool{
 			"<STRING>":      true,
 			"<INT>":         true,
+			"<FLOAT>":       true,
 			"[]<STRING>":    true,
 			"[]<INT>":       true,
 			"map[<STRING>]": true,
@@ -45,7 +47,8 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"<INT>": true,
+			"<INT>":   true,
+			"<FLOAT>": true,
 		},
 	},
 	"gte": {
@@ -53,7 +56,8 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"<INT>": true,
+			"<INT>":   true,
+			"<FLOAT>": true,
 		},
 	},
 	"lte": {
@@ -61,7 +65,8 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"<INT>": true,
+			"<INT>":   true,
+			"<FLOAT>": true,
 		},
 	},
 	"lt": {
@@ -69,7 +74,8 @@ var operations = map[string]Operation{
 		CountValues:      ONE_VALUE,
 		IsFieldOperation: false,
 		ValidTypes: map[string]bool{
-			"<INT>": true,
+			"<INT>":   true,
+			"<FLOAT>": true,
 		},
 	},
 	"min": {
@@ -124,6 +130,7 @@ var operations = map[string]Operation{
 			"<STRING>": true,
 			"<BOOL>":   true,
 			"<INT>":    true,
+			"<FLOAT>":  true,
 		},
 	},
 	"neq_ignore_case": {
@@ -141,6 +148,7 @@ var operations = map[string]Operation{
 		ValidTypes: map[string]bool{
 			"<STRING>":      true,
 			"<INT>":         true,
+			"<FLOAT>":       true,
 			"[]<STRING>":    true,
 			"[]<INT>":       true,
 			"[N]<STRING>":   true,
@@ -156,6 +164,7 @@ var operations = map[string]Operation{
 		ValidTypes: map[string]bool{
 			"<STRING>":      true,
 			"<INT>":         true,
+			"<FLOAT>":       true,
 			"[]<STRING>":    true,
 			"[]<INT>":       true,
 			"[N]<STRING>":   true,

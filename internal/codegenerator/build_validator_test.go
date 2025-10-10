@@ -203,6 +203,32 @@ errs = append(errs, types.NewValidationError("boolField must be equal to true"))
 `,
 		},
 
+		{
+			name: "if code with int",
+			args: args{
+				fieldName:       "intField",
+				fieldType:       common.FieldType{BaseType: "int"},
+				fieldValidation: "eq=5",
+			},
+			want: `if !(obj.intField == 5) {
+errs = append(errs, types.NewValidationError("intField must be equal to 5"))
+}
+`,
+		},
+
+		{
+			name: "if code with float32",
+			args: args{
+				fieldName:       "floatField",
+				fieldType:       common.FieldType{BaseType: "float32"},
+				fieldValidation: "eq=5.0",
+			},
+			want: `if !(obj.floatField == 5.0) {
+errs = append(errs, types.NewValidationError("floatField must be equal to 5.0"))
+}
+`,
+		},
+
 		// Map type
 		{
 			name: "if code with string map",

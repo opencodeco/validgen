@@ -23,6 +23,10 @@ func TestValidFieldOperationsByType(t *testing.T) {
 			op:        "eq=123",
 		},
 		{
+			fieldType: "<FLOAT>",
+			op:        "eq=123.45",
+		},
+		{
 			fieldType: "<BOOL>",
 			op:        "eq=true",
 		},
@@ -34,6 +38,10 @@ func TestValidFieldOperationsByType(t *testing.T) {
 		},
 		{
 			fieldType: "<INT>",
+			op:        "required",
+		},
+		{
+			fieldType: "<FLOAT>",
 			op:        "required",
 		},
 		{
@@ -58,11 +66,19 @@ func TestValidFieldOperationsByType(t *testing.T) {
 			fieldType: "<INT>",
 			op:        "gt=123",
 		},
+		{
+			fieldType: "<FLOAT>",
+			op:        "gt=123.45",
+		},
 
 		// gte operations
 		{
 			fieldType: "<INT>",
 			op:        "gte=123",
+		},
+		{
+			fieldType: "<FLOAT>",
+			op:        "gte=123.45",
 		},
 
 		// lt operations
@@ -70,11 +86,19 @@ func TestValidFieldOperationsByType(t *testing.T) {
 			fieldType: "<INT>",
 			op:        "lt=123",
 		},
+		{
+			fieldType: "<FLOAT>",
+			op:        "lt=123.45",
+		},
 
 		// lte operations
 		{
 			fieldType: "<INT>",
 			op:        "lte=123",
+		},
+		{
+			fieldType: "<FLOAT>",
+			op:        "lte=123.45",
 		},
 
 		// min operations
@@ -159,6 +183,10 @@ func TestValidFieldOperationsByType(t *testing.T) {
 			op:        "neq=123",
 		},
 		{
+			fieldType: "<FLOAT>",
+			op:        "neq=123.45",
+		},
+		{
 			fieldType: "<BOOL>",
 			op:        "neq=true",
 		},
@@ -173,6 +201,14 @@ func TestValidFieldOperationsByType(t *testing.T) {
 		{
 			fieldType: "<STRING>",
 			op:        "in=abc",
+		},
+		{
+			fieldType: "<INT>",
+			op:        "in=123",
+		},
+		{
+			fieldType: "<FLOAT>",
+			op:        "in=123.45",
 		},
 		{
 			fieldType: "[]<STRING>",
@@ -203,6 +239,14 @@ func TestValidFieldOperationsByType(t *testing.T) {
 		{
 			fieldType: "<STRING>",
 			op:        "nin=abc",
+		},
+		{
+			fieldType: "<INT>",
+			op:        "nin=123",
+		},
+		{
+			fieldType: "<FLOAT>",
+			op:        "nin=123.45",
 		},
 		{
 			fieldType: "[]<STRING>",

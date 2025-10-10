@@ -62,7 +62,7 @@ The following table shows the validations and possible types, where:
 - "P" means "Partially implemented"
 - "-" means "Will not be implemented"
 
-| Validation/Type | String | Numeric types (integers) | Boolean | Slice | Array | Map | Time | Duration |
+| Validation/Type | String | Numeric types (integers and floats) | Boolean | Slice | Array | Map | Time | Duration |
 | -               | -      | -                        | -       | -     | -     | -   | -    | -        |
 | eq              | I      | I                        | I       | -     | -     | -   | W    | W        |
 | eq_ignore_case  | I      | -                        | -       | -     | -     | -   | -    | -        |

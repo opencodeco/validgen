@@ -4,8 +4,8 @@ package main
 
 import "log"
 
-func numericTests() {
-	log.Println("starting numeric tests")
+func numericIntTypeTests() {
+	log.Println("starting numeric int tests")
 
 	numericIntTests()
 	numericInt8Tests()
@@ -18,9 +18,8 @@ func numericTests() {
 	numericUint32Tests()
 	numericUint64Tests()
 	
-	log.Println("numeric tests ok")
+	log.Println("numeric int tests ok")
 }
-
 
 type NumericTypeInt struct {
 	FieldReq   int `valid:"required"`
