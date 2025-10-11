@@ -49,7 +49,7 @@ func (o *Operations) IsFieldOperation(op string) bool {
 func (o *Operations) ArgsCount(op string) common.CountValues {
 	operation, ok := o.operations[op]
 	if !ok {
-		return common.UNDEFINED
+		return common.UndefinedValue
 	}
 
 	return operation.CountValues

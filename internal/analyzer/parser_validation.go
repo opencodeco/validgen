@@ -23,16 +23,16 @@ func ParserValidation(fieldValidation string) (*Validation, error) {
 	ops := operations.New()
 
 	valuesCount := ops.ArgsCount(validation)
-	if valuesCount == common.UNDEFINED {
+	if valuesCount == common.UndefinedValue {
 		return nil, types.NewValidationError("unsupported validation %s", validation)
 	}
 
 	switch valuesCount {
-	case common.ZERO_VALUE:
+	case common.ZeroValue:
 		return parserZeroValue(validation, valuesCount, values)
-	case common.ONE_VALUE:
+	case common.OneValue:
 		return parserOneValue(validation, valuesCount, values)
-	case common.MANY_VALUES:
+	case common.ManyValues:
 		return parserManyValues(validation, valuesCount, values)
 	default:
 		return nil, types.NewValidationError("invalid value in validation %s", validation)

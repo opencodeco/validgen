@@ -20,7 +20,7 @@ func TestValidParserValidation(t *testing.T) {
 			validation: "required",
 			want: &Validation{
 				Operation:      "required",
-				ExpectedValues: common.ZERO_VALUE,
+				ExpectedValues: common.ZeroValue,
 				Values:         []string{},
 			},
 		},
@@ -29,7 +29,7 @@ func TestValidParserValidation(t *testing.T) {
 			validation: "eq=abc",
 			want: &Validation{
 				Operation:      "eq",
-				ExpectedValues: common.ONE_VALUE,
+				ExpectedValues: common.OneValue,
 				Values:         []string{"abc"},
 			},
 		},
@@ -38,7 +38,7 @@ func TestValidParserValidation(t *testing.T) {
 			validation: "in=a b c",
 			want: &Validation{
 				Operation:      "in",
-				ExpectedValues: common.MANY_VALUES,
+				ExpectedValues: common.ManyValues,
 				Values:         []string{"a", "b", "c"},
 			},
 		},
@@ -47,7 +47,7 @@ func TestValidParserValidation(t *testing.T) {
 			validation: "in='abc'",
 			want: &Validation{
 				Operation:      "in",
-				ExpectedValues: common.MANY_VALUES,
+				ExpectedValues: common.ManyValues,
 				Values:         []string{"abc"},
 			},
 		},
@@ -56,7 +56,7 @@ func TestValidParserValidation(t *testing.T) {
 			validation: "in='a' 'b' 'c'",
 			want: &Validation{
 				Operation:      "in",
-				ExpectedValues: common.MANY_VALUES,
+				ExpectedValues: common.ManyValues,
 				Values:         []string{"a", "b", "c"},
 			},
 		},
@@ -65,7 +65,7 @@ func TestValidParserValidation(t *testing.T) {
 			validation: "in='a ' 'b ' 'c '",
 			want: &Validation{
 				Operation:      "in",
-				ExpectedValues: common.MANY_VALUES,
+				ExpectedValues: common.ManyValues,
 				Values:         []string{"a ", "b ", "c "},
 			},
 		},
@@ -74,7 +74,7 @@ func TestValidParserValidation(t *testing.T) {
 			validation: "in=' a ' ' b ' ' c '",
 			want: &Validation{
 				Operation:      "in",
-				ExpectedValues: common.MANY_VALUES,
+				ExpectedValues: common.ManyValues,
 				Values:         []string{" a ", " b ", " c "},
 			},
 		},
@@ -83,7 +83,7 @@ func TestValidParserValidation(t *testing.T) {
 			validation: "in='a b c'",
 			want: &Validation{
 				Operation:      "in",
-				ExpectedValues: common.MANY_VALUES,
+				ExpectedValues: common.ManyValues,
 				Values:         []string{"a b c"},
 			},
 		},
@@ -92,7 +92,7 @@ func TestValidParserValidation(t *testing.T) {
 			validation: "in=  a  b  c  ",
 			want: &Validation{
 				Operation:      "in",
-				ExpectedValues: common.MANY_VALUES,
+				ExpectedValues: common.ManyValues,
 				Values:         []string{"a", "b", "c"},
 			},
 		},
@@ -101,7 +101,7 @@ func TestValidParserValidation(t *testing.T) {
 			validation: "in=10,20,30",
 			want: &Validation{
 				Operation:      "in",
-				ExpectedValues: common.MANY_VALUES,
+				ExpectedValues: common.ManyValues,
 				Values:         []string{"10", "20", "30"},
 			},
 		},
@@ -110,7 +110,7 @@ func TestValidParserValidation(t *testing.T) {
 			validation: "email",
 			want: &Validation{
 				Operation:      "email",
-				ExpectedValues: common.ZERO_VALUE,
+				ExpectedValues: common.ZeroValue,
 				Values:         []string{},
 			},
 		},
@@ -119,7 +119,7 @@ func TestValidParserValidation(t *testing.T) {
 			validation: "eqfield=field123",
 			want: &Validation{
 				Operation:      "eqfield",
-				ExpectedValues: common.ONE_VALUE,
+				ExpectedValues: common.OneValue,
 				Values:         []string{"field123"},
 			},
 		},
@@ -128,7 +128,7 @@ func TestValidParserValidation(t *testing.T) {
 			validation: "eqfield=Nested.field123",
 			want: &Validation{
 				Operation:      "eqfield",
-				ExpectedValues: common.ONE_VALUE,
+				ExpectedValues: common.OneValue,
 				Values:         []string{"Nested.field123"},
 			},
 		},

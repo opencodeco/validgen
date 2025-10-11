@@ -26,11 +26,11 @@ func DefineTestElements(fieldName string, fieldType common.FieldType, fieldValid
 	targetValues := ""
 
 	switch fieldValidation.ExpectedValues {
-	case common.ZERO_VALUE: // REFACTOR: codegenerator should inform how many values are expected
+	case common.ZeroValue: // REFACTOR: codegenerator should inform how many values are expected
 		roperands = append(roperands, replaceNameAndTarget(condition.operation, fieldName, ""))
 		targetValue = condition.operation
 		targetValues = "'" + condition.operation + "' "
-	case common.ONE_VALUE, common.MANY_VALUES:
+	case common.OneValue, common.ManyValues:
 		valuesAsNumericSlice, valuesAsStringSlice := normalizeSlicesAsCode(fieldType.BaseType, values)
 
 		for _, value := range values {
