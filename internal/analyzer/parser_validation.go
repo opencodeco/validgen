@@ -3,12 +3,14 @@ package analyzer
 import (
 	"strings"
 
+	"github.com/opencodeco/validgen/internal/analyzer/operations"
+	"github.com/opencodeco/validgen/internal/common"
 	"github.com/opencodeco/validgen/types"
 )
 
 type Validation struct {
 	Operation      string
-	ExpectedValues CountValues
+	ExpectedValues common.CountValues
 	Values         []string
 }
 
@@ -18,17 +20,19 @@ func ParserValidation(fieldValidation string) (*Validation, error) {
 		return nil, err
 	}
 
-	valuesCount := CountValuesByOperation(validation)
-	if valuesCount == UNDEFINED {
+	ops := operations.New()
+
+	valuesCount := ops.ArgsCount(validation)
+	if valuesCount == common.UNDEFINED {
 		return nil, types.NewValidationError("unsupported validation %s", validation)
 	}
 
 	switch valuesCount {
-	case ZERO_VALUE:
+	case common.ZERO_VALUE:
 		return parserZeroValue(validation, valuesCount, values)
-	case ONE_VALUE:
+	case common.ONE_VALUE:
 		return parserOneValue(validation, valuesCount, values)
-	case MANY_VALUES:
+	case common.MANY_VALUES:
 		return parserManyValues(validation, valuesCount, values)
 	default:
 		return nil, types.NewValidationError("invalid value in validation %s", validation)
@@ -50,7 +54,7 @@ func parserValidationString(tag string) (string, string, error) {
 	return validation, values, nil
 }
 
-func parserZeroValue(validation string, valuesCount CountValues, targets string) (*Validation, error) {
+func parserZeroValue(validation string, valuesCount common.CountValues, targets string) (*Validation, error) {
 	if targets != "" {
 		return nil, types.NewValidationError("expected zero target, but has %s", targets)
 	}
@@ -62,7 +66,7 @@ func parserZeroValue(validation string, valuesCount CountValues, targets string)
 	}, nil
 }
 
-func parserOneValue(validation string, valuesCount CountValues, targets string) (*Validation, error) {
+func parserOneValue(validation string, valuesCount common.CountValues, targets string) (*Validation, error) {
 	if targets == "" {
 		return nil, types.NewValidationError("expected one target, but has nothing")
 	}
@@ -74,7 +78,7 @@ func parserOneValue(validation string, valuesCount CountValues, targets string) 
 	}, nil
 }
 
-func parserManyValues(validation string, valuesCount CountValues, targets string) (*Validation, error) {
+func parserManyValues(validation string, valuesCount common.CountValues, targets string) (*Validation, error) {
 	if len(targets) == 0 {
 		return nil, types.NewValidationError("expected at least one target, but has 0 element(s)")
 	}
