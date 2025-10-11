@@ -1,8 +1,14 @@
 package codegenerator
 
+import (
+	"slices"
+
+	"github.com/opencodeco/validgen/internal/common"
+	"github.com/opencodeco/validgen/types"
+)
+
 type Operation struct {
-	Name            string
-	ConditionByType map[string]ConditionTable
+	ConditionByTypes []ConditionByType
 }
 
 // ConditionTable defines the template for generating a condition check for a specific type.
@@ -15,455 +21,445 @@ type ConditionTable struct {
 	errorMessage string
 }
 
-var operationTable = map[string]Operation{
+type ConditionByType struct {
+	AcceptedTypes []string
+	ConditionTable
+}
+
+var conditionTable = map[string]Operation{
 	"eq": {
-		Name: "eq",
-		ConditionByType: map[string]ConditionTable{
-			"<STRING>": {
-				operation:      `obj.{{.Name}} == "{{.Target}}"`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be equal to '{{.Target}}'",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} == "{{.Target}}"`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be equal to '{{.Target}}'",
+				},
 			},
-			"<INT>": {
-				operation:      `obj.{{.Name}} == {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
-			},
-			"<FLOAT>": {
-				operation:      `obj.{{.Name}} == {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
-			},
-			"<BOOL>": {
-				operation:      `obj.{{.Name}} == {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
+			{
+				AcceptedTypes: []string{"<INT>", "<FLOAT>", "<BOOL>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} == {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be equal to {{.Target}}",
+				},
 			},
 		},
 	},
 	"required": {
-		Name: "required",
-		ConditionByType: map[string]ConditionTable{
-			"<STRING>": {
-				operation:      `obj.{{.Name}} != ""`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} is required",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != ""`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} is required",
+				},
 			},
-			"<INT>": {
-				operation:      `obj.{{.Name}} != 0`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} is required",
+			{
+				AcceptedTypes: []string{"<INT>", "<FLOAT>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != 0`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} is required",
+				},
 			},
-			"<FLOAT>": {
-				operation:      `obj.{{.Name}} != 0`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} is required",
-			},
-			"[]<STRING>": {
-				operation:      `len(obj.{{.Name}}) != 0`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must not be empty",
-			},
-			"[]<INT>": {
-				operation:      `len(obj.{{.Name}}) != 0`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must not be empty",
-			},
-			"map[<STRING>]": {
-				operation:      `len(obj.{{.Name}}) >= 1`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must not be empty",
-			},
-			"map[<INT>]": {
-				operation:      `len(obj.{{.Name}}) >= 1`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must not be empty",
+			{
+				AcceptedTypes: []string{"[]<STRING>", "[]<INT>", "map[<STRING>]", "map[<INT>]"},
+				ConditionTable: ConditionTable{
+					operation:      `len(obj.{{.Name}}) != 0`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must not be empty",
+				},
 			},
 		},
 	},
 	"gte": {
-		Name: "gte",
-		ConditionByType: map[string]ConditionTable{
-			"<INT>": {
-				operation:      `obj.{{.Name}} >= {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be >= {{.Target}}",
-			},
-			"<FLOAT>": {
-				operation:      `obj.{{.Name}} >= {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be >= {{.Target}}",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<INT>", "<FLOAT>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} >= {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be >= {{.Target}}",
+				},
 			},
 		},
 	},
 	"gt": {
-		Name: "gt",
-		ConditionByType: map[string]ConditionTable{
-			"<INT>": {
-				operation:      `obj.{{.Name}} > {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be > {{.Target}}",
-			},
-			"<FLOAT>": {
-				operation:      `obj.{{.Name}} > {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be > {{.Target}}",
-			},
-		},
-	},
-	"lt": {
-		Name: "lt",
-		ConditionByType: map[string]ConditionTable{
-			"<INT>": {
-				operation:      `obj.{{.Name}} < {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be < {{.Target}}",
-			},
-			"<FLOAT>": {
-				operation:      `obj.{{.Name}} < {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be < {{.Target}}",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<INT>", "<FLOAT>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} > {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be > {{.Target}}",
+				},
 			},
 		},
 	},
 	"lte": {
-		Name: "lte",
-		ConditionByType: map[string]ConditionTable{
-			"<INT>": {
-				operation:      `obj.{{.Name}} <= {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be <= {{.Target}}",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<INT>", "<FLOAT>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} <= {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be <= {{.Target}}",
+				},
 			},
-			"<FLOAT>": {
-				operation:      `obj.{{.Name}} <= {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be <= {{.Target}}",
+		},
+	},
+	"lt": {
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<INT>", "<FLOAT>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} < {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be < {{.Target}}",
+				},
 			},
 		},
 	},
 	"min": {
-		Name: "min",
-		ConditionByType: map[string]ConditionTable{
-			"<STRING>": {
-				operation:      `len(obj.{{.Name}}) >= {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} length must be >= {{.Target}}",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `len(obj.{{.Name}}) >= {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} length must be >= {{.Target}}",
+				},
 			},
-			"[]<STRING>": {
-				operation:      `len(obj.{{.Name}}) >= {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must have at least {{.Target}} elements",
-			},
-			"[]<INT>": {
-				operation:      `len(obj.{{.Name}}) >= {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must have at least {{.Target}} elements",
-			},
-			"map[<STRING>]": {
-				operation:      `len(obj.{{.Name}}) >= {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must have at least {{.Target}} elements",
-			},
-			"map[<INT>]": {
-				operation:      `len(obj.{{.Name}}) >= {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must have at least {{.Target}} elements",
+			{
+				AcceptedTypes: []string{"[]<STRING>", "[]<INT>", "map[<STRING>]", "map[<INT>]"},
+				ConditionTable: ConditionTable{
+					operation:      `len(obj.{{.Name}}) >= {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must have at least {{.Target}} elements",
+				},
 			},
 		},
 	},
 	"max": {
-		Name: "max",
-		ConditionByType: map[string]ConditionTable{
-			"<STRING>": {
-				operation:      `len(obj.{{.Name}}) <= {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} length must be <= {{.Target}}",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `len(obj.{{.Name}}) <= {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} length must be <= {{.Target}}",
+				},
 			},
-			"[]<STRING>": {
-				operation:      `len(obj.{{.Name}}) <= {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must have at most {{.Target}} elements",
-			},
-			"[]<INT>": {
-				operation:      `len(obj.{{.Name}}) <= {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must have at most {{.Target}} elements",
-			},
-			"map[<STRING>]": {
-				operation:      `len(obj.{{.Name}}) <= {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must have at most {{.Target}} elements",
-			},
-			"map[<INT>]": {
-				operation:      `len(obj.{{.Name}}) <= {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must have at most {{.Target}} elements",
+			{
+				AcceptedTypes: []string{"[]<STRING>", "[]<INT>", "map[<STRING>]", "map[<INT>]"},
+				ConditionTable: ConditionTable{
+					operation:      `len(obj.{{.Name}}) <= {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must have at most {{.Target}} elements",
+				},
 			},
 		},
 	},
 	"eq_ignore_case": {
-		Name: "eq_ignore_case",
-		ConditionByType: map[string]ConditionTable{
-			"<STRING>": {
-				operation:      `types.EqualFold(obj.{{.Name}}, "{{.Target}}")`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be equal to '{{.Target}}'",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `types.EqualFold(obj.{{.Name}}, "{{.Target}}")`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be equal to '{{.Target}}'",
+				},
 			},
 		},
 	},
 	"len": {
-		Name: "len",
-		ConditionByType: map[string]ConditionTable{
-			"<STRING>": {
-				operation:      `len(obj.{{.Name}}) == {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} length must be {{.Target}}",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `len(obj.{{.Name}}) == {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} length must be {{.Target}}",
+				},
 			},
-			"[]<STRING>": {
-				operation:      `len(obj.{{.Name}}) == {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must have exactly {{.Target}} elements",
-			},
-			"[]<INT>": {
-				operation:      `len(obj.{{.Name}}) == {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must have exactly {{.Target}} elements",
-			},
-			"map[<STRING>]": {
-				operation:      `len(obj.{{.Name}}) == {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must have exactly {{.Target}} elements",
-			},
-			"map[<INT>]": {
-				operation:      `len(obj.{{.Name}}) == {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must have exactly {{.Target}} elements",
+			{
+				AcceptedTypes: []string{"[]<STRING>", "[]<INT>", "map[<STRING>]", "map[<INT>]"},
+				ConditionTable: ConditionTable{
+					operation:      `len(obj.{{.Name}}) == {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must have exactly {{.Target}} elements",
+				},
 			},
 		},
 	},
 	"neq": {
-		Name: "neq",
-		ConditionByType: map[string]ConditionTable{
-			"<STRING>": {
-				operation:      `obj.{{.Name}} != "{{.Target}}"`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must not be equal to '{{.Target}}'",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != "{{.Target}}"`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must not be equal to '{{.Target}}'",
+				},
 			},
-			"<BOOL>": {
-				operation:      `obj.{{.Name}} != {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
-			},
-			"<INT>": {
-				operation:      `obj.{{.Name}} != {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
-			},
-			"<FLOAT>": {
-				operation:      `obj.{{.Name}} != {{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
+			{
+				AcceptedTypes: []string{"<INT>", "<FLOAT>", "<BOOL>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
+				},
 			},
 		},
 	},
 	"neq_ignore_case": {
-		Name: "neq_ignore_case",
-		ConditionByType: map[string]ConditionTable{
-			"<STRING>": {
-				operation:      `!types.EqualFold(obj.{{.Name}}, "{{.Target}}")`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must not be equal to '{{.Target}}'",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `!types.EqualFold(obj.{{.Name}}, "{{.Target}}")`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must not be equal to '{{.Target}}'",
+				},
 			},
 		},
 	},
 	"in": {
-		Name: "in",
-		ConditionByType: map[string]ConditionTable{
-			"<STRING>": {
-				operation:      `obj.{{.Name}} == "{{.Target}}"`,
-				concatOperator: "||",
-				errorMessage:   "{{.Name}} must be one of {{.Targets}}",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} == "{{.Target}}"`,
+					concatOperator: "||",
+					errorMessage:   "{{.Name}} must be one of {{.Targets}}",
+				},
 			},
-			"<INT>": {
-				operation:      `obj.{{.Name}} == {{.Target}}`,
-				concatOperator: "||",
-				errorMessage:   "{{.Name}} must be one of {{.Targets}}",
+			{
+				AcceptedTypes: []string{"<INT>", "<FLOAT>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} == {{.Target}}`,
+					concatOperator: "||",
+					errorMessage:   "{{.Name}} must be one of {{.Targets}}",
+				},
 			},
-			"<FLOAT>": {
-				operation:      `obj.{{.Name}} == {{.Target}}`,
-				concatOperator: "||",
-				errorMessage:   "{{.Name}} must be one of {{.Targets}}",
+			{
+				AcceptedTypes: []string{"[]<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `types.SliceOnlyContains(obj.{{.Name}}, {{.TargetsAsStringSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+				},
 			},
-			"[]<STRING>": {
-				operation:      `types.SliceOnlyContains(obj.{{.Name}}, {{.TargetsAsStringSlice}})`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+			{
+				AcceptedTypes: []string{"[N]<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `types.SliceOnlyContains(obj.{{.Name}}[:], {{.TargetsAsStringSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+				},
 			},
-			"[]<INT>": {
-				operation:      `types.SliceOnlyContains(obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+			{
+				AcceptedTypes: []string{"[]<INT>"},
+				ConditionTable: ConditionTable{
+					operation:      `types.SliceOnlyContains(obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+				},
 			},
-			"[N]<STRING>": {
-				operation:      `types.SliceOnlyContains(obj.{{.Name}}[:], {{.TargetsAsStringSlice}})`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+			{
+				AcceptedTypes: []string{"[N]<INT>"},
+				ConditionTable: ConditionTable{
+					operation:      `types.SliceOnlyContains(obj.{{.Name}}[:], {{.TargetsAsNumericSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+				},
 			},
-			"[N]<INT>": {
-				operation:      `types.SliceOnlyContains(obj.{{.Name}}[:], {{.TargetsAsNumericSlice}})`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+			{
+				AcceptedTypes: []string{"map[<STRING>]"},
+				ConditionTable: ConditionTable{
+					operation:      `types.MapOnlyContains(obj.{{.Name}}, {{.TargetsAsStringSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+				},
 			},
-			"map[<STRING>]": {
-				operation:      `types.MapOnlyContains(obj.{{.Name}}, {{.TargetsAsStringSlice}})`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
-			},
-			"map[<INT>]": {
-				operation:      `types.MapOnlyContains(obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+			{
+				AcceptedTypes: []string{"map[<INT>]"},
+				ConditionTable: ConditionTable{
+					operation:      `types.MapOnlyContains(obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+				},
 			},
 		},
 	},
 	"nin": {
-		Name: "nin",
-		ConditionByType: map[string]ConditionTable{
-			"<STRING>": {
-				operation:      `obj.{{.Name}} != "{{.Target}}"`,
-				concatOperator: "&&",
-				errorMessage:   "{{.Name}} must not be one of {{.Targets}}",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != "{{.Target}}"`,
+					concatOperator: "&&",
+					errorMessage:   "{{.Name}} must not be one of {{.Targets}}",
+				},
 			},
-			"<INT>": {
-				operation:      `obj.{{.Name}} != {{.Target}}`,
-				concatOperator: "&&",
-				errorMessage:   "{{.Name}} must not be one of {{.Targets}}",
+			{
+				AcceptedTypes: []string{"<INT>", "<FLOAT>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != {{.Target}}`,
+					concatOperator: "&&",
+					errorMessage:   "{{.Name}} must not be one of {{.Targets}}",
+				},
 			},
-			"<FLOAT>": {
-				operation:      `obj.{{.Name}} != {{.Target}}`,
-				concatOperator: "&&",
-				errorMessage:   "{{.Name}} must not be one of {{.Targets}}",
+			{
+				AcceptedTypes: []string{"[]<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `types.SliceNotContains(obj.{{.Name}}, {{.TargetsAsStringSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+				},
 			},
-			"[]<STRING>": {
-				operation:      `types.SliceNotContains(obj.{{.Name}}, {{.TargetsAsStringSlice}})`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+			{
+				AcceptedTypes: []string{"[N]<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `types.SliceNotContains(obj.{{.Name}}[:], {{.TargetsAsStringSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+				},
 			},
-			"[]<INT>": {
-				operation:      `types.SliceNotContains(obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+			{
+				AcceptedTypes: []string{"[]<INT>"},
+				ConditionTable: ConditionTable{
+					operation:      `types.SliceNotContains(obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+				},
 			},
-			"[N]<STRING>": {
-				operation:      `types.SliceNotContains(obj.{{.Name}}[:], {{.TargetsAsStringSlice}})`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+			{
+				AcceptedTypes: []string{"[N]<INT>"},
+				ConditionTable: ConditionTable{
+					operation:      `types.SliceNotContains(obj.{{.Name}}[:], {{.TargetsAsNumericSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+				},
 			},
-			"[N]<INT>": {
-				operation:      `types.SliceNotContains(obj.{{.Name}}[:], {{.TargetsAsNumericSlice}})`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+			{
+				AcceptedTypes: []string{"map[<STRING>]"},
+				ConditionTable: ConditionTable{
+					operation:      `types.MapNotContains(obj.{{.Name}}, {{.TargetsAsStringSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+				},
 			},
-			"map[<STRING>]": {
-				operation:      `types.MapNotContains(obj.{{.Name}}, {{.TargetsAsStringSlice}})`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
-			},
-			"map[<INT>]": {
-				operation:      `types.MapNotContains(obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+			{
+				AcceptedTypes: []string{"map[<INT>]"},
+				ConditionTable: ConditionTable{
+					operation:      `types.MapNotContains(obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+				},
 			},
 		},
 	},
 	"email": {
-		Name: "email",
-		ConditionByType: map[string]ConditionTable{
-			"<STRING>": {
-				operation:      `types.IsValidEmail(obj.{{.Name}})`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be a valid email",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `types.IsValidEmail(obj.{{.Name}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be a valid email",
+				},
 			},
 		},
 	},
 	"eqfield": {
-		Name: "eqfield",
-		ConditionByType: map[string]ConditionTable{
-			"<STRING>": {
-				operation:      `obj.{{.Name}} == obj.{{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
-			},
-			"<INT>": {
-				operation:      `obj.{{.Name}} == obj.{{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
-			},
-			"<BOOL>": {
-				operation:      `obj.{{.Name}} == obj.{{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be equal to {{.Target}}",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<STRING>", "<INT>", "<BOOL>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} == obj.{{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be equal to {{.Target}}",
+				},
 			},
 		},
 	},
 	"neqfield": {
-		Name: "neqfield",
-		ConditionByType: map[string]ConditionTable{
-			"<STRING>": {
-				operation:      `obj.{{.Name}} != obj.{{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
-			},
-			"<INT>": {
-				operation:      `obj.{{.Name}} != obj.{{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
-			},
-			"<BOOL>": {
-				operation:      `obj.{{.Name}} != obj.{{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<STRING>", "<INT>", "<BOOL>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != obj.{{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
+				},
 			},
 		},
 	},
 	"gtefield": {
-		Name: "gtefield",
-		ConditionByType: map[string]ConditionTable{
-			"<INT>": {
-				operation:      `obj.{{.Name}} >= obj.{{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be >= {{.Target}}",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<INT>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} >= obj.{{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be >= {{.Target}}",
+				},
 			},
 		},
 	},
 	"gtfield": {
-		Name: "gtfield",
-		ConditionByType: map[string]ConditionTable{
-			"<INT>": {
-				operation:      `obj.{{.Name}} > obj.{{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be > {{.Target}}",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<INT>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} > obj.{{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be > {{.Target}}",
+				},
 			},
 		},
 	},
 	"ltefield": {
-		Name: "ltefield",
-		ConditionByType: map[string]ConditionTable{
-			"<INT>": {
-				operation:      `obj.{{.Name}} <= obj.{{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be <= {{.Target}}",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<INT>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} <= obj.{{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be <= {{.Target}}",
+				},
 			},
 		},
 	},
 	"ltfield": {
-		Name: "ltfield",
-		ConditionByType: map[string]ConditionTable{
-			"<INT>": {
-				operation:      `obj.{{.Name}} < obj.{{.Target}}`,
-				concatOperator: "",
-				errorMessage:   "{{.Name}} must be < {{.Target}}",
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<INT>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} < obj.{{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be < {{.Target}}",
+				},
 			},
 		},
 	},
+}
+
+func GetConditionTable(operation string, fieldType common.FieldType) (ConditionTable, error) {
+	op, ok := conditionTable[operation]
+	if !ok {
+		return ConditionTable{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s", operation)
+	}
+
+	for _, conditionByType := range op.ConditionByTypes {
+		if slices.Contains(conditionByType.AcceptedTypes, fieldType.ToNormalizedString()) {
+			return conditionByType.ConditionTable, nil
+		}
+	}
+
+	return ConditionTable{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s type %s", operation, fieldType.BaseType)
 }

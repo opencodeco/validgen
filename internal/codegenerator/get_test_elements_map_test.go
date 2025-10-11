@@ -27,7 +27,7 @@ func TestDefineTestElementsWithMapFields(t *testing.T) {
 				fieldValidation: "required",
 			},
 			want: TestElements{
-				conditions:   []string{`len(obj.myfield) >= 1`},
+				conditions:   []string{`len(obj.myfield) != 0`},
 				errorMessage: "myfield must not be empty",
 			},
 		},
@@ -101,7 +101,7 @@ func TestDefineTestElementsWithMapFields(t *testing.T) {
 				fieldValidation: "required",
 			},
 			want: TestElements{
-				conditions:   []string{`len(obj.myfield) >= 1`},
+				conditions:   []string{`len(obj.myfield) != 0`},
 				errorMessage: "myfield must not be empty",
 			},
 		},

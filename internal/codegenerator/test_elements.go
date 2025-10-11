@@ -5,7 +5,6 @@ import (
 
 	"github.com/opencodeco/validgen/internal/analyzer"
 	"github.com/opencodeco/validgen/internal/common"
-	"github.com/opencodeco/validgen/types"
 )
 
 type TestElements struct {
@@ -16,14 +15,9 @@ type TestElements struct {
 
 func DefineTestElements(fieldName string, fieldType common.FieldType, fieldValidation *analyzer.Validation) (TestElements, error) {
 
-	op, ok := operationTable[fieldValidation.Operation]
-	if !ok {
-		return TestElements{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s", fieldValidation.Operation)
-	}
-
-	condition, ok := op.ConditionByType[fieldType.ToNormalizedString()]
-	if !ok {
-		return TestElements{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s type %s", fieldValidation.Operation, fieldType.BaseType)
+	condition, err := GetConditionTable(fieldValidation.Operation, fieldType)
+	if err != nil {
+		return TestElements{}, err
 	}
 
 	values := fieldValidation.Values
@@ -32,11 +26,11 @@ func DefineTestElements(fieldName string, fieldType common.FieldType, fieldValid
 	targetValues := ""
 
 	switch fieldValidation.ExpectedValues {
-	case analyzer.ZERO_VALUE: // REFACTOR: codegenerator should inform how many values are expected
+	case common.ZeroValue: // REFACTOR: codegenerator should inform how many values are expected
 		roperands = append(roperands, replaceNameAndTarget(condition.operation, fieldName, ""))
 		targetValue = condition.operation
 		targetValues = "'" + condition.operation + "' "
-	case analyzer.ONE_VALUE, analyzer.MANY_VALUES:
+	case common.OneValue, common.ManyValues:
 		valuesAsNumericSlice, valuesAsStringSlice := normalizeSlicesAsCode(fieldType.BaseType, values)
 
 		for _, value := range values {
