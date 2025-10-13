@@ -28,29 +28,14 @@ func (o *Operations) IsValid(op string) bool {
 	return ok
 }
 
-func (o *Operations) IsValidType(op, fieldType string) bool {
-	operation, ok := o.operations[op]
-	if !ok {
-		return false
-	}
-
-	return slices.Contains(operation.ValidTypes, fieldType)
+func (o *Operations) IsValidByType(op, fieldType string) bool {
+	return slices.Contains(o.operations[op].ValidTypes, fieldType)
 }
 
 func (o *Operations) IsFieldOperation(op string) bool {
-	operation, ok := o.operations[op]
-	if !ok {
-		return false
-	}
-
-	return operation.IsFieldOperation
+	return o.operations[op].IsFieldOperation
 }
 
 func (o *Operations) ArgsCount(op string) common.CountValues {
-	operation, ok := o.operations[op]
-	if !ok {
-		return common.UndefinedValue
-	}
-
-	return operation.CountValues
+	return o.operations[op].CountValues
 }
