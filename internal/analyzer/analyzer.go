@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/opencodeco/validgen/internal/analyzer/operations"
 	"github.com/opencodeco/validgen/internal/common"
 	"github.com/opencodeco/validgen/internal/parser"
 	"github.com/opencodeco/validgen/types"
@@ -84,12 +85,14 @@ func checkForInvalidOperations(structs []*Struct) error {
 		structsWithValidation[common.KeyPath(st.PackageName, st.StructName)] = true
 	}
 
+	ops := operations.New()
+
 	for _, st := range structs {
 		for i, fd := range st.Fields {
 			for _, val := range st.FieldsValidations[i].Validations {
 				// Check if is a valid operation.
 				op := val.Operation
-				if operations[op].Name == "" {
+				if !ops.IsValid(op) {
 					return types.NewValidationError("unsupported operation %s", op)
 				}
 
@@ -105,7 +108,7 @@ func checkForInvalidOperations(structs []*Struct) error {
 				}
 
 				// Check if is a valid operation for this type.
-				if !operations[op].ValidTypes[fdType.ToNormalizedString()] {
+				if !ops.IsValidByType(op, fdType.ToNormalizedString()) {
 					return types.NewValidationError("operation %s: invalid %s type", op, fdType.BaseType)
 				}
 			}
@@ -125,12 +128,14 @@ func analyzeFieldOperations(structs []*Struct) error {
 		}
 	}
 
+	ops := operations.New()
+
 	for _, st := range structs {
 		for i, fd := range st.Fields {
 			for _, val := range st.FieldsValidations[i].Validations {
 				// Check if is a field operation.
 				op := val.Operation
-				if !operations[op].IsFieldOperation {
+				if !ops.IsFieldOperation(op) {
 					continue
 				}
 
