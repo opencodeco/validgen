@@ -16,7 +16,7 @@ clean:
 unittests:
 	@echo "Running unit tests"
 	go clean -testcache
-	go test -v ./...
+	go test -v ./internal/... ./types/...
 
 benchtests: build
 	@echo "Running bench tests"
