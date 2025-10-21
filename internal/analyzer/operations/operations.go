@@ -2,6 +2,7 @@ package operations
 
 import (
 	"slices"
+	"strings"
 
 	"github.com/opencodeco/validgen/internal/common"
 )
@@ -29,6 +30,15 @@ func (o *Operations) IsValid(op string) bool {
 }
 
 func (o *Operations) IsValidByType(op, fieldType string) bool {
+	// * is a modifier and can be ignored for type validation.
+	fieldType, pointer := strings.CutPrefix(fieldType, "*")
+
+	// Required can be used with all pointer types.
+	if pointer && op == "required" {
+		// Required can be used with all pointers types.
+		return true
+	}
+
 	return slices.Contains(o.operations[op].ValidTypes, fieldType)
 }
 
