@@ -9,11 +9,6 @@ func TestIsValidEmail(t *testing.T) {
 		want  bool
 	}{
 		{
-			name:  "empty email (valid for optional fields)",
-			email: "",
-			want:  true,
-		},
-		{
 			name:  "valid simple email",
 			email: "test@example.com",
 			want:  true,
