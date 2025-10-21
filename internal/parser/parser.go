@@ -99,7 +99,7 @@ func parseStructs(fullpath, src string) ([]*Struct, error) {
 		case (*ast.TypeSpec):
 			currentStruct = extractStructDefinition(v.Name.Name, fullpath, packageName, imports)
 		case (*ast.StructType):
-			err = appendFields(v, packageName, currentStruct)
+			err = extractAndAppendStructFields(v, packageName, currentStruct)
 			if err != nil {
 				return false
 			}
@@ -145,70 +145,24 @@ func extractStructDefinition(name, fullpath, packageName string, imports map[str
 	}
 }
 
-func appendFields(structType *ast.StructType, packageName string, cstruct *Struct) error {
+func extractAndAppendStructFields(structType *ast.StructType, packageName string, cstruct *Struct) error {
 	if structType.Fields == nil {
 		return nil
 	}
 
 	for _, field := range structType.Fields.List {
-		appendFieldNames := false
-		fieldType := common.FieldType{}
 		fieldTag := ""
 		if field.Tag != nil {
 			fieldTag = field.Tag.Value
 		}
 
-		switch v := field.Type.(type) {
-		case *ast.Ident:
-			fieldType.BaseType = v.Name
-			fieldType, fieldTag = extractFieldTypeAndTag(packageName, fieldType, fieldTag)
-			appendFieldNames = true
-
-		case *ast.ArrayType:
-			fieldType.ComposedType = "[]"
-			ident, ok := v.Elt.(*ast.Ident)
-			if !ok {
-				return fmt.Errorf("cannot find the identifier: %T", v.Elt)
-			}
-
-			fieldType.BaseType = ident.Name
-			fieldType.Size = ""
-			if v.Len != nil {
-				// Array with fixed size
-				basicLit, ok := v.Len.(*ast.BasicLit)
-				if !ok {
-					return fmt.Errorf("cannot find the basic literal: %T", v.Len)
-				}
-
-				fieldType.Size = basicLit.Value
-				fieldType.ComposedType = "[N]"
-			}
-			fieldType, fieldTag = extractFieldTypeAndTag(packageName, fieldType, fieldTag)
-			appendFieldNames = true
-
-		case *ast.SelectorExpr:
-			ident, ok := v.X.(*ast.Ident)
-			if !ok {
-				return fmt.Errorf("cannot find the identifier: %T", v.X)
-			}
-
-			nestedPkgName := ident.Name
-			fieldType, fieldTag = extractNestedFieldTypeAndTag(nestedPkgName, v.Sel.Name, fieldTag)
-			appendFieldNames = true
-
-		case *ast.MapType:
-			ident, ok := v.Key.(*ast.Ident)
-			if !ok {
-				return fmt.Errorf("cannot find the identifier: %T", v.Key)
-			}
-
-			fieldType.ComposedType = "map"
-			fieldType.BaseType = ident.Name
-			_, fieldTag = extractFieldTypeAndTag(packageName, fieldType, fieldTag)
-			appendFieldNames = true
+		fieldTag = extractTag(fieldTag)
+		fieldType, err := extractCompleteType(common.FieldType{}, field.Type, packageName)
+		if err != nil {
+			return err
 		}
 
-		if appendFieldNames {
+		if fieldType.BaseType != "" {
 			for _, name := range field.Names {
 				cstruct.Fields = append(cstruct.Fields, Field{
 					FieldName: name.Name,
@@ -222,12 +176,78 @@ func appendFields(structType *ast.StructType, packageName string, cstruct *Struc
 	return nil
 }
 
-func extractFieldTypeAndTag(packageName string, fieldType common.FieldType, fieldTag string) (common.FieldType, string) {
-	rFieldType := fieldType
+func extractCompleteType(fType common.FieldType, expr ast.Expr, packageName string) (common.FieldType, error) {
+	var err error
 
-	if !fieldType.IsGoType() {
-		rFieldType.BaseType = common.KeyPath(packageName, fieldType.BaseType)
+	switch v := expr.(type) {
+	case *ast.Ident:
+		// Single type (string, int, etc.)
+		fType.BaseType = v.Name
+		if !fType.IsGoType() {
+			fType.BaseType = common.KeyPath(packageName, fType.BaseType)
+		}
+		return fType, nil
+	case *ast.ArrayType:
+		// Slice or array type
+		fType, err = extractCompleteType(fType, v.Elt, packageName)
+		if err != nil {
+			return common.FieldType{}, err
+		}
+
+		fType.Size = ""
+		if v.Len != nil {
+			// Array with fixed size
+			basicLit, ok := v.Len.(*ast.BasicLit)
+			if !ok {
+				return common.FieldType{}, fmt.Errorf("cannot find the basic literal: %T", v.Len)
+			}
+
+			fType.Size = basicLit.Value
+			fType.ComposedType += "[N]"
+		} else {
+			fType.ComposedType += "[]"
+		}
+		return fType, nil
+	case *ast.SelectorExpr:
+		// Nested type from another package
+		typeID, ok := v.X.(*ast.Ident)
+		if !ok {
+			return common.FieldType{}, fmt.Errorf("cannot find the type id: %T", v.X)
+		}
+
+		nestedPkgName := typeID.Name
+		fType, err = extractCompleteType(fType, v.X, nestedPkgName)
+		if err != nil {
+			return common.FieldType{}, err
+		}
+
+		fType, _ = extractNestedFieldTypeAndTag(nestedPkgName, v.Sel.Name, "")
+		return fType, nil
+
+	case *ast.MapType:
+		// Map type
+		fType.ComposedType += "map"
+		fType, err = extractCompleteType(fType, v.Key, packageName)
+		if err != nil {
+			return common.FieldType{}, err
+		}
+
+		return fType, nil
+	case *ast.StarExpr:
+		// Pointer type
+		fType.ComposedType += "*"
+		fType, err = extractCompleteType(fType, v.X, packageName)
+		if err != nil {
+			return common.FieldType{}, err
+		}
+
+		return fType, nil
 	}
+
+	return common.FieldType{}, nil
+}
+
+func extractTag(fieldTag string) string {
 
 	rFieldTag := ""
 	if fieldTag != "" {
@@ -235,7 +255,7 @@ func extractFieldTypeAndTag(packageName string, fieldType common.FieldType, fiel
 		rFieldTag, _ = strconv.Unquote(rFieldTag)
 	}
 
-	return rFieldType, rFieldTag
+	return rFieldTag
 }
 
 func extractNestedFieldTypeAndTag(nestedPkgName, baseType, fieldTag string) (common.FieldType, string) {
