@@ -4,9 +4,11 @@ import (
 	"errors"
 	"log"
 	"slices"
+	"strings"
 
 	"github.com/opencodeco/validgen/tests/endtoend/structsinpkg"
 	"github.com/opencodeco/validgen/types"
+	"github.com/sergi/go-diff/diffmatchpatch"
 )
 
 type AllTypes1 struct {
@@ -46,6 +48,8 @@ func main() {
 	mapUint8Tests()
 	numericIntTypeTests()
 	numericFloatTypeTests()
+	pointerTests()
+	noPointerTests()
 
 	log.Println("finishing tests")
 }
@@ -167,4 +171,38 @@ func expectedMsgErrorsOk(errs []error, expectedMsgErrors []string) bool {
 
 		return false
 	})
+}
+
+func assertExpectedErrorMsgs(testName string, errs []error, expectedMsgErrors []string) {
+	ok := slices.EqualFunc(errs, expectedMsgErrors, func(e1 error, e2msg string) bool {
+		var valErr types.ValidationError
+		if errors.As(e1, &valErr) {
+			return valErr.Msg == e2msg
+		}
+
+		return false
+	})
+
+	if ok {
+		return
+	}
+
+	dmp := diffmatchpatch.New()
+	want := strings.Join(expectedMsgErrors, "\n")
+	got := ""
+	for _, err := range errs {
+		got += err.Error() + "\n"
+	}
+
+	diffs := dmp.DiffMain(want, got, false)
+	if len(diffs) == 0 {
+		return
+	}
+
+	diff := dmp.DiffPrettyText(diffs)
+	log.Printf("%s error\n", testName)
+	log.Printf("error = %v\n", errs)
+	log.Printf("wantErr = %v\n", expectedMsgErrors)
+	log.Printf("emailStructFieldsValidate() diff = \n%v", diff)
+	log.Fatal()
 }

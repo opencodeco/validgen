@@ -650,9 +650,6 @@ func StringTypeValidate(obj *StringType) []error {
 	if !(types.IsValidEmail(obj.EmailReq)) {
 		errs = append(errs, types.NewValidationError("EmailReq must be a valid email"))
 	}
-	if !(types.IsValidEmail(obj.EmailOpt)) {
-		errs = append(errs, types.NewValidationError("EmailOpt must be a valid email"))
-	}
 	return errs
 }
 func UserValidate(obj *User) []error {
@@ -681,5 +678,2087 @@ func UserWithStructInPkgValidate(obj *UserWithStructInPkg) []error {
 		errs = append(errs, types.NewValidationError("Age must be <= 130"))
 	}
 	errs = append(errs, structsinpkg.AddressValidate(&obj.Address)...)
+	return errs
+}
+func emailStructFieldsValidate(obj *emailStructFields) []error {
+	var errs []error
+	if !(types.IsValidEmail(obj.FieldEmailString)) {
+		errs = append(errs, types.NewValidationError("FieldEmailString must be a valid email"))
+	}
+	return errs
+}
+func emailStructFieldsPointerValidate(obj *emailStructFieldsPointer) []error {
+	var errs []error
+	if !(obj.FieldEmailStringPointer != nil && types.IsValidEmail(*obj.FieldEmailStringPointer)) {
+		errs = append(errs, types.NewValidationError("FieldEmailStringPointer must be a valid email"))
+	}
+	return errs
+}
+func eqStructFieldsValidate(obj *eqStructFields) []error {
+	var errs []error
+	if !(obj.FieldEqString == "abcde") {
+		errs = append(errs, types.NewValidationError("FieldEqString must be equal to 'abcde'"))
+	}
+	if !(obj.FieldEqInt == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqInt must be equal to 32"))
+	}
+	if !(obj.FieldEqInt8 == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqInt8 must be equal to 32"))
+	}
+	if !(obj.FieldEqInt16 == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqInt16 must be equal to 32"))
+	}
+	if !(obj.FieldEqInt32 == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqInt32 must be equal to 32"))
+	}
+	if !(obj.FieldEqInt64 == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqInt64 must be equal to 32"))
+	}
+	if !(obj.FieldEqUint == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqUint must be equal to 32"))
+	}
+	if !(obj.FieldEqUint8 == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqUint8 must be equal to 32"))
+	}
+	if !(obj.FieldEqUint16 == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqUint16 must be equal to 32"))
+	}
+	if !(obj.FieldEqUint32 == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqUint32 must be equal to 32"))
+	}
+	if !(obj.FieldEqUint64 == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqUint64 must be equal to 32"))
+	}
+	if !(obj.FieldEqFloat32 == 12.34) {
+		errs = append(errs, types.NewValidationError("FieldEqFloat32 must be equal to 12.34"))
+	}
+	if !(obj.FieldEqFloat64 == 12.34) {
+		errs = append(errs, types.NewValidationError("FieldEqFloat64 must be equal to 12.34"))
+	}
+	if !(obj.FieldEqBool == true) {
+		errs = append(errs, types.NewValidationError("FieldEqBool must be equal to true"))
+	}
+	return errs
+}
+func eqStructFieldsPointerValidate(obj *eqStructFieldsPointer) []error {
+	var errs []error
+	if !(obj.FieldEqStringPointer != nil && *obj.FieldEqStringPointer == "abcde") {
+		errs = append(errs, types.NewValidationError("FieldEqStringPointer must be equal to 'abcde'"))
+	}
+	if !(obj.FieldEqIntPointer != nil && *obj.FieldEqIntPointer == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqIntPointer must be equal to 32"))
+	}
+	if !(obj.FieldEqInt8Pointer != nil && *obj.FieldEqInt8Pointer == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqInt8Pointer must be equal to 32"))
+	}
+	if !(obj.FieldEqInt16Pointer != nil && *obj.FieldEqInt16Pointer == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqInt16Pointer must be equal to 32"))
+	}
+	if !(obj.FieldEqInt32Pointer != nil && *obj.FieldEqInt32Pointer == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqInt32Pointer must be equal to 32"))
+	}
+	if !(obj.FieldEqInt64Pointer != nil && *obj.FieldEqInt64Pointer == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqInt64Pointer must be equal to 32"))
+	}
+	if !(obj.FieldEqUintPointer != nil && *obj.FieldEqUintPointer == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqUintPointer must be equal to 32"))
+	}
+	if !(obj.FieldEqUint8Pointer != nil && *obj.FieldEqUint8Pointer == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqUint8Pointer must be equal to 32"))
+	}
+	if !(obj.FieldEqUint16Pointer != nil && *obj.FieldEqUint16Pointer == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqUint16Pointer must be equal to 32"))
+	}
+	if !(obj.FieldEqUint32Pointer != nil && *obj.FieldEqUint32Pointer == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqUint32Pointer must be equal to 32"))
+	}
+	if !(obj.FieldEqUint64Pointer != nil && *obj.FieldEqUint64Pointer == 32) {
+		errs = append(errs, types.NewValidationError("FieldEqUint64Pointer must be equal to 32"))
+	}
+	if !(obj.FieldEqFloat32Pointer != nil && *obj.FieldEqFloat32Pointer == 12.34) {
+		errs = append(errs, types.NewValidationError("FieldEqFloat32Pointer must be equal to 12.34"))
+	}
+	if !(obj.FieldEqFloat64Pointer != nil && *obj.FieldEqFloat64Pointer == 12.34) {
+		errs = append(errs, types.NewValidationError("FieldEqFloat64Pointer must be equal to 12.34"))
+	}
+	if !(obj.FieldEqBoolPointer != nil && *obj.FieldEqBoolPointer == true) {
+		errs = append(errs, types.NewValidationError("FieldEqBoolPointer must be equal to true"))
+	}
+	return errs
+}
+func eq_ignore_caseStructFieldsValidate(obj *eq_ignore_caseStructFields) []error {
+	var errs []error
+	if !(types.EqualFold(obj.FieldEq_ignore_caseString, "abcde")) {
+		errs = append(errs, types.NewValidationError("FieldEq_ignore_caseString must be equal to 'abcde'"))
+	}
+	return errs
+}
+func eq_ignore_caseStructFieldsPointerValidate(obj *eq_ignore_caseStructFieldsPointer) []error {
+	var errs []error
+	if !(obj.FieldEq_ignore_caseStringPointer != nil && types.EqualFold(*obj.FieldEq_ignore_caseStringPointer, "abcde")) {
+		errs = append(errs, types.NewValidationError("FieldEq_ignore_caseStringPointer must be equal to 'abcde'"))
+	}
+	return errs
+}
+func gtStructFieldsValidate(obj *gtStructFields) []error {
+	var errs []error
+	if !(obj.FieldGtInt > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtInt must be > 32"))
+	}
+	if !(obj.FieldGtInt8 > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtInt8 must be > 32"))
+	}
+	if !(obj.FieldGtInt16 > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtInt16 must be > 32"))
+	}
+	if !(obj.FieldGtInt32 > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtInt32 must be > 32"))
+	}
+	if !(obj.FieldGtInt64 > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtInt64 must be > 32"))
+	}
+	if !(obj.FieldGtUint > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtUint must be > 32"))
+	}
+	if !(obj.FieldGtUint8 > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtUint8 must be > 32"))
+	}
+	if !(obj.FieldGtUint16 > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtUint16 must be > 32"))
+	}
+	if !(obj.FieldGtUint32 > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtUint32 must be > 32"))
+	}
+	if !(obj.FieldGtUint64 > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtUint64 must be > 32"))
+	}
+	if !(obj.FieldGtFloat32 > 12.34) {
+		errs = append(errs, types.NewValidationError("FieldGtFloat32 must be > 12.34"))
+	}
+	if !(obj.FieldGtFloat64 > 12.34) {
+		errs = append(errs, types.NewValidationError("FieldGtFloat64 must be > 12.34"))
+	}
+	return errs
+}
+func gtStructFieldsPointerValidate(obj *gtStructFieldsPointer) []error {
+	var errs []error
+	if !(obj.FieldGtIntPointer != nil && *obj.FieldGtIntPointer > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtIntPointer must be > 32"))
+	}
+	if !(obj.FieldGtInt8Pointer != nil && *obj.FieldGtInt8Pointer > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtInt8Pointer must be > 32"))
+	}
+	if !(obj.FieldGtInt16Pointer != nil && *obj.FieldGtInt16Pointer > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtInt16Pointer must be > 32"))
+	}
+	if !(obj.FieldGtInt32Pointer != nil && *obj.FieldGtInt32Pointer > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtInt32Pointer must be > 32"))
+	}
+	if !(obj.FieldGtInt64Pointer != nil && *obj.FieldGtInt64Pointer > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtInt64Pointer must be > 32"))
+	}
+	if !(obj.FieldGtUintPointer != nil && *obj.FieldGtUintPointer > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtUintPointer must be > 32"))
+	}
+	if !(obj.FieldGtUint8Pointer != nil && *obj.FieldGtUint8Pointer > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtUint8Pointer must be > 32"))
+	}
+	if !(obj.FieldGtUint16Pointer != nil && *obj.FieldGtUint16Pointer > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtUint16Pointer must be > 32"))
+	}
+	if !(obj.FieldGtUint32Pointer != nil && *obj.FieldGtUint32Pointer > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtUint32Pointer must be > 32"))
+	}
+	if !(obj.FieldGtUint64Pointer != nil && *obj.FieldGtUint64Pointer > 32) {
+		errs = append(errs, types.NewValidationError("FieldGtUint64Pointer must be > 32"))
+	}
+	if !(obj.FieldGtFloat32Pointer != nil && *obj.FieldGtFloat32Pointer > 12.34) {
+		errs = append(errs, types.NewValidationError("FieldGtFloat32Pointer must be > 12.34"))
+	}
+	if !(obj.FieldGtFloat64Pointer != nil && *obj.FieldGtFloat64Pointer > 12.34) {
+		errs = append(errs, types.NewValidationError("FieldGtFloat64Pointer must be > 12.34"))
+	}
+	return errs
+}
+func gteStructFieldsValidate(obj *gteStructFields) []error {
+	var errs []error
+	if !(obj.FieldGteInt >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteInt must be >= 32"))
+	}
+	if !(obj.FieldGteInt8 >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteInt8 must be >= 32"))
+	}
+	if !(obj.FieldGteInt16 >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteInt16 must be >= 32"))
+	}
+	if !(obj.FieldGteInt32 >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteInt32 must be >= 32"))
+	}
+	if !(obj.FieldGteInt64 >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteInt64 must be >= 32"))
+	}
+	if !(obj.FieldGteUint >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteUint must be >= 32"))
+	}
+	if !(obj.FieldGteUint8 >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteUint8 must be >= 32"))
+	}
+	if !(obj.FieldGteUint16 >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteUint16 must be >= 32"))
+	}
+	if !(obj.FieldGteUint32 >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteUint32 must be >= 32"))
+	}
+	if !(obj.FieldGteUint64 >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteUint64 must be >= 32"))
+	}
+	if !(obj.FieldGteFloat32 >= 12.34) {
+		errs = append(errs, types.NewValidationError("FieldGteFloat32 must be >= 12.34"))
+	}
+	if !(obj.FieldGteFloat64 >= 12.34) {
+		errs = append(errs, types.NewValidationError("FieldGteFloat64 must be >= 12.34"))
+	}
+	return errs
+}
+func gteStructFieldsPointerValidate(obj *gteStructFieldsPointer) []error {
+	var errs []error
+	if !(obj.FieldGteIntPointer != nil && *obj.FieldGteIntPointer >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteIntPointer must be >= 32"))
+	}
+	if !(obj.FieldGteInt8Pointer != nil && *obj.FieldGteInt8Pointer >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteInt8Pointer must be >= 32"))
+	}
+	if !(obj.FieldGteInt16Pointer != nil && *obj.FieldGteInt16Pointer >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteInt16Pointer must be >= 32"))
+	}
+	if !(obj.FieldGteInt32Pointer != nil && *obj.FieldGteInt32Pointer >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteInt32Pointer must be >= 32"))
+	}
+	if !(obj.FieldGteInt64Pointer != nil && *obj.FieldGteInt64Pointer >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteInt64Pointer must be >= 32"))
+	}
+	if !(obj.FieldGteUintPointer != nil && *obj.FieldGteUintPointer >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteUintPointer must be >= 32"))
+	}
+	if !(obj.FieldGteUint8Pointer != nil && *obj.FieldGteUint8Pointer >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteUint8Pointer must be >= 32"))
+	}
+	if !(obj.FieldGteUint16Pointer != nil && *obj.FieldGteUint16Pointer >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteUint16Pointer must be >= 32"))
+	}
+	if !(obj.FieldGteUint32Pointer != nil && *obj.FieldGteUint32Pointer >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteUint32Pointer must be >= 32"))
+	}
+	if !(obj.FieldGteUint64Pointer != nil && *obj.FieldGteUint64Pointer >= 32) {
+		errs = append(errs, types.NewValidationError("FieldGteUint64Pointer must be >= 32"))
+	}
+	if !(obj.FieldGteFloat32Pointer != nil && *obj.FieldGteFloat32Pointer >= 12.34) {
+		errs = append(errs, types.NewValidationError("FieldGteFloat32Pointer must be >= 12.34"))
+	}
+	if !(obj.FieldGteFloat64Pointer != nil && *obj.FieldGteFloat64Pointer >= 12.34) {
+		errs = append(errs, types.NewValidationError("FieldGteFloat64Pointer must be >= 12.34"))
+	}
+	return errs
+}
+func inStructFieldsValidate(obj *inStructFields) []error {
+	var errs []error
+	if !(obj.FieldInString == "ab" || obj.FieldInString == "cd" || obj.FieldInString == "ef") {
+		errs = append(errs, types.NewValidationError("FieldInString must be one of 'ab' 'cd' 'ef'"))
+	}
+	if !(obj.FieldInInt == 12 || obj.FieldInInt == 34 || obj.FieldInInt == 56) {
+		errs = append(errs, types.NewValidationError("FieldInInt must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInInt8 == 12 || obj.FieldInInt8 == 34 || obj.FieldInInt8 == 56) {
+		errs = append(errs, types.NewValidationError("FieldInInt8 must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInInt16 == 12 || obj.FieldInInt16 == 34 || obj.FieldInInt16 == 56) {
+		errs = append(errs, types.NewValidationError("FieldInInt16 must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInInt32 == 12 || obj.FieldInInt32 == 34 || obj.FieldInInt32 == 56) {
+		errs = append(errs, types.NewValidationError("FieldInInt32 must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInInt64 == 12 || obj.FieldInInt64 == 34 || obj.FieldInInt64 == 56) {
+		errs = append(errs, types.NewValidationError("FieldInInt64 must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInUint == 12 || obj.FieldInUint == 34 || obj.FieldInUint == 56) {
+		errs = append(errs, types.NewValidationError("FieldInUint must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInUint8 == 12 || obj.FieldInUint8 == 34 || obj.FieldInUint8 == 56) {
+		errs = append(errs, types.NewValidationError("FieldInUint8 must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInUint16 == 12 || obj.FieldInUint16 == 34 || obj.FieldInUint16 == 56) {
+		errs = append(errs, types.NewValidationError("FieldInUint16 must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInUint32 == 12 || obj.FieldInUint32 == 34 || obj.FieldInUint32 == 56) {
+		errs = append(errs, types.NewValidationError("FieldInUint32 must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInUint64 == 12 || obj.FieldInUint64 == 34 || obj.FieldInUint64 == 56) {
+		errs = append(errs, types.NewValidationError("FieldInUint64 must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInFloat32 == 11.11 || obj.FieldInFloat32 == 22.22 || obj.FieldInFloat32 == 33.33) {
+		errs = append(errs, types.NewValidationError("FieldInFloat32 must be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldInFloat64 == 11.11 || obj.FieldInFloat64 == 22.22 || obj.FieldInFloat64 == 33.33) {
+		errs = append(errs, types.NewValidationError("FieldInFloat64 must be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldInBool == true) {
+		errs = append(errs, types.NewValidationError("FieldInBool must be one of 'true'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInStringSlice, []string{"ab", "cd", "ef"})) {
+		errs = append(errs, types.NewValidationError("FieldInStringSlice elements must be one of 'ab' 'cd' 'ef'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInIntSlice, []int{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInIntSlice elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInInt8Slice, []int8{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInInt8Slice elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInInt16Slice, []int16{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInInt16Slice elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInInt32Slice, []int32{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInInt32Slice elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInInt64Slice, []int64{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInInt64Slice elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInUintSlice, []uint{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUintSlice elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInUint8Slice, []uint8{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUint8Slice elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInUint16Slice, []uint16{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUint16Slice elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInUint32Slice, []uint32{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUint32Slice elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInUint64Slice, []uint64{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUint64Slice elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInFloat32Slice, []float32{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldInFloat32Slice elements must be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInFloat64Slice, []float64{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldInFloat64Slice elements must be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInBoolSlice, []bool{true})) {
+		errs = append(errs, types.NewValidationError("FieldInBoolSlice elements must be one of 'true'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInStringArray[:], []string{"ab", "cd", "ef"})) {
+		errs = append(errs, types.NewValidationError("FieldInStringArray elements must be one of 'ab' 'cd' 'ef'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInIntArray[:], []int{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInIntArray elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInInt8Array[:], []int8{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInInt8Array elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInInt16Array[:], []int16{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInInt16Array elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInInt32Array[:], []int32{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInInt32Array elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInInt64Array[:], []int64{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInInt64Array elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInUintArray[:], []uint{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUintArray elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInUint8Array[:], []uint8{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUint8Array elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInUint16Array[:], []uint16{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUint16Array elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInUint32Array[:], []uint32{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUint32Array elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInUint64Array[:], []uint64{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUint64Array elements must be one of '12' '34' '56'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInFloat32Array[:], []float32{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldInFloat32Array elements must be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInFloat64Array[:], []float64{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldInFloat64Array elements must be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(types.SliceOnlyContains(obj.FieldInBoolArray[:], []bool{true})) {
+		errs = append(errs, types.NewValidationError("FieldInBoolArray elements must be one of 'true'"))
+	}
+	if !(types.MapOnlyContains(obj.FieldInStringMap, []string{"a", "b", "c"})) {
+		errs = append(errs, types.NewValidationError("FieldInStringMap elements must be one of 'a' 'b' 'c'"))
+	}
+	if !(types.MapOnlyContains(obj.FieldInIntMap, []int{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInIntMap elements must be one of '1' '2' '3'"))
+	}
+	if !(types.MapOnlyContains(obj.FieldInInt8Map, []int8{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInInt8Map elements must be one of '1' '2' '3'"))
+	}
+	if !(types.MapOnlyContains(obj.FieldInInt16Map, []int16{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInInt16Map elements must be one of '1' '2' '3'"))
+	}
+	if !(types.MapOnlyContains(obj.FieldInInt32Map, []int32{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInInt32Map elements must be one of '1' '2' '3'"))
+	}
+	if !(types.MapOnlyContains(obj.FieldInInt64Map, []int64{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInInt64Map elements must be one of '1' '2' '3'"))
+	}
+	if !(types.MapOnlyContains(obj.FieldInUintMap, []uint{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInUintMap elements must be one of '1' '2' '3'"))
+	}
+	if !(types.MapOnlyContains(obj.FieldInUint8Map, []uint8{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInUint8Map elements must be one of '1' '2' '3'"))
+	}
+	if !(types.MapOnlyContains(obj.FieldInUint16Map, []uint16{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInUint16Map elements must be one of '1' '2' '3'"))
+	}
+	if !(types.MapOnlyContains(obj.FieldInUint32Map, []uint32{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInUint32Map elements must be one of '1' '2' '3'"))
+	}
+	if !(types.MapOnlyContains(obj.FieldInUint64Map, []uint64{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInUint64Map elements must be one of '1' '2' '3'"))
+	}
+	if !(types.MapOnlyContains(obj.FieldInFloat32Map, []float32{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldInFloat32Map elements must be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(types.MapOnlyContains(obj.FieldInFloat64Map, []float64{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldInFloat64Map elements must be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(types.MapOnlyContains(obj.FieldInBoolMap, []bool{false})) {
+		errs = append(errs, types.NewValidationError("FieldInBoolMap elements must be one of 'false'"))
+	}
+	return errs
+}
+func inStructFieldsPointerValidate(obj *inStructFieldsPointer) []error {
+	var errs []error
+	if !((obj.FieldInStringPointer != nil && *obj.FieldInStringPointer == "ab") || (obj.FieldInStringPointer != nil && *obj.FieldInStringPointer == "cd") || (obj.FieldInStringPointer != nil && *obj.FieldInStringPointer == "ef")) {
+		errs = append(errs, types.NewValidationError("FieldInStringPointer must be one of 'ab' 'cd' 'ef'"))
+	}
+	if !((obj.FieldInIntPointer != nil && *obj.FieldInIntPointer == 12) || (obj.FieldInIntPointer != nil && *obj.FieldInIntPointer == 34) || (obj.FieldInIntPointer != nil && *obj.FieldInIntPointer == 56)) {
+		errs = append(errs, types.NewValidationError("FieldInIntPointer must be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldInInt8Pointer != nil && *obj.FieldInInt8Pointer == 12) || (obj.FieldInInt8Pointer != nil && *obj.FieldInInt8Pointer == 34) || (obj.FieldInInt8Pointer != nil && *obj.FieldInInt8Pointer == 56)) {
+		errs = append(errs, types.NewValidationError("FieldInInt8Pointer must be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldInInt16Pointer != nil && *obj.FieldInInt16Pointer == 12) || (obj.FieldInInt16Pointer != nil && *obj.FieldInInt16Pointer == 34) || (obj.FieldInInt16Pointer != nil && *obj.FieldInInt16Pointer == 56)) {
+		errs = append(errs, types.NewValidationError("FieldInInt16Pointer must be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldInInt32Pointer != nil && *obj.FieldInInt32Pointer == 12) || (obj.FieldInInt32Pointer != nil && *obj.FieldInInt32Pointer == 34) || (obj.FieldInInt32Pointer != nil && *obj.FieldInInt32Pointer == 56)) {
+		errs = append(errs, types.NewValidationError("FieldInInt32Pointer must be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldInInt64Pointer != nil && *obj.FieldInInt64Pointer == 12) || (obj.FieldInInt64Pointer != nil && *obj.FieldInInt64Pointer == 34) || (obj.FieldInInt64Pointer != nil && *obj.FieldInInt64Pointer == 56)) {
+		errs = append(errs, types.NewValidationError("FieldInInt64Pointer must be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldInUintPointer != nil && *obj.FieldInUintPointer == 12) || (obj.FieldInUintPointer != nil && *obj.FieldInUintPointer == 34) || (obj.FieldInUintPointer != nil && *obj.FieldInUintPointer == 56)) {
+		errs = append(errs, types.NewValidationError("FieldInUintPointer must be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldInUint8Pointer != nil && *obj.FieldInUint8Pointer == 12) || (obj.FieldInUint8Pointer != nil && *obj.FieldInUint8Pointer == 34) || (obj.FieldInUint8Pointer != nil && *obj.FieldInUint8Pointer == 56)) {
+		errs = append(errs, types.NewValidationError("FieldInUint8Pointer must be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldInUint16Pointer != nil && *obj.FieldInUint16Pointer == 12) || (obj.FieldInUint16Pointer != nil && *obj.FieldInUint16Pointer == 34) || (obj.FieldInUint16Pointer != nil && *obj.FieldInUint16Pointer == 56)) {
+		errs = append(errs, types.NewValidationError("FieldInUint16Pointer must be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldInUint32Pointer != nil && *obj.FieldInUint32Pointer == 12) || (obj.FieldInUint32Pointer != nil && *obj.FieldInUint32Pointer == 34) || (obj.FieldInUint32Pointer != nil && *obj.FieldInUint32Pointer == 56)) {
+		errs = append(errs, types.NewValidationError("FieldInUint32Pointer must be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldInUint64Pointer != nil && *obj.FieldInUint64Pointer == 12) || (obj.FieldInUint64Pointer != nil && *obj.FieldInUint64Pointer == 34) || (obj.FieldInUint64Pointer != nil && *obj.FieldInUint64Pointer == 56)) {
+		errs = append(errs, types.NewValidationError("FieldInUint64Pointer must be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldInFloat32Pointer != nil && *obj.FieldInFloat32Pointer == 11.11) || (obj.FieldInFloat32Pointer != nil && *obj.FieldInFloat32Pointer == 22.22) || (obj.FieldInFloat32Pointer != nil && *obj.FieldInFloat32Pointer == 33.33)) {
+		errs = append(errs, types.NewValidationError("FieldInFloat32Pointer must be one of '11.11' '22.22' '33.33'"))
+	}
+	if !((obj.FieldInFloat64Pointer != nil && *obj.FieldInFloat64Pointer == 11.11) || (obj.FieldInFloat64Pointer != nil && *obj.FieldInFloat64Pointer == 22.22) || (obj.FieldInFloat64Pointer != nil && *obj.FieldInFloat64Pointer == 33.33)) {
+		errs = append(errs, types.NewValidationError("FieldInFloat64Pointer must be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldInBoolPointer != nil && *obj.FieldInBoolPointer == true) {
+		errs = append(errs, types.NewValidationError("FieldInBoolPointer must be one of 'true'"))
+	}
+	if !(obj.FieldInStringSlicePointer != nil && types.SliceOnlyContains(*obj.FieldInStringSlicePointer, []string{"ab", "cd", "ef"})) {
+		errs = append(errs, types.NewValidationError("FieldInStringSlicePointer elements must be one of 'ab' 'cd' 'ef'"))
+	}
+	if !(obj.FieldInIntSlicePointer != nil && types.SliceOnlyContains(*obj.FieldInIntSlicePointer, []int{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInIntSlicePointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInInt8SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInInt8SlicePointer, []int8{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInInt8SlicePointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInInt16SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInInt16SlicePointer, []int16{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInInt16SlicePointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInInt32SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInInt32SlicePointer, []int32{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInInt32SlicePointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInInt64SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInInt64SlicePointer, []int64{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInInt64SlicePointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInUintSlicePointer != nil && types.SliceOnlyContains(*obj.FieldInUintSlicePointer, []uint{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUintSlicePointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInUint8SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInUint8SlicePointer, []uint8{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUint8SlicePointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInUint16SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInUint16SlicePointer, []uint16{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUint16SlicePointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInUint32SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInUint32SlicePointer, []uint32{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUint32SlicePointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInUint64SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInUint64SlicePointer, []uint64{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUint64SlicePointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInFloat32SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInFloat32SlicePointer, []float32{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldInFloat32SlicePointer elements must be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldInFloat64SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInFloat64SlicePointer, []float64{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldInFloat64SlicePointer elements must be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldInBoolSlicePointer != nil && types.SliceOnlyContains(*obj.FieldInBoolSlicePointer, []bool{true})) {
+		errs = append(errs, types.NewValidationError("FieldInBoolSlicePointer elements must be one of 'true'"))
+	}
+	if !(obj.FieldInStringArrayPointer != nil && types.SliceOnlyContains(obj.FieldInStringArrayPointer[:], []string{"ab", "cd", "ef"})) {
+		errs = append(errs, types.NewValidationError("FieldInStringArrayPointer elements must be one of 'ab' 'cd' 'ef'"))
+	}
+	if !(obj.FieldInIntArrayPointer != nil && types.SliceOnlyContains(obj.FieldInIntArrayPointer[:], []int{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInIntArrayPointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInInt8ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInInt8ArrayPointer[:], []int8{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInInt8ArrayPointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInInt16ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInInt16ArrayPointer[:], []int16{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInInt16ArrayPointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInInt32ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInInt32ArrayPointer[:], []int32{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInInt32ArrayPointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInInt64ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInInt64ArrayPointer[:], []int64{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInInt64ArrayPointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInUintArrayPointer != nil && types.SliceOnlyContains(obj.FieldInUintArrayPointer[:], []uint{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUintArrayPointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInUint8ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInUint8ArrayPointer[:], []uint8{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUint8ArrayPointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInUint16ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInUint16ArrayPointer[:], []uint16{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUint16ArrayPointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInUint32ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInUint32ArrayPointer[:], []uint32{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUint32ArrayPointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInUint64ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInUint64ArrayPointer[:], []uint64{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldInUint64ArrayPointer elements must be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldInFloat32ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInFloat32ArrayPointer[:], []float32{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldInFloat32ArrayPointer elements must be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldInFloat64ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInFloat64ArrayPointer[:], []float64{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldInFloat64ArrayPointer elements must be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldInBoolArrayPointer != nil && types.SliceOnlyContains(obj.FieldInBoolArrayPointer[:], []bool{true})) {
+		errs = append(errs, types.NewValidationError("FieldInBoolArrayPointer elements must be one of 'true'"))
+	}
+	if !(obj.FieldInStringMapPointer != nil && types.MapOnlyContains(*obj.FieldInStringMapPointer, []string{"a", "b", "c"})) {
+		errs = append(errs, types.NewValidationError("FieldInStringMapPointer elements must be one of 'a' 'b' 'c'"))
+	}
+	if !(obj.FieldInIntMapPointer != nil && types.MapOnlyContains(*obj.FieldInIntMapPointer, []int{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInIntMapPointer elements must be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldInInt8MapPointer != nil && types.MapOnlyContains(*obj.FieldInInt8MapPointer, []int8{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInInt8MapPointer elements must be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldInInt16MapPointer != nil && types.MapOnlyContains(*obj.FieldInInt16MapPointer, []int16{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInInt16MapPointer elements must be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldInInt32MapPointer != nil && types.MapOnlyContains(*obj.FieldInInt32MapPointer, []int32{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInInt32MapPointer elements must be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldInInt64MapPointer != nil && types.MapOnlyContains(*obj.FieldInInt64MapPointer, []int64{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInInt64MapPointer elements must be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldInUintMapPointer != nil && types.MapOnlyContains(*obj.FieldInUintMapPointer, []uint{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInUintMapPointer elements must be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldInUint8MapPointer != nil && types.MapOnlyContains(*obj.FieldInUint8MapPointer, []uint8{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInUint8MapPointer elements must be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldInUint16MapPointer != nil && types.MapOnlyContains(*obj.FieldInUint16MapPointer, []uint16{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInUint16MapPointer elements must be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldInUint32MapPointer != nil && types.MapOnlyContains(*obj.FieldInUint32MapPointer, []uint32{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInUint32MapPointer elements must be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldInUint64MapPointer != nil && types.MapOnlyContains(*obj.FieldInUint64MapPointer, []uint64{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldInUint64MapPointer elements must be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldInFloat32MapPointer != nil && types.MapOnlyContains(*obj.FieldInFloat32MapPointer, []float32{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldInFloat32MapPointer elements must be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldInFloat64MapPointer != nil && types.MapOnlyContains(*obj.FieldInFloat64MapPointer, []float64{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldInFloat64MapPointer elements must be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldInBoolMapPointer != nil && types.MapOnlyContains(*obj.FieldInBoolMapPointer, []bool{false})) {
+		errs = append(errs, types.NewValidationError("FieldInBoolMapPointer elements must be one of 'false'"))
+	}
+	return errs
+}
+func lenStructFieldsValidate(obj *lenStructFields) []error {
+	var errs []error
+	if !(len(obj.FieldLenString) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenString length must be 2"))
+	}
+	if !(len(obj.FieldLenStringSlice) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenStringSlice must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenIntSlice) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenIntSlice must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenInt8Slice) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenInt8Slice must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenInt16Slice) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenInt16Slice must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenInt32Slice) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenInt32Slice must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenInt64Slice) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenInt64Slice must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenUintSlice) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUintSlice must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenUint8Slice) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUint8Slice must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenUint16Slice) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUint16Slice must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenUint32Slice) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUint32Slice must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenUint64Slice) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUint64Slice must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenFloat32Slice) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenFloat32Slice must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenFloat64Slice) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenFloat64Slice must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenBoolSlice) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenBoolSlice must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenStringMap) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenStringMap must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenIntMap) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenIntMap must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenInt8Map) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenInt8Map must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenInt16Map) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenInt16Map must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenInt32Map) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenInt32Map must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenInt64Map) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenInt64Map must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenUintMap) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUintMap must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenUint8Map) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUint8Map must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenUint16Map) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUint16Map must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenUint32Map) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUint32Map must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenUint64Map) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUint64Map must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenFloat32Map) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenFloat32Map must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenFloat64Map) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenFloat64Map must have exactly 2 elements"))
+	}
+	if !(len(obj.FieldLenBoolMap) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenBoolMap must have exactly 2 elements"))
+	}
+	return errs
+}
+func lenStructFieldsPointerValidate(obj *lenStructFieldsPointer) []error {
+	var errs []error
+	if !(obj.FieldLenStringPointer != nil && len(*obj.FieldLenStringPointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenStringPointer length must be 2"))
+	}
+	if !(obj.FieldLenStringSlicePointer != nil && len(*obj.FieldLenStringSlicePointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenStringSlicePointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenIntSlicePointer != nil && len(*obj.FieldLenIntSlicePointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenIntSlicePointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenInt8SlicePointer != nil && len(*obj.FieldLenInt8SlicePointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenInt8SlicePointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenInt16SlicePointer != nil && len(*obj.FieldLenInt16SlicePointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenInt16SlicePointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenInt32SlicePointer != nil && len(*obj.FieldLenInt32SlicePointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenInt32SlicePointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenInt64SlicePointer != nil && len(*obj.FieldLenInt64SlicePointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenInt64SlicePointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenUintSlicePointer != nil && len(*obj.FieldLenUintSlicePointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUintSlicePointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenUint8SlicePointer != nil && len(*obj.FieldLenUint8SlicePointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUint8SlicePointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenUint16SlicePointer != nil && len(*obj.FieldLenUint16SlicePointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUint16SlicePointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenUint32SlicePointer != nil && len(*obj.FieldLenUint32SlicePointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUint32SlicePointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenUint64SlicePointer != nil && len(*obj.FieldLenUint64SlicePointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUint64SlicePointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenFloat32SlicePointer != nil && len(*obj.FieldLenFloat32SlicePointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenFloat32SlicePointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenFloat64SlicePointer != nil && len(*obj.FieldLenFloat64SlicePointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenFloat64SlicePointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenBoolSlicePointer != nil && len(*obj.FieldLenBoolSlicePointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenBoolSlicePointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenStringMapPointer != nil && len(*obj.FieldLenStringMapPointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenStringMapPointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenIntMapPointer != nil && len(*obj.FieldLenIntMapPointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenIntMapPointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenInt8MapPointer != nil && len(*obj.FieldLenInt8MapPointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenInt8MapPointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenInt16MapPointer != nil && len(*obj.FieldLenInt16MapPointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenInt16MapPointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenInt32MapPointer != nil && len(*obj.FieldLenInt32MapPointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenInt32MapPointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenInt64MapPointer != nil && len(*obj.FieldLenInt64MapPointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenInt64MapPointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenUintMapPointer != nil && len(*obj.FieldLenUintMapPointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUintMapPointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenUint8MapPointer != nil && len(*obj.FieldLenUint8MapPointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUint8MapPointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenUint16MapPointer != nil && len(*obj.FieldLenUint16MapPointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUint16MapPointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenUint32MapPointer != nil && len(*obj.FieldLenUint32MapPointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUint32MapPointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenUint64MapPointer != nil && len(*obj.FieldLenUint64MapPointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenUint64MapPointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenFloat32MapPointer != nil && len(*obj.FieldLenFloat32MapPointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenFloat32MapPointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenFloat64MapPointer != nil && len(*obj.FieldLenFloat64MapPointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenFloat64MapPointer must have exactly 2 elements"))
+	}
+	if !(obj.FieldLenBoolMapPointer != nil && len(*obj.FieldLenBoolMapPointer) == 2) {
+		errs = append(errs, types.NewValidationError("FieldLenBoolMapPointer must have exactly 2 elements"))
+	}
+	return errs
+}
+func ltStructFieldsValidate(obj *ltStructFields) []error {
+	var errs []error
+	if !(obj.FieldLtInt < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtInt must be < 32"))
+	}
+	if !(obj.FieldLtInt8 < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtInt8 must be < 32"))
+	}
+	if !(obj.FieldLtInt16 < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtInt16 must be < 32"))
+	}
+	if !(obj.FieldLtInt32 < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtInt32 must be < 32"))
+	}
+	if !(obj.FieldLtInt64 < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtInt64 must be < 32"))
+	}
+	if !(obj.FieldLtUint < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtUint must be < 32"))
+	}
+	if !(obj.FieldLtUint8 < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtUint8 must be < 32"))
+	}
+	if !(obj.FieldLtUint16 < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtUint16 must be < 32"))
+	}
+	if !(obj.FieldLtUint32 < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtUint32 must be < 32"))
+	}
+	if !(obj.FieldLtUint64 < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtUint64 must be < 32"))
+	}
+	if !(obj.FieldLtFloat32 < 12.34) {
+		errs = append(errs, types.NewValidationError("FieldLtFloat32 must be < 12.34"))
+	}
+	if !(obj.FieldLtFloat64 < 12.34) {
+		errs = append(errs, types.NewValidationError("FieldLtFloat64 must be < 12.34"))
+	}
+	return errs
+}
+func ltStructFieldsPointerValidate(obj *ltStructFieldsPointer) []error {
+	var errs []error
+	if !(obj.FieldLtIntPointer != nil && *obj.FieldLtIntPointer < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtIntPointer must be < 32"))
+	}
+	if !(obj.FieldLtInt8Pointer != nil && *obj.FieldLtInt8Pointer < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtInt8Pointer must be < 32"))
+	}
+	if !(obj.FieldLtInt16Pointer != nil && *obj.FieldLtInt16Pointer < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtInt16Pointer must be < 32"))
+	}
+	if !(obj.FieldLtInt32Pointer != nil && *obj.FieldLtInt32Pointer < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtInt32Pointer must be < 32"))
+	}
+	if !(obj.FieldLtInt64Pointer != nil && *obj.FieldLtInt64Pointer < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtInt64Pointer must be < 32"))
+	}
+	if !(obj.FieldLtUintPointer != nil && *obj.FieldLtUintPointer < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtUintPointer must be < 32"))
+	}
+	if !(obj.FieldLtUint8Pointer != nil && *obj.FieldLtUint8Pointer < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtUint8Pointer must be < 32"))
+	}
+	if !(obj.FieldLtUint16Pointer != nil && *obj.FieldLtUint16Pointer < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtUint16Pointer must be < 32"))
+	}
+	if !(obj.FieldLtUint32Pointer != nil && *obj.FieldLtUint32Pointer < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtUint32Pointer must be < 32"))
+	}
+	if !(obj.FieldLtUint64Pointer != nil && *obj.FieldLtUint64Pointer < 32) {
+		errs = append(errs, types.NewValidationError("FieldLtUint64Pointer must be < 32"))
+	}
+	if !(obj.FieldLtFloat32Pointer != nil && *obj.FieldLtFloat32Pointer < 12.34) {
+		errs = append(errs, types.NewValidationError("FieldLtFloat32Pointer must be < 12.34"))
+	}
+	if !(obj.FieldLtFloat64Pointer != nil && *obj.FieldLtFloat64Pointer < 12.34) {
+		errs = append(errs, types.NewValidationError("FieldLtFloat64Pointer must be < 12.34"))
+	}
+	return errs
+}
+func lteStructFieldsValidate(obj *lteStructFields) []error {
+	var errs []error
+	if !(obj.FieldLteInt <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteInt must be <= 32"))
+	}
+	if !(obj.FieldLteInt8 <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteInt8 must be <= 32"))
+	}
+	if !(obj.FieldLteInt16 <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteInt16 must be <= 32"))
+	}
+	if !(obj.FieldLteInt32 <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteInt32 must be <= 32"))
+	}
+	if !(obj.FieldLteInt64 <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteInt64 must be <= 32"))
+	}
+	if !(obj.FieldLteUint <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteUint must be <= 32"))
+	}
+	if !(obj.FieldLteUint8 <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteUint8 must be <= 32"))
+	}
+	if !(obj.FieldLteUint16 <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteUint16 must be <= 32"))
+	}
+	if !(obj.FieldLteUint32 <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteUint32 must be <= 32"))
+	}
+	if !(obj.FieldLteUint64 <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteUint64 must be <= 32"))
+	}
+	if !(obj.FieldLteFloat32 <= 12.34) {
+		errs = append(errs, types.NewValidationError("FieldLteFloat32 must be <= 12.34"))
+	}
+	if !(obj.FieldLteFloat64 <= 12.34) {
+		errs = append(errs, types.NewValidationError("FieldLteFloat64 must be <= 12.34"))
+	}
+	return errs
+}
+func lteStructFieldsPointerValidate(obj *lteStructFieldsPointer) []error {
+	var errs []error
+	if !(obj.FieldLteIntPointer != nil && *obj.FieldLteIntPointer <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteIntPointer must be <= 32"))
+	}
+	if !(obj.FieldLteInt8Pointer != nil && *obj.FieldLteInt8Pointer <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteInt8Pointer must be <= 32"))
+	}
+	if !(obj.FieldLteInt16Pointer != nil && *obj.FieldLteInt16Pointer <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteInt16Pointer must be <= 32"))
+	}
+	if !(obj.FieldLteInt32Pointer != nil && *obj.FieldLteInt32Pointer <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteInt32Pointer must be <= 32"))
+	}
+	if !(obj.FieldLteInt64Pointer != nil && *obj.FieldLteInt64Pointer <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteInt64Pointer must be <= 32"))
+	}
+	if !(obj.FieldLteUintPointer != nil && *obj.FieldLteUintPointer <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteUintPointer must be <= 32"))
+	}
+	if !(obj.FieldLteUint8Pointer != nil && *obj.FieldLteUint8Pointer <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteUint8Pointer must be <= 32"))
+	}
+	if !(obj.FieldLteUint16Pointer != nil && *obj.FieldLteUint16Pointer <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteUint16Pointer must be <= 32"))
+	}
+	if !(obj.FieldLteUint32Pointer != nil && *obj.FieldLteUint32Pointer <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteUint32Pointer must be <= 32"))
+	}
+	if !(obj.FieldLteUint64Pointer != nil && *obj.FieldLteUint64Pointer <= 32) {
+		errs = append(errs, types.NewValidationError("FieldLteUint64Pointer must be <= 32"))
+	}
+	if !(obj.FieldLteFloat32Pointer != nil && *obj.FieldLteFloat32Pointer <= 12.34) {
+		errs = append(errs, types.NewValidationError("FieldLteFloat32Pointer must be <= 12.34"))
+	}
+	if !(obj.FieldLteFloat64Pointer != nil && *obj.FieldLteFloat64Pointer <= 12.34) {
+		errs = append(errs, types.NewValidationError("FieldLteFloat64Pointer must be <= 12.34"))
+	}
+	return errs
+}
+func maxStructFieldsValidate(obj *maxStructFields) []error {
+	var errs []error
+	if !(len(obj.FieldMaxString) <= 3) {
+		errs = append(errs, types.NewValidationError("FieldMaxString length must be <= 3"))
+	}
+	if !(len(obj.FieldMaxStringSlice) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxStringSlice must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxIntSlice) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxIntSlice must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxInt8Slice) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxInt8Slice must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxInt16Slice) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxInt16Slice must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxInt32Slice) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxInt32Slice must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxInt64Slice) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxInt64Slice must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxUintSlice) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUintSlice must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxUint8Slice) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUint8Slice must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxUint16Slice) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUint16Slice must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxUint32Slice) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUint32Slice must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxUint64Slice) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUint64Slice must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxFloat32Slice) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxFloat32Slice must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxFloat64Slice) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxFloat64Slice must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxBoolSlice) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxBoolSlice must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxStringMap) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxStringMap must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxIntMap) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxIntMap must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxInt8Map) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxInt8Map must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxInt16Map) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxInt16Map must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxInt32Map) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxInt32Map must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxInt64Map) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxInt64Map must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxUintMap) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUintMap must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxUint8Map) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUint8Map must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxUint16Map) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUint16Map must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxUint32Map) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUint32Map must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxUint64Map) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUint64Map must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxFloat32Map) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxFloat32Map must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxFloat64Map) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxFloat64Map must have at most 2 elements"))
+	}
+	if !(len(obj.FieldMaxBoolMap) <= 1) {
+		errs = append(errs, types.NewValidationError("FieldMaxBoolMap must have at most 1 elements"))
+	}
+	return errs
+}
+func maxStructFieldsPointerValidate(obj *maxStructFieldsPointer) []error {
+	var errs []error
+	if !(obj.FieldMaxStringPointer != nil && len(*obj.FieldMaxStringPointer) <= 3) {
+		errs = append(errs, types.NewValidationError("FieldMaxStringPointer length must be <= 3"))
+	}
+	if !(obj.FieldMaxStringSlicePointer != nil && len(*obj.FieldMaxStringSlicePointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxStringSlicePointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxIntSlicePointer != nil && len(*obj.FieldMaxIntSlicePointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxIntSlicePointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxInt8SlicePointer != nil && len(*obj.FieldMaxInt8SlicePointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxInt8SlicePointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxInt16SlicePointer != nil && len(*obj.FieldMaxInt16SlicePointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxInt16SlicePointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxInt32SlicePointer != nil && len(*obj.FieldMaxInt32SlicePointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxInt32SlicePointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxInt64SlicePointer != nil && len(*obj.FieldMaxInt64SlicePointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxInt64SlicePointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxUintSlicePointer != nil && len(*obj.FieldMaxUintSlicePointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUintSlicePointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxUint8SlicePointer != nil && len(*obj.FieldMaxUint8SlicePointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUint8SlicePointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxUint16SlicePointer != nil && len(*obj.FieldMaxUint16SlicePointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUint16SlicePointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxUint32SlicePointer != nil && len(*obj.FieldMaxUint32SlicePointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUint32SlicePointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxUint64SlicePointer != nil && len(*obj.FieldMaxUint64SlicePointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUint64SlicePointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxFloat32SlicePointer != nil && len(*obj.FieldMaxFloat32SlicePointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxFloat32SlicePointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxFloat64SlicePointer != nil && len(*obj.FieldMaxFloat64SlicePointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxFloat64SlicePointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxBoolSlicePointer != nil && len(*obj.FieldMaxBoolSlicePointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxBoolSlicePointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxStringMapPointer != nil && len(*obj.FieldMaxStringMapPointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxStringMapPointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxIntMapPointer != nil && len(*obj.FieldMaxIntMapPointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxIntMapPointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxInt8MapPointer != nil && len(*obj.FieldMaxInt8MapPointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxInt8MapPointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxInt16MapPointer != nil && len(*obj.FieldMaxInt16MapPointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxInt16MapPointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxInt32MapPointer != nil && len(*obj.FieldMaxInt32MapPointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxInt32MapPointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxInt64MapPointer != nil && len(*obj.FieldMaxInt64MapPointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxInt64MapPointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxUintMapPointer != nil && len(*obj.FieldMaxUintMapPointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUintMapPointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxUint8MapPointer != nil && len(*obj.FieldMaxUint8MapPointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUint8MapPointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxUint16MapPointer != nil && len(*obj.FieldMaxUint16MapPointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUint16MapPointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxUint32MapPointer != nil && len(*obj.FieldMaxUint32MapPointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUint32MapPointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxUint64MapPointer != nil && len(*obj.FieldMaxUint64MapPointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxUint64MapPointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxFloat32MapPointer != nil && len(*obj.FieldMaxFloat32MapPointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxFloat32MapPointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxFloat64MapPointer != nil && len(*obj.FieldMaxFloat64MapPointer) <= 2) {
+		errs = append(errs, types.NewValidationError("FieldMaxFloat64MapPointer must have at most 2 elements"))
+	}
+	if !(obj.FieldMaxBoolMapPointer != nil && len(*obj.FieldMaxBoolMapPointer) <= 1) {
+		errs = append(errs, types.NewValidationError("FieldMaxBoolMapPointer must have at most 1 elements"))
+	}
+	return errs
+}
+func minStructFieldsValidate(obj *minStructFields) []error {
+	var errs []error
+	if !(len(obj.FieldMinString) >= 5) {
+		errs = append(errs, types.NewValidationError("FieldMinString length must be >= 5"))
+	}
+	if !(len(obj.FieldMinStringSlice) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinStringSlice must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinIntSlice) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinIntSlice must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinInt8Slice) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinInt8Slice must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinInt16Slice) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinInt16Slice must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinInt32Slice) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinInt32Slice must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinInt64Slice) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinInt64Slice must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinUintSlice) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUintSlice must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinUint8Slice) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUint8Slice must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinUint16Slice) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUint16Slice must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinUint32Slice) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUint32Slice must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinUint64Slice) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUint64Slice must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinFloat32Slice) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinFloat32Slice must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinFloat64Slice) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinFloat64Slice must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinBoolSlice) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinBoolSlice must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinStringMap) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinStringMap must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinIntMap) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinIntMap must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinInt8Map) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinInt8Map must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinInt16Map) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinInt16Map must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinInt32Map) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinInt32Map must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinInt64Map) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinInt64Map must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinUintMap) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUintMap must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinUint8Map) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUint8Map must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinUint16Map) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUint16Map must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinUint32Map) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUint32Map must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinUint64Map) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUint64Map must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinFloat32Map) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinFloat32Map must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinFloat64Map) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinFloat64Map must have at least 2 elements"))
+	}
+	if !(len(obj.FieldMinBoolMap) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinBoolMap must have at least 2 elements"))
+	}
+	return errs
+}
+func minStructFieldsPointerValidate(obj *minStructFieldsPointer) []error {
+	var errs []error
+	if !(obj.FieldMinStringPointer != nil && len(*obj.FieldMinStringPointer) >= 5) {
+		errs = append(errs, types.NewValidationError("FieldMinStringPointer length must be >= 5"))
+	}
+	if !(obj.FieldMinStringSlicePointer != nil && len(*obj.FieldMinStringSlicePointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinStringSlicePointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinIntSlicePointer != nil && len(*obj.FieldMinIntSlicePointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinIntSlicePointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinInt8SlicePointer != nil && len(*obj.FieldMinInt8SlicePointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinInt8SlicePointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinInt16SlicePointer != nil && len(*obj.FieldMinInt16SlicePointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinInt16SlicePointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinInt32SlicePointer != nil && len(*obj.FieldMinInt32SlicePointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinInt32SlicePointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinInt64SlicePointer != nil && len(*obj.FieldMinInt64SlicePointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinInt64SlicePointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinUintSlicePointer != nil && len(*obj.FieldMinUintSlicePointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUintSlicePointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinUint8SlicePointer != nil && len(*obj.FieldMinUint8SlicePointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUint8SlicePointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinUint16SlicePointer != nil && len(*obj.FieldMinUint16SlicePointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUint16SlicePointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinUint32SlicePointer != nil && len(*obj.FieldMinUint32SlicePointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUint32SlicePointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinUint64SlicePointer != nil && len(*obj.FieldMinUint64SlicePointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUint64SlicePointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinFloat32SlicePointer != nil && len(*obj.FieldMinFloat32SlicePointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinFloat32SlicePointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinFloat64SlicePointer != nil && len(*obj.FieldMinFloat64SlicePointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinFloat64SlicePointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinBoolSlicePointer != nil && len(*obj.FieldMinBoolSlicePointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinBoolSlicePointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinStringMapPointer != nil && len(*obj.FieldMinStringMapPointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinStringMapPointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinIntMapPointer != nil && len(*obj.FieldMinIntMapPointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinIntMapPointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinInt8MapPointer != nil && len(*obj.FieldMinInt8MapPointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinInt8MapPointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinInt16MapPointer != nil && len(*obj.FieldMinInt16MapPointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinInt16MapPointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinInt32MapPointer != nil && len(*obj.FieldMinInt32MapPointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinInt32MapPointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinInt64MapPointer != nil && len(*obj.FieldMinInt64MapPointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinInt64MapPointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinUintMapPointer != nil && len(*obj.FieldMinUintMapPointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUintMapPointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinUint8MapPointer != nil && len(*obj.FieldMinUint8MapPointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUint8MapPointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinUint16MapPointer != nil && len(*obj.FieldMinUint16MapPointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUint16MapPointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinUint32MapPointer != nil && len(*obj.FieldMinUint32MapPointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUint32MapPointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinUint64MapPointer != nil && len(*obj.FieldMinUint64MapPointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinUint64MapPointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinFloat32MapPointer != nil && len(*obj.FieldMinFloat32MapPointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinFloat32MapPointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinFloat64MapPointer != nil && len(*obj.FieldMinFloat64MapPointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinFloat64MapPointer must have at least 2 elements"))
+	}
+	if !(obj.FieldMinBoolMapPointer != nil && len(*obj.FieldMinBoolMapPointer) >= 2) {
+		errs = append(errs, types.NewValidationError("FieldMinBoolMapPointer must have at least 2 elements"))
+	}
+	return errs
+}
+func neqStructFieldsValidate(obj *neqStructFields) []error {
+	var errs []error
+	if !(obj.FieldNeqString != "abcde") {
+		errs = append(errs, types.NewValidationError("FieldNeqString must not be equal to 'abcde'"))
+	}
+	if !(obj.FieldNeqInt != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqInt must not be equal to 32"))
+	}
+	if !(obj.FieldNeqInt8 != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqInt8 must not be equal to 32"))
+	}
+	if !(obj.FieldNeqInt16 != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqInt16 must not be equal to 32"))
+	}
+	if !(obj.FieldNeqInt32 != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqInt32 must not be equal to 32"))
+	}
+	if !(obj.FieldNeqInt64 != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqInt64 must not be equal to 32"))
+	}
+	if !(obj.FieldNeqUint != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqUint must not be equal to 32"))
+	}
+	if !(obj.FieldNeqUint8 != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqUint8 must not be equal to 32"))
+	}
+	if !(obj.FieldNeqUint16 != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqUint16 must not be equal to 32"))
+	}
+	if !(obj.FieldNeqUint32 != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqUint32 must not be equal to 32"))
+	}
+	if !(obj.FieldNeqUint64 != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqUint64 must not be equal to 32"))
+	}
+	if !(obj.FieldNeqFloat32 != 12.34) {
+		errs = append(errs, types.NewValidationError("FieldNeqFloat32 must not be equal to 12.34"))
+	}
+	if !(obj.FieldNeqFloat64 != 12.34) {
+		errs = append(errs, types.NewValidationError("FieldNeqFloat64 must not be equal to 12.34"))
+	}
+	if !(obj.FieldNeqBool != true) {
+		errs = append(errs, types.NewValidationError("FieldNeqBool must not be equal to true"))
+	}
+	return errs
+}
+func neqStructFieldsPointerValidate(obj *neqStructFieldsPointer) []error {
+	var errs []error
+	if !(obj.FieldNeqStringPointer != nil && *obj.FieldNeqStringPointer != "abcde") {
+		errs = append(errs, types.NewValidationError("FieldNeqStringPointer must not be equal to 'abcde'"))
+	}
+	if !(obj.FieldNeqIntPointer != nil && *obj.FieldNeqIntPointer != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqIntPointer must not be equal to 32"))
+	}
+	if !(obj.FieldNeqInt8Pointer != nil && *obj.FieldNeqInt8Pointer != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqInt8Pointer must not be equal to 32"))
+	}
+	if !(obj.FieldNeqInt16Pointer != nil && *obj.FieldNeqInt16Pointer != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqInt16Pointer must not be equal to 32"))
+	}
+	if !(obj.FieldNeqInt32Pointer != nil && *obj.FieldNeqInt32Pointer != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqInt32Pointer must not be equal to 32"))
+	}
+	if !(obj.FieldNeqInt64Pointer != nil && *obj.FieldNeqInt64Pointer != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqInt64Pointer must not be equal to 32"))
+	}
+	if !(obj.FieldNeqUintPointer != nil && *obj.FieldNeqUintPointer != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqUintPointer must not be equal to 32"))
+	}
+	if !(obj.FieldNeqUint8Pointer != nil && *obj.FieldNeqUint8Pointer != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqUint8Pointer must not be equal to 32"))
+	}
+	if !(obj.FieldNeqUint16Pointer != nil && *obj.FieldNeqUint16Pointer != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqUint16Pointer must not be equal to 32"))
+	}
+	if !(obj.FieldNeqUint32Pointer != nil && *obj.FieldNeqUint32Pointer != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqUint32Pointer must not be equal to 32"))
+	}
+	if !(obj.FieldNeqUint64Pointer != nil && *obj.FieldNeqUint64Pointer != 32) {
+		errs = append(errs, types.NewValidationError("FieldNeqUint64Pointer must not be equal to 32"))
+	}
+	if !(obj.FieldNeqFloat32Pointer != nil && *obj.FieldNeqFloat32Pointer != 12.34) {
+		errs = append(errs, types.NewValidationError("FieldNeqFloat32Pointer must not be equal to 12.34"))
+	}
+	if !(obj.FieldNeqFloat64Pointer != nil && *obj.FieldNeqFloat64Pointer != 12.34) {
+		errs = append(errs, types.NewValidationError("FieldNeqFloat64Pointer must not be equal to 12.34"))
+	}
+	if !(obj.FieldNeqBoolPointer != nil && *obj.FieldNeqBoolPointer != true) {
+		errs = append(errs, types.NewValidationError("FieldNeqBoolPointer must not be equal to true"))
+	}
+	return errs
+}
+func neq_ignore_caseStructFieldsValidate(obj *neq_ignore_caseStructFields) []error {
+	var errs []error
+	if !(!types.EqualFold(obj.FieldNeq_ignore_caseString, "abcde")) {
+		errs = append(errs, types.NewValidationError("FieldNeq_ignore_caseString must not be equal to 'abcde'"))
+	}
+	return errs
+}
+func neq_ignore_caseStructFieldsPointerValidate(obj *neq_ignore_caseStructFieldsPointer) []error {
+	var errs []error
+	if !(obj.FieldNeq_ignore_caseStringPointer != nil && !types.EqualFold(*obj.FieldNeq_ignore_caseStringPointer, "abcde")) {
+		errs = append(errs, types.NewValidationError("FieldNeq_ignore_caseStringPointer must not be equal to 'abcde'"))
+	}
+	return errs
+}
+func ninStructFieldsValidate(obj *ninStructFields) []error {
+	var errs []error
+	if !(obj.FieldNinString != "ab" && obj.FieldNinString != "cd" && obj.FieldNinString != "ef") {
+		errs = append(errs, types.NewValidationError("FieldNinString must not be one of 'ab' 'cd' 'ef'"))
+	}
+	if !(obj.FieldNinInt != 12 && obj.FieldNinInt != 34 && obj.FieldNinInt != 56) {
+		errs = append(errs, types.NewValidationError("FieldNinInt must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinInt8 != 12 && obj.FieldNinInt8 != 34 && obj.FieldNinInt8 != 56) {
+		errs = append(errs, types.NewValidationError("FieldNinInt8 must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinInt16 != 12 && obj.FieldNinInt16 != 34 && obj.FieldNinInt16 != 56) {
+		errs = append(errs, types.NewValidationError("FieldNinInt16 must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinInt32 != 12 && obj.FieldNinInt32 != 34 && obj.FieldNinInt32 != 56) {
+		errs = append(errs, types.NewValidationError("FieldNinInt32 must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinInt64 != 12 && obj.FieldNinInt64 != 34 && obj.FieldNinInt64 != 56) {
+		errs = append(errs, types.NewValidationError("FieldNinInt64 must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinUint != 12 && obj.FieldNinUint != 34 && obj.FieldNinUint != 56) {
+		errs = append(errs, types.NewValidationError("FieldNinUint must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinUint8 != 12 && obj.FieldNinUint8 != 34 && obj.FieldNinUint8 != 56) {
+		errs = append(errs, types.NewValidationError("FieldNinUint8 must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinUint16 != 12 && obj.FieldNinUint16 != 34 && obj.FieldNinUint16 != 56) {
+		errs = append(errs, types.NewValidationError("FieldNinUint16 must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinUint32 != 12 && obj.FieldNinUint32 != 34 && obj.FieldNinUint32 != 56) {
+		errs = append(errs, types.NewValidationError("FieldNinUint32 must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinUint64 != 12 && obj.FieldNinUint64 != 34 && obj.FieldNinUint64 != 56) {
+		errs = append(errs, types.NewValidationError("FieldNinUint64 must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinFloat32 != 11.11 && obj.FieldNinFloat32 != 22.22 && obj.FieldNinFloat32 != 33.33) {
+		errs = append(errs, types.NewValidationError("FieldNinFloat32 must not be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldNinFloat64 != 11.11 && obj.FieldNinFloat64 != 22.22 && obj.FieldNinFloat64 != 33.33) {
+		errs = append(errs, types.NewValidationError("FieldNinFloat64 must not be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldNinBool != true) {
+		errs = append(errs, types.NewValidationError("FieldNinBool must not be one of 'true'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinStringSlice, []string{"ab", "cd", "ef"})) {
+		errs = append(errs, types.NewValidationError("FieldNinStringSlice elements must not be one of 'ab' 'cd' 'ef'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinIntSlice, []int{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinIntSlice elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinInt8Slice, []int8{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt8Slice elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinInt16Slice, []int16{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt16Slice elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinInt32Slice, []int32{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt32Slice elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinInt64Slice, []int64{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt64Slice elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinUintSlice, []uint{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUintSlice elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinUint8Slice, []uint8{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint8Slice elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinUint16Slice, []uint16{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint16Slice elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinUint32Slice, []uint32{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint32Slice elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinUint64Slice, []uint64{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint64Slice elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinFloat32Slice, []float32{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldNinFloat32Slice elements must not be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinFloat64Slice, []float64{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldNinFloat64Slice elements must not be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinBoolSlice, []bool{true})) {
+		errs = append(errs, types.NewValidationError("FieldNinBoolSlice elements must not be one of 'true'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinStringArray[:], []string{"ab", "cd", "ef"})) {
+		errs = append(errs, types.NewValidationError("FieldNinStringArray elements must not be one of 'ab' 'cd' 'ef'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinIntArray[:], []int{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinIntArray elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinInt8Array[:], []int8{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt8Array elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinInt16Array[:], []int16{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt16Array elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinInt32Array[:], []int32{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt32Array elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinInt64Array[:], []int64{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt64Array elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinUintArray[:], []uint{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUintArray elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinUint8Array[:], []uint8{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint8Array elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinUint16Array[:], []uint16{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint16Array elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinUint32Array[:], []uint32{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint32Array elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinUint64Array[:], []uint64{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint64Array elements must not be one of '12' '34' '56'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinFloat32Array[:], []float32{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldNinFloat32Array elements must not be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinFloat64Array[:], []float64{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldNinFloat64Array elements must not be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(types.SliceNotContains(obj.FieldNinBoolArray[:], []bool{true})) {
+		errs = append(errs, types.NewValidationError("FieldNinBoolArray elements must not be one of 'true'"))
+	}
+	if !(types.MapNotContains(obj.FieldNinStringMap, []string{"a", "b", "c"})) {
+		errs = append(errs, types.NewValidationError("FieldNinStringMap elements must not be one of 'a' 'b' 'c'"))
+	}
+	if !(types.MapNotContains(obj.FieldNinIntMap, []int{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinIntMap elements must not be one of '1' '2' '3'"))
+	}
+	if !(types.MapNotContains(obj.FieldNinInt8Map, []int8{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt8Map elements must not be one of '1' '2' '3'"))
+	}
+	if !(types.MapNotContains(obj.FieldNinInt16Map, []int16{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt16Map elements must not be one of '1' '2' '3'"))
+	}
+	if !(types.MapNotContains(obj.FieldNinInt32Map, []int32{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt32Map elements must not be one of '1' '2' '3'"))
+	}
+	if !(types.MapNotContains(obj.FieldNinInt64Map, []int64{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt64Map elements must not be one of '1' '2' '3'"))
+	}
+	if !(types.MapNotContains(obj.FieldNinUintMap, []uint{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinUintMap elements must not be one of '1' '2' '3'"))
+	}
+	if !(types.MapNotContains(obj.FieldNinUint8Map, []uint8{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint8Map elements must not be one of '1' '2' '3'"))
+	}
+	if !(types.MapNotContains(obj.FieldNinUint16Map, []uint16{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint16Map elements must not be one of '1' '2' '3'"))
+	}
+	if !(types.MapNotContains(obj.FieldNinUint32Map, []uint32{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint32Map elements must not be one of '1' '2' '3'"))
+	}
+	if !(types.MapNotContains(obj.FieldNinUint64Map, []uint64{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint64Map elements must not be one of '1' '2' '3'"))
+	}
+	if !(types.MapNotContains(obj.FieldNinFloat32Map, []float32{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldNinFloat32Map elements must not be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(types.MapNotContains(obj.FieldNinFloat64Map, []float64{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldNinFloat64Map elements must not be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(types.MapNotContains(obj.FieldNinBoolMap, []bool{false})) {
+		errs = append(errs, types.NewValidationError("FieldNinBoolMap elements must not be one of 'false'"))
+	}
+	return errs
+}
+func ninStructFieldsPointerValidate(obj *ninStructFieldsPointer) []error {
+	var errs []error
+	if !((obj.FieldNinStringPointer != nil && *obj.FieldNinStringPointer != "ab") && (obj.FieldNinStringPointer != nil && *obj.FieldNinStringPointer != "cd") && (obj.FieldNinStringPointer != nil && *obj.FieldNinStringPointer != "ef")) {
+		errs = append(errs, types.NewValidationError("FieldNinStringPointer must not be one of 'ab' 'cd' 'ef'"))
+	}
+	if !((obj.FieldNinIntPointer != nil && *obj.FieldNinIntPointer != 12) && (obj.FieldNinIntPointer != nil && *obj.FieldNinIntPointer != 34) && (obj.FieldNinIntPointer != nil && *obj.FieldNinIntPointer != 56)) {
+		errs = append(errs, types.NewValidationError("FieldNinIntPointer must not be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldNinInt8Pointer != nil && *obj.FieldNinInt8Pointer != 12) && (obj.FieldNinInt8Pointer != nil && *obj.FieldNinInt8Pointer != 34) && (obj.FieldNinInt8Pointer != nil && *obj.FieldNinInt8Pointer != 56)) {
+		errs = append(errs, types.NewValidationError("FieldNinInt8Pointer must not be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldNinInt16Pointer != nil && *obj.FieldNinInt16Pointer != 12) && (obj.FieldNinInt16Pointer != nil && *obj.FieldNinInt16Pointer != 34) && (obj.FieldNinInt16Pointer != nil && *obj.FieldNinInt16Pointer != 56)) {
+		errs = append(errs, types.NewValidationError("FieldNinInt16Pointer must not be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldNinInt32Pointer != nil && *obj.FieldNinInt32Pointer != 12) && (obj.FieldNinInt32Pointer != nil && *obj.FieldNinInt32Pointer != 34) && (obj.FieldNinInt32Pointer != nil && *obj.FieldNinInt32Pointer != 56)) {
+		errs = append(errs, types.NewValidationError("FieldNinInt32Pointer must not be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldNinInt64Pointer != nil && *obj.FieldNinInt64Pointer != 12) && (obj.FieldNinInt64Pointer != nil && *obj.FieldNinInt64Pointer != 34) && (obj.FieldNinInt64Pointer != nil && *obj.FieldNinInt64Pointer != 56)) {
+		errs = append(errs, types.NewValidationError("FieldNinInt64Pointer must not be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldNinUintPointer != nil && *obj.FieldNinUintPointer != 12) && (obj.FieldNinUintPointer != nil && *obj.FieldNinUintPointer != 34) && (obj.FieldNinUintPointer != nil && *obj.FieldNinUintPointer != 56)) {
+		errs = append(errs, types.NewValidationError("FieldNinUintPointer must not be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldNinUint8Pointer != nil && *obj.FieldNinUint8Pointer != 12) && (obj.FieldNinUint8Pointer != nil && *obj.FieldNinUint8Pointer != 34) && (obj.FieldNinUint8Pointer != nil && *obj.FieldNinUint8Pointer != 56)) {
+		errs = append(errs, types.NewValidationError("FieldNinUint8Pointer must not be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldNinUint16Pointer != nil && *obj.FieldNinUint16Pointer != 12) && (obj.FieldNinUint16Pointer != nil && *obj.FieldNinUint16Pointer != 34) && (obj.FieldNinUint16Pointer != nil && *obj.FieldNinUint16Pointer != 56)) {
+		errs = append(errs, types.NewValidationError("FieldNinUint16Pointer must not be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldNinUint32Pointer != nil && *obj.FieldNinUint32Pointer != 12) && (obj.FieldNinUint32Pointer != nil && *obj.FieldNinUint32Pointer != 34) && (obj.FieldNinUint32Pointer != nil && *obj.FieldNinUint32Pointer != 56)) {
+		errs = append(errs, types.NewValidationError("FieldNinUint32Pointer must not be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldNinUint64Pointer != nil && *obj.FieldNinUint64Pointer != 12) && (obj.FieldNinUint64Pointer != nil && *obj.FieldNinUint64Pointer != 34) && (obj.FieldNinUint64Pointer != nil && *obj.FieldNinUint64Pointer != 56)) {
+		errs = append(errs, types.NewValidationError("FieldNinUint64Pointer must not be one of '12' '34' '56'"))
+	}
+	if !((obj.FieldNinFloat32Pointer != nil && *obj.FieldNinFloat32Pointer != 11.11) && (obj.FieldNinFloat32Pointer != nil && *obj.FieldNinFloat32Pointer != 22.22) && (obj.FieldNinFloat32Pointer != nil && *obj.FieldNinFloat32Pointer != 33.33)) {
+		errs = append(errs, types.NewValidationError("FieldNinFloat32Pointer must not be one of '11.11' '22.22' '33.33'"))
+	}
+	if !((obj.FieldNinFloat64Pointer != nil && *obj.FieldNinFloat64Pointer != 11.11) && (obj.FieldNinFloat64Pointer != nil && *obj.FieldNinFloat64Pointer != 22.22) && (obj.FieldNinFloat64Pointer != nil && *obj.FieldNinFloat64Pointer != 33.33)) {
+		errs = append(errs, types.NewValidationError("FieldNinFloat64Pointer must not be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldNinBoolPointer != nil && *obj.FieldNinBoolPointer != true) {
+		errs = append(errs, types.NewValidationError("FieldNinBoolPointer must not be one of 'true'"))
+	}
+	if !(obj.FieldNinStringSlicePointer != nil && types.SliceNotContains(*obj.FieldNinStringSlicePointer, []string{"ab", "cd", "ef"})) {
+		errs = append(errs, types.NewValidationError("FieldNinStringSlicePointer elements must not be one of 'ab' 'cd' 'ef'"))
+	}
+	if !(obj.FieldNinIntSlicePointer != nil && types.SliceNotContains(*obj.FieldNinIntSlicePointer, []int{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinIntSlicePointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinInt8SlicePointer != nil && types.SliceNotContains(*obj.FieldNinInt8SlicePointer, []int8{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt8SlicePointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinInt16SlicePointer != nil && types.SliceNotContains(*obj.FieldNinInt16SlicePointer, []int16{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt16SlicePointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinInt32SlicePointer != nil && types.SliceNotContains(*obj.FieldNinInt32SlicePointer, []int32{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt32SlicePointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinInt64SlicePointer != nil && types.SliceNotContains(*obj.FieldNinInt64SlicePointer, []int64{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt64SlicePointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinUintSlicePointer != nil && types.SliceNotContains(*obj.FieldNinUintSlicePointer, []uint{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUintSlicePointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinUint8SlicePointer != nil && types.SliceNotContains(*obj.FieldNinUint8SlicePointer, []uint8{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint8SlicePointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinUint16SlicePointer != nil && types.SliceNotContains(*obj.FieldNinUint16SlicePointer, []uint16{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint16SlicePointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinUint32SlicePointer != nil && types.SliceNotContains(*obj.FieldNinUint32SlicePointer, []uint32{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint32SlicePointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinUint64SlicePointer != nil && types.SliceNotContains(*obj.FieldNinUint64SlicePointer, []uint64{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint64SlicePointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinFloat32SlicePointer != nil && types.SliceNotContains(*obj.FieldNinFloat32SlicePointer, []float32{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldNinFloat32SlicePointer elements must not be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldNinFloat64SlicePointer != nil && types.SliceNotContains(*obj.FieldNinFloat64SlicePointer, []float64{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldNinFloat64SlicePointer elements must not be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldNinBoolSlicePointer != nil && types.SliceNotContains(*obj.FieldNinBoolSlicePointer, []bool{true})) {
+		errs = append(errs, types.NewValidationError("FieldNinBoolSlicePointer elements must not be one of 'true'"))
+	}
+	if !(obj.FieldNinStringArrayPointer != nil && types.SliceNotContains(obj.FieldNinStringArrayPointer[:], []string{"ab", "cd", "ef"})) {
+		errs = append(errs, types.NewValidationError("FieldNinStringArrayPointer elements must not be one of 'ab' 'cd' 'ef'"))
+	}
+	if !(obj.FieldNinIntArrayPointer != nil && types.SliceNotContains(obj.FieldNinIntArrayPointer[:], []int{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinIntArrayPointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinInt8ArrayPointer != nil && types.SliceNotContains(obj.FieldNinInt8ArrayPointer[:], []int8{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt8ArrayPointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinInt16ArrayPointer != nil && types.SliceNotContains(obj.FieldNinInt16ArrayPointer[:], []int16{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt16ArrayPointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinInt32ArrayPointer != nil && types.SliceNotContains(obj.FieldNinInt32ArrayPointer[:], []int32{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt32ArrayPointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinInt64ArrayPointer != nil && types.SliceNotContains(obj.FieldNinInt64ArrayPointer[:], []int64{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt64ArrayPointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinUintArrayPointer != nil && types.SliceNotContains(obj.FieldNinUintArrayPointer[:], []uint{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUintArrayPointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinUint8ArrayPointer != nil && types.SliceNotContains(obj.FieldNinUint8ArrayPointer[:], []uint8{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint8ArrayPointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinUint16ArrayPointer != nil && types.SliceNotContains(obj.FieldNinUint16ArrayPointer[:], []uint16{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint16ArrayPointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinUint32ArrayPointer != nil && types.SliceNotContains(obj.FieldNinUint32ArrayPointer[:], []uint32{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint32ArrayPointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinUint64ArrayPointer != nil && types.SliceNotContains(obj.FieldNinUint64ArrayPointer[:], []uint64{12, 34, 56})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint64ArrayPointer elements must not be one of '12' '34' '56'"))
+	}
+	if !(obj.FieldNinFloat32ArrayPointer != nil && types.SliceNotContains(obj.FieldNinFloat32ArrayPointer[:], []float32{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldNinFloat32ArrayPointer elements must not be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldNinFloat64ArrayPointer != nil && types.SliceNotContains(obj.FieldNinFloat64ArrayPointer[:], []float64{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldNinFloat64ArrayPointer elements must not be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldNinBoolArrayPointer != nil && types.SliceNotContains(obj.FieldNinBoolArrayPointer[:], []bool{true})) {
+		errs = append(errs, types.NewValidationError("FieldNinBoolArrayPointer elements must not be one of 'true'"))
+	}
+	if !(obj.FieldNinStringMapPointer != nil && types.MapNotContains(*obj.FieldNinStringMapPointer, []string{"a", "b", "c"})) {
+		errs = append(errs, types.NewValidationError("FieldNinStringMapPointer elements must not be one of 'a' 'b' 'c'"))
+	}
+	if !(obj.FieldNinIntMapPointer != nil && types.MapNotContains(*obj.FieldNinIntMapPointer, []int{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinIntMapPointer elements must not be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldNinInt8MapPointer != nil && types.MapNotContains(*obj.FieldNinInt8MapPointer, []int8{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt8MapPointer elements must not be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldNinInt16MapPointer != nil && types.MapNotContains(*obj.FieldNinInt16MapPointer, []int16{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt16MapPointer elements must not be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldNinInt32MapPointer != nil && types.MapNotContains(*obj.FieldNinInt32MapPointer, []int32{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt32MapPointer elements must not be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldNinInt64MapPointer != nil && types.MapNotContains(*obj.FieldNinInt64MapPointer, []int64{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinInt64MapPointer elements must not be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldNinUintMapPointer != nil && types.MapNotContains(*obj.FieldNinUintMapPointer, []uint{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinUintMapPointer elements must not be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldNinUint8MapPointer != nil && types.MapNotContains(*obj.FieldNinUint8MapPointer, []uint8{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint8MapPointer elements must not be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldNinUint16MapPointer != nil && types.MapNotContains(*obj.FieldNinUint16MapPointer, []uint16{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint16MapPointer elements must not be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldNinUint32MapPointer != nil && types.MapNotContains(*obj.FieldNinUint32MapPointer, []uint32{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint32MapPointer elements must not be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldNinUint64MapPointer != nil && types.MapNotContains(*obj.FieldNinUint64MapPointer, []uint64{1, 2, 3})) {
+		errs = append(errs, types.NewValidationError("FieldNinUint64MapPointer elements must not be one of '1' '2' '3'"))
+	}
+	if !(obj.FieldNinFloat32MapPointer != nil && types.MapNotContains(*obj.FieldNinFloat32MapPointer, []float32{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldNinFloat32MapPointer elements must not be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldNinFloat64MapPointer != nil && types.MapNotContains(*obj.FieldNinFloat64MapPointer, []float64{11.11, 22.22, 33.33})) {
+		errs = append(errs, types.NewValidationError("FieldNinFloat64MapPointer elements must not be one of '11.11' '22.22' '33.33'"))
+	}
+	if !(obj.FieldNinBoolMapPointer != nil && types.MapNotContains(*obj.FieldNinBoolMapPointer, []bool{false})) {
+		errs = append(errs, types.NewValidationError("FieldNinBoolMapPointer elements must not be one of 'false'"))
+	}
+	return errs
+}
+func requiredStructFieldsValidate(obj *requiredStructFields) []error {
+	var errs []error
+	if !(obj.FieldRequiredString != "") {
+		errs = append(errs, types.NewValidationError("FieldRequiredString is required"))
+	}
+	if !(obj.FieldRequiredInt != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt is required"))
+	}
+	if !(obj.FieldRequiredInt8 != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt8 is required"))
+	}
+	if !(obj.FieldRequiredInt16 != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt16 is required"))
+	}
+	if !(obj.FieldRequiredInt32 != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt32 is required"))
+	}
+	if !(obj.FieldRequiredInt64 != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt64 is required"))
+	}
+	if !(obj.FieldRequiredUint != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint is required"))
+	}
+	if !(obj.FieldRequiredUint8 != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint8 is required"))
+	}
+	if !(obj.FieldRequiredUint16 != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint16 is required"))
+	}
+	if !(obj.FieldRequiredUint32 != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint32 is required"))
+	}
+	if !(obj.FieldRequiredUint64 != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint64 is required"))
+	}
+	if !(obj.FieldRequiredFloat32 != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredFloat32 is required"))
+	}
+	if !(obj.FieldRequiredFloat64 != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredFloat64 is required"))
+	}
+	if !(obj.FieldRequiredBool != false) {
+		errs = append(errs, types.NewValidationError("FieldRequiredBool is required"))
+	}
+	if !(len(obj.FieldRequiredStringSlice) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredStringSlice must not be empty"))
+	}
+	if !(len(obj.FieldRequiredIntSlice) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredIntSlice must not be empty"))
+	}
+	if !(len(obj.FieldRequiredInt8Slice) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt8Slice must not be empty"))
+	}
+	if !(len(obj.FieldRequiredInt16Slice) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt16Slice must not be empty"))
+	}
+	if !(len(obj.FieldRequiredInt32Slice) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt32Slice must not be empty"))
+	}
+	if !(len(obj.FieldRequiredInt64Slice) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt64Slice must not be empty"))
+	}
+	if !(len(obj.FieldRequiredUintSlice) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUintSlice must not be empty"))
+	}
+	if !(len(obj.FieldRequiredUint8Slice) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint8Slice must not be empty"))
+	}
+	if !(len(obj.FieldRequiredUint16Slice) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint16Slice must not be empty"))
+	}
+	if !(len(obj.FieldRequiredUint32Slice) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint32Slice must not be empty"))
+	}
+	if !(len(obj.FieldRequiredUint64Slice) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint64Slice must not be empty"))
+	}
+	if !(len(obj.FieldRequiredFloat32Slice) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredFloat32Slice must not be empty"))
+	}
+	if !(len(obj.FieldRequiredFloat64Slice) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredFloat64Slice must not be empty"))
+	}
+	if !(len(obj.FieldRequiredBoolSlice) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredBoolSlice must not be empty"))
+	}
+	if !(len(obj.FieldRequiredStringMap) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredStringMap must not be empty"))
+	}
+	if !(len(obj.FieldRequiredIntMap) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredIntMap must not be empty"))
+	}
+	if !(len(obj.FieldRequiredInt8Map) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt8Map must not be empty"))
+	}
+	if !(len(obj.FieldRequiredInt16Map) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt16Map must not be empty"))
+	}
+	if !(len(obj.FieldRequiredInt32Map) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt32Map must not be empty"))
+	}
+	if !(len(obj.FieldRequiredInt64Map) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt64Map must not be empty"))
+	}
+	if !(len(obj.FieldRequiredUintMap) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUintMap must not be empty"))
+	}
+	if !(len(obj.FieldRequiredUint8Map) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint8Map must not be empty"))
+	}
+	if !(len(obj.FieldRequiredUint16Map) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint16Map must not be empty"))
+	}
+	if !(len(obj.FieldRequiredUint32Map) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint32Map must not be empty"))
+	}
+	if !(len(obj.FieldRequiredUint64Map) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint64Map must not be empty"))
+	}
+	if !(len(obj.FieldRequiredFloat32Map) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredFloat32Map must not be empty"))
+	}
+	if !(len(obj.FieldRequiredFloat64Map) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredFloat64Map must not be empty"))
+	}
+	if !(len(obj.FieldRequiredBoolMap) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredBoolMap must not be empty"))
+	}
+	return errs
+}
+func requiredStructFieldsPointerValidate(obj *requiredStructFieldsPointer) []error {
+	var errs []error
+	if !(obj.FieldRequiredStringPointer != nil && *obj.FieldRequiredStringPointer != "") {
+		errs = append(errs, types.NewValidationError("FieldRequiredStringPointer is required"))
+	}
+	if !(obj.FieldRequiredIntPointer != nil && *obj.FieldRequiredIntPointer != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredIntPointer is required"))
+	}
+	if !(obj.FieldRequiredInt8Pointer != nil && *obj.FieldRequiredInt8Pointer != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt8Pointer is required"))
+	}
+	if !(obj.FieldRequiredInt16Pointer != nil && *obj.FieldRequiredInt16Pointer != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt16Pointer is required"))
+	}
+	if !(obj.FieldRequiredInt32Pointer != nil && *obj.FieldRequiredInt32Pointer != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt32Pointer is required"))
+	}
+	if !(obj.FieldRequiredInt64Pointer != nil && *obj.FieldRequiredInt64Pointer != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt64Pointer is required"))
+	}
+	if !(obj.FieldRequiredUintPointer != nil && *obj.FieldRequiredUintPointer != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUintPointer is required"))
+	}
+	if !(obj.FieldRequiredUint8Pointer != nil && *obj.FieldRequiredUint8Pointer != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint8Pointer is required"))
+	}
+	if !(obj.FieldRequiredUint16Pointer != nil && *obj.FieldRequiredUint16Pointer != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint16Pointer is required"))
+	}
+	if !(obj.FieldRequiredUint32Pointer != nil && *obj.FieldRequiredUint32Pointer != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint32Pointer is required"))
+	}
+	if !(obj.FieldRequiredUint64Pointer != nil && *obj.FieldRequiredUint64Pointer != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint64Pointer is required"))
+	}
+	if !(obj.FieldRequiredFloat32Pointer != nil && *obj.FieldRequiredFloat32Pointer != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredFloat32Pointer is required"))
+	}
+	if !(obj.FieldRequiredFloat64Pointer != nil && *obj.FieldRequiredFloat64Pointer != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredFloat64Pointer is required"))
+	}
+	if !(obj.FieldRequiredBoolPointer != nil && *obj.FieldRequiredBoolPointer != false) {
+		errs = append(errs, types.NewValidationError("FieldRequiredBoolPointer is required"))
+	}
+	if !(obj.FieldRequiredStringSlicePointer != nil && len(*obj.FieldRequiredStringSlicePointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredStringSlicePointer must not be empty"))
+	}
+	if !(obj.FieldRequiredIntSlicePointer != nil && len(*obj.FieldRequiredIntSlicePointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredIntSlicePointer must not be empty"))
+	}
+	if !(obj.FieldRequiredInt8SlicePointer != nil && len(*obj.FieldRequiredInt8SlicePointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt8SlicePointer must not be empty"))
+	}
+	if !(obj.FieldRequiredInt16SlicePointer != nil && len(*obj.FieldRequiredInt16SlicePointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt16SlicePointer must not be empty"))
+	}
+	if !(obj.FieldRequiredInt32SlicePointer != nil && len(*obj.FieldRequiredInt32SlicePointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt32SlicePointer must not be empty"))
+	}
+	if !(obj.FieldRequiredInt64SlicePointer != nil && len(*obj.FieldRequiredInt64SlicePointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt64SlicePointer must not be empty"))
+	}
+	if !(obj.FieldRequiredUintSlicePointer != nil && len(*obj.FieldRequiredUintSlicePointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUintSlicePointer must not be empty"))
+	}
+	if !(obj.FieldRequiredUint8SlicePointer != nil && len(*obj.FieldRequiredUint8SlicePointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint8SlicePointer must not be empty"))
+	}
+	if !(obj.FieldRequiredUint16SlicePointer != nil && len(*obj.FieldRequiredUint16SlicePointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint16SlicePointer must not be empty"))
+	}
+	if !(obj.FieldRequiredUint32SlicePointer != nil && len(*obj.FieldRequiredUint32SlicePointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint32SlicePointer must not be empty"))
+	}
+	if !(obj.FieldRequiredUint64SlicePointer != nil && len(*obj.FieldRequiredUint64SlicePointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint64SlicePointer must not be empty"))
+	}
+	if !(obj.FieldRequiredFloat32SlicePointer != nil && len(*obj.FieldRequiredFloat32SlicePointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredFloat32SlicePointer must not be empty"))
+	}
+	if !(obj.FieldRequiredFloat64SlicePointer != nil && len(*obj.FieldRequiredFloat64SlicePointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredFloat64SlicePointer must not be empty"))
+	}
+	if !(obj.FieldRequiredBoolSlicePointer != nil && len(*obj.FieldRequiredBoolSlicePointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredBoolSlicePointer must not be empty"))
+	}
+	if !(obj.FieldRequiredStringArrayPointer != nil) {
+		errs = append(errs, types.NewValidationError("FieldRequiredStringArrayPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredIntArrayPointer != nil) {
+		errs = append(errs, types.NewValidationError("FieldRequiredIntArrayPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredInt8ArrayPointer != nil) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt8ArrayPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredInt16ArrayPointer != nil) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt16ArrayPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredInt32ArrayPointer != nil) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt32ArrayPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredInt64ArrayPointer != nil) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt64ArrayPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredUintArrayPointer != nil) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUintArrayPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredUint8ArrayPointer != nil) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint8ArrayPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredUint16ArrayPointer != nil) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint16ArrayPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredUint32ArrayPointer != nil) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint32ArrayPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredUint64ArrayPointer != nil) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint64ArrayPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredFloat32ArrayPointer != nil) {
+		errs = append(errs, types.NewValidationError("FieldRequiredFloat32ArrayPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredFloat64ArrayPointer != nil) {
+		errs = append(errs, types.NewValidationError("FieldRequiredFloat64ArrayPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredBoolArrayPointer != nil) {
+		errs = append(errs, types.NewValidationError("FieldRequiredBoolArrayPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredStringMapPointer != nil && len(*obj.FieldRequiredStringMapPointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredStringMapPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredIntMapPointer != nil && len(*obj.FieldRequiredIntMapPointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredIntMapPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredInt8MapPointer != nil && len(*obj.FieldRequiredInt8MapPointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt8MapPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredInt16MapPointer != nil && len(*obj.FieldRequiredInt16MapPointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt16MapPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredInt32MapPointer != nil && len(*obj.FieldRequiredInt32MapPointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt32MapPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredInt64MapPointer != nil && len(*obj.FieldRequiredInt64MapPointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredInt64MapPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredUintMapPointer != nil && len(*obj.FieldRequiredUintMapPointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUintMapPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredUint8MapPointer != nil && len(*obj.FieldRequiredUint8MapPointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint8MapPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredUint16MapPointer != nil && len(*obj.FieldRequiredUint16MapPointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint16MapPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredUint32MapPointer != nil && len(*obj.FieldRequiredUint32MapPointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint32MapPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredUint64MapPointer != nil && len(*obj.FieldRequiredUint64MapPointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredUint64MapPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredFloat32MapPointer != nil && len(*obj.FieldRequiredFloat32MapPointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredFloat32MapPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredFloat64MapPointer != nil && len(*obj.FieldRequiredFloat64MapPointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredFloat64MapPointer must not be empty"))
+	}
+	if !(obj.FieldRequiredBoolMapPointer != nil && len(*obj.FieldRequiredBoolMapPointer) != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredBoolMapPointer must not be empty"))
+	}
 	return errs
 }

@@ -16,21 +16,21 @@ type NumericTests struct {
 	FieldTypes []string
 }
 
-func main() {
-	log.Println("Generating numeric test file")
+func generateNumericTests() {
+	log.Println("Generating numeric test files")
 
 	numericTests := NumericTests{}
 	numericTests.FieldTypes = common.HelperFromNormalizedToBasicTypes("<INT>")
 
-	if err := numericTests.GenerateFile("numeric_int.tpl", "./numeric_int.go"); err != nil {
-		log.Fatalf("error generation numeric int file %s", err)
+	if err := numericTests.GenerateFile("numeric_int.tpl", "./generated_numeric_int_tests.go"); err != nil {
+		log.Fatalf("error generating numeric int file %s", err)
 	}
 
 	numericTests = NumericTests{}
 	numericTests.FieldTypes = common.HelperFromNormalizedToBasicTypes("<FLOAT>")
 
-	if err := numericTests.GenerateFile("numeric_float.tpl", "./numeric_float.go"); err != nil {
-		log.Fatalf("error generation numeric float file %s", err)
+	if err := numericTests.GenerateFile("numeric_float.tpl", "./generated_numeric_float_tests.go"); err != nil {
+		log.Fatalf("error generating numeric float file %s", err)
 	}
 
 	log.Println("Generating done")

@@ -13,7 +13,6 @@ type StringType struct {
 	FieldIn     string `valid:"in=ab bc cd"`
 	FieldNotIn  string `valid:"nin=xx yy zz"`
 	EmailReq    string `valid:"required,email"`
-	EmailOpt    string `valid:"email"`
 }
 
 func stringTests() {
@@ -33,7 +32,6 @@ func stringTests() {
 		FieldIn:     "abc",
 		FieldNotIn:  "zz",
 		EmailReq:    "invalid.email.format", // Invalid required email
-		EmailOpt:    "invalid",              // Invalid optional email
 	}
 	expectedMsgErrors = []string{
 		"FieldReq is required",
@@ -46,7 +44,6 @@ func stringTests() {
 		"FieldIn must be one of 'ab' 'bc' 'cd'",
 		"FieldNotIn must not be one of 'xx' 'yy' 'zz'",
 		"EmailReq must be a valid email",
-		"EmailOpt must be a valid email",
 	}
 	errs = StringTypeValidate(v)
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
@@ -65,7 +62,6 @@ func stringTests() {
 		FieldIn:     "bc",
 		FieldNotIn:  "xy",
 		EmailReq:    "user@example.com", // Valid required email
-		EmailOpt:    "",                 // Empty optional email (valid)
 	}
 	expectedMsgErrors = nil
 	errs = StringTypeValidate(v)
