@@ -220,11 +220,6 @@ func extractCompleteType(fType common.FieldType, expr ast.Expr, packageName stri
 		}
 
 		nestedPkgName := typeID.Name
-		fType, err = extractCompleteType(fType, v.X, nestedPkgName)
-		if err != nil {
-			return common.FieldType{}, err
-		}
-
 		fType = extractNestedFieldType(nestedPkgName, v.Sel.Name)
 		return fType, nil
 
