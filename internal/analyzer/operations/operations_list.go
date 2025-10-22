@@ -11,7 +11,10 @@ var operationsList = map[string]Operation{
 	"required": {
 		CountValues:      common.ZeroValue,
 		IsFieldOperation: false,
-		ValidTypes:       []string{"<STRING>", "<INT>", "<FLOAT>", "[]<STRING>", "[]<INT>", "map[<STRING>]", "map[<INT>]"},
+		ValidTypes: []string{
+			"<STRING>", "<INT>", "<FLOAT>", "<BOOL>",
+			"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>",
+			"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]"},
 	},
 	"gt": {
 		CountValues:      common.OneValue,
@@ -36,12 +39,18 @@ var operationsList = map[string]Operation{
 	"min": {
 		CountValues:      common.OneValue,
 		IsFieldOperation: false,
-		ValidTypes:       []string{"<STRING>", "[]<STRING>", "[]<INT>", "map[<STRING>]", "map[<INT>]"},
+		ValidTypes: []string{
+			"<STRING>", "[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>",
+			"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]",
+		},
 	},
 	"max": {
 		CountValues:      common.OneValue,
 		IsFieldOperation: false,
-		ValidTypes:       []string{"<STRING>", "[]<STRING>", "[]<INT>", "map[<STRING>]", "map[<INT>]"},
+		ValidTypes: []string{
+			"<STRING>", "[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>",
+			"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]",
+		},
 	},
 	"eq_ignore_case": {
 		CountValues:      common.OneValue,
@@ -51,7 +60,10 @@ var operationsList = map[string]Operation{
 	"len": {
 		CountValues:      common.OneValue,
 		IsFieldOperation: false,
-		ValidTypes:       []string{"<STRING>", "[]<STRING>", "[]<INT>", "map[<STRING>]", "map[<INT>]"},
+		ValidTypes: []string{
+			"<STRING>", "[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>",
+			"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]",
+		},
 	},
 	"neq": {
 		CountValues:      common.OneValue,
@@ -66,12 +78,22 @@ var operationsList = map[string]Operation{
 	"in": {
 		CountValues:      common.ManyValues,
 		IsFieldOperation: false,
-		ValidTypes:       []string{"<STRING>", "<INT>", "<FLOAT>", "[]<STRING>", "[]<INT>", "[N]<STRING>", "[N]<INT>", "map[<STRING>]", "map[<INT>]"},
+		ValidTypes: []string{
+			"<STRING>", "<INT>", "<FLOAT>", "<BOOL>",
+			"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>",
+			"[N]<STRING>", "[N]<INT>", "[N]<FLOAT>", "[N]<BOOL>",
+			"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]",
+		},
 	},
 	"nin": {
 		CountValues:      common.ManyValues,
 		IsFieldOperation: false,
-		ValidTypes:       []string{"<STRING>", "<INT>", "<FLOAT>", "[]<STRING>", "[]<INT>", "[N]<STRING>", "[N]<INT>", "map[<STRING>]", "map[<INT>]"},
+		ValidTypes: []string{
+			"<STRING>", "<INT>", "<FLOAT>", "<BOOL>",
+			"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>",
+			"[N]<STRING>", "[N]<INT>", "[N]<FLOAT>", "[N]<BOOL>",
+			"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]",
+		},
 	},
 	"email": {
 		CountValues:      common.ZeroValue,

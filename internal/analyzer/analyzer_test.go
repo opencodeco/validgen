@@ -257,7 +257,7 @@ func TestAnalyzeStructsWithInvalidInnerFieldOperations(t *testing.T) {
 					},
 				},
 			},
-			wantErr: types.NewValidationError("operation ltfield: invalid string type"),
+			wantErr: types.NewValidationError("operation ltfield: invalid string(<STRING>) type"),
 		},
 	}
 
@@ -359,7 +359,7 @@ func TestAnalyzeStructsWithInvalidNestedFieldOperations(t *testing.T) {
 					},
 				},
 			},
-			wantErr: types.NewValidationError("operation ltfield: invalid string type"),
+			wantErr: types.NewValidationError("operation ltfield: invalid string(<STRING>) type"),
 		},
 	}
 

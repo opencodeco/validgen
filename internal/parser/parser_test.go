@@ -505,6 +505,65 @@ func TestParseStructsOk(t *testing.T) {
 				},
 			},
 		},
+
+		{
+			name: "Pointers type",
+			args: args{
+				fullpath: "example/main.go",
+				src: "package main\n" +
+					"type AllTypes struct {\n" +
+					"	StringPointer   *string          `valid:\"eq=abc\"`\n" +
+					"	IntPointer      *int64           `valid:\"neq=1234\"`\n" +
+					"	BoolPointer     *bool            `valid:\"eq=true\"`\n" +
+					"	MapPointer      *map[string]bool `valid:\"min=2\"`\n" +
+					"	SliceIntPointer []*int64 `valid:\"min=2\"`\n" +
+					"	ArrayIntPointer [5]*int64 `valid:\"max=4\"`\n" +
+					"}\n" +
+
+					"func main() {\n" +
+					"}\n",
+			},
+			want: []*Struct{
+				{
+					StructName:  "AllTypes",
+					Path:        "./example",
+					PackageName: "main",
+					Fields: []Field{
+						{
+							FieldName: "StringPointer",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "*", Size: ""},
+							Tag:       "valid:\"eq=abc\"",
+						},
+						{
+							FieldName: "IntPointer",
+							Type:      common.FieldType{BaseType: "int64", ComposedType: "*", Size: ""},
+							Tag:       "valid:\"neq=1234\"",
+						},
+						{
+							FieldName: "BoolPointer",
+							Type:      common.FieldType{BaseType: "bool", ComposedType: "*", Size: ""},
+							Tag:       "valid:\"eq=true\"",
+						},
+						{
+							FieldName: "MapPointer",
+							Type:      common.FieldType{BaseType: "string", ComposedType: "*map", Size: ""},
+							Tag:       "valid:\"min=2\"",
+						},
+						{
+							FieldName: "SliceIntPointer",
+							Type:      common.FieldType{BaseType: "int64", ComposedType: "*[]", Size: ""},
+							Tag:       "valid:\"min=2\"",
+						},
+						{
+							FieldName: "ArrayIntPointer",
+							Type:      common.FieldType{BaseType: "int64", ComposedType: "*[5]", Size: ""},
+							Tag:       "valid:\"max=4\"",
+						},
+					},
+					Imports: map[string]Import{},
+				},
+			},
+		},
 	}
 
 	for _, tt := range tests {

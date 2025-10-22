@@ -18,6 +18,7 @@ func TestDefineTestElementsBetweenInnerFields(t *testing.T) {
 		args args
 		want TestElements
 	}{
+		// <STRING>
 		{
 			name: "inner string fields must be equal",
 			args: args{
@@ -44,6 +45,8 @@ func TestDefineTestElementsBetweenInnerFields(t *testing.T) {
 				errorMessage:   "myfield1 must not be equal to myfield2",
 			},
 		},
+
+		// <INT>
 		{
 			name: "inner uint8 fields must be equal",
 			args: args{
@@ -123,6 +126,7 @@ func TestDefineTestElementsBetweenInnerFields(t *testing.T) {
 			},
 		},
 
+		// <BOOL>
 		{
 			name: "inner bool fields must be equal",
 			args: args{

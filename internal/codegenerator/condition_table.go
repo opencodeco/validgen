@@ -45,6 +45,22 @@ var conditionTable = map[string]Operation{
 					errorMessage:   "{{.Name}} must be equal to {{.Target}}",
 				},
 			},
+			{
+				AcceptedTypes: []string{"*<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && *obj.{{.Name}} == "{{.Target}}"`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be equal to '{{.Target}}'",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<INT>", "*<FLOAT>", "*<BOOL>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && *obj.{{.Name}} == {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be equal to {{.Target}}",
+				},
+			},
 		},
 	},
 	"required": {
@@ -66,9 +82,57 @@ var conditionTable = map[string]Operation{
 				},
 			},
 			{
-				AcceptedTypes: []string{"[]<STRING>", "[]<INT>", "map[<STRING>]", "map[<INT>]"},
+				AcceptedTypes: []string{"<BOOL>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != false`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} is required",
+				},
+			},
+			{
+				AcceptedTypes: []string{"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>", "map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]"},
 				ConditionTable: ConditionTable{
 					operation:      `len(obj.{{.Name}}) != 0`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must not be empty",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && *obj.{{.Name}} != ""`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} is required",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<INT>", "*<FLOAT>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && *obj.{{.Name}} != 0`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} is required",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<BOOL>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && *obj.{{.Name}} != false`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} is required",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*[]<STRING>", "*[]<INT>", "*[]<FLOAT>", "*[]<BOOL>", "*map[<STRING>]", "*map[<INT>]", "*map[<FLOAT>]", "*map[<BOOL>]"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && len(*obj.{{.Name}}) != 0`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must not be empty",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*[N]<STRING>", "*[N]<INT>", "*[N]<FLOAT>", "*[N]<BOOL>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil`,
 					concatOperator: "",
 					errorMessage:   "{{.Name}} must not be empty",
 				},
@@ -85,6 +149,14 @@ var conditionTable = map[string]Operation{
 					errorMessage:   "{{.Name}} must be >= {{.Target}}",
 				},
 			},
+			{
+				AcceptedTypes: []string{"*<INT>", "*<FLOAT>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && *obj.{{.Name}} >= {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be >= {{.Target}}",
+				},
+			},
 		},
 	},
 	"gt": {
@@ -93,6 +165,14 @@ var conditionTable = map[string]Operation{
 				AcceptedTypes: []string{"<INT>", "<FLOAT>"},
 				ConditionTable: ConditionTable{
 					operation:      `obj.{{.Name}} > {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be > {{.Target}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<INT>", "*<FLOAT>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && *obj.{{.Name}} > {{.Target}}`,
 					concatOperator: "",
 					errorMessage:   "{{.Name}} must be > {{.Target}}",
 				},
@@ -109,6 +189,14 @@ var conditionTable = map[string]Operation{
 					errorMessage:   "{{.Name}} must be <= {{.Target}}",
 				},
 			},
+			{
+				AcceptedTypes: []string{"*<INT>", "*<FLOAT>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && *obj.{{.Name}} <= {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be <= {{.Target}}",
+				},
+			},
 		},
 	},
 	"lt": {
@@ -117,6 +205,14 @@ var conditionTable = map[string]Operation{
 				AcceptedTypes: []string{"<INT>", "<FLOAT>"},
 				ConditionTable: ConditionTable{
 					operation:      `obj.{{.Name}} < {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be < {{.Target}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<INT>", "*<FLOAT>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && *obj.{{.Name}} < {{.Target}}`,
 					concatOperator: "",
 					errorMessage:   "{{.Name}} must be < {{.Target}}",
 				},
@@ -134,9 +230,25 @@ var conditionTable = map[string]Operation{
 				},
 			},
 			{
-				AcceptedTypes: []string{"[]<STRING>", "[]<INT>", "map[<STRING>]", "map[<INT>]"},
+				AcceptedTypes: []string{"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>", "map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]"},
 				ConditionTable: ConditionTable{
 					operation:      `len(obj.{{.Name}}) >= {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must have at least {{.Target}} elements",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && len(*obj.{{.Name}}) >= {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} length must be >= {{.Target}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*[]<STRING>", "*[]<INT>", "*[]<FLOAT>", "*[]<BOOL>", "*map[<STRING>]", "*map[<INT>]", "*map[<FLOAT>]", "*map[<BOOL>]"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && len(*obj.{{.Name}}) >= {{.Target}}`,
 					concatOperator: "",
 					errorMessage:   "{{.Name}} must have at least {{.Target}} elements",
 				},
@@ -154,9 +266,25 @@ var conditionTable = map[string]Operation{
 				},
 			},
 			{
-				AcceptedTypes: []string{"[]<STRING>", "[]<INT>", "map[<STRING>]", "map[<INT>]"},
+				AcceptedTypes: []string{"*<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && len(*obj.{{.Name}}) <= {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} length must be <= {{.Target}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>", "map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]"},
 				ConditionTable: ConditionTable{
 					operation:      `len(obj.{{.Name}}) <= {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must have at most {{.Target}} elements",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*[]<STRING>", "*[]<INT>", "*[]<FLOAT>", "*[]<BOOL>", "*map[<STRING>]", "*map[<INT>]", "*map[<FLOAT>]", "*map[<BOOL>]"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && len(*obj.{{.Name}}) <= {{.Target}}`,
 					concatOperator: "",
 					errorMessage:   "{{.Name}} must have at most {{.Target}} elements",
 				},
@@ -169,6 +297,14 @@ var conditionTable = map[string]Operation{
 				AcceptedTypes: []string{"<STRING>"},
 				ConditionTable: ConditionTable{
 					operation:      `types.EqualFold(obj.{{.Name}}, "{{.Target}}")`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be equal to '{{.Target}}'",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && types.EqualFold(*obj.{{.Name}}, "{{.Target}}")`,
 					concatOperator: "",
 					errorMessage:   "{{.Name}} must be equal to '{{.Target}}'",
 				},
@@ -186,9 +322,25 @@ var conditionTable = map[string]Operation{
 				},
 			},
 			{
-				AcceptedTypes: []string{"[]<STRING>", "[]<INT>", "map[<STRING>]", "map[<INT>]"},
+				AcceptedTypes: []string{"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>", "map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]"},
 				ConditionTable: ConditionTable{
 					operation:      `len(obj.{{.Name}}) == {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must have exactly {{.Target}} elements",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && len(*obj.{{.Name}}) == {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} length must be {{.Target}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*[]<STRING>", "*[]<INT>", "*[]<FLOAT>", "*[]<BOOL>", "*map[<STRING>]", "*map[<INT>]", "*map[<FLOAT>]", "*map[<BOOL>]"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && len(*obj.{{.Name}}) == {{.Target}}`,
 					concatOperator: "",
 					errorMessage:   "{{.Name}} must have exactly {{.Target}} elements",
 				},
@@ -213,6 +365,22 @@ var conditionTable = map[string]Operation{
 					errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
 				},
 			},
+			{
+				AcceptedTypes: []string{"*<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && *obj.{{.Name}} != "{{.Target}}"`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must not be equal to '{{.Target}}'",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<INT>", "*<FLOAT>", "*<BOOL>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && *obj.{{.Name}} != {{.Target}}`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must not be equal to {{.Target}}",
+				},
+			},
 		},
 	},
 	"neq_ignore_case": {
@@ -221,6 +389,14 @@ var conditionTable = map[string]Operation{
 				AcceptedTypes: []string{"<STRING>"},
 				ConditionTable: ConditionTable{
 					operation:      `!types.EqualFold(obj.{{.Name}}, "{{.Target}}")`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must not be equal to '{{.Target}}'",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && !types.EqualFold(*obj.{{.Name}}, "{{.Target}}")`,
 					concatOperator: "",
 					errorMessage:   "{{.Name}} must not be equal to '{{.Target}}'",
 				},
@@ -238,7 +414,7 @@ var conditionTable = map[string]Operation{
 				},
 			},
 			{
-				AcceptedTypes: []string{"<INT>", "<FLOAT>"},
+				AcceptedTypes: []string{"<INT>", "<FLOAT>", "<BOOL>"},
 				ConditionTable: ConditionTable{
 					operation:      `obj.{{.Name}} == {{.Target}}`,
 					concatOperator: "||",
@@ -254,6 +430,14 @@ var conditionTable = map[string]Operation{
 				},
 			},
 			{
+				AcceptedTypes: []string{"[]<INT>", "[]<FLOAT>", "[]<BOOL>"},
+				ConditionTable: ConditionTable{
+					operation:      `types.SliceOnlyContains(obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+				},
+			},
+			{
 				AcceptedTypes: []string{"[N]<STRING>"},
 				ConditionTable: ConditionTable{
 					operation:      `types.SliceOnlyContains(obj.{{.Name}}[:], {{.TargetsAsStringSlice}})`,
@@ -262,15 +446,7 @@ var conditionTable = map[string]Operation{
 				},
 			},
 			{
-				AcceptedTypes: []string{"[]<INT>"},
-				ConditionTable: ConditionTable{
-					operation:      `types.SliceOnlyContains(obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
-					concatOperator: "",
-					errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
-				},
-			},
-			{
-				AcceptedTypes: []string{"[N]<INT>"},
+				AcceptedTypes: []string{"[N]<INT>", "[N]<FLOAT>", "[N]<BOOL>"},
 				ConditionTable: ConditionTable{
 					operation:      `types.SliceOnlyContains(obj.{{.Name}}[:], {{.TargetsAsNumericSlice}})`,
 					concatOperator: "",
@@ -286,9 +462,73 @@ var conditionTable = map[string]Operation{
 				},
 			},
 			{
-				AcceptedTypes: []string{"map[<INT>]"},
+				AcceptedTypes: []string{"map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]"},
 				ConditionTable: ConditionTable{
 					operation:      `types.MapOnlyContains(obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `(obj.{{.Name}} != nil && *obj.{{.Name}} == "{{.Target}}")`,
+					concatOperator: "||",
+					errorMessage:   "{{.Name}} must be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<INT>", "*<FLOAT>", "*<BOOL>"},
+				ConditionTable: ConditionTable{
+					operation:      `(obj.{{.Name}} != nil && *obj.{{.Name}} == {{.Target}})`,
+					concatOperator: "||",
+					errorMessage:   "{{.Name}} must be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*[]<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && types.SliceOnlyContains(*obj.{{.Name}}, {{.TargetsAsStringSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*[]<INT>", "*[]<FLOAT>", "*[]<BOOL>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && types.SliceOnlyContains(*obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*[N]<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && types.SliceOnlyContains(obj.{{.Name}}[:], {{.TargetsAsStringSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*[N]<INT>", "*[N]<FLOAT>", "*[N]<BOOL>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && types.SliceOnlyContains(obj.{{.Name}}[:], {{.TargetsAsNumericSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*map[<STRING>]"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && types.MapOnlyContains(*obj.{{.Name}}, {{.TargetsAsStringSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*map[<INT>]", "*map[<FLOAT>]", "*map[<BOOL>]"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && types.MapOnlyContains(*obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
 					concatOperator: "",
 					errorMessage:   "{{.Name}} elements must be one of {{.Targets}}",
 				},
@@ -306,7 +546,7 @@ var conditionTable = map[string]Operation{
 				},
 			},
 			{
-				AcceptedTypes: []string{"<INT>", "<FLOAT>"},
+				AcceptedTypes: []string{"<INT>", "<FLOAT>", "<BOOL>"},
 				ConditionTable: ConditionTable{
 					operation:      `obj.{{.Name}} != {{.Target}}`,
 					concatOperator: "&&",
@@ -322,6 +562,14 @@ var conditionTable = map[string]Operation{
 				},
 			},
 			{
+				AcceptedTypes: []string{"[]<INT>", "[]<FLOAT>", "[]<BOOL>"},
+				ConditionTable: ConditionTable{
+					operation:      `types.SliceNotContains(obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+				},
+			},
+			{
 				AcceptedTypes: []string{"[N]<STRING>"},
 				ConditionTable: ConditionTable{
 					operation:      `types.SliceNotContains(obj.{{.Name}}[:], {{.TargetsAsStringSlice}})`,
@@ -330,15 +578,7 @@ var conditionTable = map[string]Operation{
 				},
 			},
 			{
-				AcceptedTypes: []string{"[]<INT>"},
-				ConditionTable: ConditionTable{
-					operation:      `types.SliceNotContains(obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
-					concatOperator: "",
-					errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
-				},
-			},
-			{
-				AcceptedTypes: []string{"[N]<INT>"},
+				AcceptedTypes: []string{"[N]<INT>", "[N]<FLOAT>", "[N]<BOOL>"},
 				ConditionTable: ConditionTable{
 					operation:      `types.SliceNotContains(obj.{{.Name}}[:], {{.TargetsAsNumericSlice}})`,
 					concatOperator: "",
@@ -354,9 +594,73 @@ var conditionTable = map[string]Operation{
 				},
 			},
 			{
-				AcceptedTypes: []string{"map[<INT>]"},
+				AcceptedTypes: []string{"map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]"},
 				ConditionTable: ConditionTable{
 					operation:      `types.MapNotContains(obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `(obj.{{.Name}} != nil && *obj.{{.Name}} != "{{.Target}}")`,
+					concatOperator: "&&",
+					errorMessage:   "{{.Name}} must not be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<INT>", "*<FLOAT>", "*<BOOL>"},
+				ConditionTable: ConditionTable{
+					operation:      `(obj.{{.Name}} != nil && *obj.{{.Name}} != {{.Target}})`,
+					concatOperator: "&&",
+					errorMessage:   "{{.Name}} must not be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*[]<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && types.SliceNotContains(*obj.{{.Name}}, {{.TargetsAsStringSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*[]<INT>", "*[]<FLOAT>", "*[]<BOOL>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && types.SliceNotContains(*obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*[N]<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && types.SliceNotContains(obj.{{.Name}}[:], {{.TargetsAsStringSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*[N]<INT>", "*[N]<FLOAT>", "*[N]<BOOL>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && types.SliceNotContains(obj.{{.Name}}[:], {{.TargetsAsNumericSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*map[<STRING>]"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && types.MapNotContains(*obj.{{.Name}}, {{.TargetsAsStringSlice}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*map[<INT>]", "*map[<FLOAT>]", "*map[<BOOL>]"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && types.MapNotContains(*obj.{{.Name}}, {{.TargetsAsNumericSlice}})`,
 					concatOperator: "",
 					errorMessage:   "{{.Name}} elements must not be one of {{.Targets}}",
 				},
@@ -373,12 +677,20 @@ var conditionTable = map[string]Operation{
 					errorMessage:   "{{.Name}} must be a valid email",
 				},
 			},
+			{
+				AcceptedTypes: []string{"*<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && types.IsValidEmail(*obj.{{.Name}})`,
+					concatOperator: "",
+					errorMessage:   "{{.Name}} must be a valid email",
+				},
+			},
 		},
 	},
 	"eqfield": {
 		ConditionByTypes: []ConditionByType{
 			{
-				AcceptedTypes: []string{"<STRING>", "<INT>", "<BOOL>"},
+				AcceptedTypes: []string{"<STRING>", "<INT>", "<FLOAT>", "<BOOL>"},
 				ConditionTable: ConditionTable{
 					operation:      `obj.{{.Name}} == obj.{{.Target}}`,
 					concatOperator: "",
@@ -390,7 +702,7 @@ var conditionTable = map[string]Operation{
 	"neqfield": {
 		ConditionByTypes: []ConditionByType{
 			{
-				AcceptedTypes: []string{"<STRING>", "<INT>", "<BOOL>"},
+				AcceptedTypes: []string{"<STRING>", "<INT>", "<FLOAT>", "<BOOL>"},
 				ConditionTable: ConditionTable{
 					operation:      `obj.{{.Name}} != obj.{{.Target}}`,
 					concatOperator: "",
@@ -402,7 +714,7 @@ var conditionTable = map[string]Operation{
 	"gtefield": {
 		ConditionByTypes: []ConditionByType{
 			{
-				AcceptedTypes: []string{"<INT>"},
+				AcceptedTypes: []string{"<INT>", "<FLOAT>"},
 				ConditionTable: ConditionTable{
 					operation:      `obj.{{.Name}} >= obj.{{.Target}}`,
 					concatOperator: "",
@@ -414,7 +726,7 @@ var conditionTable = map[string]Operation{
 	"gtfield": {
 		ConditionByTypes: []ConditionByType{
 			{
-				AcceptedTypes: []string{"<INT>"},
+				AcceptedTypes: []string{"<INT>", "<FLOAT>"},
 				ConditionTable: ConditionTable{
 					operation:      `obj.{{.Name}} > obj.{{.Target}}`,
 					concatOperator: "",
@@ -426,7 +738,7 @@ var conditionTable = map[string]Operation{
 	"ltefield": {
 		ConditionByTypes: []ConditionByType{
 			{
-				AcceptedTypes: []string{"<INT>"},
+				AcceptedTypes: []string{"<INT>", "<FLOAT>"},
 				ConditionTable: ConditionTable{
 					operation:      `obj.{{.Name}} <= obj.{{.Target}}`,
 					concatOperator: "",
@@ -438,7 +750,7 @@ var conditionTable = map[string]Operation{
 	"ltfield": {
 		ConditionByTypes: []ConditionByType{
 			{
-				AcceptedTypes: []string{"<INT>"},
+				AcceptedTypes: []string{"<INT>", "<FLOAT>"},
 				ConditionTable: ConditionTable{
 					operation:      `obj.{{.Name}} < obj.{{.Target}}`,
 					concatOperator: "",
@@ -455,11 +767,12 @@ func GetConditionTable(operation string, fieldType common.FieldType) (ConditionT
 		return ConditionTable{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s", operation)
 	}
 
+	normalizedType := fieldType.ToNormalizedString()
 	for _, conditionByType := range op.ConditionByTypes {
-		if slices.Contains(conditionByType.AcceptedTypes, fieldType.ToNormalizedString()) {
+		if slices.Contains(conditionByType.AcceptedTypes, normalizedType) {
 			return conditionByType.ConditionTable, nil
 		}
 	}
 
-	return ConditionTable{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s type %s", operation, fieldType.BaseType)
+	return ConditionTable{}, types.NewValidationError("INTERNAL ERROR: unsupported operation %s type %s (%s)", operation, normalizedType, fieldType.BaseType)
 }

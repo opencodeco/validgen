@@ -1,6 +1,11 @@
 package common
 
-import "fmt"
+import (
+	"fmt"
+
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
+)
 
 type FieldType struct {
 	ComposedType string // array ([N]), map (map) or slice ([])
@@ -9,7 +14,7 @@ type FieldType struct {
 }
 
 func (ft FieldType) IsGoType() bool {
-	if ft.ComposedType == "map" {
+	if ft.ComposedType == "map" || ft.ComposedType == "*map" {
 		return true
 	}
 
@@ -78,7 +83,15 @@ func (ft FieldType) ToType() string {
 	case "[]":
 		return "[]" + ft.BaseType
 	case "map":
-		return "map[" + ft.BaseType + "]"
+		return "map[" + ft.BaseType + "]" + ft.BaseType
+	case "*":
+		return "*" + ft.BaseType
+	case "*[N]":
+		return fmt.Sprintf("*[%s]%s", ft.Size, ft.BaseType)
+	case "*[]":
+		return "*[]" + ft.BaseType
+	case "*map":
+		return "*map[" + ft.BaseType + "]" + ft.BaseType
 	}
 
 	return ft.BaseType
@@ -92,7 +105,38 @@ func (ft FieldType) ToNormalizedString() string {
 		return "[]" + ft.NormalizeBaseType().String()
 	case "map":
 		return "map[" + ft.NormalizeBaseType().String() + "]"
+	case "*[N]":
+		return "*[N]" + ft.NormalizeBaseType().String()
+	case "*[]":
+		return "*[]" + ft.NormalizeBaseType().String()
+	case "*map":
+		return "*map[" + ft.NormalizeBaseType().String() + "]"
+	case "*":
+		return "*" + ft.NormalizeBaseType().String()
 	}
 
 	return ft.NormalizeBaseType().String()
+}
+
+func (ft FieldType) ToStringName() string {
+	result := ""
+
+	switch ft.ComposedType {
+	case "[N]":
+		result = "Array"
+	case "[]":
+		result = "Slice"
+	case "map":
+		result = "Map"
+	case "*[N]":
+		result = "ArrayPointer"
+	case "*[]":
+		result = "SlicePointer"
+	case "*map":
+		result = "MapPointer"
+	case "*":
+		result = "Pointer"
+	}
+
+	return cases.Title(language.Und).String(ft.BaseType) + result
 }

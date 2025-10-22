@@ -167,7 +167,7 @@ func TestFieldTypeIsGoType(t *testing.T) {
 	}
 }
 
-func TestFieldType_NormalizeBaseType(t *testing.T) {
+func TestFieldTypeNormalizeBaseType(t *testing.T) {
 	type fields struct {
 		BaseType string
 	}
@@ -291,6 +291,336 @@ func TestFieldType_NormalizeBaseType(t *testing.T) {
 			}
 			if got := ft.NormalizeBaseType(); got != tt.want {
 				t.Errorf("FieldType.NormalizeBaseType() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestFieldTypeToStringName(t *testing.T) {
+	type fields struct {
+		ComposedType string
+		BaseType     string
+		Size         string
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		want   string
+	}{
+		// Base types.
+		{
+			name: "string type",
+			fields: fields{
+				ComposedType: "",
+				BaseType:     "string",
+				Size:         "",
+			},
+			want: "String",
+		},
+		{
+			name: "int type",
+			fields: fields{
+				ComposedType: "",
+				BaseType:     "int",
+				Size:         "",
+			},
+			want: "Int",
+		},
+		{
+			name: "float64 type",
+			fields: fields{
+				ComposedType: "",
+				BaseType:     "float64",
+				Size:         "",
+			},
+			want: "Float64",
+		},
+		{
+			name: "bool type",
+			fields: fields{
+				ComposedType: "",
+				BaseType:     "bool",
+				Size:         "",
+			},
+			want: "Bool",
+		},
+
+		// Array type.
+		{
+			name: "array string type",
+			fields: fields{
+				ComposedType: "[N]",
+				BaseType:     "string",
+				Size:         "5",
+			},
+			want: "StringArray",
+		},
+		{
+			name: "array int type",
+			fields: fields{
+				ComposedType: "[N]",
+				BaseType:     "int",
+				Size:         "5",
+			},
+			want: "IntArray",
+		},
+		{
+			name: "array float type",
+			fields: fields{
+				ComposedType: "[N]",
+				BaseType:     "float64",
+				Size:         "5",
+			},
+			want: "Float64Array",
+		},
+		{
+			name: "array bool type",
+			fields: fields{
+				ComposedType: "[N]",
+				BaseType:     "bool",
+				Size:         "5",
+			},
+			want: "BoolArray",
+		},
+
+		// Slice type.
+		{
+			name: "slice string type",
+			fields: fields{
+				ComposedType: "[]",
+				BaseType:     "string",
+				Size:         "",
+			},
+			want: "StringSlice",
+		},
+		{
+			name: "slice int type",
+			fields: fields{
+				ComposedType: "[]",
+				BaseType:     "int",
+				Size:         "",
+			},
+			want: "IntSlice",
+		},
+		{
+			name: "slice float type",
+			fields: fields{
+				ComposedType: "[]",
+				BaseType:     "float64",
+				Size:         "",
+			},
+			want: "Float64Slice",
+		},
+		{
+			name: "slice bool type",
+			fields: fields{
+				ComposedType: "[]",
+				BaseType:     "bool",
+				Size:         "",
+			},
+			want: "BoolSlice",
+		},
+
+		// Map type.
+		{
+			name: "map string type",
+			fields: fields{
+				ComposedType: "map",
+				BaseType:     "string",
+				Size:         "",
+			},
+			want: "StringMap",
+		},
+		{
+			name: "map int type",
+			fields: fields{
+				ComposedType: "map",
+				BaseType:     "int",
+				Size:         "",
+			},
+			want: "IntMap",
+		},
+		{
+			name: "map float type",
+			fields: fields{
+				ComposedType: "map",
+				BaseType:     "float64",
+				Size:         "",
+			},
+			want: "Float64Map",
+		},
+		{
+			name: "map bool type",
+			fields: fields{
+				ComposedType: "map",
+				BaseType:     "bool",
+				Size:         "",
+			},
+			want: "BoolMap",
+		},
+
+		// Base pointer types.
+		{
+			name: "string pointer type",
+			fields: fields{
+				ComposedType: "*",
+				BaseType:     "string",
+				Size:         "",
+			},
+			want: "StringPointer",
+		},
+		{
+			name: "int pointer type",
+			fields: fields{
+				ComposedType: "*",
+				BaseType:     "int",
+				Size:         "",
+			},
+			want: "IntPointer",
+		},
+		{
+			name: "float64 pointer type",
+			fields: fields{
+				ComposedType: "*",
+				BaseType:     "float64",
+				Size:         "",
+			},
+			want: "Float64Pointer",
+		},
+		{
+			name: "bool pointer type",
+			fields: fields{
+				ComposedType: "*",
+				BaseType:     "bool",
+				Size:         "",
+			},
+			want: "BoolPointer",
+		},
+
+		// Array pointer type.
+		{
+			name: "array string pointer type",
+			fields: fields{
+				ComposedType: "*[N]",
+				BaseType:     "string",
+				Size:         "5",
+			},
+			want: "StringArrayPointer",
+		},
+		{
+			name: "array int pointer type",
+			fields: fields{
+				ComposedType: "*[N]",
+				BaseType:     "int",
+				Size:         "5",
+			},
+			want: "IntArrayPointer",
+		},
+		{
+			name: "array float pointer type",
+			fields: fields{
+				ComposedType: "*[N]",
+				BaseType:     "float64",
+				Size:         "5",
+			},
+			want: "Float64ArrayPointer",
+		},
+		{
+			name: "array bool pointer type",
+			fields: fields{
+				ComposedType: "*[N]",
+				BaseType:     "bool",
+				Size:         "5",
+			},
+			want: "BoolArrayPointer",
+		},
+
+		// Slice pointer type.
+		{
+			name: "slice string pointer type",
+			fields: fields{
+				ComposedType: "*[]",
+				BaseType:     "string",
+				Size:         "",
+			},
+			want: "StringSlicePointer",
+		},
+		{
+			name: "slice int pointer type",
+			fields: fields{
+				ComposedType: "*[]",
+				BaseType:     "int",
+				Size:         "",
+			},
+			want: "IntSlicePointer",
+		},
+		{
+			name: "slice float pointer type",
+			fields: fields{
+				ComposedType: "*[]",
+				BaseType:     "float64",
+				Size:         "",
+			},
+			want: "Float64SlicePointer",
+		},
+		{
+			name: "slice bool pointer type",
+			fields: fields{
+				ComposedType: "*[]",
+				BaseType:     "bool",
+				Size:         "",
+			},
+			want: "BoolSlicePointer",
+		},
+
+		// Map type.
+		{
+			name: "map string pointer type",
+			fields: fields{
+				ComposedType: "*map",
+				BaseType:     "string",
+				Size:         "",
+			},
+			want: "StringMapPointer",
+		},
+		{
+			name: "map int pointer type",
+			fields: fields{
+				ComposedType: "*map",
+				BaseType:     "int",
+				Size:         "",
+			},
+			want: "IntMapPointer",
+		},
+		{
+			name: "map float pointer type",
+			fields: fields{
+				ComposedType: "*map",
+				BaseType:     "float64",
+				Size:         "",
+			},
+			want: "Float64MapPointer",
+		},
+		{
+			name: "map bool pointer type",
+			fields: fields{
+				ComposedType: "*map",
+				BaseType:     "bool",
+				Size:         "",
+			},
+			want: "BoolMapPointer",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ft := FieldType{
+				ComposedType: tt.fields.ComposedType,
+				BaseType:     tt.fields.BaseType,
+				Size:         tt.fields.Size,
+			}
+			if got := ft.ToStringName(); got != tt.want {
+				t.Errorf("FieldType.ToStringName() = %v, want %v", got, tt.want)
 			}
 		})
 	}

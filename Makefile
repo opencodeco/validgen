@@ -16,7 +16,7 @@ clean:
 unittests:
 	@echo "Running unit tests"
 	go clean -testcache
-	go test -v ./...
+	go test -v ./internal/... ./types/...
 
 benchtests: build
 	@echo "Running bench tests"
@@ -32,7 +32,7 @@ build: clean
 endtoendtests: build
 	@echo "Running endtoend tests"
 	find tests/endtoend/ -name 'validator__.go' -exec rm \{} \;
-	cd tests/endtoend/generate_tests/; rm -f numeric_*.go; go run generate_numeric_tests_main.go; mv numeric_*.go ..
+	cd tests/endtoend/generate_tests/; rm -f generated*tests.go; go run *.go; mv generated*tests.go ..
 	$(VALIDGEN_BIN) tests/endtoend
 	cd tests/endtoend; go run .
 
