@@ -156,7 +156,11 @@ func extractAndAppendStructFields(structType *ast.StructType, packageName string
 			fieldTag = field.Tag.Value
 		}
 
-		fieldTag = extractTag(fieldTag)
+		fieldTag, err := extractTag(fieldTag)
+		if err != nil {
+			return err
+		}
+
 		fieldType, err := extractCompleteType(common.FieldType{}, field.Type, packageName)
 		if err != nil {
 			return err
@@ -221,7 +225,7 @@ func extractCompleteType(fType common.FieldType, expr ast.Expr, packageName stri
 			return common.FieldType{}, err
 		}
 
-		fType, _ = extractNestedFieldTypeAndTag(nestedPkgName, v.Sel.Name, "")
+		fType = extractNestedFieldType(nestedPkgName, v.Sel.Name)
 		return fType, nil
 
 	case *ast.MapType:
@@ -247,24 +251,25 @@ func extractCompleteType(fType common.FieldType, expr ast.Expr, packageName stri
 	return common.FieldType{}, nil
 }
 
-func extractTag(fieldTag string) string {
+func extractTag(fieldTag string) (string, error) {
 
-	rFieldTag := ""
-	if fieldTag != "" {
-		rFieldTag = fieldTag
-		rFieldTag, _ = strconv.Unquote(rFieldTag)
+	if fieldTag == "" {
+		return "", nil
 	}
 
-	return rFieldTag
+	rFieldTag, err := strconv.Unquote(fieldTag)
+	if err != nil {
+		return "", err
+	}
+
+	return rFieldTag, nil
 }
 
-func extractNestedFieldTypeAndTag(nestedPkgName, baseType, fieldTag string) (common.FieldType, string) {
-	rFieldType := common.KeyPath(nestedPkgName, baseType)
-	rFieldTag, _ := strconv.Unquote(fieldTag)
+func extractNestedFieldType(nestedPkgName, baseType string) common.FieldType {
 
 	return common.FieldType{
-		BaseType:     rFieldType,
+		BaseType:     common.KeyPath(nestedPkgName, baseType),
 		ComposedType: "",
 		Size:         "",
-	}, rFieldTag
+	}
 }
