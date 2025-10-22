@@ -203,6 +203,6 @@ func assertExpectedErrorMsgs(testName string, errs []error, expectedMsgErrors []
 	log.Printf("%s error\n", testName)
 	log.Printf("error = %v\n", errs)
 	log.Printf("wantErr = %v\n", expectedMsgErrors)
-	log.Printf("emailStructFieldsValidate() diff = \n%v", diff)
+	log.Printf("%s() diff = \n%v", testName, diff)
 	log.Fatal()
 }
