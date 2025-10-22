@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func noPointerTests () {
+func noPointerTests() {
 {{range .TestCases}}{{.StructName}}Tests()
 {{end}}
 }
