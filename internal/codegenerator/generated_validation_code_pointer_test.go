@@ -1,0 +1,4045 @@
+package codegenerator
+
+import (
+	"testing"
+
+	"github.com/opencodeco/validgen/internal/analyzer"
+	"github.com/opencodeco/validgen/internal/common"
+)
+
+func TestBuildValidationCodePointer(t *testing.T) {
+	type args struct {
+		fieldName       string
+		fieldType       common.FieldType
+		fieldValidation string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "email_stringpointer_email",
+			args: args{
+				fieldName:       "FieldEmailStringPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "string", Size: ""},
+				fieldValidation: "email",
+			},
+			want: `if !(obj.FieldEmailStringPointer != nil && types.IsValidEmail(*obj.FieldEmailStringPointer)) {
+errs = append(errs, types.NewValidationError("FieldEmailStringPointer must be a valid email"))
+}
+`,
+		},
+		{
+			name: "required_stringpointer_required",
+			args: args{
+				fieldName:       "FieldRequiredStringPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "string", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredStringPointer != nil && *obj.FieldRequiredStringPointer != "") {
+errs = append(errs, types.NewValidationError("FieldRequiredStringPointer is required"))
+}
+`,
+		},
+		{
+			name: "required_intpointer_required",
+			args: args{
+				fieldName:       "FieldRequiredIntPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredIntPointer != nil && *obj.FieldRequiredIntPointer != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredIntPointer is required"))
+}
+`,
+		},
+		{
+			name: "required_int8pointer_required",
+			args: args{
+				fieldName:       "FieldRequiredInt8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int8", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredInt8Pointer != nil && *obj.FieldRequiredInt8Pointer != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredInt8Pointer is required"))
+}
+`,
+		},
+		{
+			name: "required_int16pointer_required",
+			args: args{
+				fieldName:       "FieldRequiredInt16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int16", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredInt16Pointer != nil && *obj.FieldRequiredInt16Pointer != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredInt16Pointer is required"))
+}
+`,
+		},
+		{
+			name: "required_int32pointer_required",
+			args: args{
+				fieldName:       "FieldRequiredInt32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int32", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredInt32Pointer != nil && *obj.FieldRequiredInt32Pointer != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredInt32Pointer is required"))
+}
+`,
+		},
+		{
+			name: "required_int64pointer_required",
+			args: args{
+				fieldName:       "FieldRequiredInt64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int64", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredInt64Pointer != nil && *obj.FieldRequiredInt64Pointer != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredInt64Pointer is required"))
+}
+`,
+		},
+		{
+			name: "required_uintpointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUintPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUintPointer != nil && *obj.FieldRequiredUintPointer != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredUintPointer is required"))
+}
+`,
+		},
+		{
+			name: "required_uint8pointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUint8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint8", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUint8Pointer != nil && *obj.FieldRequiredUint8Pointer != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredUint8Pointer is required"))
+}
+`,
+		},
+		{
+			name: "required_uint16pointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUint16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint16", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUint16Pointer != nil && *obj.FieldRequiredUint16Pointer != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredUint16Pointer is required"))
+}
+`,
+		},
+		{
+			name: "required_uint32pointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUint32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint32", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUint32Pointer != nil && *obj.FieldRequiredUint32Pointer != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredUint32Pointer is required"))
+}
+`,
+		},
+		{
+			name: "required_uint64pointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUint64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint64", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUint64Pointer != nil && *obj.FieldRequiredUint64Pointer != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredUint64Pointer is required"))
+}
+`,
+		},
+		{
+			name: "required_float32pointer_required",
+			args: args{
+				fieldName:       "FieldRequiredFloat32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float32", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredFloat32Pointer != nil && *obj.FieldRequiredFloat32Pointer != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredFloat32Pointer is required"))
+}
+`,
+		},
+		{
+			name: "required_float64pointer_required",
+			args: args{
+				fieldName:       "FieldRequiredFloat64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float64", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredFloat64Pointer != nil && *obj.FieldRequiredFloat64Pointer != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredFloat64Pointer is required"))
+}
+`,
+		},
+		{
+			name: "required_boolpointer_required",
+			args: args{
+				fieldName:       "FieldRequiredBoolPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "bool", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredBoolPointer != nil && *obj.FieldRequiredBoolPointer != false) {
+errs = append(errs, types.NewValidationError("FieldRequiredBoolPointer is required"))
+}
+`,
+		},
+		{
+			name: "required_stringslicepointer_required",
+			args: args{
+				fieldName:       "FieldRequiredStringSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "string", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredStringSlicePointer != nil && len(*obj.FieldRequiredStringSlicePointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredStringSlicePointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_intslicepointer_required",
+			args: args{
+				fieldName:       "FieldRequiredIntSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredIntSlicePointer != nil && len(*obj.FieldRequiredIntSlicePointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredIntSlicePointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_int8slicepointer_required",
+			args: args{
+				fieldName:       "FieldRequiredInt8SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int8", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredInt8SlicePointer != nil && len(*obj.FieldRequiredInt8SlicePointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredInt8SlicePointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_int16slicepointer_required",
+			args: args{
+				fieldName:       "FieldRequiredInt16SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int16", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredInt16SlicePointer != nil && len(*obj.FieldRequiredInt16SlicePointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredInt16SlicePointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_int32slicepointer_required",
+			args: args{
+				fieldName:       "FieldRequiredInt32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int32", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredInt32SlicePointer != nil && len(*obj.FieldRequiredInt32SlicePointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredInt32SlicePointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_int64slicepointer_required",
+			args: args{
+				fieldName:       "FieldRequiredInt64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int64", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredInt64SlicePointer != nil && len(*obj.FieldRequiredInt64SlicePointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredInt64SlicePointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_uintslicepointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUintSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUintSlicePointer != nil && len(*obj.FieldRequiredUintSlicePointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredUintSlicePointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_uint8slicepointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUint8SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint8", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUint8SlicePointer != nil && len(*obj.FieldRequiredUint8SlicePointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredUint8SlicePointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_uint16slicepointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUint16SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint16", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUint16SlicePointer != nil && len(*obj.FieldRequiredUint16SlicePointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredUint16SlicePointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_uint32slicepointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUint32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint32", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUint32SlicePointer != nil && len(*obj.FieldRequiredUint32SlicePointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredUint32SlicePointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_uint64slicepointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUint64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint64", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUint64SlicePointer != nil && len(*obj.FieldRequiredUint64SlicePointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredUint64SlicePointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_float32slicepointer_required",
+			args: args{
+				fieldName:       "FieldRequiredFloat32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "float32", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredFloat32SlicePointer != nil && len(*obj.FieldRequiredFloat32SlicePointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredFloat32SlicePointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_float64slicepointer_required",
+			args: args{
+				fieldName:       "FieldRequiredFloat64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "float64", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredFloat64SlicePointer != nil && len(*obj.FieldRequiredFloat64SlicePointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredFloat64SlicePointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_boolslicepointer_required",
+			args: args{
+				fieldName:       "FieldRequiredBoolSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "bool", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredBoolSlicePointer != nil && len(*obj.FieldRequiredBoolSlicePointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredBoolSlicePointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_stringarraypointer_required",
+			args: args{
+				fieldName:       "FieldRequiredStringArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "string", Size: "3"},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredStringArrayPointer != nil) {
+errs = append(errs, types.NewValidationError("FieldRequiredStringArrayPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_intarraypointer_required",
+			args: args{
+				fieldName:       "FieldRequiredIntArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "int", Size: "3"},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredIntArrayPointer != nil) {
+errs = append(errs, types.NewValidationError("FieldRequiredIntArrayPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_int8arraypointer_required",
+			args: args{
+				fieldName:       "FieldRequiredInt8ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "int8", Size: "3"},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredInt8ArrayPointer != nil) {
+errs = append(errs, types.NewValidationError("FieldRequiredInt8ArrayPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_int16arraypointer_required",
+			args: args{
+				fieldName:       "FieldRequiredInt16ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "int16", Size: "3"},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredInt16ArrayPointer != nil) {
+errs = append(errs, types.NewValidationError("FieldRequiredInt16ArrayPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_int32arraypointer_required",
+			args: args{
+				fieldName:       "FieldRequiredInt32ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "int32", Size: "3"},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredInt32ArrayPointer != nil) {
+errs = append(errs, types.NewValidationError("FieldRequiredInt32ArrayPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_int64arraypointer_required",
+			args: args{
+				fieldName:       "FieldRequiredInt64ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "int64", Size: "3"},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredInt64ArrayPointer != nil) {
+errs = append(errs, types.NewValidationError("FieldRequiredInt64ArrayPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_uintarraypointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUintArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "uint", Size: "3"},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUintArrayPointer != nil) {
+errs = append(errs, types.NewValidationError("FieldRequiredUintArrayPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_uint8arraypointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUint8ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "uint8", Size: "3"},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUint8ArrayPointer != nil) {
+errs = append(errs, types.NewValidationError("FieldRequiredUint8ArrayPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_uint16arraypointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUint16ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "uint16", Size: "3"},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUint16ArrayPointer != nil) {
+errs = append(errs, types.NewValidationError("FieldRequiredUint16ArrayPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_uint32arraypointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUint32ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "uint32", Size: "3"},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUint32ArrayPointer != nil) {
+errs = append(errs, types.NewValidationError("FieldRequiredUint32ArrayPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_uint64arraypointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUint64ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "uint64", Size: "3"},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUint64ArrayPointer != nil) {
+errs = append(errs, types.NewValidationError("FieldRequiredUint64ArrayPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_float32arraypointer_required",
+			args: args{
+				fieldName:       "FieldRequiredFloat32ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "float32", Size: "3"},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredFloat32ArrayPointer != nil) {
+errs = append(errs, types.NewValidationError("FieldRequiredFloat32ArrayPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_float64arraypointer_required",
+			args: args{
+				fieldName:       "FieldRequiredFloat64ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "float64", Size: "3"},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredFloat64ArrayPointer != nil) {
+errs = append(errs, types.NewValidationError("FieldRequiredFloat64ArrayPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_boolarraypointer_required",
+			args: args{
+				fieldName:       "FieldRequiredBoolArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "bool", Size: "3"},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredBoolArrayPointer != nil) {
+errs = append(errs, types.NewValidationError("FieldRequiredBoolArrayPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_stringmappointer_required",
+			args: args{
+				fieldName:       "FieldRequiredStringMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "string", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredStringMapPointer != nil && len(*obj.FieldRequiredStringMapPointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredStringMapPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_intmappointer_required",
+			args: args{
+				fieldName:       "FieldRequiredIntMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredIntMapPointer != nil && len(*obj.FieldRequiredIntMapPointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredIntMapPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_int8mappointer_required",
+			args: args{
+				fieldName:       "FieldRequiredInt8MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int8", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredInt8MapPointer != nil && len(*obj.FieldRequiredInt8MapPointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredInt8MapPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_int16mappointer_required",
+			args: args{
+				fieldName:       "FieldRequiredInt16MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int16", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredInt16MapPointer != nil && len(*obj.FieldRequiredInt16MapPointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredInt16MapPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_int32mappointer_required",
+			args: args{
+				fieldName:       "FieldRequiredInt32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int32", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredInt32MapPointer != nil && len(*obj.FieldRequiredInt32MapPointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredInt32MapPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_int64mappointer_required",
+			args: args{
+				fieldName:       "FieldRequiredInt64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int64", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredInt64MapPointer != nil && len(*obj.FieldRequiredInt64MapPointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredInt64MapPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_uintmappointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUintMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUintMapPointer != nil && len(*obj.FieldRequiredUintMapPointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredUintMapPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_uint8mappointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUint8MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint8", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUint8MapPointer != nil && len(*obj.FieldRequiredUint8MapPointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredUint8MapPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_uint16mappointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUint16MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint16", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUint16MapPointer != nil && len(*obj.FieldRequiredUint16MapPointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredUint16MapPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_uint32mappointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUint32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint32", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUint32MapPointer != nil && len(*obj.FieldRequiredUint32MapPointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredUint32MapPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_uint64mappointer_required",
+			args: args{
+				fieldName:       "FieldRequiredUint64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint64", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredUint64MapPointer != nil && len(*obj.FieldRequiredUint64MapPointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredUint64MapPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_float32mappointer_required",
+			args: args{
+				fieldName:       "FieldRequiredFloat32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "float32", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredFloat32MapPointer != nil && len(*obj.FieldRequiredFloat32MapPointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredFloat32MapPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_float64mappointer_required",
+			args: args{
+				fieldName:       "FieldRequiredFloat64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "float64", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredFloat64MapPointer != nil && len(*obj.FieldRequiredFloat64MapPointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredFloat64MapPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "required_boolmappointer_required",
+			args: args{
+				fieldName:       "FieldRequiredBoolMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "bool", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredBoolMapPointer != nil && len(*obj.FieldRequiredBoolMapPointer) != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredBoolMapPointer must not be empty"))
+}
+`,
+		},
+		{
+			name: "eq_stringpointer_eq=abcde",
+			args: args{
+				fieldName:       "FieldEqStringPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "string", Size: ""},
+				fieldValidation: "eq=abcde",
+			},
+			want: `if !(obj.FieldEqStringPointer != nil && *obj.FieldEqStringPointer == "abcde") {
+errs = append(errs, types.NewValidationError("FieldEqStringPointer must be equal to 'abcde'"))
+}
+`,
+		},
+		{
+			name: "eq_intpointer_eq=32",
+			args: args{
+				fieldName:       "FieldEqIntPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int", Size: ""},
+				fieldValidation: "eq=32",
+			},
+			want: `if !(obj.FieldEqIntPointer != nil && *obj.FieldEqIntPointer == 32) {
+errs = append(errs, types.NewValidationError("FieldEqIntPointer must be equal to 32"))
+}
+`,
+		},
+		{
+			name: "eq_int8pointer_eq=32",
+			args: args{
+				fieldName:       "FieldEqInt8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int8", Size: ""},
+				fieldValidation: "eq=32",
+			},
+			want: `if !(obj.FieldEqInt8Pointer != nil && *obj.FieldEqInt8Pointer == 32) {
+errs = append(errs, types.NewValidationError("FieldEqInt8Pointer must be equal to 32"))
+}
+`,
+		},
+		{
+			name: "eq_int16pointer_eq=32",
+			args: args{
+				fieldName:       "FieldEqInt16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int16", Size: ""},
+				fieldValidation: "eq=32",
+			},
+			want: `if !(obj.FieldEqInt16Pointer != nil && *obj.FieldEqInt16Pointer == 32) {
+errs = append(errs, types.NewValidationError("FieldEqInt16Pointer must be equal to 32"))
+}
+`,
+		},
+		{
+			name: "eq_int32pointer_eq=32",
+			args: args{
+				fieldName:       "FieldEqInt32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int32", Size: ""},
+				fieldValidation: "eq=32",
+			},
+			want: `if !(obj.FieldEqInt32Pointer != nil && *obj.FieldEqInt32Pointer == 32) {
+errs = append(errs, types.NewValidationError("FieldEqInt32Pointer must be equal to 32"))
+}
+`,
+		},
+		{
+			name: "eq_int64pointer_eq=32",
+			args: args{
+				fieldName:       "FieldEqInt64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int64", Size: ""},
+				fieldValidation: "eq=32",
+			},
+			want: `if !(obj.FieldEqInt64Pointer != nil && *obj.FieldEqInt64Pointer == 32) {
+errs = append(errs, types.NewValidationError("FieldEqInt64Pointer must be equal to 32"))
+}
+`,
+		},
+		{
+			name: "eq_uintpointer_eq=32",
+			args: args{
+				fieldName:       "FieldEqUintPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint", Size: ""},
+				fieldValidation: "eq=32",
+			},
+			want: `if !(obj.FieldEqUintPointer != nil && *obj.FieldEqUintPointer == 32) {
+errs = append(errs, types.NewValidationError("FieldEqUintPointer must be equal to 32"))
+}
+`,
+		},
+		{
+			name: "eq_uint8pointer_eq=32",
+			args: args{
+				fieldName:       "FieldEqUint8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint8", Size: ""},
+				fieldValidation: "eq=32",
+			},
+			want: `if !(obj.FieldEqUint8Pointer != nil && *obj.FieldEqUint8Pointer == 32) {
+errs = append(errs, types.NewValidationError("FieldEqUint8Pointer must be equal to 32"))
+}
+`,
+		},
+		{
+			name: "eq_uint16pointer_eq=32",
+			args: args{
+				fieldName:       "FieldEqUint16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint16", Size: ""},
+				fieldValidation: "eq=32",
+			},
+			want: `if !(obj.FieldEqUint16Pointer != nil && *obj.FieldEqUint16Pointer == 32) {
+errs = append(errs, types.NewValidationError("FieldEqUint16Pointer must be equal to 32"))
+}
+`,
+		},
+		{
+			name: "eq_uint32pointer_eq=32",
+			args: args{
+				fieldName:       "FieldEqUint32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint32", Size: ""},
+				fieldValidation: "eq=32",
+			},
+			want: `if !(obj.FieldEqUint32Pointer != nil && *obj.FieldEqUint32Pointer == 32) {
+errs = append(errs, types.NewValidationError("FieldEqUint32Pointer must be equal to 32"))
+}
+`,
+		},
+		{
+			name: "eq_uint64pointer_eq=32",
+			args: args{
+				fieldName:       "FieldEqUint64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint64", Size: ""},
+				fieldValidation: "eq=32",
+			},
+			want: `if !(obj.FieldEqUint64Pointer != nil && *obj.FieldEqUint64Pointer == 32) {
+errs = append(errs, types.NewValidationError("FieldEqUint64Pointer must be equal to 32"))
+}
+`,
+		},
+		{
+			name: "eq_float32pointer_eq=12.34",
+			args: args{
+				fieldName:       "FieldEqFloat32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float32", Size: ""},
+				fieldValidation: "eq=12.34",
+			},
+			want: `if !(obj.FieldEqFloat32Pointer != nil && *obj.FieldEqFloat32Pointer == 12.34) {
+errs = append(errs, types.NewValidationError("FieldEqFloat32Pointer must be equal to 12.34"))
+}
+`,
+		},
+		{
+			name: "eq_float64pointer_eq=12.34",
+			args: args{
+				fieldName:       "FieldEqFloat64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float64", Size: ""},
+				fieldValidation: "eq=12.34",
+			},
+			want: `if !(obj.FieldEqFloat64Pointer != nil && *obj.FieldEqFloat64Pointer == 12.34) {
+errs = append(errs, types.NewValidationError("FieldEqFloat64Pointer must be equal to 12.34"))
+}
+`,
+		},
+		{
+			name: "eq_boolpointer_eq=true",
+			args: args{
+				fieldName:       "FieldEqBoolPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "bool", Size: ""},
+				fieldValidation: "eq=true",
+			},
+			want: `if !(obj.FieldEqBoolPointer != nil && *obj.FieldEqBoolPointer == true) {
+errs = append(errs, types.NewValidationError("FieldEqBoolPointer must be equal to true"))
+}
+`,
+		},
+		{
+			name: "neq_stringpointer_neq=abcde",
+			args: args{
+				fieldName:       "FieldNeqStringPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "string", Size: ""},
+				fieldValidation: "neq=abcde",
+			},
+			want: `if !(obj.FieldNeqStringPointer != nil && *obj.FieldNeqStringPointer != "abcde") {
+errs = append(errs, types.NewValidationError("FieldNeqStringPointer must not be equal to 'abcde'"))
+}
+`,
+		},
+		{
+			name: "neq_intpointer_neq=32",
+			args: args{
+				fieldName:       "FieldNeqIntPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int", Size: ""},
+				fieldValidation: "neq=32",
+			},
+			want: `if !(obj.FieldNeqIntPointer != nil && *obj.FieldNeqIntPointer != 32) {
+errs = append(errs, types.NewValidationError("FieldNeqIntPointer must not be equal to 32"))
+}
+`,
+		},
+		{
+			name: "neq_int8pointer_neq=32",
+			args: args{
+				fieldName:       "FieldNeqInt8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int8", Size: ""},
+				fieldValidation: "neq=32",
+			},
+			want: `if !(obj.FieldNeqInt8Pointer != nil && *obj.FieldNeqInt8Pointer != 32) {
+errs = append(errs, types.NewValidationError("FieldNeqInt8Pointer must not be equal to 32"))
+}
+`,
+		},
+		{
+			name: "neq_int16pointer_neq=32",
+			args: args{
+				fieldName:       "FieldNeqInt16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int16", Size: ""},
+				fieldValidation: "neq=32",
+			},
+			want: `if !(obj.FieldNeqInt16Pointer != nil && *obj.FieldNeqInt16Pointer != 32) {
+errs = append(errs, types.NewValidationError("FieldNeqInt16Pointer must not be equal to 32"))
+}
+`,
+		},
+		{
+			name: "neq_int32pointer_neq=32",
+			args: args{
+				fieldName:       "FieldNeqInt32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int32", Size: ""},
+				fieldValidation: "neq=32",
+			},
+			want: `if !(obj.FieldNeqInt32Pointer != nil && *obj.FieldNeqInt32Pointer != 32) {
+errs = append(errs, types.NewValidationError("FieldNeqInt32Pointer must not be equal to 32"))
+}
+`,
+		},
+		{
+			name: "neq_int64pointer_neq=32",
+			args: args{
+				fieldName:       "FieldNeqInt64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int64", Size: ""},
+				fieldValidation: "neq=32",
+			},
+			want: `if !(obj.FieldNeqInt64Pointer != nil && *obj.FieldNeqInt64Pointer != 32) {
+errs = append(errs, types.NewValidationError("FieldNeqInt64Pointer must not be equal to 32"))
+}
+`,
+		},
+		{
+			name: "neq_uintpointer_neq=32",
+			args: args{
+				fieldName:       "FieldNeqUintPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint", Size: ""},
+				fieldValidation: "neq=32",
+			},
+			want: `if !(obj.FieldNeqUintPointer != nil && *obj.FieldNeqUintPointer != 32) {
+errs = append(errs, types.NewValidationError("FieldNeqUintPointer must not be equal to 32"))
+}
+`,
+		},
+		{
+			name: "neq_uint8pointer_neq=32",
+			args: args{
+				fieldName:       "FieldNeqUint8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint8", Size: ""},
+				fieldValidation: "neq=32",
+			},
+			want: `if !(obj.FieldNeqUint8Pointer != nil && *obj.FieldNeqUint8Pointer != 32) {
+errs = append(errs, types.NewValidationError("FieldNeqUint8Pointer must not be equal to 32"))
+}
+`,
+		},
+		{
+			name: "neq_uint16pointer_neq=32",
+			args: args{
+				fieldName:       "FieldNeqUint16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint16", Size: ""},
+				fieldValidation: "neq=32",
+			},
+			want: `if !(obj.FieldNeqUint16Pointer != nil && *obj.FieldNeqUint16Pointer != 32) {
+errs = append(errs, types.NewValidationError("FieldNeqUint16Pointer must not be equal to 32"))
+}
+`,
+		},
+		{
+			name: "neq_uint32pointer_neq=32",
+			args: args{
+				fieldName:       "FieldNeqUint32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint32", Size: ""},
+				fieldValidation: "neq=32",
+			},
+			want: `if !(obj.FieldNeqUint32Pointer != nil && *obj.FieldNeqUint32Pointer != 32) {
+errs = append(errs, types.NewValidationError("FieldNeqUint32Pointer must not be equal to 32"))
+}
+`,
+		},
+		{
+			name: "neq_uint64pointer_neq=32",
+			args: args{
+				fieldName:       "FieldNeqUint64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint64", Size: ""},
+				fieldValidation: "neq=32",
+			},
+			want: `if !(obj.FieldNeqUint64Pointer != nil && *obj.FieldNeqUint64Pointer != 32) {
+errs = append(errs, types.NewValidationError("FieldNeqUint64Pointer must not be equal to 32"))
+}
+`,
+		},
+		{
+			name: "neq_float32pointer_neq=12.34",
+			args: args{
+				fieldName:       "FieldNeqFloat32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float32", Size: ""},
+				fieldValidation: "neq=12.34",
+			},
+			want: `if !(obj.FieldNeqFloat32Pointer != nil && *obj.FieldNeqFloat32Pointer != 12.34) {
+errs = append(errs, types.NewValidationError("FieldNeqFloat32Pointer must not be equal to 12.34"))
+}
+`,
+		},
+		{
+			name: "neq_float64pointer_neq=12.34",
+			args: args{
+				fieldName:       "FieldNeqFloat64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float64", Size: ""},
+				fieldValidation: "neq=12.34",
+			},
+			want: `if !(obj.FieldNeqFloat64Pointer != nil && *obj.FieldNeqFloat64Pointer != 12.34) {
+errs = append(errs, types.NewValidationError("FieldNeqFloat64Pointer must not be equal to 12.34"))
+}
+`,
+		},
+		{
+			name: "neq_boolpointer_neq=true",
+			args: args{
+				fieldName:       "FieldNeqBoolPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "bool", Size: ""},
+				fieldValidation: "neq=true",
+			},
+			want: `if !(obj.FieldNeqBoolPointer != nil && *obj.FieldNeqBoolPointer != true) {
+errs = append(errs, types.NewValidationError("FieldNeqBoolPointer must not be equal to true"))
+}
+`,
+		},
+		{
+			name: "gt_intpointer_gt=32",
+			args: args{
+				fieldName:       "FieldGtIntPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int", Size: ""},
+				fieldValidation: "gt=32",
+			},
+			want: `if !(obj.FieldGtIntPointer != nil && *obj.FieldGtIntPointer > 32) {
+errs = append(errs, types.NewValidationError("FieldGtIntPointer must be > 32"))
+}
+`,
+		},
+		{
+			name: "gt_int8pointer_gt=32",
+			args: args{
+				fieldName:       "FieldGtInt8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int8", Size: ""},
+				fieldValidation: "gt=32",
+			},
+			want: `if !(obj.FieldGtInt8Pointer != nil && *obj.FieldGtInt8Pointer > 32) {
+errs = append(errs, types.NewValidationError("FieldGtInt8Pointer must be > 32"))
+}
+`,
+		},
+		{
+			name: "gt_int16pointer_gt=32",
+			args: args{
+				fieldName:       "FieldGtInt16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int16", Size: ""},
+				fieldValidation: "gt=32",
+			},
+			want: `if !(obj.FieldGtInt16Pointer != nil && *obj.FieldGtInt16Pointer > 32) {
+errs = append(errs, types.NewValidationError("FieldGtInt16Pointer must be > 32"))
+}
+`,
+		},
+		{
+			name: "gt_int32pointer_gt=32",
+			args: args{
+				fieldName:       "FieldGtInt32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int32", Size: ""},
+				fieldValidation: "gt=32",
+			},
+			want: `if !(obj.FieldGtInt32Pointer != nil && *obj.FieldGtInt32Pointer > 32) {
+errs = append(errs, types.NewValidationError("FieldGtInt32Pointer must be > 32"))
+}
+`,
+		},
+		{
+			name: "gt_int64pointer_gt=32",
+			args: args{
+				fieldName:       "FieldGtInt64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int64", Size: ""},
+				fieldValidation: "gt=32",
+			},
+			want: `if !(obj.FieldGtInt64Pointer != nil && *obj.FieldGtInt64Pointer > 32) {
+errs = append(errs, types.NewValidationError("FieldGtInt64Pointer must be > 32"))
+}
+`,
+		},
+		{
+			name: "gt_uintpointer_gt=32",
+			args: args{
+				fieldName:       "FieldGtUintPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint", Size: ""},
+				fieldValidation: "gt=32",
+			},
+			want: `if !(obj.FieldGtUintPointer != nil && *obj.FieldGtUintPointer > 32) {
+errs = append(errs, types.NewValidationError("FieldGtUintPointer must be > 32"))
+}
+`,
+		},
+		{
+			name: "gt_uint8pointer_gt=32",
+			args: args{
+				fieldName:       "FieldGtUint8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint8", Size: ""},
+				fieldValidation: "gt=32",
+			},
+			want: `if !(obj.FieldGtUint8Pointer != nil && *obj.FieldGtUint8Pointer > 32) {
+errs = append(errs, types.NewValidationError("FieldGtUint8Pointer must be > 32"))
+}
+`,
+		},
+		{
+			name: "gt_uint16pointer_gt=32",
+			args: args{
+				fieldName:       "FieldGtUint16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint16", Size: ""},
+				fieldValidation: "gt=32",
+			},
+			want: `if !(obj.FieldGtUint16Pointer != nil && *obj.FieldGtUint16Pointer > 32) {
+errs = append(errs, types.NewValidationError("FieldGtUint16Pointer must be > 32"))
+}
+`,
+		},
+		{
+			name: "gt_uint32pointer_gt=32",
+			args: args{
+				fieldName:       "FieldGtUint32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint32", Size: ""},
+				fieldValidation: "gt=32",
+			},
+			want: `if !(obj.FieldGtUint32Pointer != nil && *obj.FieldGtUint32Pointer > 32) {
+errs = append(errs, types.NewValidationError("FieldGtUint32Pointer must be > 32"))
+}
+`,
+		},
+		{
+			name: "gt_uint64pointer_gt=32",
+			args: args{
+				fieldName:       "FieldGtUint64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint64", Size: ""},
+				fieldValidation: "gt=32",
+			},
+			want: `if !(obj.FieldGtUint64Pointer != nil && *obj.FieldGtUint64Pointer > 32) {
+errs = append(errs, types.NewValidationError("FieldGtUint64Pointer must be > 32"))
+}
+`,
+		},
+		{
+			name: "gt_float32pointer_gt=12.34",
+			args: args{
+				fieldName:       "FieldGtFloat32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float32", Size: ""},
+				fieldValidation: "gt=12.34",
+			},
+			want: `if !(obj.FieldGtFloat32Pointer != nil && *obj.FieldGtFloat32Pointer > 12.34) {
+errs = append(errs, types.NewValidationError("FieldGtFloat32Pointer must be > 12.34"))
+}
+`,
+		},
+		{
+			name: "gt_float64pointer_gt=12.34",
+			args: args{
+				fieldName:       "FieldGtFloat64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float64", Size: ""},
+				fieldValidation: "gt=12.34",
+			},
+			want: `if !(obj.FieldGtFloat64Pointer != nil && *obj.FieldGtFloat64Pointer > 12.34) {
+errs = append(errs, types.NewValidationError("FieldGtFloat64Pointer must be > 12.34"))
+}
+`,
+		},
+		{
+			name: "gte_intpointer_gte=32",
+			args: args{
+				fieldName:       "FieldGteIntPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int", Size: ""},
+				fieldValidation: "gte=32",
+			},
+			want: `if !(obj.FieldGteIntPointer != nil && *obj.FieldGteIntPointer >= 32) {
+errs = append(errs, types.NewValidationError("FieldGteIntPointer must be >= 32"))
+}
+`,
+		},
+		{
+			name: "gte_int8pointer_gte=32",
+			args: args{
+				fieldName:       "FieldGteInt8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int8", Size: ""},
+				fieldValidation: "gte=32",
+			},
+			want: `if !(obj.FieldGteInt8Pointer != nil && *obj.FieldGteInt8Pointer >= 32) {
+errs = append(errs, types.NewValidationError("FieldGteInt8Pointer must be >= 32"))
+}
+`,
+		},
+		{
+			name: "gte_int16pointer_gte=32",
+			args: args{
+				fieldName:       "FieldGteInt16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int16", Size: ""},
+				fieldValidation: "gte=32",
+			},
+			want: `if !(obj.FieldGteInt16Pointer != nil && *obj.FieldGteInt16Pointer >= 32) {
+errs = append(errs, types.NewValidationError("FieldGteInt16Pointer must be >= 32"))
+}
+`,
+		},
+		{
+			name: "gte_int32pointer_gte=32",
+			args: args{
+				fieldName:       "FieldGteInt32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int32", Size: ""},
+				fieldValidation: "gte=32",
+			},
+			want: `if !(obj.FieldGteInt32Pointer != nil && *obj.FieldGteInt32Pointer >= 32) {
+errs = append(errs, types.NewValidationError("FieldGteInt32Pointer must be >= 32"))
+}
+`,
+		},
+		{
+			name: "gte_int64pointer_gte=32",
+			args: args{
+				fieldName:       "FieldGteInt64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int64", Size: ""},
+				fieldValidation: "gte=32",
+			},
+			want: `if !(obj.FieldGteInt64Pointer != nil && *obj.FieldGteInt64Pointer >= 32) {
+errs = append(errs, types.NewValidationError("FieldGteInt64Pointer must be >= 32"))
+}
+`,
+		},
+		{
+			name: "gte_uintpointer_gte=32",
+			args: args{
+				fieldName:       "FieldGteUintPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint", Size: ""},
+				fieldValidation: "gte=32",
+			},
+			want: `if !(obj.FieldGteUintPointer != nil && *obj.FieldGteUintPointer >= 32) {
+errs = append(errs, types.NewValidationError("FieldGteUintPointer must be >= 32"))
+}
+`,
+		},
+		{
+			name: "gte_uint8pointer_gte=32",
+			args: args{
+				fieldName:       "FieldGteUint8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint8", Size: ""},
+				fieldValidation: "gte=32",
+			},
+			want: `if !(obj.FieldGteUint8Pointer != nil && *obj.FieldGteUint8Pointer >= 32) {
+errs = append(errs, types.NewValidationError("FieldGteUint8Pointer must be >= 32"))
+}
+`,
+		},
+		{
+			name: "gte_uint16pointer_gte=32",
+			args: args{
+				fieldName:       "FieldGteUint16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint16", Size: ""},
+				fieldValidation: "gte=32",
+			},
+			want: `if !(obj.FieldGteUint16Pointer != nil && *obj.FieldGteUint16Pointer >= 32) {
+errs = append(errs, types.NewValidationError("FieldGteUint16Pointer must be >= 32"))
+}
+`,
+		},
+		{
+			name: "gte_uint32pointer_gte=32",
+			args: args{
+				fieldName:       "FieldGteUint32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint32", Size: ""},
+				fieldValidation: "gte=32",
+			},
+			want: `if !(obj.FieldGteUint32Pointer != nil && *obj.FieldGteUint32Pointer >= 32) {
+errs = append(errs, types.NewValidationError("FieldGteUint32Pointer must be >= 32"))
+}
+`,
+		},
+		{
+			name: "gte_uint64pointer_gte=32",
+			args: args{
+				fieldName:       "FieldGteUint64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint64", Size: ""},
+				fieldValidation: "gte=32",
+			},
+			want: `if !(obj.FieldGteUint64Pointer != nil && *obj.FieldGteUint64Pointer >= 32) {
+errs = append(errs, types.NewValidationError("FieldGteUint64Pointer must be >= 32"))
+}
+`,
+		},
+		{
+			name: "gte_float32pointer_gte=12.34",
+			args: args{
+				fieldName:       "FieldGteFloat32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float32", Size: ""},
+				fieldValidation: "gte=12.34",
+			},
+			want: `if !(obj.FieldGteFloat32Pointer != nil && *obj.FieldGteFloat32Pointer >= 12.34) {
+errs = append(errs, types.NewValidationError("FieldGteFloat32Pointer must be >= 12.34"))
+}
+`,
+		},
+		{
+			name: "gte_float64pointer_gte=12.34",
+			args: args{
+				fieldName:       "FieldGteFloat64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float64", Size: ""},
+				fieldValidation: "gte=12.34",
+			},
+			want: `if !(obj.FieldGteFloat64Pointer != nil && *obj.FieldGteFloat64Pointer >= 12.34) {
+errs = append(errs, types.NewValidationError("FieldGteFloat64Pointer must be >= 12.34"))
+}
+`,
+		},
+		{
+			name: "lt_intpointer_lt=32",
+			args: args{
+				fieldName:       "FieldLtIntPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int", Size: ""},
+				fieldValidation: "lt=32",
+			},
+			want: `if !(obj.FieldLtIntPointer != nil && *obj.FieldLtIntPointer < 32) {
+errs = append(errs, types.NewValidationError("FieldLtIntPointer must be < 32"))
+}
+`,
+		},
+		{
+			name: "lt_int8pointer_lt=32",
+			args: args{
+				fieldName:       "FieldLtInt8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int8", Size: ""},
+				fieldValidation: "lt=32",
+			},
+			want: `if !(obj.FieldLtInt8Pointer != nil && *obj.FieldLtInt8Pointer < 32) {
+errs = append(errs, types.NewValidationError("FieldLtInt8Pointer must be < 32"))
+}
+`,
+		},
+		{
+			name: "lt_int16pointer_lt=32",
+			args: args{
+				fieldName:       "FieldLtInt16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int16", Size: ""},
+				fieldValidation: "lt=32",
+			},
+			want: `if !(obj.FieldLtInt16Pointer != nil && *obj.FieldLtInt16Pointer < 32) {
+errs = append(errs, types.NewValidationError("FieldLtInt16Pointer must be < 32"))
+}
+`,
+		},
+		{
+			name: "lt_int32pointer_lt=32",
+			args: args{
+				fieldName:       "FieldLtInt32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int32", Size: ""},
+				fieldValidation: "lt=32",
+			},
+			want: `if !(obj.FieldLtInt32Pointer != nil && *obj.FieldLtInt32Pointer < 32) {
+errs = append(errs, types.NewValidationError("FieldLtInt32Pointer must be < 32"))
+}
+`,
+		},
+		{
+			name: "lt_int64pointer_lt=32",
+			args: args{
+				fieldName:       "FieldLtInt64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int64", Size: ""},
+				fieldValidation: "lt=32",
+			},
+			want: `if !(obj.FieldLtInt64Pointer != nil && *obj.FieldLtInt64Pointer < 32) {
+errs = append(errs, types.NewValidationError("FieldLtInt64Pointer must be < 32"))
+}
+`,
+		},
+		{
+			name: "lt_uintpointer_lt=32",
+			args: args{
+				fieldName:       "FieldLtUintPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint", Size: ""},
+				fieldValidation: "lt=32",
+			},
+			want: `if !(obj.FieldLtUintPointer != nil && *obj.FieldLtUintPointer < 32) {
+errs = append(errs, types.NewValidationError("FieldLtUintPointer must be < 32"))
+}
+`,
+		},
+		{
+			name: "lt_uint8pointer_lt=32",
+			args: args{
+				fieldName:       "FieldLtUint8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint8", Size: ""},
+				fieldValidation: "lt=32",
+			},
+			want: `if !(obj.FieldLtUint8Pointer != nil && *obj.FieldLtUint8Pointer < 32) {
+errs = append(errs, types.NewValidationError("FieldLtUint8Pointer must be < 32"))
+}
+`,
+		},
+		{
+			name: "lt_uint16pointer_lt=32",
+			args: args{
+				fieldName:       "FieldLtUint16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint16", Size: ""},
+				fieldValidation: "lt=32",
+			},
+			want: `if !(obj.FieldLtUint16Pointer != nil && *obj.FieldLtUint16Pointer < 32) {
+errs = append(errs, types.NewValidationError("FieldLtUint16Pointer must be < 32"))
+}
+`,
+		},
+		{
+			name: "lt_uint32pointer_lt=32",
+			args: args{
+				fieldName:       "FieldLtUint32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint32", Size: ""},
+				fieldValidation: "lt=32",
+			},
+			want: `if !(obj.FieldLtUint32Pointer != nil && *obj.FieldLtUint32Pointer < 32) {
+errs = append(errs, types.NewValidationError("FieldLtUint32Pointer must be < 32"))
+}
+`,
+		},
+		{
+			name: "lt_uint64pointer_lt=32",
+			args: args{
+				fieldName:       "FieldLtUint64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint64", Size: ""},
+				fieldValidation: "lt=32",
+			},
+			want: `if !(obj.FieldLtUint64Pointer != nil && *obj.FieldLtUint64Pointer < 32) {
+errs = append(errs, types.NewValidationError("FieldLtUint64Pointer must be < 32"))
+}
+`,
+		},
+		{
+			name: "lt_float32pointer_lt=12.34",
+			args: args{
+				fieldName:       "FieldLtFloat32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float32", Size: ""},
+				fieldValidation: "lt=12.34",
+			},
+			want: `if !(obj.FieldLtFloat32Pointer != nil && *obj.FieldLtFloat32Pointer < 12.34) {
+errs = append(errs, types.NewValidationError("FieldLtFloat32Pointer must be < 12.34"))
+}
+`,
+		},
+		{
+			name: "lt_float64pointer_lt=12.34",
+			args: args{
+				fieldName:       "FieldLtFloat64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float64", Size: ""},
+				fieldValidation: "lt=12.34",
+			},
+			want: `if !(obj.FieldLtFloat64Pointer != nil && *obj.FieldLtFloat64Pointer < 12.34) {
+errs = append(errs, types.NewValidationError("FieldLtFloat64Pointer must be < 12.34"))
+}
+`,
+		},
+		{
+			name: "lte_intpointer_lte=32",
+			args: args{
+				fieldName:       "FieldLteIntPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int", Size: ""},
+				fieldValidation: "lte=32",
+			},
+			want: `if !(obj.FieldLteIntPointer != nil && *obj.FieldLteIntPointer <= 32) {
+errs = append(errs, types.NewValidationError("FieldLteIntPointer must be <= 32"))
+}
+`,
+		},
+		{
+			name: "lte_int8pointer_lte=32",
+			args: args{
+				fieldName:       "FieldLteInt8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int8", Size: ""},
+				fieldValidation: "lte=32",
+			},
+			want: `if !(obj.FieldLteInt8Pointer != nil && *obj.FieldLteInt8Pointer <= 32) {
+errs = append(errs, types.NewValidationError("FieldLteInt8Pointer must be <= 32"))
+}
+`,
+		},
+		{
+			name: "lte_int16pointer_lte=32",
+			args: args{
+				fieldName:       "FieldLteInt16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int16", Size: ""},
+				fieldValidation: "lte=32",
+			},
+			want: `if !(obj.FieldLteInt16Pointer != nil && *obj.FieldLteInt16Pointer <= 32) {
+errs = append(errs, types.NewValidationError("FieldLteInt16Pointer must be <= 32"))
+}
+`,
+		},
+		{
+			name: "lte_int32pointer_lte=32",
+			args: args{
+				fieldName:       "FieldLteInt32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int32", Size: ""},
+				fieldValidation: "lte=32",
+			},
+			want: `if !(obj.FieldLteInt32Pointer != nil && *obj.FieldLteInt32Pointer <= 32) {
+errs = append(errs, types.NewValidationError("FieldLteInt32Pointer must be <= 32"))
+}
+`,
+		},
+		{
+			name: "lte_int64pointer_lte=32",
+			args: args{
+				fieldName:       "FieldLteInt64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int64", Size: ""},
+				fieldValidation: "lte=32",
+			},
+			want: `if !(obj.FieldLteInt64Pointer != nil && *obj.FieldLteInt64Pointer <= 32) {
+errs = append(errs, types.NewValidationError("FieldLteInt64Pointer must be <= 32"))
+}
+`,
+		},
+		{
+			name: "lte_uintpointer_lte=32",
+			args: args{
+				fieldName:       "FieldLteUintPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint", Size: ""},
+				fieldValidation: "lte=32",
+			},
+			want: `if !(obj.FieldLteUintPointer != nil && *obj.FieldLteUintPointer <= 32) {
+errs = append(errs, types.NewValidationError("FieldLteUintPointer must be <= 32"))
+}
+`,
+		},
+		{
+			name: "lte_uint8pointer_lte=32",
+			args: args{
+				fieldName:       "FieldLteUint8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint8", Size: ""},
+				fieldValidation: "lte=32",
+			},
+			want: `if !(obj.FieldLteUint8Pointer != nil && *obj.FieldLteUint8Pointer <= 32) {
+errs = append(errs, types.NewValidationError("FieldLteUint8Pointer must be <= 32"))
+}
+`,
+		},
+		{
+			name: "lte_uint16pointer_lte=32",
+			args: args{
+				fieldName:       "FieldLteUint16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint16", Size: ""},
+				fieldValidation: "lte=32",
+			},
+			want: `if !(obj.FieldLteUint16Pointer != nil && *obj.FieldLteUint16Pointer <= 32) {
+errs = append(errs, types.NewValidationError("FieldLteUint16Pointer must be <= 32"))
+}
+`,
+		},
+		{
+			name: "lte_uint32pointer_lte=32",
+			args: args{
+				fieldName:       "FieldLteUint32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint32", Size: ""},
+				fieldValidation: "lte=32",
+			},
+			want: `if !(obj.FieldLteUint32Pointer != nil && *obj.FieldLteUint32Pointer <= 32) {
+errs = append(errs, types.NewValidationError("FieldLteUint32Pointer must be <= 32"))
+}
+`,
+		},
+		{
+			name: "lte_uint64pointer_lte=32",
+			args: args{
+				fieldName:       "FieldLteUint64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint64", Size: ""},
+				fieldValidation: "lte=32",
+			},
+			want: `if !(obj.FieldLteUint64Pointer != nil && *obj.FieldLteUint64Pointer <= 32) {
+errs = append(errs, types.NewValidationError("FieldLteUint64Pointer must be <= 32"))
+}
+`,
+		},
+		{
+			name: "lte_float32pointer_lte=12.34",
+			args: args{
+				fieldName:       "FieldLteFloat32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float32", Size: ""},
+				fieldValidation: "lte=12.34",
+			},
+			want: `if !(obj.FieldLteFloat32Pointer != nil && *obj.FieldLteFloat32Pointer <= 12.34) {
+errs = append(errs, types.NewValidationError("FieldLteFloat32Pointer must be <= 12.34"))
+}
+`,
+		},
+		{
+			name: "lte_float64pointer_lte=12.34",
+			args: args{
+				fieldName:       "FieldLteFloat64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float64", Size: ""},
+				fieldValidation: "lte=12.34",
+			},
+			want: `if !(obj.FieldLteFloat64Pointer != nil && *obj.FieldLteFloat64Pointer <= 12.34) {
+errs = append(errs, types.NewValidationError("FieldLteFloat64Pointer must be <= 12.34"))
+}
+`,
+		},
+		{
+			name: "min_stringpointer_min=5",
+			args: args{
+				fieldName:       "FieldMinStringPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "string", Size: ""},
+				fieldValidation: "min=5",
+			},
+			want: `if !(obj.FieldMinStringPointer != nil && len(*obj.FieldMinStringPointer) >= 5) {
+errs = append(errs, types.NewValidationError("FieldMinStringPointer length must be >= 5"))
+}
+`,
+		},
+		{
+			name: "min_stringslicepointer_min=2",
+			args: args{
+				fieldName:       "FieldMinStringSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "string", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinStringSlicePointer != nil && len(*obj.FieldMinStringSlicePointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinStringSlicePointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_intslicepointer_min=2",
+			args: args{
+				fieldName:       "FieldMinIntSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinIntSlicePointer != nil && len(*obj.FieldMinIntSlicePointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinIntSlicePointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_int8slicepointer_min=2",
+			args: args{
+				fieldName:       "FieldMinInt8SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int8", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinInt8SlicePointer != nil && len(*obj.FieldMinInt8SlicePointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinInt8SlicePointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_int16slicepointer_min=2",
+			args: args{
+				fieldName:       "FieldMinInt16SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int16", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinInt16SlicePointer != nil && len(*obj.FieldMinInt16SlicePointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinInt16SlicePointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_int32slicepointer_min=2",
+			args: args{
+				fieldName:       "FieldMinInt32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int32", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinInt32SlicePointer != nil && len(*obj.FieldMinInt32SlicePointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinInt32SlicePointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_int64slicepointer_min=2",
+			args: args{
+				fieldName:       "FieldMinInt64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int64", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinInt64SlicePointer != nil && len(*obj.FieldMinInt64SlicePointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinInt64SlicePointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_uintslicepointer_min=2",
+			args: args{
+				fieldName:       "FieldMinUintSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinUintSlicePointer != nil && len(*obj.FieldMinUintSlicePointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinUintSlicePointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_uint8slicepointer_min=2",
+			args: args{
+				fieldName:       "FieldMinUint8SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint8", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinUint8SlicePointer != nil && len(*obj.FieldMinUint8SlicePointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinUint8SlicePointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_uint16slicepointer_min=2",
+			args: args{
+				fieldName:       "FieldMinUint16SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint16", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinUint16SlicePointer != nil && len(*obj.FieldMinUint16SlicePointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinUint16SlicePointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_uint32slicepointer_min=2",
+			args: args{
+				fieldName:       "FieldMinUint32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint32", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinUint32SlicePointer != nil && len(*obj.FieldMinUint32SlicePointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinUint32SlicePointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_uint64slicepointer_min=2",
+			args: args{
+				fieldName:       "FieldMinUint64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint64", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinUint64SlicePointer != nil && len(*obj.FieldMinUint64SlicePointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinUint64SlicePointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_float32slicepointer_min=2",
+			args: args{
+				fieldName:       "FieldMinFloat32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "float32", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinFloat32SlicePointer != nil && len(*obj.FieldMinFloat32SlicePointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinFloat32SlicePointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_float64slicepointer_min=2",
+			args: args{
+				fieldName:       "FieldMinFloat64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "float64", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinFloat64SlicePointer != nil && len(*obj.FieldMinFloat64SlicePointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinFloat64SlicePointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_boolslicepointer_min=2",
+			args: args{
+				fieldName:       "FieldMinBoolSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "bool", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinBoolSlicePointer != nil && len(*obj.FieldMinBoolSlicePointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinBoolSlicePointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_stringmappointer_min=2",
+			args: args{
+				fieldName:       "FieldMinStringMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "string", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinStringMapPointer != nil && len(*obj.FieldMinStringMapPointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinStringMapPointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_intmappointer_min=2",
+			args: args{
+				fieldName:       "FieldMinIntMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinIntMapPointer != nil && len(*obj.FieldMinIntMapPointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinIntMapPointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_int8mappointer_min=2",
+			args: args{
+				fieldName:       "FieldMinInt8MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int8", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinInt8MapPointer != nil && len(*obj.FieldMinInt8MapPointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinInt8MapPointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_int16mappointer_min=2",
+			args: args{
+				fieldName:       "FieldMinInt16MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int16", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinInt16MapPointer != nil && len(*obj.FieldMinInt16MapPointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinInt16MapPointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_int32mappointer_min=2",
+			args: args{
+				fieldName:       "FieldMinInt32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int32", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinInt32MapPointer != nil && len(*obj.FieldMinInt32MapPointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinInt32MapPointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_int64mappointer_min=2",
+			args: args{
+				fieldName:       "FieldMinInt64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int64", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinInt64MapPointer != nil && len(*obj.FieldMinInt64MapPointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinInt64MapPointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_uintmappointer_min=2",
+			args: args{
+				fieldName:       "FieldMinUintMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinUintMapPointer != nil && len(*obj.FieldMinUintMapPointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinUintMapPointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_uint8mappointer_min=2",
+			args: args{
+				fieldName:       "FieldMinUint8MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint8", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinUint8MapPointer != nil && len(*obj.FieldMinUint8MapPointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinUint8MapPointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_uint16mappointer_min=2",
+			args: args{
+				fieldName:       "FieldMinUint16MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint16", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinUint16MapPointer != nil && len(*obj.FieldMinUint16MapPointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinUint16MapPointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_uint32mappointer_min=2",
+			args: args{
+				fieldName:       "FieldMinUint32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint32", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinUint32MapPointer != nil && len(*obj.FieldMinUint32MapPointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinUint32MapPointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_uint64mappointer_min=2",
+			args: args{
+				fieldName:       "FieldMinUint64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint64", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinUint64MapPointer != nil && len(*obj.FieldMinUint64MapPointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinUint64MapPointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_float32mappointer_min=2",
+			args: args{
+				fieldName:       "FieldMinFloat32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "float32", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinFloat32MapPointer != nil && len(*obj.FieldMinFloat32MapPointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinFloat32MapPointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_float64mappointer_min=2",
+			args: args{
+				fieldName:       "FieldMinFloat64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "float64", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinFloat64MapPointer != nil && len(*obj.FieldMinFloat64MapPointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinFloat64MapPointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "min_boolmappointer_min=2",
+			args: args{
+				fieldName:       "FieldMinBoolMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "bool", Size: ""},
+				fieldValidation: "min=2",
+			},
+			want: `if !(obj.FieldMinBoolMapPointer != nil && len(*obj.FieldMinBoolMapPointer) >= 2) {
+errs = append(errs, types.NewValidationError("FieldMinBoolMapPointer must have at least 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_stringpointer_max=3",
+			args: args{
+				fieldName:       "FieldMaxStringPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "string", Size: ""},
+				fieldValidation: "max=3",
+			},
+			want: `if !(obj.FieldMaxStringPointer != nil && len(*obj.FieldMaxStringPointer) <= 3) {
+errs = append(errs, types.NewValidationError("FieldMaxStringPointer length must be <= 3"))
+}
+`,
+		},
+		{
+			name: "max_stringslicepointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxStringSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "string", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxStringSlicePointer != nil && len(*obj.FieldMaxStringSlicePointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxStringSlicePointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_intslicepointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxIntSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxIntSlicePointer != nil && len(*obj.FieldMaxIntSlicePointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxIntSlicePointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_int8slicepointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxInt8SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int8", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxInt8SlicePointer != nil && len(*obj.FieldMaxInt8SlicePointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxInt8SlicePointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_int16slicepointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxInt16SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int16", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxInt16SlicePointer != nil && len(*obj.FieldMaxInt16SlicePointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxInt16SlicePointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_int32slicepointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxInt32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int32", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxInt32SlicePointer != nil && len(*obj.FieldMaxInt32SlicePointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxInt32SlicePointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_int64slicepointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxInt64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int64", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxInt64SlicePointer != nil && len(*obj.FieldMaxInt64SlicePointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxInt64SlicePointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_uintslicepointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxUintSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxUintSlicePointer != nil && len(*obj.FieldMaxUintSlicePointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxUintSlicePointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_uint8slicepointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxUint8SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint8", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxUint8SlicePointer != nil && len(*obj.FieldMaxUint8SlicePointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxUint8SlicePointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_uint16slicepointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxUint16SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint16", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxUint16SlicePointer != nil && len(*obj.FieldMaxUint16SlicePointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxUint16SlicePointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_uint32slicepointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxUint32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint32", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxUint32SlicePointer != nil && len(*obj.FieldMaxUint32SlicePointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxUint32SlicePointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_uint64slicepointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxUint64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint64", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxUint64SlicePointer != nil && len(*obj.FieldMaxUint64SlicePointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxUint64SlicePointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_float32slicepointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxFloat32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "float32", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxFloat32SlicePointer != nil && len(*obj.FieldMaxFloat32SlicePointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxFloat32SlicePointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_float64slicepointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxFloat64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "float64", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxFloat64SlicePointer != nil && len(*obj.FieldMaxFloat64SlicePointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxFloat64SlicePointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_boolslicepointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxBoolSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "bool", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxBoolSlicePointer != nil && len(*obj.FieldMaxBoolSlicePointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxBoolSlicePointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_stringmappointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxStringMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "string", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxStringMapPointer != nil && len(*obj.FieldMaxStringMapPointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxStringMapPointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_intmappointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxIntMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxIntMapPointer != nil && len(*obj.FieldMaxIntMapPointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxIntMapPointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_int8mappointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxInt8MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int8", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxInt8MapPointer != nil && len(*obj.FieldMaxInt8MapPointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxInt8MapPointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_int16mappointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxInt16MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int16", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxInt16MapPointer != nil && len(*obj.FieldMaxInt16MapPointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxInt16MapPointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_int32mappointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxInt32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int32", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxInt32MapPointer != nil && len(*obj.FieldMaxInt32MapPointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxInt32MapPointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_int64mappointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxInt64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int64", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxInt64MapPointer != nil && len(*obj.FieldMaxInt64MapPointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxInt64MapPointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_uintmappointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxUintMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxUintMapPointer != nil && len(*obj.FieldMaxUintMapPointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxUintMapPointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_uint8mappointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxUint8MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint8", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxUint8MapPointer != nil && len(*obj.FieldMaxUint8MapPointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxUint8MapPointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_uint16mappointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxUint16MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint16", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxUint16MapPointer != nil && len(*obj.FieldMaxUint16MapPointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxUint16MapPointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_uint32mappointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxUint32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint32", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxUint32MapPointer != nil && len(*obj.FieldMaxUint32MapPointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxUint32MapPointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_uint64mappointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxUint64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint64", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxUint64MapPointer != nil && len(*obj.FieldMaxUint64MapPointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxUint64MapPointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_float32mappointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxFloat32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "float32", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxFloat32MapPointer != nil && len(*obj.FieldMaxFloat32MapPointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxFloat32MapPointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_float64mappointer_max=2",
+			args: args{
+				fieldName:       "FieldMaxFloat64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "float64", Size: ""},
+				fieldValidation: "max=2",
+			},
+			want: `if !(obj.FieldMaxFloat64MapPointer != nil && len(*obj.FieldMaxFloat64MapPointer) <= 2) {
+errs = append(errs, types.NewValidationError("FieldMaxFloat64MapPointer must have at most 2 elements"))
+}
+`,
+		},
+		{
+			name: "max_boolmappointer_max=1",
+			args: args{
+				fieldName:       "FieldMaxBoolMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "bool", Size: ""},
+				fieldValidation: "max=1",
+			},
+			want: `if !(obj.FieldMaxBoolMapPointer != nil && len(*obj.FieldMaxBoolMapPointer) <= 1) {
+errs = append(errs, types.NewValidationError("FieldMaxBoolMapPointer must have at most 1 elements"))
+}
+`,
+		},
+		{
+			name: "eq_ignore_case_stringpointer_eq_ignore_case=abcde",
+			args: args{
+				fieldName:       "FieldEq_ignore_caseStringPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "string", Size: ""},
+				fieldValidation: "eq_ignore_case=abcde",
+			},
+			want: `if !(obj.FieldEq_ignore_caseStringPointer != nil && types.EqualFold(*obj.FieldEq_ignore_caseStringPointer, "abcde")) {
+errs = append(errs, types.NewValidationError("FieldEq_ignore_caseStringPointer must be equal to 'abcde'"))
+}
+`,
+		},
+		{
+			name: "neq_ignore_case_stringpointer_neq_ignore_case=abcde",
+			args: args{
+				fieldName:       "FieldNeq_ignore_caseStringPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "string", Size: ""},
+				fieldValidation: "neq_ignore_case=abcde",
+			},
+			want: `if !(obj.FieldNeq_ignore_caseStringPointer != nil && !types.EqualFold(*obj.FieldNeq_ignore_caseStringPointer, "abcde")) {
+errs = append(errs, types.NewValidationError("FieldNeq_ignore_caseStringPointer must not be equal to 'abcde'"))
+}
+`,
+		},
+		{
+			name: "len_stringpointer_len=2",
+			args: args{
+				fieldName:       "FieldLenStringPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "string", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenStringPointer != nil && len(*obj.FieldLenStringPointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenStringPointer length must be 2"))
+}
+`,
+		},
+		{
+			name: "len_stringslicepointer_len=2",
+			args: args{
+				fieldName:       "FieldLenStringSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "string", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenStringSlicePointer != nil && len(*obj.FieldLenStringSlicePointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenStringSlicePointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_intslicepointer_len=2",
+			args: args{
+				fieldName:       "FieldLenIntSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenIntSlicePointer != nil && len(*obj.FieldLenIntSlicePointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenIntSlicePointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_int8slicepointer_len=2",
+			args: args{
+				fieldName:       "FieldLenInt8SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int8", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenInt8SlicePointer != nil && len(*obj.FieldLenInt8SlicePointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenInt8SlicePointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_int16slicepointer_len=2",
+			args: args{
+				fieldName:       "FieldLenInt16SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int16", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenInt16SlicePointer != nil && len(*obj.FieldLenInt16SlicePointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenInt16SlicePointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_int32slicepointer_len=2",
+			args: args{
+				fieldName:       "FieldLenInt32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int32", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenInt32SlicePointer != nil && len(*obj.FieldLenInt32SlicePointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenInt32SlicePointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_int64slicepointer_len=2",
+			args: args{
+				fieldName:       "FieldLenInt64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int64", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenInt64SlicePointer != nil && len(*obj.FieldLenInt64SlicePointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenInt64SlicePointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_uintslicepointer_len=2",
+			args: args{
+				fieldName:       "FieldLenUintSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenUintSlicePointer != nil && len(*obj.FieldLenUintSlicePointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenUintSlicePointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_uint8slicepointer_len=2",
+			args: args{
+				fieldName:       "FieldLenUint8SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint8", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenUint8SlicePointer != nil && len(*obj.FieldLenUint8SlicePointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenUint8SlicePointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_uint16slicepointer_len=2",
+			args: args{
+				fieldName:       "FieldLenUint16SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint16", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenUint16SlicePointer != nil && len(*obj.FieldLenUint16SlicePointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenUint16SlicePointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_uint32slicepointer_len=2",
+			args: args{
+				fieldName:       "FieldLenUint32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint32", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenUint32SlicePointer != nil && len(*obj.FieldLenUint32SlicePointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenUint32SlicePointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_uint64slicepointer_len=2",
+			args: args{
+				fieldName:       "FieldLenUint64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint64", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenUint64SlicePointer != nil && len(*obj.FieldLenUint64SlicePointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenUint64SlicePointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_float32slicepointer_len=2",
+			args: args{
+				fieldName:       "FieldLenFloat32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "float32", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenFloat32SlicePointer != nil && len(*obj.FieldLenFloat32SlicePointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenFloat32SlicePointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_float64slicepointer_len=2",
+			args: args{
+				fieldName:       "FieldLenFloat64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "float64", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenFloat64SlicePointer != nil && len(*obj.FieldLenFloat64SlicePointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenFloat64SlicePointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_boolslicepointer_len=2",
+			args: args{
+				fieldName:       "FieldLenBoolSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "bool", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenBoolSlicePointer != nil && len(*obj.FieldLenBoolSlicePointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenBoolSlicePointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_stringmappointer_len=2",
+			args: args{
+				fieldName:       "FieldLenStringMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "string", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenStringMapPointer != nil && len(*obj.FieldLenStringMapPointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenStringMapPointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_intmappointer_len=2",
+			args: args{
+				fieldName:       "FieldLenIntMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenIntMapPointer != nil && len(*obj.FieldLenIntMapPointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenIntMapPointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_int8mappointer_len=2",
+			args: args{
+				fieldName:       "FieldLenInt8MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int8", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenInt8MapPointer != nil && len(*obj.FieldLenInt8MapPointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenInt8MapPointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_int16mappointer_len=2",
+			args: args{
+				fieldName:       "FieldLenInt16MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int16", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenInt16MapPointer != nil && len(*obj.FieldLenInt16MapPointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenInt16MapPointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_int32mappointer_len=2",
+			args: args{
+				fieldName:       "FieldLenInt32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int32", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenInt32MapPointer != nil && len(*obj.FieldLenInt32MapPointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenInt32MapPointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_int64mappointer_len=2",
+			args: args{
+				fieldName:       "FieldLenInt64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int64", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenInt64MapPointer != nil && len(*obj.FieldLenInt64MapPointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenInt64MapPointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_uintmappointer_len=2",
+			args: args{
+				fieldName:       "FieldLenUintMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenUintMapPointer != nil && len(*obj.FieldLenUintMapPointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenUintMapPointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_uint8mappointer_len=2",
+			args: args{
+				fieldName:       "FieldLenUint8MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint8", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenUint8MapPointer != nil && len(*obj.FieldLenUint8MapPointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenUint8MapPointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_uint16mappointer_len=2",
+			args: args{
+				fieldName:       "FieldLenUint16MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint16", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenUint16MapPointer != nil && len(*obj.FieldLenUint16MapPointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenUint16MapPointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_uint32mappointer_len=2",
+			args: args{
+				fieldName:       "FieldLenUint32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint32", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenUint32MapPointer != nil && len(*obj.FieldLenUint32MapPointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenUint32MapPointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_uint64mappointer_len=2",
+			args: args{
+				fieldName:       "FieldLenUint64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint64", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenUint64MapPointer != nil && len(*obj.FieldLenUint64MapPointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenUint64MapPointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_float32mappointer_len=2",
+			args: args{
+				fieldName:       "FieldLenFloat32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "float32", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenFloat32MapPointer != nil && len(*obj.FieldLenFloat32MapPointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenFloat32MapPointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_float64mappointer_len=2",
+			args: args{
+				fieldName:       "FieldLenFloat64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "float64", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenFloat64MapPointer != nil && len(*obj.FieldLenFloat64MapPointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenFloat64MapPointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "len_boolmappointer_len=2",
+			args: args{
+				fieldName:       "FieldLenBoolMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "bool", Size: ""},
+				fieldValidation: "len=2",
+			},
+			want: `if !(obj.FieldLenBoolMapPointer != nil && len(*obj.FieldLenBoolMapPointer) == 2) {
+errs = append(errs, types.NewValidationError("FieldLenBoolMapPointer must have exactly 2 elements"))
+}
+`,
+		},
+		{
+			name: "in_stringpointer_in=ab cd ef",
+			args: args{
+				fieldName:       "FieldInStringPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "string", Size: ""},
+				fieldValidation: "in=ab cd ef",
+			},
+			want: `if !((obj.FieldInStringPointer != nil && *obj.FieldInStringPointer == "ab") || (obj.FieldInStringPointer != nil && *obj.FieldInStringPointer == "cd") || (obj.FieldInStringPointer != nil && *obj.FieldInStringPointer == "ef")) {
+errs = append(errs, types.NewValidationError("FieldInStringPointer must be one of 'ab' 'cd' 'ef'"))
+}
+`,
+		},
+		{
+			name: "in_intpointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInIntPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !((obj.FieldInIntPointer != nil && *obj.FieldInIntPointer == 12) || (obj.FieldInIntPointer != nil && *obj.FieldInIntPointer == 34) || (obj.FieldInIntPointer != nil && *obj.FieldInIntPointer == 56)) {
+errs = append(errs, types.NewValidationError("FieldInIntPointer must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_int8pointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInInt8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int8", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !((obj.FieldInInt8Pointer != nil && *obj.FieldInInt8Pointer == 12) || (obj.FieldInInt8Pointer != nil && *obj.FieldInInt8Pointer == 34) || (obj.FieldInInt8Pointer != nil && *obj.FieldInInt8Pointer == 56)) {
+errs = append(errs, types.NewValidationError("FieldInInt8Pointer must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_int16pointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInInt16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int16", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !((obj.FieldInInt16Pointer != nil && *obj.FieldInInt16Pointer == 12) || (obj.FieldInInt16Pointer != nil && *obj.FieldInInt16Pointer == 34) || (obj.FieldInInt16Pointer != nil && *obj.FieldInInt16Pointer == 56)) {
+errs = append(errs, types.NewValidationError("FieldInInt16Pointer must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_int32pointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInInt32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int32", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !((obj.FieldInInt32Pointer != nil && *obj.FieldInInt32Pointer == 12) || (obj.FieldInInt32Pointer != nil && *obj.FieldInInt32Pointer == 34) || (obj.FieldInInt32Pointer != nil && *obj.FieldInInt32Pointer == 56)) {
+errs = append(errs, types.NewValidationError("FieldInInt32Pointer must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_int64pointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInInt64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int64", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !((obj.FieldInInt64Pointer != nil && *obj.FieldInInt64Pointer == 12) || (obj.FieldInInt64Pointer != nil && *obj.FieldInInt64Pointer == 34) || (obj.FieldInInt64Pointer != nil && *obj.FieldInInt64Pointer == 56)) {
+errs = append(errs, types.NewValidationError("FieldInInt64Pointer must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_uintpointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInUintPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !((obj.FieldInUintPointer != nil && *obj.FieldInUintPointer == 12) || (obj.FieldInUintPointer != nil && *obj.FieldInUintPointer == 34) || (obj.FieldInUintPointer != nil && *obj.FieldInUintPointer == 56)) {
+errs = append(errs, types.NewValidationError("FieldInUintPointer must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_uint8pointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInUint8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint8", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !((obj.FieldInUint8Pointer != nil && *obj.FieldInUint8Pointer == 12) || (obj.FieldInUint8Pointer != nil && *obj.FieldInUint8Pointer == 34) || (obj.FieldInUint8Pointer != nil && *obj.FieldInUint8Pointer == 56)) {
+errs = append(errs, types.NewValidationError("FieldInUint8Pointer must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_uint16pointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInUint16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint16", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !((obj.FieldInUint16Pointer != nil && *obj.FieldInUint16Pointer == 12) || (obj.FieldInUint16Pointer != nil && *obj.FieldInUint16Pointer == 34) || (obj.FieldInUint16Pointer != nil && *obj.FieldInUint16Pointer == 56)) {
+errs = append(errs, types.NewValidationError("FieldInUint16Pointer must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_uint32pointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInUint32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint32", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !((obj.FieldInUint32Pointer != nil && *obj.FieldInUint32Pointer == 12) || (obj.FieldInUint32Pointer != nil && *obj.FieldInUint32Pointer == 34) || (obj.FieldInUint32Pointer != nil && *obj.FieldInUint32Pointer == 56)) {
+errs = append(errs, types.NewValidationError("FieldInUint32Pointer must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_uint64pointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInUint64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint64", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !((obj.FieldInUint64Pointer != nil && *obj.FieldInUint64Pointer == 12) || (obj.FieldInUint64Pointer != nil && *obj.FieldInUint64Pointer == 34) || (obj.FieldInUint64Pointer != nil && *obj.FieldInUint64Pointer == 56)) {
+errs = append(errs, types.NewValidationError("FieldInUint64Pointer must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_float32pointer_in=11.11 22.22 33.33",
+			args: args{
+				fieldName:       "FieldInFloat32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float32", Size: ""},
+				fieldValidation: "in=11.11 22.22 33.33",
+			},
+			want: `if !((obj.FieldInFloat32Pointer != nil && *obj.FieldInFloat32Pointer == 11.11) || (obj.FieldInFloat32Pointer != nil && *obj.FieldInFloat32Pointer == 22.22) || (obj.FieldInFloat32Pointer != nil && *obj.FieldInFloat32Pointer == 33.33)) {
+errs = append(errs, types.NewValidationError("FieldInFloat32Pointer must be one of '11.11' '22.22' '33.33'"))
+}
+`,
+		},
+		{
+			name: "in_float64pointer_in=11.11 22.22 33.33",
+			args: args{
+				fieldName:       "FieldInFloat64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float64", Size: ""},
+				fieldValidation: "in=11.11 22.22 33.33",
+			},
+			want: `if !((obj.FieldInFloat64Pointer != nil && *obj.FieldInFloat64Pointer == 11.11) || (obj.FieldInFloat64Pointer != nil && *obj.FieldInFloat64Pointer == 22.22) || (obj.FieldInFloat64Pointer != nil && *obj.FieldInFloat64Pointer == 33.33)) {
+errs = append(errs, types.NewValidationError("FieldInFloat64Pointer must be one of '11.11' '22.22' '33.33'"))
+}
+`,
+		},
+		{
+			name: "in_boolpointer_in=true",
+			args: args{
+				fieldName:       "FieldInBoolPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "bool", Size: ""},
+				fieldValidation: "in=true",
+			},
+			want: `if !((obj.FieldInBoolPointer != nil && *obj.FieldInBoolPointer == true)) {
+errs = append(errs, types.NewValidationError("FieldInBoolPointer must be one of 'true'"))
+}
+`,
+		},
+		{
+			name: "in_stringslicepointer_in=ab cd ef",
+			args: args{
+				fieldName:       "FieldInStringSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "string", Size: ""},
+				fieldValidation: "in=ab cd ef",
+			},
+			want: `if !(obj.FieldInStringSlicePointer != nil && types.SliceOnlyContains(*obj.FieldInStringSlicePointer, []string{"ab", "cd", "ef"})) {
+errs = append(errs, types.NewValidationError("FieldInStringSlicePointer elements must be one of 'ab' 'cd' 'ef'"))
+}
+`,
+		},
+		{
+			name: "in_intslicepointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInIntSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInIntSlicePointer != nil && types.SliceOnlyContains(*obj.FieldInIntSlicePointer, []int{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInIntSlicePointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_int8slicepointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInInt8SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int8", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInInt8SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInInt8SlicePointer, []int8{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInInt8SlicePointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_int16slicepointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInInt16SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int16", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInInt16SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInInt16SlicePointer, []int16{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInInt16SlicePointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_int32slicepointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInInt32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int32", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInInt32SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInInt32SlicePointer, []int32{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInInt32SlicePointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_int64slicepointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInInt64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int64", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInInt64SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInInt64SlicePointer, []int64{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInInt64SlicePointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_uintslicepointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInUintSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInUintSlicePointer != nil && types.SliceOnlyContains(*obj.FieldInUintSlicePointer, []uint{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInUintSlicePointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_uint8slicepointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInUint8SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint8", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInUint8SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInUint8SlicePointer, []uint8{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInUint8SlicePointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_uint16slicepointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInUint16SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint16", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInUint16SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInUint16SlicePointer, []uint16{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInUint16SlicePointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_uint32slicepointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInUint32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint32", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInUint32SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInUint32SlicePointer, []uint32{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInUint32SlicePointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_uint64slicepointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInUint64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint64", Size: ""},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInUint64SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInUint64SlicePointer, []uint64{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInUint64SlicePointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_float32slicepointer_in=11.11 22.22 33.33",
+			args: args{
+				fieldName:       "FieldInFloat32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "float32", Size: ""},
+				fieldValidation: "in=11.11 22.22 33.33",
+			},
+			want: `if !(obj.FieldInFloat32SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInFloat32SlicePointer, []float32{11.11, 22.22, 33.33})) {
+errs = append(errs, types.NewValidationError("FieldInFloat32SlicePointer elements must be one of '11.11' '22.22' '33.33'"))
+}
+`,
+		},
+		{
+			name: "in_float64slicepointer_in=11.11 22.22 33.33",
+			args: args{
+				fieldName:       "FieldInFloat64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "float64", Size: ""},
+				fieldValidation: "in=11.11 22.22 33.33",
+			},
+			want: `if !(obj.FieldInFloat64SlicePointer != nil && types.SliceOnlyContains(*obj.FieldInFloat64SlicePointer, []float64{11.11, 22.22, 33.33})) {
+errs = append(errs, types.NewValidationError("FieldInFloat64SlicePointer elements must be one of '11.11' '22.22' '33.33'"))
+}
+`,
+		},
+		{
+			name: "in_boolslicepointer_in=true",
+			args: args{
+				fieldName:       "FieldInBoolSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "bool", Size: ""},
+				fieldValidation: "in=true",
+			},
+			want: `if !(obj.FieldInBoolSlicePointer != nil && types.SliceOnlyContains(*obj.FieldInBoolSlicePointer, []bool{true})) {
+errs = append(errs, types.NewValidationError("FieldInBoolSlicePointer elements must be one of 'true'"))
+}
+`,
+		},
+		{
+			name: "in_stringarraypointer_in=ab cd ef",
+			args: args{
+				fieldName:       "FieldInStringArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "string", Size: "3"},
+				fieldValidation: "in=ab cd ef",
+			},
+			want: `if !(obj.FieldInStringArrayPointer != nil && types.SliceOnlyContains(obj.FieldInStringArrayPointer[:], []string{"ab", "cd", "ef"})) {
+errs = append(errs, types.NewValidationError("FieldInStringArrayPointer elements must be one of 'ab' 'cd' 'ef'"))
+}
+`,
+		},
+		{
+			name: "in_intarraypointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInIntArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "int", Size: "3"},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInIntArrayPointer != nil && types.SliceOnlyContains(obj.FieldInIntArrayPointer[:], []int{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInIntArrayPointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_int8arraypointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInInt8ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "int8", Size: "3"},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInInt8ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInInt8ArrayPointer[:], []int8{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInInt8ArrayPointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_int16arraypointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInInt16ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "int16", Size: "3"},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInInt16ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInInt16ArrayPointer[:], []int16{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInInt16ArrayPointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_int32arraypointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInInt32ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "int32", Size: "3"},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInInt32ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInInt32ArrayPointer[:], []int32{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInInt32ArrayPointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_int64arraypointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInInt64ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "int64", Size: "3"},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInInt64ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInInt64ArrayPointer[:], []int64{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInInt64ArrayPointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_uintarraypointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInUintArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "uint", Size: "3"},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInUintArrayPointer != nil && types.SliceOnlyContains(obj.FieldInUintArrayPointer[:], []uint{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInUintArrayPointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_uint8arraypointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInUint8ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "uint8", Size: "3"},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInUint8ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInUint8ArrayPointer[:], []uint8{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInUint8ArrayPointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_uint16arraypointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInUint16ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "uint16", Size: "3"},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInUint16ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInUint16ArrayPointer[:], []uint16{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInUint16ArrayPointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_uint32arraypointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInUint32ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "uint32", Size: "3"},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInUint32ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInUint32ArrayPointer[:], []uint32{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInUint32ArrayPointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_uint64arraypointer_in=12 34 56",
+			args: args{
+				fieldName:       "FieldInUint64ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "uint64", Size: "3"},
+				fieldValidation: "in=12 34 56",
+			},
+			want: `if !(obj.FieldInUint64ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInUint64ArrayPointer[:], []uint64{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldInUint64ArrayPointer elements must be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "in_float32arraypointer_in=11.11 22.22 33.33",
+			args: args{
+				fieldName:       "FieldInFloat32ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "float32", Size: "3"},
+				fieldValidation: "in=11.11 22.22 33.33",
+			},
+			want: `if !(obj.FieldInFloat32ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInFloat32ArrayPointer[:], []float32{11.11, 22.22, 33.33})) {
+errs = append(errs, types.NewValidationError("FieldInFloat32ArrayPointer elements must be one of '11.11' '22.22' '33.33'"))
+}
+`,
+		},
+		{
+			name: "in_float64arraypointer_in=11.11 22.22 33.33",
+			args: args{
+				fieldName:       "FieldInFloat64ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "float64", Size: "3"},
+				fieldValidation: "in=11.11 22.22 33.33",
+			},
+			want: `if !(obj.FieldInFloat64ArrayPointer != nil && types.SliceOnlyContains(obj.FieldInFloat64ArrayPointer[:], []float64{11.11, 22.22, 33.33})) {
+errs = append(errs, types.NewValidationError("FieldInFloat64ArrayPointer elements must be one of '11.11' '22.22' '33.33'"))
+}
+`,
+		},
+		{
+			name: "in_boolarraypointer_in=true",
+			args: args{
+				fieldName:       "FieldInBoolArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "bool", Size: "3"},
+				fieldValidation: "in=true",
+			},
+			want: `if !(obj.FieldInBoolArrayPointer != nil && types.SliceOnlyContains(obj.FieldInBoolArrayPointer[:], []bool{true})) {
+errs = append(errs, types.NewValidationError("FieldInBoolArrayPointer elements must be one of 'true'"))
+}
+`,
+		},
+		{
+			name: "in_stringmappointer_in=a b c",
+			args: args{
+				fieldName:       "FieldInStringMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "string", Size: ""},
+				fieldValidation: "in=a b c",
+			},
+			want: `if !(obj.FieldInStringMapPointer != nil && types.MapOnlyContains(*obj.FieldInStringMapPointer, []string{"a", "b", "c"})) {
+errs = append(errs, types.NewValidationError("FieldInStringMapPointer elements must be one of 'a' 'b' 'c'"))
+}
+`,
+		},
+		{
+			name: "in_intmappointer_in=1 2 3",
+			args: args{
+				fieldName:       "FieldInIntMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int", Size: ""},
+				fieldValidation: "in=1 2 3",
+			},
+			want: `if !(obj.FieldInIntMapPointer != nil && types.MapOnlyContains(*obj.FieldInIntMapPointer, []int{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldInIntMapPointer elements must be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "in_int8mappointer_in=1 2 3",
+			args: args{
+				fieldName:       "FieldInInt8MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int8", Size: ""},
+				fieldValidation: "in=1 2 3",
+			},
+			want: `if !(obj.FieldInInt8MapPointer != nil && types.MapOnlyContains(*obj.FieldInInt8MapPointer, []int8{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldInInt8MapPointer elements must be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "in_int16mappointer_in=1 2 3",
+			args: args{
+				fieldName:       "FieldInInt16MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int16", Size: ""},
+				fieldValidation: "in=1 2 3",
+			},
+			want: `if !(obj.FieldInInt16MapPointer != nil && types.MapOnlyContains(*obj.FieldInInt16MapPointer, []int16{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldInInt16MapPointer elements must be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "in_int32mappointer_in=1 2 3",
+			args: args{
+				fieldName:       "FieldInInt32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int32", Size: ""},
+				fieldValidation: "in=1 2 3",
+			},
+			want: `if !(obj.FieldInInt32MapPointer != nil && types.MapOnlyContains(*obj.FieldInInt32MapPointer, []int32{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldInInt32MapPointer elements must be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "in_int64mappointer_in=1 2 3",
+			args: args{
+				fieldName:       "FieldInInt64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int64", Size: ""},
+				fieldValidation: "in=1 2 3",
+			},
+			want: `if !(obj.FieldInInt64MapPointer != nil && types.MapOnlyContains(*obj.FieldInInt64MapPointer, []int64{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldInInt64MapPointer elements must be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "in_uintmappointer_in=1 2 3",
+			args: args{
+				fieldName:       "FieldInUintMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint", Size: ""},
+				fieldValidation: "in=1 2 3",
+			},
+			want: `if !(obj.FieldInUintMapPointer != nil && types.MapOnlyContains(*obj.FieldInUintMapPointer, []uint{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldInUintMapPointer elements must be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "in_uint8mappointer_in=1 2 3",
+			args: args{
+				fieldName:       "FieldInUint8MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint8", Size: ""},
+				fieldValidation: "in=1 2 3",
+			},
+			want: `if !(obj.FieldInUint8MapPointer != nil && types.MapOnlyContains(*obj.FieldInUint8MapPointer, []uint8{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldInUint8MapPointer elements must be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "in_uint16mappointer_in=1 2 3",
+			args: args{
+				fieldName:       "FieldInUint16MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint16", Size: ""},
+				fieldValidation: "in=1 2 3",
+			},
+			want: `if !(obj.FieldInUint16MapPointer != nil && types.MapOnlyContains(*obj.FieldInUint16MapPointer, []uint16{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldInUint16MapPointer elements must be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "in_uint32mappointer_in=1 2 3",
+			args: args{
+				fieldName:       "FieldInUint32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint32", Size: ""},
+				fieldValidation: "in=1 2 3",
+			},
+			want: `if !(obj.FieldInUint32MapPointer != nil && types.MapOnlyContains(*obj.FieldInUint32MapPointer, []uint32{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldInUint32MapPointer elements must be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "in_uint64mappointer_in=1 2 3",
+			args: args{
+				fieldName:       "FieldInUint64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint64", Size: ""},
+				fieldValidation: "in=1 2 3",
+			},
+			want: `if !(obj.FieldInUint64MapPointer != nil && types.MapOnlyContains(*obj.FieldInUint64MapPointer, []uint64{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldInUint64MapPointer elements must be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "in_float32mappointer_in=11.11 22.22 33.33",
+			args: args{
+				fieldName:       "FieldInFloat32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "float32", Size: ""},
+				fieldValidation: "in=11.11 22.22 33.33",
+			},
+			want: `if !(obj.FieldInFloat32MapPointer != nil && types.MapOnlyContains(*obj.FieldInFloat32MapPointer, []float32{11.11, 22.22, 33.33})) {
+errs = append(errs, types.NewValidationError("FieldInFloat32MapPointer elements must be one of '11.11' '22.22' '33.33'"))
+}
+`,
+		},
+		{
+			name: "in_float64mappointer_in=11.11 22.22 33.33",
+			args: args{
+				fieldName:       "FieldInFloat64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "float64", Size: ""},
+				fieldValidation: "in=11.11 22.22 33.33",
+			},
+			want: `if !(obj.FieldInFloat64MapPointer != nil && types.MapOnlyContains(*obj.FieldInFloat64MapPointer, []float64{11.11, 22.22, 33.33})) {
+errs = append(errs, types.NewValidationError("FieldInFloat64MapPointer elements must be one of '11.11' '22.22' '33.33'"))
+}
+`,
+		},
+		{
+			name: "in_boolmappointer_in=false",
+			args: args{
+				fieldName:       "FieldInBoolMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "bool", Size: ""},
+				fieldValidation: "in=false",
+			},
+			want: `if !(obj.FieldInBoolMapPointer != nil && types.MapOnlyContains(*obj.FieldInBoolMapPointer, []bool{false})) {
+errs = append(errs, types.NewValidationError("FieldInBoolMapPointer elements must be one of 'false'"))
+}
+`,
+		},
+		{
+			name: "nin_stringpointer_nin=ab cd ef",
+			args: args{
+				fieldName:       "FieldNinStringPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "string", Size: ""},
+				fieldValidation: "nin=ab cd ef",
+			},
+			want: `if !((obj.FieldNinStringPointer != nil && *obj.FieldNinStringPointer != "ab") && (obj.FieldNinStringPointer != nil && *obj.FieldNinStringPointer != "cd") && (obj.FieldNinStringPointer != nil && *obj.FieldNinStringPointer != "ef")) {
+errs = append(errs, types.NewValidationError("FieldNinStringPointer must not be one of 'ab' 'cd' 'ef'"))
+}
+`,
+		},
+		{
+			name: "nin_intpointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinIntPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !((obj.FieldNinIntPointer != nil && *obj.FieldNinIntPointer != 12) && (obj.FieldNinIntPointer != nil && *obj.FieldNinIntPointer != 34) && (obj.FieldNinIntPointer != nil && *obj.FieldNinIntPointer != 56)) {
+errs = append(errs, types.NewValidationError("FieldNinIntPointer must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_int8pointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinInt8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int8", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !((obj.FieldNinInt8Pointer != nil && *obj.FieldNinInt8Pointer != 12) && (obj.FieldNinInt8Pointer != nil && *obj.FieldNinInt8Pointer != 34) && (obj.FieldNinInt8Pointer != nil && *obj.FieldNinInt8Pointer != 56)) {
+errs = append(errs, types.NewValidationError("FieldNinInt8Pointer must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_int16pointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinInt16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int16", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !((obj.FieldNinInt16Pointer != nil && *obj.FieldNinInt16Pointer != 12) && (obj.FieldNinInt16Pointer != nil && *obj.FieldNinInt16Pointer != 34) && (obj.FieldNinInt16Pointer != nil && *obj.FieldNinInt16Pointer != 56)) {
+errs = append(errs, types.NewValidationError("FieldNinInt16Pointer must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_int32pointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinInt32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int32", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !((obj.FieldNinInt32Pointer != nil && *obj.FieldNinInt32Pointer != 12) && (obj.FieldNinInt32Pointer != nil && *obj.FieldNinInt32Pointer != 34) && (obj.FieldNinInt32Pointer != nil && *obj.FieldNinInt32Pointer != 56)) {
+errs = append(errs, types.NewValidationError("FieldNinInt32Pointer must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_int64pointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinInt64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "int64", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !((obj.FieldNinInt64Pointer != nil && *obj.FieldNinInt64Pointer != 12) && (obj.FieldNinInt64Pointer != nil && *obj.FieldNinInt64Pointer != 34) && (obj.FieldNinInt64Pointer != nil && *obj.FieldNinInt64Pointer != 56)) {
+errs = append(errs, types.NewValidationError("FieldNinInt64Pointer must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_uintpointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinUintPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !((obj.FieldNinUintPointer != nil && *obj.FieldNinUintPointer != 12) && (obj.FieldNinUintPointer != nil && *obj.FieldNinUintPointer != 34) && (obj.FieldNinUintPointer != nil && *obj.FieldNinUintPointer != 56)) {
+errs = append(errs, types.NewValidationError("FieldNinUintPointer must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_uint8pointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinUint8Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint8", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !((obj.FieldNinUint8Pointer != nil && *obj.FieldNinUint8Pointer != 12) && (obj.FieldNinUint8Pointer != nil && *obj.FieldNinUint8Pointer != 34) && (obj.FieldNinUint8Pointer != nil && *obj.FieldNinUint8Pointer != 56)) {
+errs = append(errs, types.NewValidationError("FieldNinUint8Pointer must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_uint16pointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinUint16Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint16", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !((obj.FieldNinUint16Pointer != nil && *obj.FieldNinUint16Pointer != 12) && (obj.FieldNinUint16Pointer != nil && *obj.FieldNinUint16Pointer != 34) && (obj.FieldNinUint16Pointer != nil && *obj.FieldNinUint16Pointer != 56)) {
+errs = append(errs, types.NewValidationError("FieldNinUint16Pointer must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_uint32pointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinUint32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint32", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !((obj.FieldNinUint32Pointer != nil && *obj.FieldNinUint32Pointer != 12) && (obj.FieldNinUint32Pointer != nil && *obj.FieldNinUint32Pointer != 34) && (obj.FieldNinUint32Pointer != nil && *obj.FieldNinUint32Pointer != 56)) {
+errs = append(errs, types.NewValidationError("FieldNinUint32Pointer must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_uint64pointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinUint64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "uint64", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !((obj.FieldNinUint64Pointer != nil && *obj.FieldNinUint64Pointer != 12) && (obj.FieldNinUint64Pointer != nil && *obj.FieldNinUint64Pointer != 34) && (obj.FieldNinUint64Pointer != nil && *obj.FieldNinUint64Pointer != 56)) {
+errs = append(errs, types.NewValidationError("FieldNinUint64Pointer must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_float32pointer_nin=11.11 22.22 33.33",
+			args: args{
+				fieldName:       "FieldNinFloat32Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float32", Size: ""},
+				fieldValidation: "nin=11.11 22.22 33.33",
+			},
+			want: `if !((obj.FieldNinFloat32Pointer != nil && *obj.FieldNinFloat32Pointer != 11.11) && (obj.FieldNinFloat32Pointer != nil && *obj.FieldNinFloat32Pointer != 22.22) && (obj.FieldNinFloat32Pointer != nil && *obj.FieldNinFloat32Pointer != 33.33)) {
+errs = append(errs, types.NewValidationError("FieldNinFloat32Pointer must not be one of '11.11' '22.22' '33.33'"))
+}
+`,
+		},
+		{
+			name: "nin_float64pointer_nin=11.11 22.22 33.33",
+			args: args{
+				fieldName:       "FieldNinFloat64Pointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "float64", Size: ""},
+				fieldValidation: "nin=11.11 22.22 33.33",
+			},
+			want: `if !((obj.FieldNinFloat64Pointer != nil && *obj.FieldNinFloat64Pointer != 11.11) && (obj.FieldNinFloat64Pointer != nil && *obj.FieldNinFloat64Pointer != 22.22) && (obj.FieldNinFloat64Pointer != nil && *obj.FieldNinFloat64Pointer != 33.33)) {
+errs = append(errs, types.NewValidationError("FieldNinFloat64Pointer must not be one of '11.11' '22.22' '33.33'"))
+}
+`,
+		},
+		{
+			name: "nin_boolpointer_nin=true",
+			args: args{
+				fieldName:       "FieldNinBoolPointer",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "bool", Size: ""},
+				fieldValidation: "nin=true",
+			},
+			want: `if !((obj.FieldNinBoolPointer != nil && *obj.FieldNinBoolPointer != true)) {
+errs = append(errs, types.NewValidationError("FieldNinBoolPointer must not be one of 'true'"))
+}
+`,
+		},
+		{
+			name: "nin_stringslicepointer_nin=ab cd ef",
+			args: args{
+				fieldName:       "FieldNinStringSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "string", Size: ""},
+				fieldValidation: "nin=ab cd ef",
+			},
+			want: `if !(obj.FieldNinStringSlicePointer != nil && types.SliceNotContains(*obj.FieldNinStringSlicePointer, []string{"ab", "cd", "ef"})) {
+errs = append(errs, types.NewValidationError("FieldNinStringSlicePointer elements must not be one of 'ab' 'cd' 'ef'"))
+}
+`,
+		},
+		{
+			name: "nin_intslicepointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinIntSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinIntSlicePointer != nil && types.SliceNotContains(*obj.FieldNinIntSlicePointer, []int{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinIntSlicePointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_int8slicepointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinInt8SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int8", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinInt8SlicePointer != nil && types.SliceNotContains(*obj.FieldNinInt8SlicePointer, []int8{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinInt8SlicePointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_int16slicepointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinInt16SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int16", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinInt16SlicePointer != nil && types.SliceNotContains(*obj.FieldNinInt16SlicePointer, []int16{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinInt16SlicePointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_int32slicepointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinInt32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int32", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinInt32SlicePointer != nil && types.SliceNotContains(*obj.FieldNinInt32SlicePointer, []int32{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinInt32SlicePointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_int64slicepointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinInt64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "int64", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinInt64SlicePointer != nil && types.SliceNotContains(*obj.FieldNinInt64SlicePointer, []int64{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinInt64SlicePointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_uintslicepointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinUintSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinUintSlicePointer != nil && types.SliceNotContains(*obj.FieldNinUintSlicePointer, []uint{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinUintSlicePointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_uint8slicepointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinUint8SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint8", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinUint8SlicePointer != nil && types.SliceNotContains(*obj.FieldNinUint8SlicePointer, []uint8{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinUint8SlicePointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_uint16slicepointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinUint16SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint16", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinUint16SlicePointer != nil && types.SliceNotContains(*obj.FieldNinUint16SlicePointer, []uint16{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinUint16SlicePointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_uint32slicepointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinUint32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint32", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinUint32SlicePointer != nil && types.SliceNotContains(*obj.FieldNinUint32SlicePointer, []uint32{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinUint32SlicePointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_uint64slicepointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinUint64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "uint64", Size: ""},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinUint64SlicePointer != nil && types.SliceNotContains(*obj.FieldNinUint64SlicePointer, []uint64{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinUint64SlicePointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_float32slicepointer_nin=11.11 22.22 33.33",
+			args: args{
+				fieldName:       "FieldNinFloat32SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "float32", Size: ""},
+				fieldValidation: "nin=11.11 22.22 33.33",
+			},
+			want: `if !(obj.FieldNinFloat32SlicePointer != nil && types.SliceNotContains(*obj.FieldNinFloat32SlicePointer, []float32{11.11, 22.22, 33.33})) {
+errs = append(errs, types.NewValidationError("FieldNinFloat32SlicePointer elements must not be one of '11.11' '22.22' '33.33'"))
+}
+`,
+		},
+		{
+			name: "nin_float64slicepointer_nin=11.11 22.22 33.33",
+			args: args{
+				fieldName:       "FieldNinFloat64SlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "float64", Size: ""},
+				fieldValidation: "nin=11.11 22.22 33.33",
+			},
+			want: `if !(obj.FieldNinFloat64SlicePointer != nil && types.SliceNotContains(*obj.FieldNinFloat64SlicePointer, []float64{11.11, 22.22, 33.33})) {
+errs = append(errs, types.NewValidationError("FieldNinFloat64SlicePointer elements must not be one of '11.11' '22.22' '33.33'"))
+}
+`,
+		},
+		{
+			name: "nin_boolslicepointer_nin=true",
+			args: args{
+				fieldName:       "FieldNinBoolSlicePointer",
+				fieldType:       common.FieldType{ComposedType: "*[]", BaseType: "bool", Size: ""},
+				fieldValidation: "nin=true",
+			},
+			want: `if !(obj.FieldNinBoolSlicePointer != nil && types.SliceNotContains(*obj.FieldNinBoolSlicePointer, []bool{true})) {
+errs = append(errs, types.NewValidationError("FieldNinBoolSlicePointer elements must not be one of 'true'"))
+}
+`,
+		},
+		{
+			name: "nin_stringarraypointer_nin=ab cd ef",
+			args: args{
+				fieldName:       "FieldNinStringArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "string", Size: "3"},
+				fieldValidation: "nin=ab cd ef",
+			},
+			want: `if !(obj.FieldNinStringArrayPointer != nil && types.SliceNotContains(obj.FieldNinStringArrayPointer[:], []string{"ab", "cd", "ef"})) {
+errs = append(errs, types.NewValidationError("FieldNinStringArrayPointer elements must not be one of 'ab' 'cd' 'ef'"))
+}
+`,
+		},
+		{
+			name: "nin_intarraypointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinIntArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "int", Size: "3"},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinIntArrayPointer != nil && types.SliceNotContains(obj.FieldNinIntArrayPointer[:], []int{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinIntArrayPointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_int8arraypointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinInt8ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "int8", Size: "3"},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinInt8ArrayPointer != nil && types.SliceNotContains(obj.FieldNinInt8ArrayPointer[:], []int8{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinInt8ArrayPointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_int16arraypointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinInt16ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "int16", Size: "3"},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinInt16ArrayPointer != nil && types.SliceNotContains(obj.FieldNinInt16ArrayPointer[:], []int16{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinInt16ArrayPointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_int32arraypointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinInt32ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "int32", Size: "3"},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinInt32ArrayPointer != nil && types.SliceNotContains(obj.FieldNinInt32ArrayPointer[:], []int32{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinInt32ArrayPointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_int64arraypointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinInt64ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "int64", Size: "3"},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinInt64ArrayPointer != nil && types.SliceNotContains(obj.FieldNinInt64ArrayPointer[:], []int64{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinInt64ArrayPointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_uintarraypointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinUintArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "uint", Size: "3"},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinUintArrayPointer != nil && types.SliceNotContains(obj.FieldNinUintArrayPointer[:], []uint{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinUintArrayPointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_uint8arraypointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinUint8ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "uint8", Size: "3"},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinUint8ArrayPointer != nil && types.SliceNotContains(obj.FieldNinUint8ArrayPointer[:], []uint8{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinUint8ArrayPointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_uint16arraypointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinUint16ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "uint16", Size: "3"},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinUint16ArrayPointer != nil && types.SliceNotContains(obj.FieldNinUint16ArrayPointer[:], []uint16{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinUint16ArrayPointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_uint32arraypointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinUint32ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "uint32", Size: "3"},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinUint32ArrayPointer != nil && types.SliceNotContains(obj.FieldNinUint32ArrayPointer[:], []uint32{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinUint32ArrayPointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_uint64arraypointer_nin=12 34 56",
+			args: args{
+				fieldName:       "FieldNinUint64ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "uint64", Size: "3"},
+				fieldValidation: "nin=12 34 56",
+			},
+			want: `if !(obj.FieldNinUint64ArrayPointer != nil && types.SliceNotContains(obj.FieldNinUint64ArrayPointer[:], []uint64{12, 34, 56})) {
+errs = append(errs, types.NewValidationError("FieldNinUint64ArrayPointer elements must not be one of '12' '34' '56'"))
+}
+`,
+		},
+		{
+			name: "nin_float32arraypointer_nin=11.11 22.22 33.33",
+			args: args{
+				fieldName:       "FieldNinFloat32ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "float32", Size: "3"},
+				fieldValidation: "nin=11.11 22.22 33.33",
+			},
+			want: `if !(obj.FieldNinFloat32ArrayPointer != nil && types.SliceNotContains(obj.FieldNinFloat32ArrayPointer[:], []float32{11.11, 22.22, 33.33})) {
+errs = append(errs, types.NewValidationError("FieldNinFloat32ArrayPointer elements must not be one of '11.11' '22.22' '33.33'"))
+}
+`,
+		},
+		{
+			name: "nin_float64arraypointer_nin=11.11 22.22 33.33",
+			args: args{
+				fieldName:       "FieldNinFloat64ArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "float64", Size: "3"},
+				fieldValidation: "nin=11.11 22.22 33.33",
+			},
+			want: `if !(obj.FieldNinFloat64ArrayPointer != nil && types.SliceNotContains(obj.FieldNinFloat64ArrayPointer[:], []float64{11.11, 22.22, 33.33})) {
+errs = append(errs, types.NewValidationError("FieldNinFloat64ArrayPointer elements must not be one of '11.11' '22.22' '33.33'"))
+}
+`,
+		},
+		{
+			name: "nin_boolarraypointer_nin=true",
+			args: args{
+				fieldName:       "FieldNinBoolArrayPointer",
+				fieldType:       common.FieldType{ComposedType: "*[N]", BaseType: "bool", Size: "3"},
+				fieldValidation: "nin=true",
+			},
+			want: `if !(obj.FieldNinBoolArrayPointer != nil && types.SliceNotContains(obj.FieldNinBoolArrayPointer[:], []bool{true})) {
+errs = append(errs, types.NewValidationError("FieldNinBoolArrayPointer elements must not be one of 'true'"))
+}
+`,
+		},
+		{
+			name: "nin_stringmappointer_nin=a b c",
+			args: args{
+				fieldName:       "FieldNinStringMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "string", Size: ""},
+				fieldValidation: "nin=a b c",
+			},
+			want: `if !(obj.FieldNinStringMapPointer != nil && types.MapNotContains(*obj.FieldNinStringMapPointer, []string{"a", "b", "c"})) {
+errs = append(errs, types.NewValidationError("FieldNinStringMapPointer elements must not be one of 'a' 'b' 'c'"))
+}
+`,
+		},
+		{
+			name: "nin_intmappointer_nin=1 2 3",
+			args: args{
+				fieldName:       "FieldNinIntMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int", Size: ""},
+				fieldValidation: "nin=1 2 3",
+			},
+			want: `if !(obj.FieldNinIntMapPointer != nil && types.MapNotContains(*obj.FieldNinIntMapPointer, []int{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldNinIntMapPointer elements must not be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "nin_int8mappointer_nin=1 2 3",
+			args: args{
+				fieldName:       "FieldNinInt8MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int8", Size: ""},
+				fieldValidation: "nin=1 2 3",
+			},
+			want: `if !(obj.FieldNinInt8MapPointer != nil && types.MapNotContains(*obj.FieldNinInt8MapPointer, []int8{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldNinInt8MapPointer elements must not be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "nin_int16mappointer_nin=1 2 3",
+			args: args{
+				fieldName:       "FieldNinInt16MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int16", Size: ""},
+				fieldValidation: "nin=1 2 3",
+			},
+			want: `if !(obj.FieldNinInt16MapPointer != nil && types.MapNotContains(*obj.FieldNinInt16MapPointer, []int16{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldNinInt16MapPointer elements must not be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "nin_int32mappointer_nin=1 2 3",
+			args: args{
+				fieldName:       "FieldNinInt32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int32", Size: ""},
+				fieldValidation: "nin=1 2 3",
+			},
+			want: `if !(obj.FieldNinInt32MapPointer != nil && types.MapNotContains(*obj.FieldNinInt32MapPointer, []int32{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldNinInt32MapPointer elements must not be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "nin_int64mappointer_nin=1 2 3",
+			args: args{
+				fieldName:       "FieldNinInt64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "int64", Size: ""},
+				fieldValidation: "nin=1 2 3",
+			},
+			want: `if !(obj.FieldNinInt64MapPointer != nil && types.MapNotContains(*obj.FieldNinInt64MapPointer, []int64{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldNinInt64MapPointer elements must not be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "nin_uintmappointer_nin=1 2 3",
+			args: args{
+				fieldName:       "FieldNinUintMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint", Size: ""},
+				fieldValidation: "nin=1 2 3",
+			},
+			want: `if !(obj.FieldNinUintMapPointer != nil && types.MapNotContains(*obj.FieldNinUintMapPointer, []uint{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldNinUintMapPointer elements must not be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "nin_uint8mappointer_nin=1 2 3",
+			args: args{
+				fieldName:       "FieldNinUint8MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint8", Size: ""},
+				fieldValidation: "nin=1 2 3",
+			},
+			want: `if !(obj.FieldNinUint8MapPointer != nil && types.MapNotContains(*obj.FieldNinUint8MapPointer, []uint8{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldNinUint8MapPointer elements must not be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "nin_uint16mappointer_nin=1 2 3",
+			args: args{
+				fieldName:       "FieldNinUint16MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint16", Size: ""},
+				fieldValidation: "nin=1 2 3",
+			},
+			want: `if !(obj.FieldNinUint16MapPointer != nil && types.MapNotContains(*obj.FieldNinUint16MapPointer, []uint16{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldNinUint16MapPointer elements must not be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "nin_uint32mappointer_nin=1 2 3",
+			args: args{
+				fieldName:       "FieldNinUint32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint32", Size: ""},
+				fieldValidation: "nin=1 2 3",
+			},
+			want: `if !(obj.FieldNinUint32MapPointer != nil && types.MapNotContains(*obj.FieldNinUint32MapPointer, []uint32{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldNinUint32MapPointer elements must not be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "nin_uint64mappointer_nin=1 2 3",
+			args: args{
+				fieldName:       "FieldNinUint64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "uint64", Size: ""},
+				fieldValidation: "nin=1 2 3",
+			},
+			want: `if !(obj.FieldNinUint64MapPointer != nil && types.MapNotContains(*obj.FieldNinUint64MapPointer, []uint64{1, 2, 3})) {
+errs = append(errs, types.NewValidationError("FieldNinUint64MapPointer elements must not be one of '1' '2' '3'"))
+}
+`,
+		},
+		{
+			name: "nin_float32mappointer_nin=11.11 22.22 33.33",
+			args: args{
+				fieldName:       "FieldNinFloat32MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "float32", Size: ""},
+				fieldValidation: "nin=11.11 22.22 33.33",
+			},
+			want: `if !(obj.FieldNinFloat32MapPointer != nil && types.MapNotContains(*obj.FieldNinFloat32MapPointer, []float32{11.11, 22.22, 33.33})) {
+errs = append(errs, types.NewValidationError("FieldNinFloat32MapPointer elements must not be one of '11.11' '22.22' '33.33'"))
+}
+`,
+		},
+		{
+			name: "nin_float64mappointer_nin=11.11 22.22 33.33",
+			args: args{
+				fieldName:       "FieldNinFloat64MapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "float64", Size: ""},
+				fieldValidation: "nin=11.11 22.22 33.33",
+			},
+			want: `if !(obj.FieldNinFloat64MapPointer != nil && types.MapNotContains(*obj.FieldNinFloat64MapPointer, []float64{11.11, 22.22, 33.33})) {
+errs = append(errs, types.NewValidationError("FieldNinFloat64MapPointer elements must not be one of '11.11' '22.22' '33.33'"))
+}
+`,
+		},
+		{
+			name: "nin_boolmappointer_nin=false",
+			args: args{
+				fieldName:       "FieldNinBoolMapPointer",
+				fieldType:       common.FieldType{ComposedType: "*map", BaseType: "bool", Size: ""},
+				fieldValidation: "nin=false",
+			},
+			want: `if !(obj.FieldNinBoolMapPointer != nil && types.MapNotContains(*obj.FieldNinBoolMapPointer, []bool{false})) {
+errs = append(errs, types.NewValidationError("FieldNinBoolMapPointer elements must not be one of 'false'"))
+}
+`,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gv := GenValidations{}
+			validation := AssertParserValidation(t, tt.args.fieldValidation)
+			got, err := gv.BuildValidationCode(tt.args.fieldName, tt.args.fieldType, []*analyzer.Validation{validation})
+			if err != nil {
+				t.Errorf("BuildValidationCode() error = %v, wantErr %v", err, nil)
+				return
+			}
+			if got != tt.want {
+				t.Errorf("BuildValidationCode() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
