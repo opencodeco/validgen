@@ -34,8 +34,8 @@ type TestCase struct {
 }
 
 func generateValidationTypesTests() {
-	generateValidationTypesTestsFile("no_pointer_tests.tpl", "generated_no_pointer_tests.go", false)
-	generateValidationTypesTestsFile("pointer_tests.tpl", "generated_pointer_tests.go", true)
+	generateValidationTypesTestsFile("no_pointer_tests.tpl", "generated_endtoend_no_pointer_tests.go", false)
+	generateValidationTypesTestsFile("pointer_tests.tpl", "generated_endtoend_pointer_tests.go", true)
 }
 
 func generateValidationTypesTestsFile(tpl, dest string, pointer bool) {
