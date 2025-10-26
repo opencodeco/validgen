@@ -33,7 +33,7 @@ type TestCase struct {
 	ErrorMessage string
 }
 
-func generateValidationTypesTests() {
+func generateValidationTypesEndToEndTests() {
 	generateValidationTypesTestsFile("no_pointer_tests.tpl", "generated_endtoend_no_pointer_tests.go", false)
 	generateValidationTypesTestsFile("pointer_tests.tpl", "generated_endtoend_pointer_tests.go", true)
 }
@@ -100,7 +100,7 @@ func generateValidationTypesTestsFile(tpl, dest string, pointer bool) {
 	log.Printf("Generating %s done\n", dest)
 }
 
-func (at *AllTestCasesToGenerate) GenerateFile(tplFile, output string) error {
+func (tc *AllTestCasesToGenerate) GenerateFile(tplFile, output string) error {
 	tpl, err := os.ReadFile(tplFile)
 	if err != nil {
 		return fmt.Errorf("error reading %s: %s", tplFile, err)
@@ -112,7 +112,7 @@ func (at *AllTestCasesToGenerate) GenerateFile(tplFile, output string) error {
 	}
 
 	code := new(bytes.Buffer)
-	if err := tmpl.Execute(code, at); err != nil {
+	if err := tmpl.Execute(code, tc); err != nil {
 		return err
 	}
 

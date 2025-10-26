@@ -28,7 +28,7 @@ type ValidationCodeTestCase struct {
 	ExpectedCode string
 }
 
-func generateValidationCodeTests() {
+func generateValidationCodeUnitTests() {
 	generateValidationCodeTestsFile("build_validation_code_test.tpl", "generated_validation_code_no_pointer_test.go", false)
 	generateValidationCodeTestsFile("build_validation_code_test.tpl", "generated_validation_code_pointer_test.go", true)
 }
