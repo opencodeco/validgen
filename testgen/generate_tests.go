@@ -7,8 +7,9 @@ import (
 func main() {
 	fmt.Println("Generating tests files")
 
-	generateValidationTypesTests()
-	generateValidationCodeTests()
+	generateValidationTypesEndToEndTests()
+	generateValidationCodeUnitTests()
+	generateFunctionCodeUnitTests()
 
 	fmt.Println("Generating done")
 }

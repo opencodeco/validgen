@@ -31,7 +31,7 @@ build: clean
 
 testgen:
 	@echo "Generating tests"
-	cd testgen/; rm -f generated_*.go; go run *.go; mv generated_endtoend_*tests.go ../tests/endtoend/; mv generated_validation_*_test.go ../internal/codegenerator/
+	cd testgen/; rm -f generated_*.go; go run *.go && mv generated_endtoend_*tests.go ../tests/endtoend/ && mv generated_validation_*_test.go ../internal/codegenerator/ && mv generated_function_code_*_test.go ../internal/codegenerator/
 
 endtoendtests: build
 	@echo "Running endtoend tests"
