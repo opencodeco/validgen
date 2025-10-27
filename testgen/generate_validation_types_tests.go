@@ -116,10 +116,6 @@ func (tc *AllTestCasesToGenerate) GenerateFile(tplFile, output string) error {
 		return err
 	}
 
-	// if err := os.WriteFile(output, code.Bytes(), 0644); err != nil {
-	// 	return err
-	// }
-
 	formattedCode, err := format.Source(code.Bytes())
 	if err != nil {
 		return err
