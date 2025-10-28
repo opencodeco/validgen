@@ -52,15 +52,15 @@ func generateFunctionCodeTestsFile(tpl, dest string, pointer bool) {
 	}
 
 	for _, typeValidation := range typesValidation {
-		testCases.Tests = append(testCases.Tests, FunctionCodeTestCase{
+		newTest := FunctionCodeTestCase{
 			TestName:   typeValidation.tag + "Struct",
 			StructName: typeValidation.tag + "Struct",
-		})
-		currentTest := &testCases.Tests[len(testCases.Tests)-1]
+		}
+
 		structInfo := &analyzer.Struct{
 			Struct: parser.Struct{
 				PackageName: "main",
-				StructName:  currentTest.StructName,
+				StructName:  newTest.StructName,
 			},
 		}
 
@@ -92,7 +92,7 @@ func generateFunctionCodeTestsFile(tpl, dest string, pointer bool) {
 					log.Fatalf("failed to parse validation %q: %v", validation, err)
 				}
 
-				currentTest.Fields = append(currentTest.Fields, FunctionCodeTestField{
+				newTest.Fields = append(newTest.Fields, FunctionCodeTestField{
 					Name: fieldName,
 					Type: fieldType,
 					Tag:  validation,
@@ -107,17 +107,20 @@ func generateFunctionCodeTestsFile(tpl, dest string, pointer bool) {
 					Validations: []*analyzer.Validation{parsedValidation},
 				})
 			}
-
-			gv := codegenerator.GenValidations{
-				Struct: structInfo,
-			}
-
-			got, err := gv.BuildFuncValidatorCode()
-			if err != nil {
-				log.Fatalf("failed to build function validator code for struct %q: %v", currentTest.StructName, err)
-			}
-			currentTest.ExpectedCode = got
 		}
+
+		gv := codegenerator.GenValidations{
+			Struct: structInfo,
+		}
+
+		expectedCode, err := gv.BuildFuncValidatorCode()
+		if err != nil {
+			log.Fatalf("failed to build function validator code for struct %q: %v", newTest.StructName, err)
+		}
+
+		newTest.ExpectedCode = expectedCode
+
+		testCases.Tests = append(testCases.Tests, newTest)
 	}
 
 	if err := testCases.GenerateFile(tpl, dest); err != nil {
