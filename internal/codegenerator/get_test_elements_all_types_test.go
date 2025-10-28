@@ -1150,7 +1150,6 @@ func TestDefineTestElementsWithAllTypes(t *testing.T) {
 					return
 				}
 				for _, fieldType := range fieldTypes {
-					// op, _, _ := strings.Cut(tt.validation, "=")
 					validation := replaceValidationValue(tt.validation, check.value)
 					want := TestElements{
 						concatOperator: check.want.concatOperator,

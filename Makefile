@@ -1,4 +1,4 @@
-.PHONY: clean unittests benchtests build endtoendtests cmpbenchtests
+.PHONY: clean unittests benchtests build endtoendtests cmpbenchtests testgen setup lint
 
 BIN_DIR=bin
 BIN_NAME=validgen
@@ -29,10 +29,13 @@ build: clean
 	@echo "Building"
 	go build -o $(VALIDGEN_BIN) .
 
+testgen:
+	@echo "Generating tests"
+	cd testgen/; rm -f generated_*.go; go run *.go; mv generated_endtoend_*tests.go ../tests/endtoend/; mv generated_validation_*_test.go ../internal/codegenerator/
+
 endtoendtests: build
 	@echo "Running endtoend tests"
 	find tests/endtoend/ -name 'validator__.go' -exec rm \{} \;
-	cd tests/endtoend/generate_tests/; rm -f generated*tests.go; go run *.go; mv generated*tests.go ..
 	$(VALIDGEN_BIN) tests/endtoend
 	cd tests/endtoend; go run .
 

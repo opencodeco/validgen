@@ -27,12 +27,12 @@ type fieldTpl struct {
 	Validations []*analyzer.Validation
 }
 
-func (gv *genValidations) BuildFuncValidatorCode() (string, error) {
+func (gv *GenValidations) BuildFuncValidatorCode() (string, error) {
 
 	stTpl := StructToTpl(gv.Struct)
 
 	funcMap := template.FuncMap{
-		"buildValidationCode": gv.buildValidationCode,
+		"buildValidationCode": gv.BuildValidationCode,
 	}
 
 	tmpl, err := template.New("FuncValidator").Funcs(funcMap).Parse(funcValidatorTpl)
@@ -48,7 +48,7 @@ func (gv *genValidations) BuildFuncValidatorCode() (string, error) {
 	return code.String(), nil
 }
 
-func (gv *genValidations) buildValidationCode(fieldName string, fieldType common.FieldType, fieldValidations []*analyzer.Validation) (string, error) {
+func (gv *GenValidations) BuildValidationCode(fieldName string, fieldType common.FieldType, fieldValidations []*analyzer.Validation) (string, error) {
 
 	tests := ""
 	for _, fieldValidation := range fieldValidations {
@@ -73,7 +73,7 @@ func (gv *genValidations) buildValidationCode(fieldName string, fieldType common
 	return tests, nil
 }
 
-func (gv *genValidations) buildIfCode(fieldName string, fieldType common.FieldType, fieldValidation *analyzer.Validation) (string, error) {
+func (gv *GenValidations) buildIfCode(fieldName string, fieldType common.FieldType, fieldValidation *analyzer.Validation) (string, error) {
 	testElements, err := DefineTestElements(fieldName, fieldType, fieldValidation)
 	if err != nil {
 		return "", fmt.Errorf("field %s: %w", fieldName, err)
@@ -95,7 +95,7 @@ errs = append(errs, types.NewValidationError("%s"))
 `, booleanCondition, testElements.errorMessage), nil
 }
 
-func (gv *genValidations) buildIfNestedCode(fieldName string, fieldType common.FieldType) (string, error) {
+func (gv *GenValidations) buildIfNestedCode(fieldName string, fieldType common.FieldType) (string, error) {
 	_, ok := gv.StructsWithValidation[fieldType.BaseType]
 	if !ok {
 		return "", fmt.Errorf("no validator found for struct type %s", fieldType)

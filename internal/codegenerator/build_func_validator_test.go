@@ -173,7 +173,7 @@ return errs
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gv := genValidations{
+			gv := GenValidations{
 				Struct: tt.fields.Struct,
 			}
 			got, err := gv.BuildFuncValidatorCode()

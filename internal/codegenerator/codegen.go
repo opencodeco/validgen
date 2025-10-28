@@ -6,7 +6,7 @@ import (
 	"github.com/opencodeco/validgen/internal/parser"
 )
 
-type genValidations struct {
+type GenValidations struct {
 	StructsWithValidation map[string]struct{}
 	Struct                *analyzer.Struct
 }
@@ -26,7 +26,7 @@ func GenerateCode(structs []*analyzer.Struct) (map[string]*Pkg, error) {
 			continue
 		}
 
-		codeInfo := &genValidations{
+		codeInfo := &GenValidations{
 			StructsWithValidation: structsWithValidation,
 			Struct:                st,
 		}

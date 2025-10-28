@@ -9,7 +9,7 @@ import (
 	"github.com/opencodeco/validgen/internal/parser"
 )
 
-func TestBuildValidationCode(t *testing.T) {
+func TestBuildValidationCodeOld(t *testing.T) {
 	type args struct {
 		fieldName       string
 		fieldType       common.FieldType
@@ -259,15 +259,15 @@ errs = append(errs, types.NewValidationError("mapField must have exactly 3 eleme
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gv := genValidations{}
+			gv := GenValidations{}
 			validation := AssertParserValidation(t, tt.args.fieldValidation)
-			got, err := gv.buildValidationCode(tt.args.fieldName, tt.args.fieldType, []*analyzer.Validation{validation})
+			got, err := gv.BuildValidationCode(tt.args.fieldName, tt.args.fieldType, []*analyzer.Validation{validation})
 			if err != nil {
-				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, nil)
+				t.Errorf("BuildValidationCode() error = %v, wantErr %v", err, nil)
 				return
 			}
 			if got != tt.want {
-				t.Errorf("buildValidationCode() = %v, want %v", got, tt.want)
+				t.Errorf("BuildValidationCode() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -330,7 +330,7 @@ errs = append(errs, types.NewValidationError("Field must have at least 2 element
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gv := genValidations{
+			gv := GenValidations{
 				Struct: &analyzer.Struct{
 					Struct: parser.Struct{
 						PackageName: "main",
@@ -340,13 +340,13 @@ errs = append(errs, types.NewValidationError("Field must have at least 2 element
 			}
 			gv.StructsWithValidation[tt.args.fieldType.BaseType] = struct{}{}
 			validation := AssertParserValidation(t, tt.args.fieldValidation)
-			got, err := gv.buildValidationCode(tt.args.fieldName, tt.args.fieldType, []*analyzer.Validation{validation})
+			got, err := gv.BuildValidationCode(tt.args.fieldName, tt.args.fieldType, []*analyzer.Validation{validation})
 			if err != nil {
-				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, nil)
+				t.Errorf("BuildValidationCode() error = %v, wantErr %v", err, nil)
 				return
 			}
 			if got != tt.want {
-				t.Errorf("buildValidationCode() = %v, want %v", got, tt.want)
+				t.Errorf("BuildValidationCode() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -506,15 +506,15 @@ errs = append(errs, types.NewValidationError("field must have exactly 3 elements
 	for _, tt := range tests {
 		testName := fmt.Sprintf("validation: %s with %s (%s)", tt.validation, tt.fieldType.ToGenericType(), tt.fieldType.ToNormalizedString())
 		t.Run(testName, func(t *testing.T) {
-			gv := genValidations{}
+			gv := GenValidations{}
 			validation := AssertParserValidation(t, tt.validation)
-			got, err := gv.buildValidationCode("field", tt.fieldType, []*analyzer.Validation{validation})
+			got, err := gv.BuildValidationCode("field", tt.fieldType, []*analyzer.Validation{validation})
 			if err != nil {
-				t.Errorf("buildValidationCode() error = %v, wantErr %v", err, nil)
+				t.Errorf("BuildValidationCode() error = %v, wantErr %v", err, nil)
 				return
 			}
 			if got != tt.want {
-				t.Errorf("buildValidationCode() = %v, want %v", got, tt.want)
+				t.Errorf("BuildValidationCode() = %v, want %v", got, tt.want)
 			}
 		})
 	}
