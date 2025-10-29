@@ -10,6 +10,7 @@ func main() {
 	generateValidationTypesEndToEndTests()
 	generateValidationCodeUnitTests()
 	generateFunctionCodeUnitTests()
+	generateComparativePerformanceTests()
 
 	fmt.Println("Generating done")
 }
