@@ -1,12 +1,8 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
-	"go/format"
-	"os"
 	"strings"
-	"text/template"
 
 	"github.com/opencodeco/validgen/internal/common"
 	"golang.org/x/text/cases"
@@ -44,8 +40,8 @@ func generateValidationTypesEndToEndTests() error {
 	return nil
 }
 
-func generateValidationTypesEndToEndTest(tpl, dest string, pointer bool) error {
-	fmt.Printf("Generating validation types test file: tpl[%s] dest[%s] pointer[%v]\n", tpl, dest, pointer)
+func generateValidationTypesEndToEndTest(tplFile, outputFile string, pointer bool) error {
+	fmt.Printf("Generating validation types test file: tplFile[%s] outputFile[%s] pointer[%v]\n", tplFile, outputFile, pointer)
 
 	allTestsToGenerate := AllTestCasesToGenerate{}
 
@@ -95,39 +91,11 @@ func generateValidationTypesEndToEndTest(tpl, dest string, pointer bool) error {
 		}
 	}
 
-	if err := allTestsToGenerate.GenerateFile(tpl, dest); err != nil {
+	if err := ExecTemplate("ValidationTypesTests", tplFile, outputFile, allTestsToGenerate); err != nil {
 		return fmt.Errorf("generating validation types file %s", err)
 	}
 
-	fmt.Printf("Generating %s done\n", dest)
-
-	return nil
-}
-
-func (tc *AllTestCasesToGenerate) GenerateFile(tplFile, output string) error {
-	tpl, err := os.ReadFile(tplFile)
-	if err != nil {
-		return fmt.Errorf("error reading %s: %s", tplFile, err)
-	}
-
-	tmpl, err := template.New("ValidationTypesTests").Parse(string(tpl))
-	if err != nil {
-		return err
-	}
-
-	code := new(bytes.Buffer)
-	if err := tmpl.Execute(code, tc); err != nil {
-		return err
-	}
-
-	formattedCode, err := format.Source(code.Bytes())
-	if err != nil {
-		return err
-	}
-
-	if err := os.WriteFile(output, formattedCode, 0644); err != nil {
-		return err
-	}
+	fmt.Printf("Generating %s done\n", outputFile)
 
 	return nil
 }

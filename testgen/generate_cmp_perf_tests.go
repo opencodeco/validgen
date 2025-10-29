@@ -1,12 +1,8 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
-	"go/format"
-	"os"
 	"strings"
-	"text/template"
 
 	"github.com/opencodeco/validgen/internal/common"
 	"golang.org/x/text/cases"
@@ -38,8 +34,8 @@ func generateComparativePerformanceTests() error {
 	return nil
 }
 
-func generateComparativePerformanceTest(tpl, dest string, pointer bool) error {
-	fmt.Printf("Generating comparative performance tests file: tpl[%s] dest[%s] pointer[%v]\n", tpl, dest, pointer)
+func generateComparativePerformanceTest(tplFile, outputFile string, pointer bool) error {
+	fmt.Printf("Generating comparative performance tests file: tplFile[%s] outputFile[%s] pointer[%v]\n", tplFile, outputFile, pointer)
 
 	benchTests := CmpBenchTests{}
 
@@ -94,39 +90,11 @@ func generateComparativePerformanceTest(tpl, dest string, pointer bool) error {
 
 	fmt.Printf("%d test cases were generated\n", len(benchTests.Tests))
 
-	if err := benchTests.GenerateFile(tpl, dest); err != nil {
+	if err := ExecTemplate("BenchTest", tplFile, outputFile, benchTests); err != nil {
 		return fmt.Errorf("error generating comparative performance tests file %s", err)
 	}
 
-	fmt.Println("Generating done")
-
-	return nil
-}
-
-func (cbt *CmpBenchTests) GenerateFile(tplFile, output string) error {
-	tpl, err := os.ReadFile(tplFile)
-	if err != nil {
-		return fmt.Errorf("error reading %s: %s", tplFile, err)
-	}
-
-	tmpl, err := template.New("BenchTest").Parse(string(tpl))
-	if err != nil {
-		return fmt.Errorf("error parsing template %s: %s", tplFile, err)
-	}
-
-	code := new(bytes.Buffer)
-	if err := tmpl.Execute(code, cbt); err != nil {
-		return err
-	}
-
-	formattedCode, err := format.Source(code.Bytes())
-	if err != nil {
-		return err
-	}
-
-	if err := os.WriteFile(output, formattedCode, 0644); err != nil {
-		return err
-	}
+	fmt.Printf("Generating %s done\n", outputFile)
 
 	return nil
 }

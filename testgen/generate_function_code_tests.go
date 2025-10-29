@@ -1,11 +1,7 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
-	"go/format"
-	"os"
-	"text/template"
 
 	"github.com/opencodeco/validgen/internal/analyzer"
 	"github.com/opencodeco/validgen/internal/codegenerator"
@@ -45,8 +41,8 @@ func generateFunctionCodeUnitTests() error {
 	return nil
 }
 
-func generateFunctionCodeUnitTest(tpl, dest string, pointer bool) error {
-	fmt.Printf("Generating function code test file: tpl[%s] dest[%s] pointer[%v]\n", tpl, dest, pointer)
+func generateFunctionCodeUnitTest(tplFile, outputFile string, pointer bool) error {
+	fmt.Printf("Generating function code test file: tplFile[%s] outputFile[%s] pointer[%v]\n", tplFile, outputFile, pointer)
 
 	funcName := "TestBuildFunctionCode"
 	if pointer {
@@ -124,39 +120,11 @@ func generateFunctionCodeUnitTest(tpl, dest string, pointer bool) error {
 		testCases.Tests = append(testCases.Tests, newTest)
 	}
 
-	if err := testCases.GenerateFile(tpl, dest); err != nil {
+	if err := ExecTemplate("FunctionCodeTests", tplFile, outputFile, testCases); err != nil {
 		return fmt.Errorf("generating function code tests file %s", err)
 	}
 
-	fmt.Printf("Generating %s done\n", dest)
-
-	return nil
-}
-
-func (tc *FunctionCodeTestCases) GenerateFile(tplFile, output string) error {
-	tpl, err := os.ReadFile(tplFile)
-	if err != nil {
-		return fmt.Errorf("error reading %s: %s", tplFile, err)
-	}
-
-	tmpl, err := template.New("ValidationCodeTests").Parse(string(tpl))
-	if err != nil {
-		return err
-	}
-
-	code := new(bytes.Buffer)
-	if err := tmpl.Execute(code, tc); err != nil {
-		return err
-	}
-
-	formattedCode, err := format.Source(code.Bytes())
-	if err != nil {
-		return err
-	}
-
-	if err := os.WriteFile(output, formattedCode, 0644); err != nil {
-		return err
-	}
+	fmt.Printf("Generating %s done\n", outputFile)
 
 	return nil
 }
