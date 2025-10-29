@@ -2,13 +2,20 @@ package main
 
 import "github.com/opencodeco/validgen/internal/common"
 
+type excludeIf uint32
+
+const (
+	cmpBenchTests excludeIf = 1 << iota
+	noPointer
+)
+
 type typeValidation struct {
 	typeClass    string
 	validation   string
 	validCase    string
 	invalidCase  string
 	errorMessage string
-	generateFor  string
+	excludeIf    excludeIf
 }
 
 var typesValidation = []struct {
@@ -21,7 +28,7 @@ var typesValidation = []struct {
 	// email operations
 	{
 		tag:               "email",
-		validatorTag:      ``,
+		validatorTag:      `email`,
 		isFieldValidation: false,
 		argsCount:         common.ZeroValue,
 		testCases: []typeValidation{
@@ -39,7 +46,7 @@ var typesValidation = []struct {
 	// required operations
 	{
 		tag:               "required",
-		validatorTag:      ``,
+		validatorTag:      `required`,
 		isFieldValidation: false,
 		argsCount:         common.ZeroValue,
 		testCases: []typeValidation{
@@ -110,7 +117,7 @@ var typesValidation = []struct {
 				validCase:    `{{.BasicType}}{"abcde"}`,
 				invalidCase:  `--`,
 				errorMessage: `{{.FieldName}} must not be empty`,
-				generateFor:  "pointer",
+				excludeIf:    noPointer,
 			},
 			{
 				typeClass:    `[N]<INT>`,
@@ -118,7 +125,7 @@ var typesValidation = []struct {
 				validCase:    `{{.BasicType}}{32}`,
 				invalidCase:  `--`,
 				errorMessage: `{{.FieldName}} must not be empty`,
-				generateFor:  "pointer",
+				excludeIf:    noPointer,
 			},
 			{
 				typeClass:    `[N]<FLOAT>`,
@@ -126,7 +133,7 @@ var typesValidation = []struct {
 				validCase:    `{{.BasicType}}{12.34}`,
 				invalidCase:  `--`,
 				errorMessage: `{{.FieldName}} must not be empty`,
-				generateFor:  "pointer",
+				excludeIf:    noPointer,
 			},
 			{
 				typeClass:    `[N]<BOOL>`,
@@ -134,7 +141,7 @@ var typesValidation = []struct {
 				validCase:    `{{.BasicType}}{true}`,
 				invalidCase:  `--`,
 				errorMessage: `{{.FieldName}} must not be empty`,
-				generateFor:  "pointer",
+				excludeIf:    noPointer,
 			},
 
 			// required: "map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]"
@@ -172,7 +179,7 @@ var typesValidation = []struct {
 	// eq operations
 	{
 		tag:               "eq",
-		validatorTag:      ``,
+		validatorTag:      `eq`,
 		isFieldValidation: false,
 		argsCount:         common.OneValue,
 		testCases: []typeValidation{
@@ -211,7 +218,7 @@ var typesValidation = []struct {
 	// neq operations
 	{
 		tag:               "neq",
-		validatorTag:      ``,
+		validatorTag:      `ne`,
 		isFieldValidation: false,
 		argsCount:         common.OneValue,
 		testCases: []typeValidation{
@@ -250,7 +257,7 @@ var typesValidation = []struct {
 	// gt operations
 	{
 		tag:               "gt",
-		validatorTag:      ``,
+		validatorTag:      `gt`,
 		isFieldValidation: false,
 		argsCount:         common.OneValue,
 		testCases: []typeValidation{
@@ -275,7 +282,7 @@ var typesValidation = []struct {
 	// gte operations
 	{
 		tag:               "gte",
-		validatorTag:      ``,
+		validatorTag:      `gte`,
 		isFieldValidation: false,
 		argsCount:         common.OneValue,
 		testCases: []typeValidation{
@@ -300,7 +307,7 @@ var typesValidation = []struct {
 	// lt operations
 	{
 		tag:               "lt",
-		validatorTag:      ``,
+		validatorTag:      `lt`,
 		isFieldValidation: false,
 		argsCount:         common.OneValue,
 		testCases: []typeValidation{
@@ -325,7 +332,7 @@ var typesValidation = []struct {
 	// lte operations
 	{
 		tag:               "lte",
-		validatorTag:      ``,
+		validatorTag:      `lte`,
 		isFieldValidation: false,
 		argsCount:         common.OneValue,
 		testCases: []typeValidation{
@@ -350,7 +357,7 @@ var typesValidation = []struct {
 	// min operations
 	{
 		tag:               "min",
-		validatorTag:      ``,
+		validatorTag:      `min`,
 		isFieldValidation: false,
 		argsCount:         common.OneValue,
 		testCases: []typeValidation{
@@ -428,7 +435,7 @@ var typesValidation = []struct {
 	// max operations
 	{
 		tag:               "max",
-		validatorTag:      ``,
+		validatorTag:      `max`,
 		isFieldValidation: false,
 		argsCount:         common.OneValue,
 		testCases: []typeValidation{
@@ -506,7 +513,7 @@ var typesValidation = []struct {
 	// eq_ignore_case operations
 	{
 		tag:               "eq_ignore_case",
-		validatorTag:      ``,
+		validatorTag:      `eq_ignore_case`,
 		isFieldValidation: false,
 		argsCount:         common.OneValue,
 		testCases: []typeValidation{
@@ -524,7 +531,7 @@ var typesValidation = []struct {
 	// neq_ignore_case operations
 	{
 		tag:               "neq_ignore_case",
-		validatorTag:      ``,
+		validatorTag:      `ne_ignore_case`,
 		isFieldValidation: false,
 		argsCount:         common.OneValue,
 		testCases: []typeValidation{
@@ -542,7 +549,7 @@ var typesValidation = []struct {
 	// len operations
 	{
 		tag:               "len",
-		validatorTag:      ``,
+		validatorTag:      `len`,
 		isFieldValidation: false,
 		argsCount:         common.OneValue,
 		testCases: []typeValidation{
@@ -620,7 +627,7 @@ var typesValidation = []struct {
 	// in operations
 	{
 		tag:               "in",
-		validatorTag:      ``,
+		validatorTag:      `oneof`,
 		isFieldValidation: false,
 		argsCount:         common.ManyValues,
 		testCases: []typeValidation{
@@ -645,6 +652,7 @@ var typesValidation = []struct {
 				validCase:    `22.22`,
 				invalidCase:  `44.44`,
 				errorMessage: `{{.FieldName}} must be one of {{.Targets}}`,
+				excludeIf:    cmpBenchTests,
 			},
 			{
 				typeClass:    `<BOOL>`,
@@ -652,6 +660,7 @@ var typesValidation = []struct {
 				validCase:    `true`,
 				invalidCase:  `false`,
 				errorMessage: `{{.FieldName}} must be one of {{.Targets}}`,
+				excludeIf:    cmpBenchTests,
 			},
 
 			// in: "[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>"
@@ -661,6 +670,7 @@ var typesValidation = []struct {
 				validCase:    `{{.BasicType}}{"ab", "ef"}`,
 				invalidCase:  `{{.BasicType}}{"ab", "gh", "ef"}`,
 				errorMessage: `{{.FieldName}} elements must be one of {{.Targets}}`,
+				excludeIf:    cmpBenchTests,
 			},
 			{
 				typeClass:    `[]<INT>`,
@@ -668,6 +678,7 @@ var typesValidation = []struct {
 				validCase:    `{{.BasicType}}{12, 56}`,
 				invalidCase:  `{{.BasicType}}{12, 78, 56}`,
 				errorMessage: `{{.FieldName}} elements must be one of {{.Targets}}`,
+				excludeIf:    cmpBenchTests,
 			},
 			{
 				typeClass:    `[]<FLOAT>`,
@@ -675,6 +686,7 @@ var typesValidation = []struct {
 				validCase:    `{{.BasicType}}{11.11, 22.22}`,
 				invalidCase:  `{{.BasicType}}{11.11, 44.44, 33.33}`,
 				errorMessage: `{{.FieldName}} elements must be one of {{.Targets}}`,
+				excludeIf:    cmpBenchTests,
 			},
 			{
 				typeClass:    `[]<BOOL>`,
@@ -682,6 +694,7 @@ var typesValidation = []struct {
 				validCase:    `{{.BasicType}}{true, true}`,
 				invalidCase:  `{{.BasicType}}{true, false, true}`,
 				errorMessage: `{{.FieldName}} elements must be one of {{.Targets}}`,
+				excludeIf:    cmpBenchTests,
 			},
 
 			// in: "[<N>]<STRING>", "[<N>]<INT>", "[<N>]<FLOAT>", "[<N>]<BOOL>"
@@ -691,6 +704,7 @@ var typesValidation = []struct {
 				validCase:    `{{.BasicType}}{"ab", "ef", "ab"}`,
 				invalidCase:  `{{.BasicType}}{"ab", "gh", "ef"}`,
 				errorMessage: `{{.FieldName}} elements must be one of {{.Targets}}`,
+				excludeIf:    cmpBenchTests,
 			},
 			{
 				typeClass:    `[N]<INT>`,
@@ -698,6 +712,7 @@ var typesValidation = []struct {
 				validCase:    `{{.BasicType}}{12, 56, 12}`,
 				invalidCase:  `{{.BasicType}}{12, 78, 56}`,
 				errorMessage: `{{.FieldName}} elements must be one of {{.Targets}}`,
+				excludeIf:    cmpBenchTests,
 			},
 			{
 				typeClass:    `[N]<FLOAT>`,
@@ -705,6 +720,7 @@ var typesValidation = []struct {
 				validCase:    `{{.BasicType}}{11.11, 22.22, 11.11}`,
 				invalidCase:  `{{.BasicType}}{11.11, 44.44, 33.33}`,
 				errorMessage: `{{.FieldName}} elements must be one of {{.Targets}}`,
+				excludeIf:    cmpBenchTests,
 			},
 			{
 				typeClass:    `[N]<BOOL>`,
@@ -712,6 +728,7 @@ var typesValidation = []struct {
 				validCase:    `{{.BasicType}}{true, true, true}`,
 				invalidCase:  `{{.BasicType}}{true, false, true}`,
 				errorMessage: `{{.FieldName}} elements must be one of {{.Targets}}`,
+				excludeIf:    cmpBenchTests,
 			},
 
 			// in: "map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]"
@@ -721,6 +738,7 @@ var typesValidation = []struct {
 				validCase:    `{{.BasicType}}{"a": "1", "b": "2", "c": "3"}`,
 				invalidCase:  `{{.BasicType}}{"a": "1", "d": "9", "c": "3"}`,
 				errorMessage: `{{.FieldName}} elements must be one of {{.Targets}}`,
+				excludeIf:    cmpBenchTests,
 			},
 			{
 				typeClass:    `map[<INT>]`,
@@ -728,6 +746,7 @@ var typesValidation = []struct {
 				validCase:    `{{.BasicType}}{1: 65, 2: 67, 3: 68}`,
 				invalidCase:  `{{.BasicType}}{1: 65, 4: 69, 3: 68}`,
 				errorMessage: `{{.FieldName}} elements must be one of {{.Targets}}`,
+				excludeIf:    cmpBenchTests,
 			},
 			{
 				typeClass:    `map[<FLOAT>]`,
@@ -735,6 +754,7 @@ var typesValidation = []struct {
 				validCase:    `{{.BasicType}}{11.11: 11.11, 22.22: 22.22, 33.33: 33.33}`,
 				invalidCase:  `{{.BasicType}}{11.11: 11.11, 44.44: 44.44, 33.33: 33.33}`,
 				errorMessage: `{{.FieldName}} elements must be one of {{.Targets}}`,
+				excludeIf:    cmpBenchTests,
 			},
 			{
 				typeClass:    `map[<BOOL>]`,
@@ -742,6 +762,7 @@ var typesValidation = []struct {
 				validCase:    `{{.BasicType}}{false: false}`,
 				invalidCase:  `{{.BasicType}}{true: true, false: false}`,
 				errorMessage: `{{.FieldName}} elements must be one of {{.Targets}}`,
+				excludeIf:    cmpBenchTests,
 			},
 		},
 	},
