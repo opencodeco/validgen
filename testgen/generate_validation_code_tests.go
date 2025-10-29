@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"go/format"
-	"log"
 	"os"
 	"text/template"
 
@@ -28,13 +27,20 @@ type ValidationCodeTestCase struct {
 	ExpectedCode string
 }
 
-func generateValidationCodeUnitTests() {
-	generateValidationCodeTestsFile("build_validation_code_test.tpl", "generated_validation_code_no_pointer_test.go", false)
-	generateValidationCodeTestsFile("build_validation_code_test.tpl", "generated_validation_code_pointer_test.go", true)
+func generateValidationCodeUnitTests() error {
+	if err := generateValidationCodeUnitTest("build_validation_code_test.tpl", "generated_validation_code_no_pointer_test.go", false); err != nil {
+		return err
+	}
+
+	if err := generateValidationCodeUnitTest("build_validation_code_test.tpl", "generated_validation_code_pointer_test.go", true); err != nil {
+		return err
+	}
+
+	return nil
 }
 
-func generateValidationCodeTestsFile(tpl, dest string, pointer bool) {
-	log.Printf("Generating validation code test file: tpl[%s] dest[%s] pointer[%v]\n", tpl, dest, pointer)
+func generateValidationCodeUnitTest(tpl, dest string, pointer bool) error {
+	fmt.Printf("Generating validation code test file: tpl[%s] dest[%s] pointer[%v]\n", tpl, dest, pointer)
 
 	funcName := "TestBuildValidationCode"
 	if pointer {
@@ -48,7 +54,7 @@ func generateValidationCodeTestsFile(tpl, dest string, pointer bool) {
 	for _, typeValidation := range typesValidation {
 		for _, toGenerate := range typeValidation.testCases {
 			if toGenerate.excludeIf&noPointer != 0 && !pointer {
-				log.Printf("Skipping no pointer: tag %s type %s\n", typeValidation.tag, toGenerate.typeClass)
+				fmt.Printf("Skipping no pointer: tag %s type %s\n", typeValidation.tag, toGenerate.typeClass)
 				continue
 			}
 
@@ -68,11 +74,11 @@ func generateValidationCodeTestsFile(tpl, dest string, pointer bool) {
 				gv := codegenerator.GenValidations{}
 				parsedValidation, err := analyzer.ParserValidation(validation)
 				if err != nil {
-					log.Fatalf("failed to parse validation %q: %v", validation, err)
+					return fmt.Errorf("failed to parse validation %q: %v", validation, err)
 				}
 				expectedValidationCode, err := gv.BuildValidationCode(fieldName, fieldType, []*analyzer.Validation{parsedValidation})
 				if err != nil {
-					log.Fatalf("failed to build validation code for %q: %v", fieldName, err)
+					return fmt.Errorf("failed to build validation code for %q: %v", fieldName, err)
 				}
 
 				testCases.Tests = append(testCases.Tests, ValidationCodeTestCase{
@@ -87,10 +93,12 @@ func generateValidationCodeTestsFile(tpl, dest string, pointer bool) {
 	}
 
 	if err := testCases.GenerateFile(tpl, dest); err != nil {
-		log.Fatalf("error generation validation code tests file %s", err)
+		return fmt.Errorf("error generating validation code tests file %s", err)
 	}
 
-	log.Printf("Generating %s done\n", dest)
+	fmt.Printf("Generating %s done\n", dest)
+
+	return nil
 }
 
 func (at *ValidationCodeTestCases) GenerateFile(tplFile, output string) error {

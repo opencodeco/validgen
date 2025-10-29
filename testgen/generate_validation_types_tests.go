@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"go/format"
-	"log"
 	"os"
 	"strings"
 	"text/template"
@@ -33,13 +32,20 @@ type TestCase struct {
 	ErrorMessage string
 }
 
-func generateValidationTypesEndToEndTests() {
-	generateValidationTypesTestsFile("no_pointer_tests.tpl", "generated_endtoend_no_pointer_tests.go", false)
-	generateValidationTypesTestsFile("pointer_tests.tpl", "generated_endtoend_pointer_tests.go", true)
+func generateValidationTypesEndToEndTests() error {
+	if err := generateValidationTypesEndToEndTest("no_pointer_tests.tpl", "generated_endtoend_no_pointer_tests.go", false); err != nil {
+		return err
+	}
+
+	if err := generateValidationTypesEndToEndTest("pointer_tests.tpl", "generated_endtoend_pointer_tests.go", true); err != nil {
+		return err
+	}
+
+	return nil
 }
 
-func generateValidationTypesTestsFile(tpl, dest string, pointer bool) {
-	log.Printf("Generating validation types test file: tpl[%s] dest[%s] pointer[%v]\n", tpl, dest, pointer)
+func generateValidationTypesEndToEndTest(tpl, dest string, pointer bool) error {
+	fmt.Printf("Generating validation types test file: tpl[%s] dest[%s] pointer[%v]\n", tpl, dest, pointer)
 
 	allTestsToGenerate := AllTestCasesToGenerate{}
 
@@ -53,7 +59,7 @@ func generateValidationTypesTestsFile(tpl, dest string, pointer bool) {
 		})
 		for _, toGenerate := range testCase.testCases {
 			if toGenerate.excludeIf&noPointer != 0 && !pointer {
-				log.Printf("Skipping no pointer: tag %s type %s\n", testCase.tag, toGenerate.typeClass)
+				fmt.Printf("Skipping no pointer: tag %s type %s\n", testCase.tag, toGenerate.typeClass)
 				continue
 			}
 
@@ -90,10 +96,12 @@ func generateValidationTypesTestsFile(tpl, dest string, pointer bool) {
 	}
 
 	if err := allTestsToGenerate.GenerateFile(tpl, dest); err != nil {
-		log.Fatalf("error generation validation types file %s", err)
+		return fmt.Errorf("generating validation types file %s", err)
 	}
 
-	log.Printf("Generating %s done\n", dest)
+	fmt.Printf("Generating %s done\n", dest)
+
+	return nil
 }
 
 func (tc *AllTestCasesToGenerate) GenerateFile(tplFile, output string) error {

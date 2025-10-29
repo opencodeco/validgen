@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"go/format"
-	"log"
 	"os"
 	"text/template"
 
@@ -34,13 +33,20 @@ type FunctionCodeTestField struct {
 	Tag  string
 }
 
-func generateFunctionCodeUnitTests() {
-	generateFunctionCodeTestsFile("function_code_test.tpl", "generated_function_code_no_pointer_test.go", false)
-	generateFunctionCodeTestsFile("function_code_test.tpl", "generated_function_code_pointer_test.go", true)
+func generateFunctionCodeUnitTests() error {
+	if err := generateFunctionCodeUnitTest("function_code_test.tpl", "generated_function_code_no_pointer_test.go", false); err != nil {
+		return err
+	}
+
+	if err := generateFunctionCodeUnitTest("function_code_test.tpl", "generated_function_code_pointer_test.go", true); err != nil {
+		return err
+	}
+
+	return nil
 }
 
-func generateFunctionCodeTestsFile(tpl, dest string, pointer bool) {
-	log.Printf("Generating function code test file: tpl[%s] dest[%s] pointer[%v]\n", tpl, dest, pointer)
+func generateFunctionCodeUnitTest(tpl, dest string, pointer bool) error {
+	fmt.Printf("Generating function code test file: tpl[%s] dest[%s] pointer[%v]\n", tpl, dest, pointer)
 
 	funcName := "TestBuildFunctionCode"
 	if pointer {
@@ -66,7 +72,7 @@ func generateFunctionCodeTestsFile(tpl, dest string, pointer bool) {
 
 		for _, toGenerate := range typeValidation.testCases {
 			if toGenerate.excludeIf&noPointer != 0 && !pointer {
-				log.Printf("Skipping no pointer: tag %s type %s\n", typeValidation.tag, toGenerate.typeClass)
+				fmt.Printf("Skipping no pointer: tag %s type %s\n", typeValidation.tag, toGenerate.typeClass)
 				continue
 			}
 
@@ -84,7 +90,7 @@ func generateFunctionCodeTestsFile(tpl, dest string, pointer bool) {
 				fieldName := "Field" + cases.Title(language.Und).String(typeValidation.tag) + fieldType.ToStringName()
 				parsedValidation, err := analyzer.ParserValidation(validation)
 				if err != nil {
-					log.Fatalf("failed to parse validation %q: %v", validation, err)
+					return fmt.Errorf("failed to parse validation %q: %v", validation, err)
 				}
 
 				newTest.Fields = append(newTest.Fields, FunctionCodeTestField{
@@ -110,7 +116,7 @@ func generateFunctionCodeTestsFile(tpl, dest string, pointer bool) {
 
 		expectedCode, err := gv.BuildFuncValidatorCode()
 		if err != nil {
-			log.Fatalf("failed to build function validator code for struct %q: %v", newTest.StructName, err)
+			return fmt.Errorf("failed to build function validator code for struct %q: %v", newTest.StructName, err)
 		}
 
 		newTest.ExpectedCode = expectedCode
@@ -119,10 +125,12 @@ func generateFunctionCodeTestsFile(tpl, dest string, pointer bool) {
 	}
 
 	if err := testCases.GenerateFile(tpl, dest); err != nil {
-		log.Fatalf("error generating function code tests file %s", err)
+		return fmt.Errorf("generating function code tests file %s", err)
 	}
 
-	log.Printf("Generating %s done\n", dest)
+	fmt.Printf("Generating %s done\n", dest)
+
+	return nil
 }
 
 func (tc *FunctionCodeTestCases) GenerateFile(tplFile, output string) error {

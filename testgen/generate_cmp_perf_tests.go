@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"go/format"
-	"log"
 	"os"
 	"strings"
 	"text/template"
@@ -27,29 +26,36 @@ type CmpBenchTest struct {
 	ValidInput   string
 }
 
-func generateComparativePerformanceTests() {
-	generateComparativePerformanceTest("cmp_perf_no_pointer_tests.tpl", "generated_cmp_perf_no_pointer_test.go", false)
-	generateComparativePerformanceTest("cmp_perf_pointer_tests.tpl", "generated_cmp_perf_pointer_test.go", true)
+func generateComparativePerformanceTests() error {
+	if err := generateComparativePerformanceTest("cmp_perf_no_pointer_tests.tpl", "generated_cmp_perf_no_pointer_test.go", false); err != nil {
+		return err
+	}
+
+	if err := generateComparativePerformanceTest("cmp_perf_pointer_tests.tpl", "generated_cmp_perf_pointer_test.go", true); err != nil {
+		return err
+	}
+
+	return nil
 }
 
-func generateComparativePerformanceTest(tpl, dest string, pointer bool) {
-	log.Printf("Generating comparative performance tests file: tpl[%s] dest[%s] pointer[%v]\n", tpl, dest, pointer)
+func generateComparativePerformanceTest(tpl, dest string, pointer bool) error {
+	fmt.Printf("Generating comparative performance tests file: tpl[%s] dest[%s] pointer[%v]\n", tpl, dest, pointer)
 
 	benchTests := CmpBenchTests{}
 
 	for _, typeVal := range typesValidation {
 		if typeVal.validatorTag == "" {
-			log.Printf("Skipping tag %s: go-validator tag not defined\n", typeVal.tag)
+			fmt.Printf("Skipping tag %s: go-validator tag not defined\n", typeVal.tag)
 			continue
 		}
 
 		for _, testCase := range typeVal.testCases {
 			if testCase.excludeIf&cmpBenchTests != 0 {
-				log.Printf("Skipping test: tag %s type %s\n", typeVal.tag, testCase.typeClass)
+				fmt.Printf("Skipping test: tag %s type %s\n", typeVal.tag, testCase.typeClass)
 				continue
 			}
 			if testCase.excludeIf&noPointer != 0 && !pointer {
-				log.Printf("Skipping no pointer: tag %s type %s\n", typeVal.tag, testCase.typeClass)
+				fmt.Printf("Skipping no pointer: tag %s type %s\n", typeVal.tag, testCase.typeClass)
 				continue
 			}
 
@@ -86,13 +92,15 @@ func generateComparativePerformanceTest(tpl, dest string, pointer bool) {
 		}
 	}
 
-	log.Printf("%d test cases were generated\n", len(benchTests.Tests))
+	fmt.Printf("%d test cases were generated\n", len(benchTests.Tests))
 
 	if err := benchTests.GenerateFile(tpl, dest); err != nil {
-		log.Fatalf("error generating comparative performance tests file %s", err)
+		return fmt.Errorf("error generating comparative performance tests file %s", err)
 	}
 
-	log.Println("Generating done")
+	fmt.Println("Generating done")
+
+	return nil
 }
 
 func (cbt *CmpBenchTests) GenerateFile(tplFile, output string) error {
