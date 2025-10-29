@@ -6,6 +6,3170 @@ import (
 	"github.com/opencodeco/validgen/types"
 )
 
+func ValidGenEmailStringPointerStructValidate(obj *ValidGenEmailStringPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && types.IsValidEmail(*obj.Field)) {
+		errs = append(errs, types.NewValidationError("Field must be a valid email"))
+	}
+	return errs
+}
+func ValidGenEmailStringStructValidate(obj *ValidGenEmailStringStruct) []error {
+	var errs []error
+	if !(types.IsValidEmail(obj.Field)) {
+		errs = append(errs, types.NewValidationError("Field must be a valid email"))
+	}
+	return errs
+}
+func ValidGenEqBoolPointerStructValidate(obj *ValidGenEqBoolPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field == true) {
+		errs = append(errs, types.NewValidationError("Field must be equal to true"))
+	}
+	return errs
+}
+func ValidGenEqBoolStructValidate(obj *ValidGenEqBoolStruct) []error {
+	var errs []error
+	if !(obj.Field == true) {
+		errs = append(errs, types.NewValidationError("Field must be equal to true"))
+	}
+	return errs
+}
+func ValidGenEqFloat32PointerStructValidate(obj *ValidGenEqFloat32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field == 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 12.34"))
+	}
+	return errs
+}
+func ValidGenEqFloat32StructValidate(obj *ValidGenEqFloat32Struct) []error {
+	var errs []error
+	if !(obj.Field == 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 12.34"))
+	}
+	return errs
+}
+func ValidGenEqFloat64PointerStructValidate(obj *ValidGenEqFloat64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field == 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 12.34"))
+	}
+	return errs
+}
+func ValidGenEqFloat64StructValidate(obj *ValidGenEqFloat64Struct) []error {
+	var errs []error
+	if !(obj.Field == 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 12.34"))
+	}
+	return errs
+}
+func ValidGenEqInt16PointerStructValidate(obj *ValidGenEqInt16PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqInt16StructValidate(obj *ValidGenEqInt16Struct) []error {
+	var errs []error
+	if !(obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqInt32PointerStructValidate(obj *ValidGenEqInt32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqInt32StructValidate(obj *ValidGenEqInt32Struct) []error {
+	var errs []error
+	if !(obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqInt64PointerStructValidate(obj *ValidGenEqInt64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqInt64StructValidate(obj *ValidGenEqInt64Struct) []error {
+	var errs []error
+	if !(obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqInt8PointerStructValidate(obj *ValidGenEqInt8PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqInt8StructValidate(obj *ValidGenEqInt8Struct) []error {
+	var errs []error
+	if !(obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqIntPointerStructValidate(obj *ValidGenEqIntPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqIntStructValidate(obj *ValidGenEqIntStruct) []error {
+	var errs []error
+	if !(obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqStringPointerStructValidate(obj *ValidGenEqStringPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field == "abcde") {
+		errs = append(errs, types.NewValidationError("Field must be equal to 'abcde'"))
+	}
+	return errs
+}
+func ValidGenEqStringStructValidate(obj *ValidGenEqStringStruct) []error {
+	var errs []error
+	if !(obj.Field == "abcde") {
+		errs = append(errs, types.NewValidationError("Field must be equal to 'abcde'"))
+	}
+	return errs
+}
+func ValidGenEqUint16PointerStructValidate(obj *ValidGenEqUint16PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqUint16StructValidate(obj *ValidGenEqUint16Struct) []error {
+	var errs []error
+	if !(obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqUint32PointerStructValidate(obj *ValidGenEqUint32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqUint32StructValidate(obj *ValidGenEqUint32Struct) []error {
+	var errs []error
+	if !(obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqUint64PointerStructValidate(obj *ValidGenEqUint64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqUint64StructValidate(obj *ValidGenEqUint64Struct) []error {
+	var errs []error
+	if !(obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqUint8PointerStructValidate(obj *ValidGenEqUint8PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqUint8StructValidate(obj *ValidGenEqUint8Struct) []error {
+	var errs []error
+	if !(obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqUintPointerStructValidate(obj *ValidGenEqUintPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEqUintStructValidate(obj *ValidGenEqUintStruct) []error {
+	var errs []error
+	if !(obj.Field == 32) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 32"))
+	}
+	return errs
+}
+func ValidGenEq_ignore_caseStringPointerStructValidate(obj *ValidGenEq_ignore_caseStringPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && types.EqualFold(*obj.Field, "abcde")) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 'abcde'"))
+	}
+	return errs
+}
+func ValidGenEq_ignore_caseStringStructValidate(obj *ValidGenEq_ignore_caseStringStruct) []error {
+	var errs []error
+	if !(types.EqualFold(obj.Field, "abcde")) {
+		errs = append(errs, types.NewValidationError("Field must be equal to 'abcde'"))
+	}
+	return errs
+}
+func ValidGenGtFloat32PointerStructValidate(obj *ValidGenGtFloat32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field > 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be > 12.34"))
+	}
+	return errs
+}
+func ValidGenGtFloat32StructValidate(obj *ValidGenGtFloat32Struct) []error {
+	var errs []error
+	if !(obj.Field > 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be > 12.34"))
+	}
+	return errs
+}
+func ValidGenGtFloat64PointerStructValidate(obj *ValidGenGtFloat64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field > 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be > 12.34"))
+	}
+	return errs
+}
+func ValidGenGtFloat64StructValidate(obj *ValidGenGtFloat64Struct) []error {
+	var errs []error
+	if !(obj.Field > 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be > 12.34"))
+	}
+	return errs
+}
+func ValidGenGtInt16PointerStructValidate(obj *ValidGenGtInt16PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtInt16StructValidate(obj *ValidGenGtInt16Struct) []error {
+	var errs []error
+	if !(obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtInt32PointerStructValidate(obj *ValidGenGtInt32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtInt32StructValidate(obj *ValidGenGtInt32Struct) []error {
+	var errs []error
+	if !(obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtInt64PointerStructValidate(obj *ValidGenGtInt64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtInt64StructValidate(obj *ValidGenGtInt64Struct) []error {
+	var errs []error
+	if !(obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtInt8PointerStructValidate(obj *ValidGenGtInt8PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtInt8StructValidate(obj *ValidGenGtInt8Struct) []error {
+	var errs []error
+	if !(obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtIntPointerStructValidate(obj *ValidGenGtIntPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtIntStructValidate(obj *ValidGenGtIntStruct) []error {
+	var errs []error
+	if !(obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtUint16PointerStructValidate(obj *ValidGenGtUint16PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtUint16StructValidate(obj *ValidGenGtUint16Struct) []error {
+	var errs []error
+	if !(obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtUint32PointerStructValidate(obj *ValidGenGtUint32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtUint32StructValidate(obj *ValidGenGtUint32Struct) []error {
+	var errs []error
+	if !(obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtUint64PointerStructValidate(obj *ValidGenGtUint64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtUint64StructValidate(obj *ValidGenGtUint64Struct) []error {
+	var errs []error
+	if !(obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtUint8PointerStructValidate(obj *ValidGenGtUint8PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtUint8StructValidate(obj *ValidGenGtUint8Struct) []error {
+	var errs []error
+	if !(obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtUintPointerStructValidate(obj *ValidGenGtUintPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGtUintStructValidate(obj *ValidGenGtUintStruct) []error {
+	var errs []error
+	if !(obj.Field > 32) {
+		errs = append(errs, types.NewValidationError("Field must be > 32"))
+	}
+	return errs
+}
+func ValidGenGteFloat32PointerStructValidate(obj *ValidGenGteFloat32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field >= 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be >= 12.34"))
+	}
+	return errs
+}
+func ValidGenGteFloat32StructValidate(obj *ValidGenGteFloat32Struct) []error {
+	var errs []error
+	if !(obj.Field >= 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be >= 12.34"))
+	}
+	return errs
+}
+func ValidGenGteFloat64PointerStructValidate(obj *ValidGenGteFloat64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field >= 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be >= 12.34"))
+	}
+	return errs
+}
+func ValidGenGteFloat64StructValidate(obj *ValidGenGteFloat64Struct) []error {
+	var errs []error
+	if !(obj.Field >= 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be >= 12.34"))
+	}
+	return errs
+}
+func ValidGenGteInt16PointerStructValidate(obj *ValidGenGteInt16PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteInt16StructValidate(obj *ValidGenGteInt16Struct) []error {
+	var errs []error
+	if !(obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteInt32PointerStructValidate(obj *ValidGenGteInt32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteInt32StructValidate(obj *ValidGenGteInt32Struct) []error {
+	var errs []error
+	if !(obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteInt64PointerStructValidate(obj *ValidGenGteInt64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteInt64StructValidate(obj *ValidGenGteInt64Struct) []error {
+	var errs []error
+	if !(obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteInt8PointerStructValidate(obj *ValidGenGteInt8PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteInt8StructValidate(obj *ValidGenGteInt8Struct) []error {
+	var errs []error
+	if !(obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteIntPointerStructValidate(obj *ValidGenGteIntPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteIntStructValidate(obj *ValidGenGteIntStruct) []error {
+	var errs []error
+	if !(obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteUint16PointerStructValidate(obj *ValidGenGteUint16PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteUint16StructValidate(obj *ValidGenGteUint16Struct) []error {
+	var errs []error
+	if !(obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteUint32PointerStructValidate(obj *ValidGenGteUint32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteUint32StructValidate(obj *ValidGenGteUint32Struct) []error {
+	var errs []error
+	if !(obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteUint64PointerStructValidate(obj *ValidGenGteUint64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteUint64StructValidate(obj *ValidGenGteUint64Struct) []error {
+	var errs []error
+	if !(obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteUint8PointerStructValidate(obj *ValidGenGteUint8PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteUint8StructValidate(obj *ValidGenGteUint8Struct) []error {
+	var errs []error
+	if !(obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteUintPointerStructValidate(obj *ValidGenGteUintPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenGteUintStructValidate(obj *ValidGenGteUintStruct) []error {
+	var errs []error
+	if !(obj.Field >= 32) {
+		errs = append(errs, types.NewValidationError("Field must be >= 32"))
+	}
+	return errs
+}
+func ValidGenInInt16PointerStructValidate(obj *ValidGenInInt16PointerStruct) []error {
+	var errs []error
+	if !((obj.Field != nil && *obj.Field == 12) || (obj.Field != nil && *obj.Field == 34) || (obj.Field != nil && *obj.Field == 56)) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInInt16StructValidate(obj *ValidGenInInt16Struct) []error {
+	var errs []error
+	if !(obj.Field == 12 || obj.Field == 34 || obj.Field == 56) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInInt32PointerStructValidate(obj *ValidGenInInt32PointerStruct) []error {
+	var errs []error
+	if !((obj.Field != nil && *obj.Field == 12) || (obj.Field != nil && *obj.Field == 34) || (obj.Field != nil && *obj.Field == 56)) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInInt32StructValidate(obj *ValidGenInInt32Struct) []error {
+	var errs []error
+	if !(obj.Field == 12 || obj.Field == 34 || obj.Field == 56) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInInt64PointerStructValidate(obj *ValidGenInInt64PointerStruct) []error {
+	var errs []error
+	if !((obj.Field != nil && *obj.Field == 12) || (obj.Field != nil && *obj.Field == 34) || (obj.Field != nil && *obj.Field == 56)) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInInt64StructValidate(obj *ValidGenInInt64Struct) []error {
+	var errs []error
+	if !(obj.Field == 12 || obj.Field == 34 || obj.Field == 56) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInInt8PointerStructValidate(obj *ValidGenInInt8PointerStruct) []error {
+	var errs []error
+	if !((obj.Field != nil && *obj.Field == 12) || (obj.Field != nil && *obj.Field == 34) || (obj.Field != nil && *obj.Field == 56)) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInInt8StructValidate(obj *ValidGenInInt8Struct) []error {
+	var errs []error
+	if !(obj.Field == 12 || obj.Field == 34 || obj.Field == 56) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInIntPointerStructValidate(obj *ValidGenInIntPointerStruct) []error {
+	var errs []error
+	if !((obj.Field != nil && *obj.Field == 12) || (obj.Field != nil && *obj.Field == 34) || (obj.Field != nil && *obj.Field == 56)) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInIntStructValidate(obj *ValidGenInIntStruct) []error {
+	var errs []error
+	if !(obj.Field == 12 || obj.Field == 34 || obj.Field == 56) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInStringPointerStructValidate(obj *ValidGenInStringPointerStruct) []error {
+	var errs []error
+	if !((obj.Field != nil && *obj.Field == "ab") || (obj.Field != nil && *obj.Field == "cd") || (obj.Field != nil && *obj.Field == "ef")) {
+		errs = append(errs, types.NewValidationError("Field must be one of 'ab' 'cd' 'ef'"))
+	}
+	return errs
+}
+func ValidGenInStringStructValidate(obj *ValidGenInStringStruct) []error {
+	var errs []error
+	if !(obj.Field == "ab" || obj.Field == "cd" || obj.Field == "ef") {
+		errs = append(errs, types.NewValidationError("Field must be one of 'ab' 'cd' 'ef'"))
+	}
+	return errs
+}
+func ValidGenInUint16PointerStructValidate(obj *ValidGenInUint16PointerStruct) []error {
+	var errs []error
+	if !((obj.Field != nil && *obj.Field == 12) || (obj.Field != nil && *obj.Field == 34) || (obj.Field != nil && *obj.Field == 56)) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInUint16StructValidate(obj *ValidGenInUint16Struct) []error {
+	var errs []error
+	if !(obj.Field == 12 || obj.Field == 34 || obj.Field == 56) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInUint32PointerStructValidate(obj *ValidGenInUint32PointerStruct) []error {
+	var errs []error
+	if !((obj.Field != nil && *obj.Field == 12) || (obj.Field != nil && *obj.Field == 34) || (obj.Field != nil && *obj.Field == 56)) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInUint32StructValidate(obj *ValidGenInUint32Struct) []error {
+	var errs []error
+	if !(obj.Field == 12 || obj.Field == 34 || obj.Field == 56) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInUint64PointerStructValidate(obj *ValidGenInUint64PointerStruct) []error {
+	var errs []error
+	if !((obj.Field != nil && *obj.Field == 12) || (obj.Field != nil && *obj.Field == 34) || (obj.Field != nil && *obj.Field == 56)) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInUint64StructValidate(obj *ValidGenInUint64Struct) []error {
+	var errs []error
+	if !(obj.Field == 12 || obj.Field == 34 || obj.Field == 56) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInUint8PointerStructValidate(obj *ValidGenInUint8PointerStruct) []error {
+	var errs []error
+	if !((obj.Field != nil && *obj.Field == 12) || (obj.Field != nil && *obj.Field == 34) || (obj.Field != nil && *obj.Field == 56)) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInUint8StructValidate(obj *ValidGenInUint8Struct) []error {
+	var errs []error
+	if !(obj.Field == 12 || obj.Field == 34 || obj.Field == 56) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInUintPointerStructValidate(obj *ValidGenInUintPointerStruct) []error {
+	var errs []error
+	if !((obj.Field != nil && *obj.Field == 12) || (obj.Field != nil && *obj.Field == 34) || (obj.Field != nil && *obj.Field == 56)) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenInUintStructValidate(obj *ValidGenInUintStruct) []error {
+	var errs []error
+	if !(obj.Field == 12 || obj.Field == 34 || obj.Field == 56) {
+		errs = append(errs, types.NewValidationError("Field must be one of '12' '34' '56'"))
+	}
+	return errs
+}
+func ValidGenLenBoolMapPointerStructValidate(obj *ValidGenLenBoolMapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenBoolMapStructValidate(obj *ValidGenLenBoolMapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenBoolSlicePointerStructValidate(obj *ValidGenLenBoolSlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenBoolSliceStructValidate(obj *ValidGenLenBoolSliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenFloat32MapPointerStructValidate(obj *ValidGenLenFloat32MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenFloat32MapStructValidate(obj *ValidGenLenFloat32MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenFloat32SlicePointerStructValidate(obj *ValidGenLenFloat32SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenFloat32SliceStructValidate(obj *ValidGenLenFloat32SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenFloat64MapPointerStructValidate(obj *ValidGenLenFloat64MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenFloat64MapStructValidate(obj *ValidGenLenFloat64MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenFloat64SlicePointerStructValidate(obj *ValidGenLenFloat64SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenFloat64SliceStructValidate(obj *ValidGenLenFloat64SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenInt16MapPointerStructValidate(obj *ValidGenLenInt16MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenInt16MapStructValidate(obj *ValidGenLenInt16MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenInt16SlicePointerStructValidate(obj *ValidGenLenInt16SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenInt16SliceStructValidate(obj *ValidGenLenInt16SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenInt32MapPointerStructValidate(obj *ValidGenLenInt32MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenInt32MapStructValidate(obj *ValidGenLenInt32MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenInt32SlicePointerStructValidate(obj *ValidGenLenInt32SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenInt32SliceStructValidate(obj *ValidGenLenInt32SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenInt64MapPointerStructValidate(obj *ValidGenLenInt64MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenInt64MapStructValidate(obj *ValidGenLenInt64MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenInt64SlicePointerStructValidate(obj *ValidGenLenInt64SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenInt64SliceStructValidate(obj *ValidGenLenInt64SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenInt8MapPointerStructValidate(obj *ValidGenLenInt8MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenInt8MapStructValidate(obj *ValidGenLenInt8MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenInt8SlicePointerStructValidate(obj *ValidGenLenInt8SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenInt8SliceStructValidate(obj *ValidGenLenInt8SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenIntMapPointerStructValidate(obj *ValidGenLenIntMapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenIntMapStructValidate(obj *ValidGenLenIntMapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenIntSlicePointerStructValidate(obj *ValidGenLenIntSlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenIntSliceStructValidate(obj *ValidGenLenIntSliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenStringMapPointerStructValidate(obj *ValidGenLenStringMapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenStringMapStructValidate(obj *ValidGenLenStringMapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenStringPointerStructValidate(obj *ValidGenLenStringPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field length must be 2"))
+	}
+	return errs
+}
+func ValidGenLenStringSlicePointerStructValidate(obj *ValidGenLenStringSlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenStringSliceStructValidate(obj *ValidGenLenStringSliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenStringStructValidate(obj *ValidGenLenStringStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field length must be 2"))
+	}
+	return errs
+}
+func ValidGenLenUint16MapPointerStructValidate(obj *ValidGenLenUint16MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUint16MapStructValidate(obj *ValidGenLenUint16MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUint16SlicePointerStructValidate(obj *ValidGenLenUint16SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUint16SliceStructValidate(obj *ValidGenLenUint16SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUint32MapPointerStructValidate(obj *ValidGenLenUint32MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUint32MapStructValidate(obj *ValidGenLenUint32MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUint32SlicePointerStructValidate(obj *ValidGenLenUint32SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUint32SliceStructValidate(obj *ValidGenLenUint32SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUint64MapPointerStructValidate(obj *ValidGenLenUint64MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUint64MapStructValidate(obj *ValidGenLenUint64MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUint64SlicePointerStructValidate(obj *ValidGenLenUint64SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUint64SliceStructValidate(obj *ValidGenLenUint64SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUint8MapPointerStructValidate(obj *ValidGenLenUint8MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUint8MapStructValidate(obj *ValidGenLenUint8MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUint8SlicePointerStructValidate(obj *ValidGenLenUint8SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUint8SliceStructValidate(obj *ValidGenLenUint8SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUintMapPointerStructValidate(obj *ValidGenLenUintMapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUintMapStructValidate(obj *ValidGenLenUintMapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUintSlicePointerStructValidate(obj *ValidGenLenUintSlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLenUintSliceStructValidate(obj *ValidGenLenUintSliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) == 2) {
+		errs = append(errs, types.NewValidationError("Field must have exactly 2 elements"))
+	}
+	return errs
+}
+func ValidGenLtFloat32PointerStructValidate(obj *ValidGenLtFloat32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field < 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be < 12.34"))
+	}
+	return errs
+}
+func ValidGenLtFloat32StructValidate(obj *ValidGenLtFloat32Struct) []error {
+	var errs []error
+	if !(obj.Field < 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be < 12.34"))
+	}
+	return errs
+}
+func ValidGenLtFloat64PointerStructValidate(obj *ValidGenLtFloat64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field < 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be < 12.34"))
+	}
+	return errs
+}
+func ValidGenLtFloat64StructValidate(obj *ValidGenLtFloat64Struct) []error {
+	var errs []error
+	if !(obj.Field < 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be < 12.34"))
+	}
+	return errs
+}
+func ValidGenLtInt16PointerStructValidate(obj *ValidGenLtInt16PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtInt16StructValidate(obj *ValidGenLtInt16Struct) []error {
+	var errs []error
+	if !(obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtInt32PointerStructValidate(obj *ValidGenLtInt32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtInt32StructValidate(obj *ValidGenLtInt32Struct) []error {
+	var errs []error
+	if !(obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtInt64PointerStructValidate(obj *ValidGenLtInt64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtInt64StructValidate(obj *ValidGenLtInt64Struct) []error {
+	var errs []error
+	if !(obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtInt8PointerStructValidate(obj *ValidGenLtInt8PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtInt8StructValidate(obj *ValidGenLtInt8Struct) []error {
+	var errs []error
+	if !(obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtIntPointerStructValidate(obj *ValidGenLtIntPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtIntStructValidate(obj *ValidGenLtIntStruct) []error {
+	var errs []error
+	if !(obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtUint16PointerStructValidate(obj *ValidGenLtUint16PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtUint16StructValidate(obj *ValidGenLtUint16Struct) []error {
+	var errs []error
+	if !(obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtUint32PointerStructValidate(obj *ValidGenLtUint32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtUint32StructValidate(obj *ValidGenLtUint32Struct) []error {
+	var errs []error
+	if !(obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtUint64PointerStructValidate(obj *ValidGenLtUint64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtUint64StructValidate(obj *ValidGenLtUint64Struct) []error {
+	var errs []error
+	if !(obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtUint8PointerStructValidate(obj *ValidGenLtUint8PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtUint8StructValidate(obj *ValidGenLtUint8Struct) []error {
+	var errs []error
+	if !(obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtUintPointerStructValidate(obj *ValidGenLtUintPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLtUintStructValidate(obj *ValidGenLtUintStruct) []error {
+	var errs []error
+	if !(obj.Field < 32) {
+		errs = append(errs, types.NewValidationError("Field must be < 32"))
+	}
+	return errs
+}
+func ValidGenLteFloat32PointerStructValidate(obj *ValidGenLteFloat32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field <= 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be <= 12.34"))
+	}
+	return errs
+}
+func ValidGenLteFloat32StructValidate(obj *ValidGenLteFloat32Struct) []error {
+	var errs []error
+	if !(obj.Field <= 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be <= 12.34"))
+	}
+	return errs
+}
+func ValidGenLteFloat64PointerStructValidate(obj *ValidGenLteFloat64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field <= 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be <= 12.34"))
+	}
+	return errs
+}
+func ValidGenLteFloat64StructValidate(obj *ValidGenLteFloat64Struct) []error {
+	var errs []error
+	if !(obj.Field <= 12.34) {
+		errs = append(errs, types.NewValidationError("Field must be <= 12.34"))
+	}
+	return errs
+}
+func ValidGenLteInt16PointerStructValidate(obj *ValidGenLteInt16PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteInt16StructValidate(obj *ValidGenLteInt16Struct) []error {
+	var errs []error
+	if !(obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteInt32PointerStructValidate(obj *ValidGenLteInt32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteInt32StructValidate(obj *ValidGenLteInt32Struct) []error {
+	var errs []error
+	if !(obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteInt64PointerStructValidate(obj *ValidGenLteInt64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteInt64StructValidate(obj *ValidGenLteInt64Struct) []error {
+	var errs []error
+	if !(obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteInt8PointerStructValidate(obj *ValidGenLteInt8PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteInt8StructValidate(obj *ValidGenLteInt8Struct) []error {
+	var errs []error
+	if !(obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteIntPointerStructValidate(obj *ValidGenLteIntPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteIntStructValidate(obj *ValidGenLteIntStruct) []error {
+	var errs []error
+	if !(obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteUint16PointerStructValidate(obj *ValidGenLteUint16PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteUint16StructValidate(obj *ValidGenLteUint16Struct) []error {
+	var errs []error
+	if !(obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteUint32PointerStructValidate(obj *ValidGenLteUint32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteUint32StructValidate(obj *ValidGenLteUint32Struct) []error {
+	var errs []error
+	if !(obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteUint64PointerStructValidate(obj *ValidGenLteUint64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteUint64StructValidate(obj *ValidGenLteUint64Struct) []error {
+	var errs []error
+	if !(obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteUint8PointerStructValidate(obj *ValidGenLteUint8PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteUint8StructValidate(obj *ValidGenLteUint8Struct) []error {
+	var errs []error
+	if !(obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteUintPointerStructValidate(obj *ValidGenLteUintPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenLteUintStructValidate(obj *ValidGenLteUintStruct) []error {
+	var errs []error
+	if !(obj.Field <= 32) {
+		errs = append(errs, types.NewValidationError("Field must be <= 32"))
+	}
+	return errs
+}
+func ValidGenMaxBoolMapPointerStructValidate(obj *ValidGenMaxBoolMapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 1) {
+		errs = append(errs, types.NewValidationError("Field must have at most 1 elements"))
+	}
+	return errs
+}
+func ValidGenMaxBoolMapStructValidate(obj *ValidGenMaxBoolMapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 1) {
+		errs = append(errs, types.NewValidationError("Field must have at most 1 elements"))
+	}
+	return errs
+}
+func ValidGenMaxBoolSlicePointerStructValidate(obj *ValidGenMaxBoolSlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxBoolSliceStructValidate(obj *ValidGenMaxBoolSliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxFloat32MapPointerStructValidate(obj *ValidGenMaxFloat32MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxFloat32MapStructValidate(obj *ValidGenMaxFloat32MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxFloat32SlicePointerStructValidate(obj *ValidGenMaxFloat32SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxFloat32SliceStructValidate(obj *ValidGenMaxFloat32SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxFloat64MapPointerStructValidate(obj *ValidGenMaxFloat64MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxFloat64MapStructValidate(obj *ValidGenMaxFloat64MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxFloat64SlicePointerStructValidate(obj *ValidGenMaxFloat64SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxFloat64SliceStructValidate(obj *ValidGenMaxFloat64SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxInt16MapPointerStructValidate(obj *ValidGenMaxInt16MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxInt16MapStructValidate(obj *ValidGenMaxInt16MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxInt16SlicePointerStructValidate(obj *ValidGenMaxInt16SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxInt16SliceStructValidate(obj *ValidGenMaxInt16SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxInt32MapPointerStructValidate(obj *ValidGenMaxInt32MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxInt32MapStructValidate(obj *ValidGenMaxInt32MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxInt32SlicePointerStructValidate(obj *ValidGenMaxInt32SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxInt32SliceStructValidate(obj *ValidGenMaxInt32SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxInt64MapPointerStructValidate(obj *ValidGenMaxInt64MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxInt64MapStructValidate(obj *ValidGenMaxInt64MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxInt64SlicePointerStructValidate(obj *ValidGenMaxInt64SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxInt64SliceStructValidate(obj *ValidGenMaxInt64SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxInt8MapPointerStructValidate(obj *ValidGenMaxInt8MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxInt8MapStructValidate(obj *ValidGenMaxInt8MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxInt8SlicePointerStructValidate(obj *ValidGenMaxInt8SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxInt8SliceStructValidate(obj *ValidGenMaxInt8SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxIntMapPointerStructValidate(obj *ValidGenMaxIntMapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxIntMapStructValidate(obj *ValidGenMaxIntMapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxIntSlicePointerStructValidate(obj *ValidGenMaxIntSlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxIntSliceStructValidate(obj *ValidGenMaxIntSliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxStringMapPointerStructValidate(obj *ValidGenMaxStringMapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxStringMapStructValidate(obj *ValidGenMaxStringMapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxStringPointerStructValidate(obj *ValidGenMaxStringPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 3) {
+		errs = append(errs, types.NewValidationError("Field length must be <= 3"))
+	}
+	return errs
+}
+func ValidGenMaxStringSlicePointerStructValidate(obj *ValidGenMaxStringSlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxStringSliceStructValidate(obj *ValidGenMaxStringSliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxStringStructValidate(obj *ValidGenMaxStringStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 3) {
+		errs = append(errs, types.NewValidationError("Field length must be <= 3"))
+	}
+	return errs
+}
+func ValidGenMaxUint16MapPointerStructValidate(obj *ValidGenMaxUint16MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUint16MapStructValidate(obj *ValidGenMaxUint16MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUint16SlicePointerStructValidate(obj *ValidGenMaxUint16SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUint16SliceStructValidate(obj *ValidGenMaxUint16SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUint32MapPointerStructValidate(obj *ValidGenMaxUint32MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUint32MapStructValidate(obj *ValidGenMaxUint32MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUint32SlicePointerStructValidate(obj *ValidGenMaxUint32SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUint32SliceStructValidate(obj *ValidGenMaxUint32SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUint64MapPointerStructValidate(obj *ValidGenMaxUint64MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUint64MapStructValidate(obj *ValidGenMaxUint64MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUint64SlicePointerStructValidate(obj *ValidGenMaxUint64SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUint64SliceStructValidate(obj *ValidGenMaxUint64SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUint8MapPointerStructValidate(obj *ValidGenMaxUint8MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUint8MapStructValidate(obj *ValidGenMaxUint8MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUint8SlicePointerStructValidate(obj *ValidGenMaxUint8SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUint8SliceStructValidate(obj *ValidGenMaxUint8SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUintMapPointerStructValidate(obj *ValidGenMaxUintMapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUintMapStructValidate(obj *ValidGenMaxUintMapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUintSlicePointerStructValidate(obj *ValidGenMaxUintSlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMaxUintSliceStructValidate(obj *ValidGenMaxUintSliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) <= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at most 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinBoolMapPointerStructValidate(obj *ValidGenMinBoolMapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinBoolMapStructValidate(obj *ValidGenMinBoolMapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinBoolSlicePointerStructValidate(obj *ValidGenMinBoolSlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinBoolSliceStructValidate(obj *ValidGenMinBoolSliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinFloat32MapPointerStructValidate(obj *ValidGenMinFloat32MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinFloat32MapStructValidate(obj *ValidGenMinFloat32MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinFloat32SlicePointerStructValidate(obj *ValidGenMinFloat32SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinFloat32SliceStructValidate(obj *ValidGenMinFloat32SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinFloat64MapPointerStructValidate(obj *ValidGenMinFloat64MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinFloat64MapStructValidate(obj *ValidGenMinFloat64MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinFloat64SlicePointerStructValidate(obj *ValidGenMinFloat64SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinFloat64SliceStructValidate(obj *ValidGenMinFloat64SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinInt16MapPointerStructValidate(obj *ValidGenMinInt16MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinInt16MapStructValidate(obj *ValidGenMinInt16MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinInt16SlicePointerStructValidate(obj *ValidGenMinInt16SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinInt16SliceStructValidate(obj *ValidGenMinInt16SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinInt32MapPointerStructValidate(obj *ValidGenMinInt32MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinInt32MapStructValidate(obj *ValidGenMinInt32MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinInt32SlicePointerStructValidate(obj *ValidGenMinInt32SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinInt32SliceStructValidate(obj *ValidGenMinInt32SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinInt64MapPointerStructValidate(obj *ValidGenMinInt64MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinInt64MapStructValidate(obj *ValidGenMinInt64MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinInt64SlicePointerStructValidate(obj *ValidGenMinInt64SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinInt64SliceStructValidate(obj *ValidGenMinInt64SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinInt8MapPointerStructValidate(obj *ValidGenMinInt8MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinInt8MapStructValidate(obj *ValidGenMinInt8MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinInt8SlicePointerStructValidate(obj *ValidGenMinInt8SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinInt8SliceStructValidate(obj *ValidGenMinInt8SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinIntMapPointerStructValidate(obj *ValidGenMinIntMapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinIntMapStructValidate(obj *ValidGenMinIntMapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinIntSlicePointerStructValidate(obj *ValidGenMinIntSlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinIntSliceStructValidate(obj *ValidGenMinIntSliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinStringMapPointerStructValidate(obj *ValidGenMinStringMapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinStringMapStructValidate(obj *ValidGenMinStringMapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinStringPointerStructValidate(obj *ValidGenMinStringPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 5) {
+		errs = append(errs, types.NewValidationError("Field length must be >= 5"))
+	}
+	return errs
+}
+func ValidGenMinStringSlicePointerStructValidate(obj *ValidGenMinStringSlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinStringSliceStructValidate(obj *ValidGenMinStringSliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinStringStructValidate(obj *ValidGenMinStringStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 5) {
+		errs = append(errs, types.NewValidationError("Field length must be >= 5"))
+	}
+	return errs
+}
+func ValidGenMinUint16MapPointerStructValidate(obj *ValidGenMinUint16MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUint16MapStructValidate(obj *ValidGenMinUint16MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUint16SlicePointerStructValidate(obj *ValidGenMinUint16SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUint16SliceStructValidate(obj *ValidGenMinUint16SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUint32MapPointerStructValidate(obj *ValidGenMinUint32MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUint32MapStructValidate(obj *ValidGenMinUint32MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUint32SlicePointerStructValidate(obj *ValidGenMinUint32SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUint32SliceStructValidate(obj *ValidGenMinUint32SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUint64MapPointerStructValidate(obj *ValidGenMinUint64MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUint64MapStructValidate(obj *ValidGenMinUint64MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUint64SlicePointerStructValidate(obj *ValidGenMinUint64SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUint64SliceStructValidate(obj *ValidGenMinUint64SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUint8MapPointerStructValidate(obj *ValidGenMinUint8MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUint8MapStructValidate(obj *ValidGenMinUint8MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUint8SlicePointerStructValidate(obj *ValidGenMinUint8SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUint8SliceStructValidate(obj *ValidGenMinUint8SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUintMapPointerStructValidate(obj *ValidGenMinUintMapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUintMapStructValidate(obj *ValidGenMinUintMapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUintSlicePointerStructValidate(obj *ValidGenMinUintSlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenMinUintSliceStructValidate(obj *ValidGenMinUintSliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) >= 2) {
+		errs = append(errs, types.NewValidationError("Field must have at least 2 elements"))
+	}
+	return errs
+}
+func ValidGenNeqBoolPointerStructValidate(obj *ValidGenNeqBoolPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != true) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to true"))
+	}
+	return errs
+}
+func ValidGenNeqBoolStructValidate(obj *ValidGenNeqBoolStruct) []error {
+	var errs []error
+	if !(obj.Field != true) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to true"))
+	}
+	return errs
+}
+func ValidGenNeqFloat32PointerStructValidate(obj *ValidGenNeqFloat32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 12.34) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 12.34"))
+	}
+	return errs
+}
+func ValidGenNeqFloat32StructValidate(obj *ValidGenNeqFloat32Struct) []error {
+	var errs []error
+	if !(obj.Field != 12.34) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 12.34"))
+	}
+	return errs
+}
+func ValidGenNeqFloat64PointerStructValidate(obj *ValidGenNeqFloat64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 12.34) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 12.34"))
+	}
+	return errs
+}
+func ValidGenNeqFloat64StructValidate(obj *ValidGenNeqFloat64Struct) []error {
+	var errs []error
+	if !(obj.Field != 12.34) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 12.34"))
+	}
+	return errs
+}
+func ValidGenNeqInt16PointerStructValidate(obj *ValidGenNeqInt16PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqInt16StructValidate(obj *ValidGenNeqInt16Struct) []error {
+	var errs []error
+	if !(obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqInt32PointerStructValidate(obj *ValidGenNeqInt32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqInt32StructValidate(obj *ValidGenNeqInt32Struct) []error {
+	var errs []error
+	if !(obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqInt64PointerStructValidate(obj *ValidGenNeqInt64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqInt64StructValidate(obj *ValidGenNeqInt64Struct) []error {
+	var errs []error
+	if !(obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqInt8PointerStructValidate(obj *ValidGenNeqInt8PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqInt8StructValidate(obj *ValidGenNeqInt8Struct) []error {
+	var errs []error
+	if !(obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqIntPointerStructValidate(obj *ValidGenNeqIntPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqIntStructValidate(obj *ValidGenNeqIntStruct) []error {
+	var errs []error
+	if !(obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqStringPointerStructValidate(obj *ValidGenNeqStringPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != "abcde") {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 'abcde'"))
+	}
+	return errs
+}
+func ValidGenNeqStringStructValidate(obj *ValidGenNeqStringStruct) []error {
+	var errs []error
+	if !(obj.Field != "abcde") {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 'abcde'"))
+	}
+	return errs
+}
+func ValidGenNeqUint16PointerStructValidate(obj *ValidGenNeqUint16PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqUint16StructValidate(obj *ValidGenNeqUint16Struct) []error {
+	var errs []error
+	if !(obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqUint32PointerStructValidate(obj *ValidGenNeqUint32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqUint32StructValidate(obj *ValidGenNeqUint32Struct) []error {
+	var errs []error
+	if !(obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqUint64PointerStructValidate(obj *ValidGenNeqUint64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqUint64StructValidate(obj *ValidGenNeqUint64Struct) []error {
+	var errs []error
+	if !(obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqUint8PointerStructValidate(obj *ValidGenNeqUint8PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqUint8StructValidate(obj *ValidGenNeqUint8Struct) []error {
+	var errs []error
+	if !(obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqUintPointerStructValidate(obj *ValidGenNeqUintPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeqUintStructValidate(obj *ValidGenNeqUintStruct) []error {
+	var errs []error
+	if !(obj.Field != 32) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 32"))
+	}
+	return errs
+}
+func ValidGenNeq_ignore_caseStringPointerStructValidate(obj *ValidGenNeq_ignore_caseStringPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && !types.EqualFold(*obj.Field, "abcde")) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 'abcde'"))
+	}
+	return errs
+}
+func ValidGenNeq_ignore_caseStringStructValidate(obj *ValidGenNeq_ignore_caseStringStruct) []error {
+	var errs []error
+	if !(!types.EqualFold(obj.Field, "abcde")) {
+		errs = append(errs, types.NewValidationError("Field must not be equal to 'abcde'"))
+	}
+	return errs
+}
+func ValidGenRequiredBoolArrayPointerStructValidate(obj *ValidGenRequiredBoolArrayPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredBoolMapPointerStructValidate(obj *ValidGenRequiredBoolMapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredBoolMapStructValidate(obj *ValidGenRequiredBoolMapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredBoolPointerStructValidate(obj *ValidGenRequiredBoolPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != false) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredBoolSlicePointerStructValidate(obj *ValidGenRequiredBoolSlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredBoolSliceStructValidate(obj *ValidGenRequiredBoolSliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredBoolStructValidate(obj *ValidGenRequiredBoolStruct) []error {
+	var errs []error
+	if !(obj.Field != false) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredFloat32ArrayPointerStructValidate(obj *ValidGenRequiredFloat32ArrayPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredFloat32MapPointerStructValidate(obj *ValidGenRequiredFloat32MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredFloat32MapStructValidate(obj *ValidGenRequiredFloat32MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredFloat32PointerStructValidate(obj *ValidGenRequiredFloat32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredFloat32SlicePointerStructValidate(obj *ValidGenRequiredFloat32SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredFloat32SliceStructValidate(obj *ValidGenRequiredFloat32SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredFloat32StructValidate(obj *ValidGenRequiredFloat32Struct) []error {
+	var errs []error
+	if !(obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredFloat64ArrayPointerStructValidate(obj *ValidGenRequiredFloat64ArrayPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredFloat64MapPointerStructValidate(obj *ValidGenRequiredFloat64MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredFloat64MapStructValidate(obj *ValidGenRequiredFloat64MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredFloat64PointerStructValidate(obj *ValidGenRequiredFloat64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredFloat64SlicePointerStructValidate(obj *ValidGenRequiredFloat64SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredFloat64SliceStructValidate(obj *ValidGenRequiredFloat64SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredFloat64StructValidate(obj *ValidGenRequiredFloat64Struct) []error {
+	var errs []error
+	if !(obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredInt16ArrayPointerStructValidate(obj *ValidGenRequiredInt16ArrayPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt16MapPointerStructValidate(obj *ValidGenRequiredInt16MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt16MapStructValidate(obj *ValidGenRequiredInt16MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt16PointerStructValidate(obj *ValidGenRequiredInt16PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredInt16SlicePointerStructValidate(obj *ValidGenRequiredInt16SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt16SliceStructValidate(obj *ValidGenRequiredInt16SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt16StructValidate(obj *ValidGenRequiredInt16Struct) []error {
+	var errs []error
+	if !(obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredInt32ArrayPointerStructValidate(obj *ValidGenRequiredInt32ArrayPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt32MapPointerStructValidate(obj *ValidGenRequiredInt32MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt32MapStructValidate(obj *ValidGenRequiredInt32MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt32PointerStructValidate(obj *ValidGenRequiredInt32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredInt32SlicePointerStructValidate(obj *ValidGenRequiredInt32SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt32SliceStructValidate(obj *ValidGenRequiredInt32SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt32StructValidate(obj *ValidGenRequiredInt32Struct) []error {
+	var errs []error
+	if !(obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredInt64ArrayPointerStructValidate(obj *ValidGenRequiredInt64ArrayPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt64MapPointerStructValidate(obj *ValidGenRequiredInt64MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt64MapStructValidate(obj *ValidGenRequiredInt64MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt64PointerStructValidate(obj *ValidGenRequiredInt64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredInt64SlicePointerStructValidate(obj *ValidGenRequiredInt64SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt64SliceStructValidate(obj *ValidGenRequiredInt64SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt64StructValidate(obj *ValidGenRequiredInt64Struct) []error {
+	var errs []error
+	if !(obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredInt8ArrayPointerStructValidate(obj *ValidGenRequiredInt8ArrayPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt8MapPointerStructValidate(obj *ValidGenRequiredInt8MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt8MapStructValidate(obj *ValidGenRequiredInt8MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt8PointerStructValidate(obj *ValidGenRequiredInt8PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredInt8SlicePointerStructValidate(obj *ValidGenRequiredInt8SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt8SliceStructValidate(obj *ValidGenRequiredInt8SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredInt8StructValidate(obj *ValidGenRequiredInt8Struct) []error {
+	var errs []error
+	if !(obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredIntArrayPointerStructValidate(obj *ValidGenRequiredIntArrayPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredIntMapPointerStructValidate(obj *ValidGenRequiredIntMapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredIntMapStructValidate(obj *ValidGenRequiredIntMapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredIntPointerStructValidate(obj *ValidGenRequiredIntPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredIntSlicePointerStructValidate(obj *ValidGenRequiredIntSlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredIntSliceStructValidate(obj *ValidGenRequiredIntSliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredIntStructValidate(obj *ValidGenRequiredIntStruct) []error {
+	var errs []error
+	if !(obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredStringArrayPointerStructValidate(obj *ValidGenRequiredStringArrayPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredStringMapPointerStructValidate(obj *ValidGenRequiredStringMapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredStringMapStructValidate(obj *ValidGenRequiredStringMapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredStringPointerStructValidate(obj *ValidGenRequiredStringPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != "") {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredStringSlicePointerStructValidate(obj *ValidGenRequiredStringSlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredStringSliceStructValidate(obj *ValidGenRequiredStringSliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredStringStructValidate(obj *ValidGenRequiredStringStruct) []error {
+	var errs []error
+	if !(obj.Field != "") {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredUint16ArrayPointerStructValidate(obj *ValidGenRequiredUint16ArrayPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint16MapPointerStructValidate(obj *ValidGenRequiredUint16MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint16MapStructValidate(obj *ValidGenRequiredUint16MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint16PointerStructValidate(obj *ValidGenRequiredUint16PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredUint16SlicePointerStructValidate(obj *ValidGenRequiredUint16SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint16SliceStructValidate(obj *ValidGenRequiredUint16SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint16StructValidate(obj *ValidGenRequiredUint16Struct) []error {
+	var errs []error
+	if !(obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredUint32ArrayPointerStructValidate(obj *ValidGenRequiredUint32ArrayPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint32MapPointerStructValidate(obj *ValidGenRequiredUint32MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint32MapStructValidate(obj *ValidGenRequiredUint32MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint32PointerStructValidate(obj *ValidGenRequiredUint32PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredUint32SlicePointerStructValidate(obj *ValidGenRequiredUint32SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint32SliceStructValidate(obj *ValidGenRequiredUint32SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint32StructValidate(obj *ValidGenRequiredUint32Struct) []error {
+	var errs []error
+	if !(obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredUint64ArrayPointerStructValidate(obj *ValidGenRequiredUint64ArrayPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint64MapPointerStructValidate(obj *ValidGenRequiredUint64MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint64MapStructValidate(obj *ValidGenRequiredUint64MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint64PointerStructValidate(obj *ValidGenRequiredUint64PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredUint64SlicePointerStructValidate(obj *ValidGenRequiredUint64SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint64SliceStructValidate(obj *ValidGenRequiredUint64SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint64StructValidate(obj *ValidGenRequiredUint64Struct) []error {
+	var errs []error
+	if !(obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredUint8ArrayPointerStructValidate(obj *ValidGenRequiredUint8ArrayPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint8MapPointerStructValidate(obj *ValidGenRequiredUint8MapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint8MapStructValidate(obj *ValidGenRequiredUint8MapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint8PointerStructValidate(obj *ValidGenRequiredUint8PointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredUint8SlicePointerStructValidate(obj *ValidGenRequiredUint8SlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint8SliceStructValidate(obj *ValidGenRequiredUint8SliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUint8StructValidate(obj *ValidGenRequiredUint8Struct) []error {
+	var errs []error
+	if !(obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredUintArrayPointerStructValidate(obj *ValidGenRequiredUintArrayPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUintMapPointerStructValidate(obj *ValidGenRequiredUintMapPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUintMapStructValidate(obj *ValidGenRequiredUintMapStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUintPointerStructValidate(obj *ValidGenRequiredUintPointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && *obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
+func ValidGenRequiredUintSlicePointerStructValidate(obj *ValidGenRequiredUintSlicePointerStruct) []error {
+	var errs []error
+	if !(obj.Field != nil && len(*obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUintSliceStructValidate(obj *ValidGenRequiredUintSliceStruct) []error {
+	var errs []error
+	if !(len(obj.Field) != 0) {
+		errs = append(errs, types.NewValidationError("Field must not be empty"))
+	}
+	return errs
+}
+func ValidGenRequiredUintStructValidate(obj *ValidGenRequiredUintStruct) []error {
+	var errs []error
+	if !(obj.Field != 0) {
+		errs = append(errs, types.NewValidationError("Field is required"))
+	}
+	return errs
+}
 func ValidGenStringEmailStructValidate(obj *ValidGenStringEmailStruct) []error {
 	var errs []error
 	if !(types.IsValidEmail(obj.Field)) {
