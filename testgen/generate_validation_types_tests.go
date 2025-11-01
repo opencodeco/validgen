@@ -52,15 +52,11 @@ func generateValidationTypesTestsFile(tpl, dest string, pointer bool) {
 			StructName: structName,
 		})
 		for _, toGenerate := range testCase.testCases {
-			// Default ("") gen no pointer and pointer test.
-			if toGenerate.generateFor != "" {
-				if toGenerate.generateFor == "pointer" && !pointer {
-					continue
-				}
-				if toGenerate.generateFor == "nopointer" && pointer {
-					continue
-				}
+			if toGenerate.excludeIf&noPointer != 0 && !pointer {
+				log.Printf("Skipping no pointer: tag %s type %s\n", testCase.tag, toGenerate.typeClass)
+				continue
 			}
+
 			normalizedType := toGenerate.typeClass
 			if pointer {
 				normalizedType = "*" + normalizedType
