@@ -17,7 +17,7 @@ func numericIntTypeTests() {
 	numericUint16Tests()
 	numericUint32Tests()
 	numericUint64Tests()
-	
+
 	log.Println("numeric int tests ok")
 }
 
