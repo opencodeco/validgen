@@ -31,7 +31,7 @@ build: clean
 
 testgen:
 	@echo "Generating tests"
-	cd testgen/ && rm -f generated_*.go && go run *.go && mv generated_endtoend_*tests.go ../tests/endtoend/ && mv generated_validation_*_test.go ../internal/codegenerator/ && mv generated_function_code_*_test.go ../internal/codegenerator/ && mv generated_cmp_perf_*.go ../tests/cmpbenchtests/generated_tests/
+	cd testgen/ && rm -f generated_*.go && go run *.go && mv generated_endtoend_*tests.go ../tests/endtoend/ && mv generated_validation_*_test.go ../internal/codegenerator/ && mv generated_function_code_*_test.go ../internal/codegenerator/ && mv generated_cmp_perf_*.go ../tests/cmpbenchtests/
 
 endtoendtests: build
 	@echo "Running endtoend tests"
@@ -41,11 +41,9 @@ endtoendtests: build
 
 cmpbenchtests: build
 	@echo "Running cmp bench tests"
-	rm -f tests/cmpbenchtests/generated_tests/valid*.go && rm -f tests/cmpbenchtests/generated_tests/types.go
-	cd tests/cmpbenchtests; go run .
-	$(VALIDGEN_BIN) tests/cmpbenchtests/generated_tests
+	$(VALIDGEN_BIN) tests/cmpbenchtests/
 	go clean -testcache
-	go test -bench=. -v -benchmem -benchtime=$(BENCH_TIME) ./tests/cmpbenchtests/generated_tests
+	go test -bench=. -v -benchmem -benchtime=$(BENCH_TIME) ./tests/cmpbenchtests/
 
 setup:
 	@echo "Setting up"
