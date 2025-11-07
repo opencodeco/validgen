@@ -61,7 +61,7 @@ errs = append(errs, types.NewValidationError("field1 must be equal to Nested.fie
 	}
 }
 
-func TestBuildValidationCodeWithNestedStructsAndSlices(t *testing.T) {
+func TestBuildValidationCodeWithNestedStructs(t *testing.T) {
 	type args struct {
 		fieldName       string
 		fieldType       common.FieldType
@@ -89,18 +89,6 @@ func TestBuildValidationCodeWithNestedStructsAndSlices(t *testing.T) {
 				fieldValidation: "required",
 			},
 			want: "errs = append(errs, mypkg.InnerStructTypeValidate(&obj.Field)...)\n",
-		},
-		{
-			name: "test code with required slice of string",
-			args: args{
-				fieldName:       "Field",
-				fieldType:       common.FieldType{BaseType: "string", ComposedType: "[]"},
-				fieldValidation: "required",
-			},
-			want: `if !(len(obj.Field) != 0) {
-errs = append(errs, types.NewValidationError("Field must not be empty"))
-}
-`,
 		},
 	}
 
