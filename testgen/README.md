@@ -70,28 +70,25 @@ At this time, ValidGen already has two generators:
 
 But these generators do not have a common configuration, do not implement all tests for all cases, and keeping the distinct configuration files in sync is painful.
 
-Beyond that, some new generators could be created:
-- Unit tests to validate operations
-- Unit tests to validate operation x type
-- Unit tests to validate the "buildValidationCode" function
-- Unit tests to validate the "condition table"
-- Parser tests
-- Almost all existing end-to-end tests could be generated
-- Examples (in _examples/) could be generated
-
-And, for all cases, valid scenarios and invalid scenarios must be generated.
-
 ## What TestGen does
 
-TestGen generates the following tests:
-- Benchmark tests between ValidGen and GoValidator
-- End-to-end tests with all possible use cases (all validations vs all types vs valid and invalid inputs)
-- Unit tests to validate operations
-- Unit tests to validate operation vs type
-- Unit tests to validate the "buildValidationCode" function
-- Unit tests to validate "condition table" result
-- Parser tests (parser_tests.go) 
-- Examples (in _examples/)
+TestGen generates the following tests (without field operations):
+- [x] Benchmark tests between ValidGen and GoValidator
+- [x] End-to-end tests with all possible use cases (all validations vs all types vs valid and invalid inputs)
+- [x] Unit tests to validate the "buildValidationCode" function
+
+High priority generators:
+- [ ] Unit tests to validate the "condition table" (get_test_elements_*_test.go)
+- [ ] Benchmark tests between ValidGen and GoValidator with field operations
+- [ ] End-to-end tests with all possible use cases (all validations vs all types vs valid and invalid inputs) with field operations
+- [ ] Unit tests to validate the "buildValidationCode" function with field operations
+
+Low priority generators (already exist, but they could be generated):
+- [ ] Unit tests to validate operations (func TestOperationsIsValid)
+- [ ] Unit tests to validate operation vs type (func TestOperationsIsValidByType)
+- [ ] Unit tests to validate if is field operation (func TestOperationsIsFieldOperation)
+- [ ] Unit tests to validate arguments count by operation (func TestOperationsArgsCount)
+- [ ] Examples (in _examples/) could be generated
 
 In some cases, valid scenarios and invalid scenarios must be generated.
 
