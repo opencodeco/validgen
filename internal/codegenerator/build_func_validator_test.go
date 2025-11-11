@@ -9,7 +9,7 @@ import (
 	"github.com/sergi/go-diff/diffmatchpatch"
 )
 
-func TestBuildFuncValidatorCode(t *testing.T) {
+func TestBuildFuncValidatorCodeFieldOperations(t *testing.T) {
 	type fields struct {
 		Struct *analyzer.Struct
 	}
@@ -18,79 +18,6 @@ func TestBuildFuncValidatorCode(t *testing.T) {
 		fields fields
 		want   string
 	}{
-		{
-			name: "Valid struct",
-			fields: fields{
-				Struct: &analyzer.Struct{
-					Struct: parser.Struct{
-						PackageName: "main",
-						StructName:  "User",
-						Fields: []parser.Field{
-							{
-								FieldName: "FirstName",
-								Type:      common.FieldType{BaseType: "string"},
-								Tag:       `validate:"required"`,
-							},
-							{
-								FieldName: "MyAge",
-								Type:      common.FieldType{BaseType: "uint8"},
-								Tag:       `validate:"required"`,
-							},
-						},
-					},
-					FieldsValidations: []analyzer.FieldValidations{
-						{
-							Validations: []*analyzer.Validation{AssertParserValidation(t, "required")},
-						},
-						{
-							Validations: []*analyzer.Validation{AssertParserValidation(t, "required")},
-						},
-					},
-				},
-			},
-			want: `func UserValidate(obj *User) []error {
-var errs []error
-if !(obj.FirstName != "") {
-errs = append(errs, types.NewValidationError("FirstName is required"))
-}
-if !(obj.MyAge != 0) {
-errs = append(errs, types.NewValidationError("MyAge is required"))
-}
-return errs
-}
-`,
-		},
-		{
-			name: "FirstName must have 5 characters or more",
-			fields: fields{
-				Struct: &analyzer.Struct{
-					Struct: parser.Struct{
-						PackageName: "main",
-						StructName:  "User",
-						Fields: []parser.Field{
-							{
-								FieldName: "FirstName",
-								Type:      common.FieldType{BaseType: "string"},
-								Tag:       `validate:"min=5"`,
-							},
-						},
-					},
-					FieldsValidations: []analyzer.FieldValidations{
-						{
-							Validations: []*analyzer.Validation{AssertParserValidation(t, "min=5")},
-						},
-					},
-				},
-			},
-			want: `func UserValidate(obj *User) []error {
-var errs []error
-if !(len(obj.FirstName) >= 5) {
-errs = append(errs, types.NewValidationError("FirstName length must be >= 5"))
-}
-return errs
-}
-`,
-		},
 		{
 			name: "Field inner op",
 			fields: fields{

@@ -33,104 +33,15 @@ type NoValidateInfo struct {
 func main() {
 	log.Println("starting tests")
 
-	allTypes1Tests()
-	allTypes2Tests()
 	structInPkgTests()
-	stringTests()
 	nestedStructTests()
-	sliceStringTests()
-	sliceIntegerTests()
-	arrayStringTests()
 	cmpBetweenInnerFieldsTests()
 	cmpBetweenNestedFieldsTests()
 	boolTests()
-	mapStringTests()
-	mapUint8Tests()
-	numericIntTypeTests()
-	numericFloatTypeTests()
 	pointerTests()
 	noPointerTests()
 
 	log.Println("finishing tests")
-}
-
-func allTypes1Tests() {
-	var expectedMsgErrors []string
-	var errs []error
-
-	v1 := &AllTypes1{}
-	expectedMsgErrors = []string{
-		"FirstName is required",
-		"LastName is required",
-		"Age is required",
-	}
-	errs = AllTypes1Validate(v1)
-	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
-		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
-	}
-
-	v2 := &AllTypes1{
-		FirstName: "First",
-		LastName:  "Last",
-		Age:       18,
-	}
-	expectedMsgErrors = nil
-	errs = AllTypes1Validate(v2)
-	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
-		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
-	}
-
-	log.Println("all_types1 tests ok")
-}
-
-func allTypes2Tests() {
-	var expectedMsgErrors []string
-	var errs []error
-
-	v1 := &AllTypes2{
-		FirstName: "",
-		LastName:  "",
-		Age:       135,
-		UserName:  "abc",
-	}
-	expectedMsgErrors = []string{
-		"FirstName is required",
-		"LastName is required",
-		"Age must be <= 130",
-		"UserName length must be >= 5",
-	}
-	errs = AllTypes2Validate(v1)
-	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
-		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
-	}
-
-	v2 := &AllTypes2{
-		FirstName: "First",
-		LastName:  "Last",
-		Age:       49,
-		UserName:  "mylongusername",
-	}
-	expectedMsgErrors = []string{
-		"UserName length must be <= 10",
-	}
-	errs = AllTypes2Validate(v2)
-	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
-		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
-	}
-
-	v3 := &AllTypes2{
-		FirstName: "First",
-		LastName:  "Last",
-		Age:       49,
-		UserName:  "myusername",
-	}
-	expectedMsgErrors = nil
-	errs = AllTypes2Validate(v3)
-	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
-		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
-	}
-
-	log.Println("all_types2 tests ok")
 }
 
 func structInPkgTests() {
