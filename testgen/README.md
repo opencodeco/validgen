@@ -1,14 +1,14 @@
 # TestGen
 
-TestGen is the tool responsible for generating tests related to ValidGen validators and supported types.
-These generated tests included unit tests, end-to-end tests, and benchmark tests.
-In the case of benchmark tests, it means comparing ValidGen and GoValidator.
+TestGen is a tool responsible for generating comprehensive test suites for ValidGen validators and supported types.
+These generated tests include unit tests, end-to-end tests, and benchmark tests.
+The benchmark tests compare ValidGen and GoValidator performance.
 
 ## Why a new tool?
 
-First of all, it is necessary to answer the question: why a new tool to generate tests?
+First, let's address the question: why create a dedicated tool for test generation?
 
-Currently, ValidGen has 21 possible validations with support for some types:
+ValidGen currently supports 21 validations across multiple data types:
 
 | Validation      | Basic types           | Slice                 | Array                 | Map                   |
 | -               | -                     | -                     | -                     | -                     |
@@ -34,41 +34,42 @@ Currently, ValidGen has 21 possible validations with support for some types:
 | ltefield        | INT                   |                       |                       |                       |
 | ltfield         | INT                   |                       |                       |                       |
 
-In this table, STRING represents the string Go type, and BOOL represents the bool Go type.
-But INT represents the ten integer Go types: int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64.
-In the same way, FLOAT represents the 2 float go types: float32, float64.
-In the same way, slice STRING is just []string, but slice INT is split between all integer Go types.
-For array and map, the rule is the same.
-And, an important modifier is "*" (pointer) because the code generated is different with or without a pointer.
+In this table:
+- **STRING** represents the `string` Go type
+- **BOOL** represents the `bool` Go type
+- **INT** represents all ten integer Go types: `int`, `int8`, `int16`, `int32`, `int64`, `uint`, `uint8`, `uint16`, `uint32`, `uint64`
+- **FLOAT** represents both float Go types: `float32`, `float64`
 
-For each possible combination (validation x type) is necessary to have the following tests:
-- Unit test in the analyzer phase
-- Unit test in the code generator phase
-- Benchmark test between ValidGen and GoValidator
+For slices, arrays, and maps, the same type expansion applies. For example, slice STRING is `[]string`, while slice INT expands to all integer Go types.
+
+Additionally, the pointer modifier (`*`) is significant because ValidGen generates different code for pointer and non-pointer types.
+
+For each possible combination (validation × type), the following tests are required:
+- Unit test for the analyzer phase
+- Unit test for the code generator phase
+- Benchmark test comparing ValidGen and GoValidator
 - End-to-end test
 
-As it is necessary to test all valid and invalid scenarios, it is necessary to test all validations against all types.
-At this time, it means:
-- Go types (14)
-- Validations (21)
-- Test types (4)
-- Types with and without a pointer (2)
-- Tests with valid and invalid inputs (2)
+Since we need to test both valid and invalid scenarios, all validations must be tested against all types.
+Currently, this means:
+- Go types: 14
+- Validations: 21
+- Test types: 4
+- Pointer variants: 2 (with/without pointer)
+- Input scenarios: 2 (valid/invalid)
 
-14 x 21 x 4 x 2 x 2 = 4.704 distinct test cases :-)
+**14 × 21 × 4 × 2 × 2 = 4,704 distinct test cases**
 
-With all the tests that need to be created (valid inputs, invalid inputs) for unit tests, benchmark, and end-to-end tests, creating the tests "by hand" is a tedious and error-prone task.
+Creating and maintaining these thousands of tests manually is tedious, error-prone, and impractical. Early attempts to write these tests by hand proved difficult to maintain when adding new operations and types.
 
-Some of these necessary unit tests were created "by hand", but it is a pain to keep the code in sync when supporting new operations and types.
+Previously, ValidGen had two separate test generators:
+- Benchmark tests comparing ValidGen and GoValidator
+- End-to-end tests for:
+    - Integer type validations
+    - Float type validations
+    - All possible use cases (all validations × all types)
 
-At this time, ValidGen already has two generators:
-- To generate benchmark tests between ValidGen and GoValidator
-- To generate end-to-end tests
-    - to validate ValidGen with integer types
-    - to validate ValidGen with float types
-    - to validate all possible use cases in ValidGen (all validations x all types)
-
-But these generators do not have a common configuration, do not implement all tests for all cases, and keeping the distinct configuration files in sync is painful.
+However, these generators lacked a common configuration, didn't implement all tests for all cases, and keeping the separate configuration files in sync was difficult.
 
 ## What TestGen does
 
@@ -83,34 +84,23 @@ High priority generators:
 - [ ] End-to-end tests with all possible use cases (all validations vs all types vs valid and invalid inputs) with field operations
 - [ ] Unit tests to validate the "buildValidationCode" function with field operations
 
-Low priority generators (already exist, but they could be generated):
+Low priority generators (already exist, but could be automated):
 - [ ] Unit tests to validate operations (func TestOperationsIsValid)
 - [ ] Unit tests to validate operation vs type (func TestOperationsIsValidByType)
-- [ ] Unit tests to validate if is field operation (func TestOperationsIsFieldOperation)
-- [ ] Unit tests to validate arguments count by operation (func TestOperationsArgsCount)
+- [ ] Unit tests to validate field operations (func TestOperationsIsFieldOperation)
+- [ ] Unit tests to validate argument count by operation (func TestOperationsArgsCount)
 - [ ] Examples (in _examples/) could be generated
 
-In some cases, valid scenarios and invalid scenarios must be generated.
+Where applicable, TestGen generates both valid and invalid test scenarios.
 
-## How TestGen works
+## Usage
 
-To be possible to generate all these tests, TestGen must have a configuration with:
-- All valid operations
-- All valid go types
-- All valid operation x type
-- Valid input cases for each operation x type
-- Invalid input cases for each operation x type
-- Equivalent GoValidator tag
-
-## Steps to generate the tests
-
-The steps to generate the tests are:
+To generate the tests:
 
 ```bash
-# Enter in the project root folder
+# Navigate to the project root folder
 cd validgen
 
 # Run testgen
 make testgen
 ```
-
