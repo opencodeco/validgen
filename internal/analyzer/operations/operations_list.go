@@ -103,31 +103,31 @@ var operationsList = map[string]Operation{
 	"eqfield": {
 		CountValues:      common.OneValue,
 		IsFieldOperation: true,
-		ValidTypes:       []string{"<STRING>", "<INT>", "<BOOL>"},
+		ValidTypes:       []string{"<STRING>", "<INT>", "<FLOAT>", "<BOOL>"},
 	},
 	"neqfield": {
 		CountValues:      common.OneValue,
 		IsFieldOperation: true,
-		ValidTypes:       []string{"<STRING>", "<INT>", "<BOOL>"},
+		ValidTypes:       []string{"<STRING>", "<INT>", "<FLOAT>", "<BOOL>"},
 	},
 	"gtefield": {
 		CountValues:      common.OneValue,
 		IsFieldOperation: true,
-		ValidTypes:       []string{"<INT>"},
+		ValidTypes:       []string{"<INT>", "<FLOAT>"},
 	},
 	"gtfield": {
 		CountValues:      common.OneValue,
 		IsFieldOperation: true,
-		ValidTypes:       []string{"<INT>"},
+		ValidTypes:       []string{"<INT>", "<FLOAT>"},
 	},
 	"ltefield": {
 		CountValues:      common.OneValue,
 		IsFieldOperation: true,
-		ValidTypes:       []string{"<INT>"},
+		ValidTypes:       []string{"<INT>", "<FLOAT>"},
 	},
 	"ltfield": {
 		CountValues:      common.OneValue,
 		IsFieldOperation: true,
-		ValidTypes:       []string{"<INT>"},
+		ValidTypes:       []string{"<INT>", "<FLOAT>"},
 	},
 }
