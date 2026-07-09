@@ -54,6 +54,11 @@ func generateFunctionCodeUnitTest(tplFile, outputFile string, pointer bool) erro
 	}
 
 	for _, typeValidation := range typesValidation {
+		if typeValidation.isFieldValidation {
+			fmt.Printf("Skipping field validation: tag %s\n", typeValidation.tag)
+			continue
+		}
+
 		newTest := FunctionCodeTestCase{
 			TestName:   typeValidation.tag + "Struct",
 			StructName: typeValidation.tag + "Struct",

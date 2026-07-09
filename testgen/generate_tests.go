@@ -13,6 +13,11 @@ func main() {
 		os.Exit(1)
 	}
 
+	if err := generateInnerFieldValidationTypesEndToEndTests(); err != nil {
+		fmt.Printf("error generating validation types end-to-end tests: %s\n", err)
+		os.Exit(1)
+	}
+
 	if err := generateValidationCodeUnitTests(); err != nil {
 		fmt.Printf("error generating validation code unit tests: %s\n", err)
 		os.Exit(1)

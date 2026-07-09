@@ -46,6 +46,11 @@ func generateValidationTypesEndToEndTest(tplFile, outputFile string, pointer boo
 	allTestsToGenerate := AllTestCasesToGenerate{}
 
 	for _, testCase := range typesValidation {
+		if testCase.isFieldValidation {
+			fmt.Printf("Skipping field validation: tag %s\n", testCase.tag)
+			continue
+		}
+
 		structName := testCase.tag + "StructFields"
 		if pointer {
 			structName += "Pointer"

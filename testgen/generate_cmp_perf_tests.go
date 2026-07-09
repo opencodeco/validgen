@@ -40,6 +40,11 @@ func generateComparativePerformanceTest(tplFile, outputFile string, pointer bool
 	benchTests := CmpBenchTests{}
 
 	for _, typeVal := range typesValidation {
+		if typeVal.isFieldValidation {
+			fmt.Printf("Skipping field validation: tag %s\n", typeVal.tag)
+			continue
+		}
+
 		if typeVal.validatorTag == "" {
 			fmt.Printf("Skipping tag %s: go-validator tag not defined\n", typeVal.tag)
 			continue

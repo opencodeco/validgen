@@ -48,6 +48,11 @@ func generateValidationCodeUnitTest(tplFile, outputFile string, pointer bool) er
 	}
 
 	for _, typeValidation := range typesValidation {
+		if typeValidation.isFieldValidation {
+			fmt.Printf("Skipping field validation: tag %s\n", typeValidation.tag)
+			continue
+		}
+
 		for _, toGenerate := range typeValidation.testCases {
 			if toGenerate.excludeIf&noPointer != 0 && !pointer {
 				fmt.Printf("Skipping no pointer: tag %s type %s\n", typeValidation.tag, toGenerate.typeClass)

@@ -895,4 +895,182 @@ var typesValidation = []struct {
 			},
 		},
 	},
+
+	// eqfield operations
+	{
+		tag:               "eqfield",
+		validatorTag:      `eqfield`, // TODO
+		isFieldValidation: true,
+		argsCount:         common.OneValue,
+		testCases: []typeValidation{
+			// eqfield: "<STRING>", "<INT>", "<FLOAT>", "<BOOL>"
+			{
+				typeClass:    `<STRING>`,
+				validation:   `{{.FieldName2}}`,
+				validCase:    `"abcde"`,
+				invalidCase:  `"fghij"`,
+				errorMessage: `{{.FieldName1}} must be equal to {{.FieldName2}}`,
+			},
+			{
+				typeClass:    `<INT>`,
+				validation:   `{{.FieldName2}}`,
+				validCase:    `32`,
+				invalidCase:  `64`,
+				errorMessage: `{{.FieldName1}} must be equal to {{.FieldName2}}`,
+			},
+			{
+				typeClass:    `<FLOAT>`,
+				validation:   `{{.FieldName2}}`,
+				validCase:    `12.34`,
+				invalidCase:  `34.56`,
+				errorMessage: `{{.FieldName1}} must be equal to {{.FieldName2}}`,
+			},
+			{
+				typeClass:    `<BOOL>`,
+				validation:   `{{.FieldName2}}`,
+				validCase:    `true`,
+				invalidCase:  `false`,
+				errorMessage: `{{.FieldName1}} must be equal to {{.FieldName2}}`,
+			},
+		},
+	},
+
+	// neqfield operations
+	{
+		tag:               "neqfield",
+		validatorTag:      `neqfield`, // TODO
+		isFieldValidation: true,
+		argsCount:         common.OneValue,
+		testCases: []typeValidation{
+			// neqfield: "<STRING>", "<INT>", "<FLOAT>", "<BOOL>"
+			{
+				typeClass:    `<STRING>`,
+				validation:   `{{.FieldName2}}`,
+				validCase:    `"fghij"`,
+				invalidCase:  `"abcde"`,
+				errorMessage: `{{.FieldName1}} must not be equal to {{.FieldName2}}`,
+			},
+			{
+				typeClass:    `<INT>`,
+				validation:   `{{.FieldName2}}`,
+				validCase:    `64`,
+				invalidCase:  `32`,
+				errorMessage: `{{.FieldName1}} must not be equal to {{.FieldName2}}`,
+			},
+			{
+				typeClass:    `<FLOAT>`,
+				validation:   `{{.FieldName2}}`,
+				validCase:    `34.56`,
+				invalidCase:  `12.34`,
+				errorMessage: `{{.FieldName1}} must not be equal to {{.FieldName2}}`,
+			},
+			{
+				typeClass:    `<BOOL>`,
+				validation:   `{{.FieldName2}}`,
+				validCase:    `false`,
+				invalidCase:  `true`,
+				errorMessage: `{{.FieldName1}} must not be equal to {{.FieldName2}}`,
+			},
+		},
+	},
+
+	// gtfield operations
+	{
+		tag:               "gtfield",
+		validatorTag:      `gtfield`, // TODO
+		isFieldValidation: true,
+		argsCount:         common.OneValue,
+		testCases: []typeValidation{
+			// gtfield	: "<INT>", "<FLOAT>"
+			{
+				typeClass:    `<INT>`,
+				validation:   `{{.FieldName2}}`,
+				validCase:    `33`,
+				invalidCase:  `31`,
+				errorMessage: `{{.FieldName1}} must be > {{.FieldName2}}`,
+			},
+			{
+				typeClass:    `<FLOAT>`,
+				validation:   `{{.FieldName2}}`,
+				validCase:    `12.35`,
+				invalidCase:  `12.34`,
+				errorMessage: `{{.FieldName1}} must be > {{.FieldName2}}`,
+			},
+		},
+	},
+
+	// gtefield operations
+	{
+		tag:               "gtefield",
+		validatorTag:      `gtefield`, // TODO
+		isFieldValidation: true,
+		argsCount:         common.OneValue,
+		testCases: []typeValidation{
+			// gtefield: "<INT>", "<FLOAT>"
+			{
+				typeClass:    `<INT>`,
+				validation:   `{{.FieldName2}}`,
+				validCase:    `32`,
+				invalidCase:  `31`,
+				errorMessage: `{{.FieldName1}} must be >= {{.FieldName2}}`,
+			},
+			{
+				typeClass:    `<FLOAT>`,
+				validation:   `{{.FieldName2}}`,
+				validCase:    `12.34`,
+				invalidCase:  `12.33`,
+				errorMessage: `{{.FieldName1}} must be >= {{.FieldName2}}`,
+			},
+		},
+	},
+
+	// ltfield operations
+	{
+		tag:               "ltfield",
+		validatorTag:      `ltfield`, // TODO
+		isFieldValidation: true,
+		argsCount:         common.OneValue,
+		testCases: []typeValidation{
+			// ltfield: "<INT>", "<FLOAT>"
+			{
+				typeClass:    `<INT>`,
+				validation:   `{{.FieldName2}}`,
+				validCase:    `31`,
+				invalidCase:  `33`,
+				errorMessage: `{{.FieldName1}} must be < {{.FieldName2}}`,
+			},
+			{
+				typeClass:    `<FLOAT>`,
+				validation:   `{{.FieldName2}}`,
+				validCase:    `12.33`,
+				invalidCase:  `12.35`,
+				errorMessage: `{{.FieldName1}} must be < {{.FieldName2}}`,
+			},
+		},
+	},
+
+	// ltefield operations
+	{
+		tag:               "ltefield",
+		validatorTag:      `ltefield`, // TODO
+		isFieldValidation: true,
+		argsCount:         common.OneValue,
+		testCases: []typeValidation{
+			// ltefield: "<INT>", "<FLOAT>"
+			{
+				typeClass:    `<INT>`,
+				validation:   `{{.FieldName2}}`,
+				validCase:    `32`,
+				invalidCase:  `33`,
+				errorMessage: `{{.FieldName1}} must be <= {{.FieldName2}}`,
+			},
+			{
+				typeClass:    `<FLOAT>`,
+				validation:   `{{.FieldName2}}`,
+				validCase:    `12.34`,
+				invalidCase:  `12.35`,
+				errorMessage: `{{.FieldName1}} must be <= {{.FieldName2}}`,
+			},
+		},
+	},
 }
