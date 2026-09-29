@@ -6,6 +6,10 @@ ValidGen born to solve that gap. Instead of use reflection, ValidGen uses the co
 
 At this time it is an unstable project and should not be used in production environments.
 
+## Internals
+
+[ValidGen internals](docs/internals.md) follows the current generator from the parser through the analyzer, code generator, and package writer, and says where TestGen fits.
+
 ## How to build ValidGen
 
 The following requirements are needed to build the project:
