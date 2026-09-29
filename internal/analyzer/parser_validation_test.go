@@ -152,11 +152,11 @@ func TestValidParserValidation(t *testing.T) {
 		},
 		{
 			name:       "oneof quoted value",
-			validation: "oneof='prefer not to'",
+			validation: "oneof='prefer not to' other",
 			want: &Validation{
 				Operation:      "oneof",
 				ExpectedValues: common.ManyValues,
-				Values:         []string{"prefer not to"},
+				Values:         []string{"prefer not to", "other"},
 			},
 		},
 		{
@@ -166,6 +166,24 @@ func TestValidParserValidation(t *testing.T) {
 				Operation:      "iscolor",
 				ExpectedValues: common.ZeroValue,
 				Values:         []string{},
+			},
+		},
+		{
+			name:       "validator ne alias",
+			validation: "ne=abcde",
+			want: &Validation{
+				Operation:      "neq",
+				ExpectedValues: common.OneValue,
+				Values:         []string{"abcde"},
+			},
+		},
+		{
+			name:       "validator ne_ignore_case alias",
+			validation: "ne_ignore_case=abcde",
+			want: &Validation{
+				Operation:      "neq_ignore_case",
+				ExpectedValues: common.OneValue,
+				Values:         []string{"abcde"},
 			},
 		},
 		{

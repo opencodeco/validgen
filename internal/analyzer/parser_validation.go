@@ -45,13 +45,24 @@ func parserValidationString(tag string) (string, string, error) {
 		return "", "", types.NewValidationError("malformed validation %s", tag)
 	}
 
-	validation := strings.TrimSpace(tokens[0])
+	validation := canonicalOperation(strings.TrimSpace(tokens[0]))
 	values := ""
 	if len(tokens) == 2 {
 		values = tokens[1]
 	}
 
 	return validation, values, nil
+}
+
+func canonicalOperation(validation string) string {
+	switch validation {
+	case "ne":
+		return "neq"
+	case "ne_ignore_case":
+		return "neq_ignore_case"
+	default:
+		return validation
+	}
 }
 
 func parserZeroValue(validation string, valuesCount common.CountValues, targets string) (*Validation, error) {
@@ -83,46 +94,50 @@ func parserManyValues(validation string, valuesCount common.CountValues, targets
 		return nil, types.NewValidationError("expected at least one target, but has 0 element(s)")
 	}
 
-	targetValues := targets
-
-	if targetValues[0] == '\'' {
-		values := []string{}
-		for {
-			first := strings.IndexByte(targetValues, '\'')
-			if first == -1 {
-				break
-			}
-
-			if first != 0 {
-				// ' must be the first chr
-				return nil, types.NewValidationError("invalid quote value in %s", targets)
-			}
-
-			second := strings.IndexByte(targetValues[first+1:], '\'')
-			if second == -1 {
-				return nil, types.NewValidationError("invalid quote value in %s", targets)
-			}
-			values = append(values, targetValues[first+1:second+1])
-			targetValues = strings.TrimSpace(targetValues[second+2:])
-		}
-
-		return &Validation{
-			Operation:      validation,
-			ExpectedValues: valuesCount,
-			Values:         values,
-		}, nil
+	values, err := splitManyValues(targets)
+	if err != nil {
+		return nil, err
 	}
-
-	// Break by commas or spaces.
-	targetValues = strings.ReplaceAll(targetValues, " ", ",")
-	values := strings.Split(targetValues, ",")
-	values = removeEmptyValues(values)
+	if len(values) == 0 {
+		return nil, types.NewValidationError("expected at least one target, but has 0 element(s)")
+	}
 
 	return &Validation{
 		Operation:      validation,
 		ExpectedValues: valuesCount,
 		Values:         values,
 	}, nil
+}
+
+// splitManyValues reads a oneof/in list. Spaces and commas separate tokens.
+// A single-quoted token may contain spaces, and quoted tokens may be mixed
+// with bare tokens, matching go-playground/validator oneof.
+func splitManyValues(targets string) ([]string, error) {
+	values := []string{}
+	for i := 0; i < len(targets); {
+		if targets[i] == ' ' || targets[i] == ',' {
+			i++
+			continue
+		}
+
+		if targets[i] == '\'' {
+			end := strings.IndexByte(targets[i+1:], '\'')
+			if end == -1 {
+				return nil, types.NewValidationError("invalid quote value in %s", targets)
+			}
+			values = append(values, targets[i+1:i+1+end])
+			i += end + 2
+			continue
+		}
+
+		start := i
+		for i < len(targets) && targets[i] != ' ' && targets[i] != ',' {
+			i++
+		}
+		values = append(values, targets[start:i])
+	}
+
+	return values, nil
 }
 
 func removeEmptyValues(input []string) []string {

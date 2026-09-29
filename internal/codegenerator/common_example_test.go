@@ -1,6 +1,9 @@
 package codegenerator
 
 import (
+	goparser "go/parser"
+	"go/token"
+	"reflect"
 	"testing"
 
 	"github.com/opencodeco/validgen/internal/analyzer"
@@ -97,6 +100,42 @@ return errs
 	if got != wantAddress {
 		dmp := diffmatchpatch.New()
 		t.Fatalf("AddressValidate mismatch\n%s", dmp.DiffPrettyText(dmp.DiffMain(wantAddress, got, false)))
+	}
+}
+
+func TestOneofIntegerAndQuotedTarget(t *testing.T) {
+	intType := common.FieldType{BaseType: "int"}
+	parsed := AssertParserValidation(t, "oneof=12 34 56")
+	got, err := DefineTestElements("Field", intType, parsed)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := TestElements{
+		conditions:     []string{"obj.Field == 12", "obj.Field == 34", "obj.Field == 56"},
+		concatOperator: "||",
+		errorMessage:   "Field must be one of '12' '34' '56'",
+	}
+	if !reflect.DeepEqual(got, want) {
+		t.Fatalf("int oneof = %+v, want %+v", got, want)
+	}
+
+	quoted := AssertParserValidation(t, `oneof='say "hi"'`)
+	got, err = DefineTestElements("Field", common.FieldType{BaseType: "string"}, quoted)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(got.conditions) != 1 || got.conditions[0] != `obj.Field == "say \"hi\""` {
+		t.Fatalf("quoted oneof condition = %#v", got.conditions)
+	}
+
+	gv := GenValidations{}
+	code, err := gv.BuildValidationCode("Field", common.FieldType{BaseType: "string"}, []*analyzer.Validation{quoted})
+	if err != nil {
+		t.Fatal(err)
+	}
+	src := "package p\nfunc f() {\n" + code + "}\n"
+	if _, err := goparser.ParseFile(token.NewFileSet(), "oneof.go", src, 0); err != nil {
+		t.Fatalf("generated oneof does not compile: %v\n%s", err, code)
 	}
 }
 

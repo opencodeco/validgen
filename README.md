@@ -93,7 +93,7 @@ The following validations will be implemented:
 - nin (not in): must not be one of the following values
 - required (required): is required
 - email (email): must be a valid email format (empty is valid for optional fields)
-- oneof (one of): string must be one of the space-separated values
+- oneof (one of): string or integer must be one of the space-separated values
 - hexcolor, rgb, rgba, hsl, hsla: string must match that color format
 - iscolor: alias for hexcolor, rgb, rgba, hsl, or hsla
 - eqfield (equal field): field must be equal to another field
@@ -141,7 +141,7 @@ The following table shows the validations and possible types, where:
 | nin             | I      | I                        | I       | -       | I     | I     | W   | -    | W        |
 | required        | I      | I                        | I       | -       | I     | -     | W   | W    | W        |
 | email           | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
-| oneof           | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
+| oneof           | I      | I                        | -       | -       | -     | -     | -   | -    | -        |
 | hexcolor        | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
 | rgb             | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
 | rgba            | I      | -                        | -       | -       | -     | -     | -   | -    | -        |

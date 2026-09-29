@@ -103,7 +103,7 @@ var operationsList = map[string]Operation{
 	"oneof": {
 		CountValues:      common.ManyValues,
 		IsFieldOperation: false,
-		ValidTypes:       []string{"<STRING>"},
+		ValidTypes:       []string{"<STRING>", "<INT>"},
 	},
 	// iscolor is go-playground/validator's alias for hexcolor|rgb|rgba|hsl|hsla.
 	"hexcolor": zeroStringOp(),

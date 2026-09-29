@@ -705,6 +705,22 @@ var conditionTable = map[string]Operation{
 					errorMessage:   "{{.Name}} must be one of {{.Targets}}",
 				},
 			},
+			{
+				AcceptedTypes: []string{"<INT>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} == {{.Target}}`,
+					concatOperator: "||",
+					errorMessage:   "{{.Name}} must be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<INT>"},
+				ConditionTable: ConditionTable{
+					operation:      `(obj.{{.Name}} != nil && *obj.{{.Name}} == {{.Target}})`,
+					concatOperator: "||",
+					errorMessage:   "{{.Name}} must be one of {{.Targets}}",
+				},
+			},
 		},
 	},
 	"hexcolor": stringPredicate("types.IsHexColor", "{{.Name}} must be a valid hex color"),

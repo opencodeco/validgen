@@ -240,8 +240,8 @@ func TestOperationsIsValidByType(t *testing.T) {
 		{
 			op: "oneof",
 			fieldTypes: []string{
-				"<STRING>",
-				"*<STRING>",
+				"<STRING>", "<INT>",
+				"*<STRING>", "*<INT>",
 			},
 			valid: true,
 		},
@@ -370,7 +370,7 @@ func TestOperationsIsValidByType(t *testing.T) {
 		{
 			op: "oneof",
 			fieldTypes: []string{
-				"<INT>", "<FLOAT>", "<BOOL>",
+				"<FLOAT>", "<BOOL>",
 				"[]<STRING>", "map[<STRING>]",
 			},
 			valid: false,

@@ -1,6 +1,7 @@
 package codegenerator
 
 import (
+	"strconv"
 	"strings"
 
 	"github.com/opencodeco/validgen/internal/analyzer"
@@ -66,6 +67,9 @@ func defineTestElements(expr, fieldName string, fieldType common.FieldType, fiel
 func replaceExprNameAndTarget(text, expr, name, target string) string {
 	text = strings.ReplaceAll(text, "obj.{{.Name}}", expr)
 	text = strings.ReplaceAll(text, "{{.Name}}", name)
+	if strings.Contains(text, `"{{.Target}}"`) {
+		text = strings.ReplaceAll(text, `"{{.Target}}"`, strconv.Quote(target))
+	}
 	text = strings.ReplaceAll(text, "{{.Target}}", target)
 
 	return text

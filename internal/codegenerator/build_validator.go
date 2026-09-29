@@ -3,6 +3,7 @@ package codegenerator
 import (
 	"bytes"
 	"fmt"
+	"strconv"
 	"strings"
 	"text/template"
 
@@ -195,9 +196,9 @@ func (gv *GenValidations) buildIfCode(expr, fieldName string, fieldType common.F
 
 	return fmt.Sprintf(
 		`if !(%s) {
-errs = append(errs, types.NewValidationError("%s"))
+errs = append(errs, types.NewValidationError(%s))
 }
-`, booleanCondition, testElements.errorMessage), nil
+`, booleanCondition, strconv.Quote(testElements.errorMessage)), nil
 }
 
 func (gv *GenValidations) buildIfNestedCode(fieldName string, fieldType common.FieldType) (string, error) {
