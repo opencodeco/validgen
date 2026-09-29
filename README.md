@@ -98,6 +98,7 @@ The following validations will be implemented:
 - ltefield (less than or equal field): field must be less than or equal to another field
 - ltfield (less than field): field must be less than another field
 - dive: tags after `dive` apply to each slice element, array element, or map value
+- keys, endkeys: after `dive` on a map, tags between `keys` and `endkeys` apply to each key and tags after `endkeys` apply to each value
 
 ### dive
 
@@ -110,7 +111,20 @@ type User struct {
 }
 ```
 
-`required` before `dive` checks that `Addresses` is not empty. After `dive`, each pointer must be non-nil and `Address` field tags run. Each `Labels` value must be non-empty. Map keys are not validated. `keys` and `endkeys` are not implemented.
+`required` before `dive` checks that `Addresses` is not empty. After `dive`, each pointer must be non-nil and `Address` field tags run. Each `Labels` value must be non-empty. Plain `dive` validates map values.
+
+### keys and endkeys
+
+`keys` follows `dive` immediately and applies only to maps. Tags between `keys` and `endkeys` validate each map key. Tags after `endkeys` validate each map value.
+
+```go
+type User struct {
+	Labels map[string]string `valid:"dive,keys,min=2,endkeys,required"`
+	Scores map[uint8]string  `valid:"dive,keys,gte=1,endkeys,required"`
+}
+```
+
+`min=2` checks each `Labels` key. `required` checks each `Labels` value. `gte=1` checks each `Scores` key. A missing `endkeys`, an extra `endkeys`, `keys` on a non-map, `dive` inside `keys`, another `keys` block, and a non-scalar map key are rejected.
 
 The following table shows the validations and possible types, where:
 

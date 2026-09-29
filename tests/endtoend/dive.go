@@ -15,6 +15,11 @@ type PointerDiveUser struct {
 	Addresses []*Address `valid:"required,dive,required"`
 }
 
+type KeyedDiveUser struct {
+	Labels map[string]string `valid:"dive,keys,min=2,endkeys,required"`
+	Scores map[uint8]string  `valid:"dive,keys,gte=1,endkeys,required"`
+}
+
 func diveTests() {
 	log.Println("starting dive tests")
 
@@ -61,5 +66,55 @@ func diveTests() {
 	pointerOK := &PointerDiveUser{Addresses: []*Address{{Street: "av 123", City: "city 123"}}}
 	assertExpectedErrorMsgs("pointer dive valid", PointerDiveUserValidate(pointerOK), nil)
 
+	keyTests()
+
 	log.Println("dive tests ok")
+}
+
+func keyTests() {
+	log.Println("starting keys tests")
+
+	shortKey := &KeyedDiveUser{
+		Labels: map[string]string{"a": "earth"},
+		Scores: map[uint8]string{1: "ok"},
+	}
+	assertExpectedErrorMsgs("string key failure", KeyedDiveUserValidate(shortKey), []string{
+		"Labels length must be >= 2",
+	})
+
+	lowScore := &KeyedDiveUser{
+		Labels: map[string]string{"home": "earth"},
+		Scores: map[uint8]string{0: "ok"},
+	}
+	assertExpectedErrorMsgs("typed key failure", KeyedDiveUserValidate(lowScore), []string{
+		"Scores must be >= 1",
+	})
+
+	emptyValue := &KeyedDiveUser{
+		Labels: map[string]string{"home": ""},
+		Scores: map[uint8]string{1: ""},
+	}
+	assertExpectedErrorMsgs("value validation after endkeys", KeyedDiveUserValidate(emptyValue), []string{
+		"Labels is required",
+		"Scores is required",
+	})
+
+	both := &KeyedDiveUser{
+		Labels: map[string]string{"a": ""},
+		Scores: map[uint8]string{0: ""},
+	}
+	assertExpectedErrorMsgs("key and value failure", KeyedDiveUserValidate(both), []string{
+		"Labels length must be >= 2",
+		"Labels is required",
+		"Scores must be >= 1",
+		"Scores is required",
+	})
+
+	ok := &KeyedDiveUser{
+		Labels: map[string]string{"home": "earth"},
+		Scores: map[uint8]string{1: "ok"},
+	}
+	assertExpectedErrorMsgs("keys valid", KeyedDiveUserValidate(ok), nil)
+
+	log.Println("keys tests ok")
 }
