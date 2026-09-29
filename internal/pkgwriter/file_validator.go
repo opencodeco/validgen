@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"go/format"
 	"os"
+	"strings"
 	"text/template"
 
 	"github.com/opencodeco/validgen/internal/codegenerator"
@@ -44,10 +45,28 @@ func needsJSONUnmarshal(pkg *codegenerator.Pkg) bool {
 	return false
 }
 
+func codeUsesStringsEqualFold(pkg *codegenerator.Pkg) bool {
+	const needle = "strings.EqualFold"
+	for _, st := range pkg.Structs {
+		if strings.Contains(st.ValidatorFuncCode, needle) || strings.Contains(st.UnmarshalJSONCode, needle) {
+			return true
+		}
+	}
+	return false
+}
+
 func buildImportPath(pkg *codegenerator.Pkg) (string, error) {
 	code := ""
-	if needsJSONUnmarshal(pkg) {
-		code += "\t\"encoding/json\"\n\t\"errors\"\n\n"
+	needsJSON := needsJSONUnmarshal(pkg)
+	needsStrings := codeUsesStringsEqualFold(pkg)
+	if needsJSON {
+		code += "\t\"encoding/json\"\n\t\"errors\"\n"
+	}
+	if needsStrings {
+		code += "\t\"strings\"\n"
+	}
+	if needsJSON || needsStrings {
+		code += "\n"
 	}
 	code += "\t\"github.com/opencodeco/validgen/types\""
 

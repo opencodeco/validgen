@@ -2522,7 +2522,7 @@ return errs
 			},
 			want: `func eq_ignore_caseStructValidate(obj *eq_ignore_caseStruct) []error {
 var errs []error
-if !(types.EqualFold(obj.FieldEq_ignore_caseString, "abcde")) {
+if !(strings.EqualFold(obj.FieldEq_ignore_caseString, "abcde")) {
 errs = append(errs, types.NewValidationError("FieldEq_ignore_caseString must be equal to 'abcde'"))
 }
 return errs
@@ -2553,7 +2553,7 @@ return errs
 			},
 			want: `func neq_ignore_caseStructValidate(obj *neq_ignore_caseStruct) []error {
 var errs []error
-if !(!types.EqualFold(obj.FieldNeq_ignore_caseString, "abcde")) {
+if !(!strings.EqualFold(obj.FieldNeq_ignore_caseString, "abcde")) {
 errs = append(errs, types.NewValidationError("FieldNeq_ignore_caseString must not be equal to 'abcde'"))
 }
 return errs

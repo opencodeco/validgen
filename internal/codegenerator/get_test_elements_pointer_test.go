@@ -44,7 +44,7 @@ func TestDefineTestElementsWithStringPointerFields(t *testing.T) {
 		{
 			validation: "eq_ignore_case=AbC",
 			want: TestElements{
-				conditions:   []string{`obj.Field != nil && types.EqualFold(*obj.Field, "AbC")`},
+				conditions:   []string{`obj.Field != nil && strings.EqualFold(*obj.Field, "AbC")`},
 				errorMessage: "Field must be equal to 'AbC'",
 			},
 		},
@@ -65,7 +65,7 @@ func TestDefineTestElementsWithStringPointerFields(t *testing.T) {
 		{
 			validation: "neq_ignore_case=AbC",
 			want: TestElements{
-				conditions:   []string{`obj.Field != nil && !types.EqualFold(*obj.Field, "AbC")`},
+				conditions:   []string{`obj.Field != nil && !strings.EqualFold(*obj.Field, "AbC")`},
 				errorMessage: "Field must not be equal to 'AbC'",
 			},
 		},

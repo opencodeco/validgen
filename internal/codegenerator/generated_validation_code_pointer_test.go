@@ -2319,7 +2319,7 @@ errs = append(errs, types.NewValidationError("FieldMaxBoolMapPointer must have a
 				fieldType:       common.FieldType{ComposedType: "*", BaseType: "string", Size: ""},
 				fieldValidation: "eq_ignore_case=abcde",
 			},
-			want: `if !(obj.FieldEq_ignore_caseStringPointer != nil && types.EqualFold(*obj.FieldEq_ignore_caseStringPointer, "abcde")) {
+			want: `if !(obj.FieldEq_ignore_caseStringPointer != nil && strings.EqualFold(*obj.FieldEq_ignore_caseStringPointer, "abcde")) {
 errs = append(errs, types.NewValidationError("FieldEq_ignore_caseStringPointer must be equal to 'abcde'"))
 }
 `,
@@ -2331,7 +2331,7 @@ errs = append(errs, types.NewValidationError("FieldEq_ignore_caseStringPointer m
 				fieldType:       common.FieldType{ComposedType: "*", BaseType: "string", Size: ""},
 				fieldValidation: "neq_ignore_case=abcde",
 			},
-			want: `if !(obj.FieldNeq_ignore_caseStringPointer != nil && !types.EqualFold(*obj.FieldNeq_ignore_caseStringPointer, "abcde")) {
+			want: `if !(obj.FieldNeq_ignore_caseStringPointer != nil && !strings.EqualFold(*obj.FieldNeq_ignore_caseStringPointer, "abcde")) {
 errs = append(errs, types.NewValidationError("FieldNeq_ignore_caseStringPointer must not be equal to 'abcde'"))
 }
 `,
