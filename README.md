@@ -33,6 +33,20 @@ make build
 
 After that the executable will be in `bin/validgen`.
 
+## Releases
+
+Push a tag named `vMAJOR.MINOR.PATCH`, with an optional pre-release suffix such as `-rc.1`. That tag push runs [Release](.github/workflows/release.yml) on a GitHub-hosted runner. The workflow cross-compiles ValidGen with `CGO_ENABLED=0` and attaches the binaries to the GitHub release for that tag. Pull requests do not publish releases.
+
+The release assets are:
+
+- `validgen_v1.2.3_linux_amd64`
+- `validgen_v1.2.3_linux_arm64`
+- `validgen_v1.2.3_darwin_amd64`
+- `validgen_v1.2.3_darwin_arm64`
+- `SHA256SUMS`
+
+`amd64` is the Intel 64-bit build. `arm64` is the Arm 64-bit build.
+
 ## Optional JSON unmarshaling
 
 By default ValidGen only generates `TValidate` functions. Pass `-unmarshal-json` to also generate `encoding/json.Unmarshaler` methods that decode with an alias (to avoid recursion) and then validate:
