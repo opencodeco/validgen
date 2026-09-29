@@ -38,6 +38,10 @@ endtoendtests: build
 	find tests/endtoend/ -name 'validator__.go' -exec rm \{} \;
 	$(VALIDGEN_BIN) tests/endtoend
 	cd tests/endtoend; go run .
+	@echo "Running json unmarshal endtoend tests"
+	find tests/jsonunmarshal/ -name 'validator__.go' -exec rm \{} \;
+	$(VALIDGEN_BIN) -unmarshal-json tests/jsonunmarshal
+	cd tests/jsonunmarshal; go run .
 
 cmpbenchtests: build
 	@echo "Running cmp bench tests"
