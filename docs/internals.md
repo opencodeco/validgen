@@ -52,7 +52,7 @@ The map value expression is ignored. Parser tests record `map[string]uint8` with
 
 The same walk collapses a pointer element into the container marker. The pointer parser test records `[]*int64` as `BaseType` `int64` and `ComposedType` `*[]`, and `*map[string]bool` as `BaseType` `string` and `ComposedType` `*map`.
 
-`FieldType.IsGoType` is true when `ComposedType` is `map` or `*map`. Otherwise it is true only when `BaseType` is `string`, `bool`, `float32`, `float64`, or one of the integer names listed in the analyzer section.
+`FieldType.IsGoType` is true when `ComposedType` is `map` or `*map`. Otherwise it is true only when `BaseType` is `string`, `bool`, `float32`, `float64`, `complex64`, `complex128`, or one of the integer names listed in the analyzer section.
 
 `extractCompleteType` returns an empty `FieldType` for an expression it does not recognize. Fields left with an empty `BaseType` are skipped.
 
@@ -66,6 +66,7 @@ Normalized names come from `FieldType.ToNormalizedString`.
 - `<BOOL>` is `bool`.
 - `<INT>` is `int`, `int8`, `int16`, `int32`, `int64`, `uint`, `uint8`, `uint16`, `uint32`, and `uint64`.
 - `<FLOAT>` is `float32` and `float64`.
+- `<COMPLEX>` is `complex64` and `complex128`.
 
 Slices, arrays, maps, and pointers keep a marker on that name, such as `[]<INT>`, `[N]<STRING>`, `map[<STRING>]`, and `*<FLOAT>`. `common.HelperFromNormalizedToFieldTypes` expands those names back to concrete `FieldType` values. TestGen and several generator tests call that helper. The CLI generator calls `ToNormalizedString` on the parsed field.
 
@@ -91,7 +92,7 @@ If the field's `BaseType` is `package.Struct` for a struct parsed in this run, t
 
 ### Field comparisons
 
-`eqfield`, `neqfield`, `gtfield`, `gtefield`, `ltfield`, and `ltefield` set `IsFieldOperation`. `analyzeFieldOperations` checks those after the catalog checks.
+`eqfield`, `neqfield`, `gtfield`, `gtefield`, `ltfield`, and `ltefield` set `IsFieldOperation`. `eqfield` and `neqfield` allow `<STRING>`, `<INT>`, `<FLOAT>`, `<COMPLEX>`, and `<BOOL>`. Their condition-table rows compare with `==` and `!=`. `gtfield`, `gtefield`, `ltfield`, and `ltefield` allow `<INT>` and `<FLOAT>` only. `analyzeFieldOperations` checks field operations after the catalog checks.
 
 The target is the single value from the tag. `Field2` refers to a field of the same struct. `Nested.Field2` refers to a field of the struct stored on `Nested`. The lookup key is `common.KeyPath`, which joins names with `.`. Both fields must already be in the parsed set, and their `FieldType` values must be equal. That comparison includes `ComposedType`, `BaseType`, and `Size`, so `int` and `int32` do not match.
 
