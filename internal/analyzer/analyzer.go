@@ -2,7 +2,7 @@ package analyzer
 
 import (
 	"fmt"
-	"strconv"
+	"reflect"
 	"strings"
 
 	"github.com/opencodeco/validgen/internal/analyzer/operations"
@@ -10,8 +10,6 @@ import (
 	"github.com/opencodeco/validgen/internal/parser"
 	"github.com/opencodeco/validgen/types"
 )
-
-const validTag = "valid"
 
 func AnalyzeStructs(structs []*parser.Struct) ([]*Struct, error) {
 	result, err := analyzeFieldValidations(structs)
@@ -63,18 +61,20 @@ func analyzeFieldValidations(structs []*parser.Struct) ([]*Struct, error) {
 }
 
 func parseFieldValidations(fieldTag string) ([]string, bool) {
-	fieldValidations := []string{}
-	hasValidTag := false
-	prefixToSearch := validTag + ":"
-
-	if strings.HasPrefix(fieldTag, prefixToSearch) {
-		hasValidTag = true
-		tagWithoutPrefix, _ := strings.CutPrefix(fieldTag, prefixToSearch)
-		tagWithoutQuotes, _ := strconv.Unquote(tagWithoutPrefix)
-		fieldValidations = strings.Split(tagWithoutQuotes, ",")
+	if fieldTag == "" {
+		return nil, false
 	}
 
-	return fieldValidations, hasValidTag
+	tag := reflect.StructTag(fieldTag)
+	value, ok := tag.Lookup("valid")
+	if !ok {
+		value, ok = tag.Lookup("validate")
+	}
+	if !ok {
+		return nil, false
+	}
+
+	return strings.Split(value, ","), true
 }
 
 func checkForInvalidOperations(structs []*Struct) error {

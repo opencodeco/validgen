@@ -100,6 +100,18 @@ var operationsList = map[string]Operation{
 		IsFieldOperation: false,
 		ValidTypes:       []string{"<STRING>"},
 	},
+	"oneof": {
+		CountValues:      common.ManyValues,
+		IsFieldOperation: false,
+		ValidTypes:       []string{"<STRING>"},
+	},
+	// iscolor is go-playground/validator's alias for hexcolor|rgb|rgba|hsl|hsla.
+	"hexcolor": zeroStringOp(),
+	"rgb":      zeroStringOp(),
+	"rgba":     zeroStringOp(),
+	"hsl":      zeroStringOp(),
+	"hsla":     zeroStringOp(),
+	"iscolor":  zeroStringOp(),
 	"eqfield": {
 		CountValues:      common.OneValue,
 		IsFieldOperation: true,
@@ -136,4 +148,12 @@ var operationsList = map[string]Operation{
 		IsFieldOperation: false,
 		ValidTypes:       nil,
 	},
+}
+
+func zeroStringOp() Operation {
+	return Operation{
+		CountValues:      common.ZeroValue,
+		IsFieldOperation: false,
+		ValidTypes:       []string{"<STRING>"},
+	}
 }

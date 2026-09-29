@@ -687,6 +687,32 @@ var conditionTable = map[string]Operation{
 			},
 		},
 	},
+	"oneof": {
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} == "{{.Target}}"`,
+					concatOperator: "||",
+					errorMessage:   "{{.Name}} must be one of {{.Targets}}",
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `(obj.{{.Name}} != nil && *obj.{{.Name}} == "{{.Target}}")`,
+					concatOperator: "||",
+					errorMessage:   "{{.Name}} must be one of {{.Targets}}",
+				},
+			},
+		},
+	},
+	"hexcolor": stringPredicate("types.IsHexColor", "{{.Name}} must be a valid hex color"),
+	"rgb":      stringPredicate("types.IsRGB", "{{.Name}} must be a valid rgb color"),
+	"rgba":     stringPredicate("types.IsRGBA", "{{.Name}} must be a valid rgba color"),
+	"hsl":      stringPredicate("types.IsHSL", "{{.Name}} must be a valid hsl color"),
+	"hsla":     stringPredicate("types.IsHSLA", "{{.Name}} must be a valid hsla color"),
+	"iscolor":  stringPredicate("types.IsColor", "{{.Name}} must be a valid color"),
 	"eqfield": {
 		ConditionByTypes: []ConditionByType{
 			{
@@ -759,6 +785,29 @@ var conditionTable = map[string]Operation{
 			},
 		},
 	},
+}
+
+func stringPredicate(call, message string) Operation {
+	return Operation{
+		ConditionByTypes: []ConditionByType{
+			{
+				AcceptedTypes: []string{"<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      call + `(obj.{{.Name}})`,
+					concatOperator: "",
+					errorMessage:   message,
+				},
+			},
+			{
+				AcceptedTypes: []string{"*<STRING>"},
+				ConditionTable: ConditionTable{
+					operation:      `obj.{{.Name}} != nil && ` + call + `(*obj.{{.Name}})`,
+					concatOperator: "",
+					errorMessage:   message,
+				},
+			},
+		},
+	}
 }
 
 func GetConditionTable(operation string, fieldType common.FieldType) (ConditionTable, error) {

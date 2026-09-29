@@ -92,6 +92,25 @@ func TestDefineTestElementsWithStringPointerFields(t *testing.T) {
 				errorMessage: "Field must be a valid email",
 			},
 		},
+		{
+			validation: "oneof=male female prefer_not_to",
+			want: TestElements{
+				conditions: []string{
+					`(obj.Field != nil && *obj.Field == "male")`,
+					`(obj.Field != nil && *obj.Field == "female")`,
+					`(obj.Field != nil && *obj.Field == "prefer_not_to")`,
+				},
+				concatOperator: "||",
+				errorMessage:   "Field must be one of 'male' 'female' 'prefer_not_to'",
+			},
+		},
+		{
+			validation: "iscolor",
+			want: TestElements{
+				conditions:   []string{`obj.Field != nil && types.IsColor(*obj.Field)`},
+				errorMessage: "Field must be a valid color",
+			},
+		},
 	}
 
 	for _, tt := range tests {

@@ -141,6 +141,42 @@ func TestValidParserValidation(t *testing.T) {
 				Values:         []string{},
 			},
 		},
+		{
+			name:       "oneof from the common validator example",
+			validation: "oneof=male female prefer_not_to",
+			want: &Validation{
+				Operation:      "oneof",
+				ExpectedValues: common.ManyValues,
+				Values:         []string{"male", "female", "prefer_not_to"},
+			},
+		},
+		{
+			name:       "oneof quoted value",
+			validation: "oneof='prefer not to'",
+			want: &Validation{
+				Operation:      "oneof",
+				ExpectedValues: common.ManyValues,
+				Values:         []string{"prefer not to"},
+			},
+		},
+		{
+			name:       "iscolor alias",
+			validation: "iscolor",
+			want: &Validation{
+				Operation:      "iscolor",
+				ExpectedValues: common.ZeroValue,
+				Values:         []string{},
+			},
+		},
+		{
+			name:       "hexcolor",
+			validation: "hexcolor",
+			want: &Validation{
+				Operation:      "hexcolor",
+				ExpectedValues: common.ZeroValue,
+				Values:         []string{},
+			},
+		},
 	}
 
 	for _, tt := range tests {

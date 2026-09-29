@@ -74,6 +74,8 @@ Malformed JSON still returns the usual `encoding/json` decode error. Validation 
 
 ## Validations
 
+Struct tags may use `valid` or `validate`. When both keys are present, `valid` is the one that is read. The common go-playground example uses `validate`.
+
 The following validations will be implemented:
 
 - eq (equal): must be equal to the specified value
@@ -91,6 +93,9 @@ The following validations will be implemented:
 - nin (not in): must not be one of the following values
 - required (required): is required
 - email (email): must be a valid email format (empty is valid for optional fields)
+- oneof (one of): string must be one of the space-separated values
+- hexcolor, rgb, rgba, hsl, hsla: string must match that color format
+- iscolor: alias for hexcolor, rgb, rgba, hsl, or hsla
 - eqfield (equal field): field must be equal to another field
 - neqfield (not equal field): field must not be equal to another field
 - gtefield (greater than or equal field): field must be greater than or equal to another field
@@ -136,6 +141,13 @@ The following table shows the validations and possible types, where:
 | nin             | I      | I                        | W       | -       | I     | I     | W   | -    | W        |
 | required        | I      | I                        | W       | -       | I     | -     | W   | W    | W        |
 | email           | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
+| oneof           | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
+| hexcolor        | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
+| rgb             | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
+| rgba            | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
+| hsl             | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
+| hsla            | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
+| iscolor         | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
 | eqfield         | I      | I                        | I       | I       | -     | -     | -   | W    | W        |
 | neqfield        | I      | I                        | I       | I       | -     | -     | -   | W    | W        |
 | gtefield        | -      | I                        | -       | -       | -     | -     | -   | W    | W        |
