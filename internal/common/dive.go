@@ -93,6 +93,24 @@ func (ft FieldType) OperationType(op string, accept func(FieldType) bool) (Field
 	return FieldType{}, false
 }
 
+// MapKey returns the key of a map.
+// The key must be a Go scalar. Array, slice, map, and struct keys are rejected.
+func (ft FieldType) MapKey() (FieldType, error) {
+	ct := ft.ComposedType
+	if strings.HasPrefix(ct, "*") && !ft.ElemPointer {
+		ct = strings.TrimPrefix(ct, "*")
+	}
+	if !strings.HasPrefix(ct, "map") {
+		return FieldType{}, fmt.Errorf("%s is not a map", ft.ToType())
+	}
+	key := FieldType{BaseType: ft.BaseType}
+	if ct != "map" || !key.IsGoType() {
+		return FieldType{}, fmt.Errorf("nested map keys are not supported")
+	}
+
+	return key, nil
+}
+
 // DiveInto returns the type of one slice element, array element, or map value.
 func (ft FieldType) DiveInto() (FieldType, error) {
 	ct := ft.ComposedType

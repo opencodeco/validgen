@@ -142,6 +142,24 @@ func TestValidParserValidation(t *testing.T) {
 			},
 		},
 		{
+			name:       "keys tag",
+			validation: "keys",
+			want: &Validation{
+				Operation:      "keys",
+				ExpectedValues: common.ZeroValue,
+				Values:         []string{},
+			},
+		},
+		{
+			name:       "endkeys tag",
+			validation: "endkeys",
+			want: &Validation{
+				Operation:      "endkeys",
+				ExpectedValues: common.ZeroValue,
+				Values:         []string{},
+			},
+		},
+		{
 			name:       "oneof from the common validator example",
 			validation: "oneof=male female prefer_not_to",
 			want: &Validation{
@@ -239,14 +257,14 @@ func TestParserInvalidValidation(t *testing.T) {
 			expectedErr: types.NewValidationError("unsupported validation xpto"),
 		},
 		{
-			name:        "keys is not implemented",
-			validation:  "keys",
-			expectedErr: types.NewValidationError("unsupported validation keys"),
+			name:        "keys with a target",
+			validation:  "keys=a",
+			expectedErr: types.NewValidationError("expected zero target, but has a"),
 		},
 		{
-			name:        "endkeys is not implemented",
-			validation:  "endkeys",
-			expectedErr: types.NewValidationError("unsupported validation endkeys"),
+			name:        "endkeys with a target",
+			validation:  "endkeys=a",
+			expectedErr: types.NewValidationError("expected zero target, but has a"),
 		},
 		{
 			name:        "malformed value",
