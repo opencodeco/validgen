@@ -28,6 +28,13 @@ func TestOperationsIsValid(t *testing.T) {
 		{op: "in", want: true},
 		{op: "nin", want: true},
 		{op: "email", want: true},
+		{op: "oneof", want: true},
+		{op: "hexcolor", want: true},
+		{op: "rgb", want: true},
+		{op: "rgba", want: true},
+		{op: "hsl", want: true},
+		{op: "hsla", want: true},
+		{op: "iscolor", want: true},
 		{op: "eqfield", want: true},
 		{op: "neqfield", want: true},
 		{op: "gtefield", want: true},
@@ -232,6 +239,63 @@ func TestOperationsIsValidByType(t *testing.T) {
 			valid: true,
 		},
 
+		{
+			op: "oneof",
+			fieldTypes: []string{
+				"<STRING>", "<INT>",
+				"*<STRING>", "*<INT>",
+			},
+			valid: true,
+		},
+		{
+			op: "hexcolor",
+			fieldTypes: []string{
+				"<STRING>",
+				"*<STRING>",
+			},
+			valid: true,
+		},
+		{
+			op: "rgb",
+			fieldTypes: []string{
+				"<STRING>",
+				"*<STRING>",
+			},
+			valid: true,
+		},
+		{
+			op: "rgba",
+			fieldTypes: []string{
+				"<STRING>",
+				"*<STRING>",
+			},
+			valid: true,
+		},
+		{
+			op: "hsl",
+			fieldTypes: []string{
+				"<STRING>",
+				"*<STRING>",
+			},
+			valid: true,
+		},
+		{
+			op: "hsla",
+			fieldTypes: []string{
+				"<STRING>",
+				"*<STRING>",
+			},
+			valid: true,
+		},
+		{
+			op: "iscolor",
+			fieldTypes: []string{
+				"<STRING>",
+				"*<STRING>",
+			},
+			valid: true,
+		},
+
 		// eqfield operations
 		{
 			op: "eqfield",
@@ -302,6 +366,21 @@ func TestOperationsIsValidByType(t *testing.T) {
 				"*<INT>", "*<FLOAT>", "*<BOOL>",
 				"*[]<STRING>", "*[]<INT>", "*[]<FLOAT>", "*[]<BOOL>",
 				"*map[<STRING>]", "*map[<INT>]", "*map[<FLOAT>]", "*map[<BOOL>]",
+			},
+			valid: false,
+		},
+		{
+			op: "oneof",
+			fieldTypes: []string{
+				"<FLOAT>", "<BOOL>",
+				"[]<STRING>", "map[<STRING>]",
+			},
+			valid: false,
+		},
+		{
+			op: "iscolor",
+			fieldTypes: []string{
+				"<INT>", "[]<STRING>", "map[<STRING>]",
 			},
 			valid: false,
 		},
@@ -495,6 +574,13 @@ func TestOperationsIsFieldOperation(t *testing.T) {
 		{op: "in", want: false},
 		{op: "nin", want: false},
 		{op: "email", want: false},
+		{op: "oneof", want: false},
+		{op: "hexcolor", want: false},
+		{op: "rgb", want: false},
+		{op: "rgba", want: false},
+		{op: "hsl", want: false},
+		{op: "hsla", want: false},
+		{op: "iscolor", want: false},
 		{op: "eqfield", want: true},
 		{op: "neqfield", want: true},
 		{op: "gtefield", want: true},
@@ -538,6 +624,13 @@ func TestOperationsArgsCount(t *testing.T) {
 		{op: "in", want: common.ManyValues},
 		{op: "nin", want: common.ManyValues},
 		{op: "email", want: common.ZeroValue},
+		{op: "oneof", want: common.ManyValues},
+		{op: "hexcolor", want: common.ZeroValue},
+		{op: "rgb", want: common.ZeroValue},
+		{op: "rgba", want: common.ZeroValue},
+		{op: "hsl", want: common.ZeroValue},
+		{op: "hsla", want: common.ZeroValue},
+		{op: "iscolor", want: common.ZeroValue},
 		{op: "eqfield", want: common.OneValue},
 		{op: "neqfield", want: common.OneValue},
 		{op: "gtefield", want: common.OneValue},

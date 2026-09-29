@@ -152,6 +152,29 @@ func TestDefineTestElementsWithStringFields(t *testing.T) {
 				errorMessage: "EmailField must be a valid email",
 			},
 		},
+		{
+			name: "oneof from the common validator example",
+			args: args{
+				fieldName:       "Gender",
+				fieldValidation: "oneof=male female prefer_not_to",
+			},
+			want: TestElements{
+				conditions:     []string{`obj.Gender == "male"`, `obj.Gender == "female"`, `obj.Gender == "prefer_not_to"`},
+				concatOperator: "||",
+				errorMessage:   "Gender must be one of 'male' 'female' 'prefer_not_to'",
+			},
+		},
+		{
+			name: "iscolor alias",
+			args: args{
+				fieldName:       "FavouriteColor",
+				fieldValidation: "iscolor",
+			},
+			want: TestElements{
+				conditions:   []string{`types.IsColor(obj.FavouriteColor)`},
+				errorMessage: "FavouriteColor must be a valid color",
+			},
+		},
 	}
 
 	for _, tt := range tests {

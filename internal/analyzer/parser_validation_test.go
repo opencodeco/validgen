@@ -159,6 +159,60 @@ func TestValidParserValidation(t *testing.T) {
 				Values:         []string{},
 			},
 		},
+		{
+			name:       "oneof from the common validator example",
+			validation: "oneof=male female prefer_not_to",
+			want: &Validation{
+				Operation:      "oneof",
+				ExpectedValues: common.ManyValues,
+				Values:         []string{"male", "female", "prefer_not_to"},
+			},
+		},
+		{
+			name:       "oneof quoted value",
+			validation: "oneof='prefer not to' other",
+			want: &Validation{
+				Operation:      "oneof",
+				ExpectedValues: common.ManyValues,
+				Values:         []string{"prefer not to", "other"},
+			},
+		},
+		{
+			name:       "iscolor alias",
+			validation: "iscolor",
+			want: &Validation{
+				Operation:      "iscolor",
+				ExpectedValues: common.ZeroValue,
+				Values:         []string{},
+			},
+		},
+		{
+			name:       "validator ne alias",
+			validation: "ne=abcde",
+			want: &Validation{
+				Operation:      "neq",
+				ExpectedValues: common.OneValue,
+				Values:         []string{"abcde"},
+			},
+		},
+		{
+			name:       "validator ne_ignore_case alias",
+			validation: "ne_ignore_case=abcde",
+			want: &Validation{
+				Operation:      "neq_ignore_case",
+				ExpectedValues: common.OneValue,
+				Values:         []string{"abcde"},
+			},
+		},
+		{
+			name:       "hexcolor",
+			validation: "hexcolor",
+			want: &Validation{
+				Operation:      "hexcolor",
+				ExpectedValues: common.ZeroValue,
+				Values:         []string{},
+			},
+		},
 	}
 
 	for _, tt := range tests {
@@ -196,6 +250,11 @@ func TestParserInvalidValidation(t *testing.T) {
 			name:        "malformed tag",
 			validation:  "eq=aaa=bbb",
 			expectedErr: types.NewValidationError("malformed validation eq=aaa=bbb"),
+		},
+		{
+			name:        "empty validation",
+			validation:  "",
+			expectedErr: types.NewValidationError("malformed validation "),
 		},
 		{
 			name:        "undefined validation",

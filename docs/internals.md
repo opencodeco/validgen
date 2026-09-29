@@ -72,11 +72,11 @@ Slices, arrays, maps, and pointers keep a marker on that name, such as `[]<INT>`
 
 ### Tag parsing
 
-`analyzeFieldValidations` copies each `parser.Struct` into an `analyzer.Struct`. A field counts as validated only when its tag text starts with `valid:`. The analyzer sets `HasValidTag` if any field matches. It unquotes the text after `valid:` and splits on commas.
+`analyzeFieldValidations` copies each `parser.Struct` into an `analyzer.Struct`. A field counts as validated when its struct tag has a `valid` key, or a `validate` key if `valid` is absent. The analyzer sets `HasValidTag` if any field matches. It splits that key's value on commas and drops blank pieces, including a blank value such as `validate:""`. `reflect.StructTag` reads the key, so `json:"email" validate:"required,email"` is accepted.
 
-`ParserValidation` splits one validation on `=`. More than two pieces is an error. The operation's `CountValues` selects the shape.
+`ParserValidation` splits one validation on `=`. More than two pieces, or none, is an error. The operation's `CountValues` selects the shape.
 
-`ZeroValue` operations `required` and `email` reject a target. `OneValue` operations require one target. `ManyValues` operations `in` and `nin` require a target list. A list that starts with a single quote is read as quoted strings. Any other list is split on commas and spaces.
+`ZeroValue` operations `required`, `email`, `hexcolor`, `rgb`, `rgba`, `hsl`, `hsla`, `iscolor`, `dive`, `keys`, and `endkeys` reject a target. `OneValue` operations require one target. `ManyValues` operations `in`, `nin`, and `oneof` require a target list. Spaces and commas separate tokens. A single-quoted token keeps its interior, including spaces, and quoted tokens can be mixed with bare tokens, as in `oneof=red 'light blue'`. `iscolor` is the alias for `hexcolor|rgb|rgba|hsl|hsla` and calls `types.IsColor`. `ne` and `ne_ignore_case` are read as `neq` and `neq_ignore_case`.
 
 The result is an `analyzer.Validation` with `Operation`, `ExpectedValues`, and `Values`.
 
@@ -144,7 +144,7 @@ errs = append(errs, types.NewValidationError("message"))
 
 Scalar `in` rows set `concatOperator` to `||`, and the per-value copies are joined. That includes `<COMPLEX>`, `*<STRING>`, `*<INT>`, `*<FLOAT>`, and `*<BOOL>`. Scalar `nin` rows set `concatOperator` to `&&`. Complex scalar rows use the same `==` / `!=` form as numeric scalars, with the tag literal left unquoted. Slice, array, and map rows leave `concatOperator` empty, so `DefineTestElements` keeps one copy. That copy lists every target through `{{.TargetsAsStringSlice}}` or `{{.TargetsAsNumericSlice}}`.
 
-Those slice and map copies call `types.SliceOnlyContains`, `types.SliceNotContains`, `types.MapOnlyContains`, or `types.MapNotContains`. Non-pointer array rows pass `obj.Field[:]` into the slice helpers. Literal string comparisons quote the target. `email` calls `types.IsValidEmail`. `eq_ignore_case` and `neq_ignore_case` call `strings.EqualFold`. Field comparisons compile to `obj.Field` compared with `obj.Other` or `obj.Nested.Field`.
+Those slice and map copies call `types.SliceOnlyContains`, `types.SliceNotContains`, `types.MapOnlyContains`, or `types.MapNotContains`. Non-pointer array rows pass `obj.Field[:]` into the slice helpers. Literal string comparisons quote the target. `email` calls `types.IsValidEmail`. `oneof` uses the same equality as scalar `in` for strings and integers. String targets are emitted as Go string literals. `hexcolor`, `rgb`, `rgba`, `hsl`, `hsla`, and `iscolor` call the matching `types` helpers. `eq_ignore_case` and `neq_ignore_case` call `strings.EqualFold`. Field comparisons compile to `obj.Field` compared with `obj.Other` or `obj.Nested.Field`.
 
 When the field is a struct or a pointer to a struct, each validation on that field appends a nested call instead of a condition-table test. The call is `TypeValidate(&obj.Field)`, where `Type` is `BaseType`. If `BaseType` starts with the struct's own package name and a dot, that prefix is removed. A same-package field whose `BaseType` is `main.InnerStructType` calls `InnerStructTypeValidate`. A field whose `BaseType` is `mypkg.InnerStructType` calls `mypkg.InnerStructTypeValidate`. The call is emitted when `BaseType` is in the parsed-struct index. A missing type returns `no validator found for struct type`.
 
