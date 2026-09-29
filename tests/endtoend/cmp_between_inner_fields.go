@@ -11,6 +11,8 @@ func cmpBetweenInnerFieldsTests() {
 	cmpBetweenInnerUint8FieldsTests()
 	cmpBetweenInnerFloat32FieldsTests()
 	cmpBetweenInnerFloat64FieldsTests()
+	cmpBetweenInnerComplex64FieldsTests()
+	cmpBetweenInnerComplex128FieldsTests()
 	cmpBetweenInnerBoolFieldsTests()
 
 	log.Println("cmp between inner fields tests ok")
@@ -214,6 +216,72 @@ func cmpBetweenInnerFloatFieldsTests(validate func(a, b, c, d, e, f, g, h float6
 	expectedMsgErrors = nil
 	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
 		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
+	}
+}
+
+type CmpInnerComplex64Fields struct {
+	Field1     complex64
+	Field2eq1  complex64 `valid:"eqfield=Field1"`
+	Field3neq1 complex64 `valid:"neqfield=Field1"`
+}
+
+func cmpBetweenInnerComplex64FieldsTests() {
+	log.Println("starting between inner complex64 fields tests")
+	cmpBetweenInnerComplexFieldsTests(
+		func(a, b, c complex128) []error {
+			v := &CmpInnerComplex64Fields{
+				Field1:     complex64(a),
+				Field2eq1:  complex64(b),
+				Field3neq1: complex64(c),
+			}
+			return CmpInnerComplex64FieldsValidate(v)
+		},
+	)
+	log.Println("cmp between inner complex64 fields tests ok")
+}
+
+type CmpInnerComplex128Fields struct {
+	Field1     complex128
+	Field2eq1  complex128 `valid:"eqfield=Field1"`
+	Field3neq1 complex128 `valid:"neqfield=Field1"`
+}
+
+func cmpBetweenInnerComplex128FieldsTests() {
+	log.Println("starting between inner complex128 fields tests")
+	cmpBetweenInnerComplexFieldsTests(
+		func(a, b, c complex128) []error {
+			v := &CmpInnerComplex128Fields{
+				Field1:     a,
+				Field2eq1:  b,
+				Field3neq1: c,
+			}
+			return CmpInnerComplex128FieldsValidate(v)
+		},
+	)
+	log.Println("cmp between inner complex128 fields tests ok")
+}
+
+func cmpBetweenInnerComplexFieldsTests(validate func(a, b, c complex128) []error) {
+	errs := validate(1+2i, 3+4i, 1+2i)
+	expectedMsgErrors := []string{
+		"Field2eq1 must be equal to Field1",
+		"Field3neq1 must not be equal to Field1",
+	}
+	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
+		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
+	}
+
+	errs = validate(1+2i, 1+2i, 1+2i)
+	expectedMsgErrors = []string{
+		"Field3neq1 must not be equal to Field1",
+	}
+	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
+		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
+	}
+
+	errs = validate(1+2i, 1+2i, 3+4i)
+	if !expectedMsgErrorsOk(errs, nil) {
+		log.Fatalf("error = %v, wantErr %v", errs, nil)
 	}
 }
 

@@ -11,6 +11,8 @@ func cmpBetweenNestedFieldsTests() {
 	cmpBetweenNestedUint8FieldsTests()
 	cmpBetweenNestedFloat32FieldsTests()
 	cmpBetweenNestedFloat64FieldsTests()
+	cmpBetweenNestedComplex64FieldsTests()
+	cmpBetweenNestedComplex128FieldsTests()
 
 	log.Println("cmp between nested fields tests ok")
 }
@@ -234,6 +236,84 @@ func cmpBetweenNestedFloatFieldsTests(validate func(eq, neq, gte, gt, lte, lt, n
 	}
 
 	errs = validate(1.5, 0, 10.5, 11.5, 10.5, 9.5, 1.5, 10.5)
+	if !expectedMsgErrorsOk(errs, nil) {
+		log.Fatalf("error = %v, wantErr %v", errs, nil)
+	}
+}
+
+type CmpNestedComplex64Fields struct {
+	Field1eqNestedField1  complex64 `valid:"eqfield=Nested.Field1"`
+	Field2neqNestedField1 complex64 `valid:"neqfield=Nested.Field1"`
+	Nested                NestedComplex64Fields
+}
+
+type NestedComplex64Fields struct {
+	Field1 complex64
+}
+
+func cmpBetweenNestedComplex64FieldsTests() {
+	log.Println("starting between nested complex64 fields tests")
+	cmpBetweenNestedComplexFieldsTests(
+		func(eq, neq, nested1 complex128) []error {
+			v := &CmpNestedComplex64Fields{
+				Field1eqNestedField1:  complex64(eq),
+				Field2neqNestedField1: complex64(neq),
+				Nested: NestedComplex64Fields{
+					Field1: complex64(nested1),
+				},
+			}
+			return CmpNestedComplex64FieldsValidate(v)
+		},
+	)
+	log.Println("cmp between nested complex64 fields tests ok")
+}
+
+type CmpNestedComplex128Fields struct {
+	Field1eqNestedField1  complex128 `valid:"eqfield=Nested.Field1"`
+	Field2neqNestedField1 complex128 `valid:"neqfield=Nested.Field1"`
+	Nested                NestedComplex128Fields
+}
+
+type NestedComplex128Fields struct {
+	Field1 complex128
+}
+
+func cmpBetweenNestedComplex128FieldsTests() {
+	log.Println("starting between nested complex128 fields tests")
+	cmpBetweenNestedComplexFieldsTests(
+		func(eq, neq, nested1 complex128) []error {
+			v := &CmpNestedComplex128Fields{
+				Field1eqNestedField1:  eq,
+				Field2neqNestedField1: neq,
+				Nested: NestedComplex128Fields{
+					Field1: nested1,
+				},
+			}
+			return CmpNestedComplex128FieldsValidate(v)
+		},
+	)
+	log.Println("cmp between nested complex128 fields tests ok")
+}
+
+func cmpBetweenNestedComplexFieldsTests(validate func(eq, neq, nested1 complex128) []error) {
+	expectedMsgErrors := []string{
+		"Field1eqNestedField1 must be equal to Nested.Field1",
+		"Field2neqNestedField1 must not be equal to Nested.Field1",
+	}
+	errs := validate(3+4i, 1+2i, 1+2i)
+	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
+		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
+	}
+
+	expectedMsgErrors = []string{
+		"Field2neqNestedField1 must not be equal to Nested.Field1",
+	}
+	errs = validate(1+2i, 1+2i, 1+2i)
+	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
+		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
+	}
+
+	errs = validate(1+2i, 3+4i, 1+2i)
 	if !expectedMsgErrorsOk(errs, nil) {
 		log.Fatalf("error = %v, wantErr %v", errs, nil)
 	}

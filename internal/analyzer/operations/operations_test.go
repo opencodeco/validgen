@@ -233,8 +233,8 @@ func TestOperationsIsValidByType(t *testing.T) {
 		{
 			op: "eqfield",
 			fieldTypes: []string{
-				"<STRING>", "<INT>", "<FLOAT>", "<BOOL>",
-				"*<STRING>", "*<INT>", "*<FLOAT>", "*<BOOL>",
+				"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>",
+				"*<STRING>", "*<INT>", "*<FLOAT>", "*<COMPLEX>", "*<BOOL>",
 			},
 			valid: true,
 		},
@@ -243,8 +243,8 @@ func TestOperationsIsValidByType(t *testing.T) {
 		{
 			op: "neqfield",
 			fieldTypes: []string{
-				"<STRING>", "<INT>", "<FLOAT>", "<BOOL>",
-				"*<STRING>", "*<INT>", "*<FLOAT>", "*<BOOL>",
+				"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>",
+				"*<STRING>", "*<INT>", "*<FLOAT>", "*<COMPLEX>", "*<BOOL>",
 			},
 			valid: true,
 		},
@@ -322,55 +322,55 @@ func TestOperationsIsValidByType(t *testing.T) {
 		{
 			op: "eqfield",
 			fieldTypes: []string{
-				"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>",
-				"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]",
-				"*[]<STRING>", "*[]<INT>", "*[]<FLOAT>", "*[]<BOOL>",
-				"*map[<STRING>]", "*map[<INT>]", "*map[<FLOAT>]", "*map[<BOOL>]",
+				"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<COMPLEX>", "[]<BOOL>",
+				"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<COMPLEX>]", "map[<BOOL>]",
+				"*[]<STRING>", "*[]<INT>", "*[]<FLOAT>", "*[]<COMPLEX>", "*[]<BOOL>",
+				"*map[<STRING>]", "*map[<INT>]", "*map[<FLOAT>]", "*map[<COMPLEX>]", "*map[<BOOL>]",
 			},
 			valid: false,
 		},
 		{
 			op: "gtefield",
 			fieldTypes: []string{
-				"<STRING>", "<BOOL>",
-				"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>",
-				"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]",
-				"*<STRING>", "*<BOOL>",
-				"*[]<STRING>", "*[]<INT>", "*[]<FLOAT>", "*[]<BOOL>",
-				"*map[<STRING>]", "*map[<INT>]", "*map[<FLOAT>]", "*map[<BOOL>]",
+				"<STRING>", "<BOOL>", "<COMPLEX>",
+				"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<COMPLEX>", "[]<BOOL>",
+				"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<COMPLEX>]", "map[<BOOL>]",
+				"*<STRING>", "*<BOOL>", "*<COMPLEX>",
+				"*[]<STRING>", "*[]<INT>", "*[]<FLOAT>", "*[]<COMPLEX>", "*[]<BOOL>",
+				"*map[<STRING>]", "*map[<INT>]", "*map[<FLOAT>]", "*map[<COMPLEX>]", "*map[<BOOL>]",
 			},
 			valid: false,
 		},
 		{
 			op: "gtfield",
 			fieldTypes: []string{
-				"<STRING>", "<BOOL>",
-				"[]<FLOAT>",
+				"<STRING>", "<BOOL>", "<COMPLEX>",
+				"[]<FLOAT>", "[]<COMPLEX>",
 			},
 			valid: false,
 		},
 		{
 			op: "ltefield",
 			fieldTypes: []string{
-				"<STRING>", "<BOOL>",
-				"[]<FLOAT>",
+				"<STRING>", "<BOOL>", "<COMPLEX>",
+				"[]<FLOAT>", "[]<COMPLEX>",
 			},
 			valid: false,
 		},
 		{
 			op: "ltfield",
 			fieldTypes: []string{
-				"<STRING>", "<BOOL>",
-				"[]<FLOAT>",
-				"map[<FLOAT>]",
+				"<STRING>", "<BOOL>", "<COMPLEX>",
+				"[]<FLOAT>", "[]<COMPLEX>",
+				"map[<FLOAT>]", "map[<COMPLEX>]",
 			},
 			valid: false,
 		},
 		{
 			op: "neqfield",
 			fieldTypes: []string{
-				"[]<FLOAT>",
-				"map[<FLOAT>]",
+				"[]<FLOAT>", "[]<COMPLEX>",
+				"map[<FLOAT>]", "map[<COMPLEX>]",
 			},
 			valid: false,
 		},

@@ -39,6 +39,11 @@ func TestFromNormalizedToBasicTypes(t *testing.T) {
 			want: []string{"float32", "float64"},
 		},
 		{
+			name: "complex type",
+			args: args{t: "<COMPLEX>"},
+			want: []string{"complex64", "complex128"},
+		},
+		{
 			name: "map string type",
 			args: args{t: "map[<STRING>]"},
 			want: []string{"map[string]string"},
@@ -57,6 +62,11 @@ func TestFromNormalizedToBasicTypes(t *testing.T) {
 			name: "map float type",
 			args: args{t: "map[<FLOAT>]"},
 			want: []string{"map[float32]float32", "map[float64]float64"},
+		},
+		{
+			name: "map complex type",
+			args: args{t: "map[<COMPLEX>]"},
+			want: []string{"map[complex64]complex64", "map[complex128]complex128"},
 		},
 		{
 			name: "slice string type",
@@ -79,6 +89,11 @@ func TestFromNormalizedToBasicTypes(t *testing.T) {
 			want: []string{"[]float32", "[]float64"},
 		},
 		{
+			name: "slice complex type",
+			args: args{t: "[]<COMPLEX>"},
+			want: []string{"[]complex64", "[]complex128"},
+		},
+		{
 			name: "array string type",
 			args: args{t: "[N]<STRING>"},
 			want: []string{"[3]string"},
@@ -97,6 +112,11 @@ func TestFromNormalizedToBasicTypes(t *testing.T) {
 			name: "array float type",
 			args: args{t: "[N]<FLOAT>"},
 			want: []string{"[3]float32", "[3]float64"},
+		},
+		{
+			name: "array complex type",
+			args: args{t: "[N]<COMPLEX>"},
+			want: []string{"[3]complex64", "[3]complex128"},
 		},
 
 		// With pointer.
@@ -121,6 +141,11 @@ func TestFromNormalizedToBasicTypes(t *testing.T) {
 			want: []string{"*float32", "*float64"},
 		},
 		{
+			name: "pointer complex type",
+			args: args{t: "*<COMPLEX>"},
+			want: []string{"*complex64", "*complex128"},
+		},
+		{
 			name: "pointer map string type",
 			args: args{t: "*map[<STRING>]"},
 			want: []string{"*map[string]string"},
@@ -139,6 +164,11 @@ func TestFromNormalizedToBasicTypes(t *testing.T) {
 			name: "pointer map float type",
 			args: args{t: "*map[<FLOAT>]"},
 			want: []string{"*map[float32]float32", "*map[float64]float64"},
+		},
+		{
+			name: "pointer map complex type",
+			args: args{t: "*map[<COMPLEX>]"},
+			want: []string{"*map[complex64]complex64", "*map[complex128]complex128"},
 		},
 		{
 			name: "pointer slice string type",
@@ -161,6 +191,11 @@ func TestFromNormalizedToBasicTypes(t *testing.T) {
 			want: []string{"*[]float32", "*[]float64"},
 		},
 		{
+			name: "pointer slice complex type",
+			args: args{t: "*[]<COMPLEX>"},
+			want: []string{"*[]complex64", "*[]complex128"},
+		},
+		{
 			name: "pointer array string type",
 			args: args{t: "*[N]<STRING>"},
 			want: []string{"*[3]string"},
@@ -179,6 +214,11 @@ func TestFromNormalizedToBasicTypes(t *testing.T) {
 			name: "pointer array float type",
 			args: args{t: "*[N]<FLOAT>"},
 			want: []string{"*[3]float32", "*[3]float64"},
+		},
+		{
+			name: "pointer array complex type",
+			args: args{t: "*[N]<COMPLEX>"},
+			want: []string{"*[3]complex64", "*[3]complex128"},
 		},
 
 		// Invalid type.
@@ -249,6 +289,15 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 			nil,
 		},
 		{
+			"complex type",
+			"<COMPLEX>",
+			[]FieldType{
+				{BaseType: "complex64", ComposedType: "", Size: ""},
+				{BaseType: "complex128", ComposedType: "", Size: ""},
+			},
+			nil,
+		},
+		{
 			"map string type",
 			"map[<STRING>]",
 			[]FieldType{
@@ -287,6 +336,15 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 			[]FieldType{
 				{BaseType: "float32", ComposedType: "map", Size: ""},
 				{BaseType: "float64", ComposedType: "map", Size: ""},
+			},
+			nil,
+		},
+		{
+			"map complex type",
+			"map[<COMPLEX>]",
+			[]FieldType{
+				{BaseType: "complex64", ComposedType: "map", Size: ""},
+				{BaseType: "complex128", ComposedType: "map", Size: ""},
 			},
 			nil,
 		},
@@ -332,6 +390,15 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 			nil,
 		},
 		{
+			"slice complex type",
+			"[]<COMPLEX>",
+			[]FieldType{
+				{BaseType: "complex64", ComposedType: "[]", Size: ""},
+				{BaseType: "complex128", ComposedType: "[]", Size: ""},
+			},
+			nil,
+		},
+		{
 			"array string type",
 			"[N]<STRING>",
 			[]FieldType{
@@ -370,6 +437,15 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 			[]FieldType{
 				{BaseType: "float32", ComposedType: "[N]", Size: "3"},
 				{BaseType: "float64", ComposedType: "[N]", Size: "3"},
+			},
+			nil,
+		},
+		{
+			"array complex type",
+			"[N]<COMPLEX>",
+			[]FieldType{
+				{BaseType: "complex64", ComposedType: "[N]", Size: "3"},
+				{BaseType: "complex128", ComposedType: "[N]", Size: "3"},
 			},
 			nil,
 		},
@@ -414,6 +490,15 @@ func TestFromNormalizedToFieldTypes(t *testing.T) {
 			[]FieldType{
 				{BaseType: "float32", ComposedType: "*", Size: ""},
 				{BaseType: "float64", ComposedType: "*", Size: ""},
+			},
+			nil,
+		},
+		{
+			"pointer complex type",
+			"*<COMPLEX>",
+			[]FieldType{
+				{BaseType: "complex64", ComposedType: "*", Size: ""},
+				{BaseType: "complex128", ComposedType: "*", Size: ""},
 			},
 			nil,
 		},

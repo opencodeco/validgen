@@ -27,8 +27,8 @@ ValidGen currently supports 21 validations across multiple data types:
 | in              | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL |
 | nin             | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL |
 | email           | STRING                |                       |                       |                       |
-| eqfield         | STRING INT FLOAT BOOL |                       |                       |                       |
-| neqfield        | STRING INT FLOAT BOOL |                       |                       |                       |
+| eqfield         | STRING INT FLOAT COMPLEX BOOL |                       |                       |                       |
+| neqfield        | STRING INT FLOAT COMPLEX BOOL |                       |                       |                       |
 | gtefield        | INT FLOAT             |                       |                       |                       |
 | gtfield         | INT FLOAT             |                       |                       |                       |
 | ltefield        | INT FLOAT             |                       |                       |                       |
@@ -39,6 +39,7 @@ In this table:
 - **BOOL** represents the `bool` Go type
 - **INT** represents all ten integer Go types: `int`, `int8`, `int16`, `int32`, `int64`, `uint`, `uint8`, `uint16`, `uint32`, `uint64`
 - **FLOAT** represents both float Go types: `float32`, `float64`
+- **COMPLEX** represents both complex Go types: `complex64`, `complex128` (equality only; no ordering field tags)
 
 For slices, arrays, and maps, the same type expansion applies. For example, slice STRING is `[]string`, while slice INT expands to all integer Go types.
 
