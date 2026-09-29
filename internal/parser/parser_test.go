@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 
@@ -376,17 +377,17 @@ func TestParseStructsOk(t *testing.T) {
 					Fields: []Field{
 						{
 							FieldName: "MapField1",
-							Type:      common.FieldType{BaseType: "string", ComposedType: "map", Size: ""},
+							Type:      common.FieldType{BaseType: "string", ComposedType: "map", Size: "", MapValue: &common.FieldType{BaseType: "string"}},
 							Tag:       "valid:\"required\"",
 						},
 						{
 							FieldName: "MapField2",
-							Type:      common.FieldType{BaseType: "string", ComposedType: "map", Size: ""},
+							Type:      common.FieldType{BaseType: "string", ComposedType: "map", Size: "", MapValue: &common.FieldType{BaseType: "uint8"}},
 							Tag:       "valid:\"len=3\"",
 						},
 						{
 							FieldName: "MapField3",
-							Type:      common.FieldType{BaseType: "uint8", ComposedType: "map", Size: ""},
+							Type:      common.FieldType{BaseType: "uint8", ComposedType: "map", Size: "", MapValue: &common.FieldType{BaseType: "string"}},
 							Tag:       "valid:\"max=5\"",
 						},
 					},
@@ -546,17 +547,17 @@ func TestParseStructsOk(t *testing.T) {
 						},
 						{
 							FieldName: "MapPointer",
-							Type:      common.FieldType{BaseType: "string", ComposedType: "*map", Size: ""},
+							Type:      common.FieldType{BaseType: "string", ComposedType: "*map", Size: "", MapValue: &common.FieldType{BaseType: "bool"}},
 							Tag:       "valid:\"min=2\"",
 						},
 						{
 							FieldName: "SliceIntPointer",
-							Type:      common.FieldType{BaseType: "int64", ComposedType: "*[]", Size: ""},
+							Type:      common.FieldType{BaseType: "int64", ComposedType: "*[]", Size: "", ElemPointer: true},
 							Tag:       "valid:\"min=2\"",
 						},
 						{
 							FieldName: "ArrayIntPointer",
-							Type:      common.FieldType{BaseType: "int64", ComposedType: "*[5]", Size: ""},
+							Type:      common.FieldType{BaseType: "int64", ComposedType: "*[N]", Size: "5", ElemPointer: true},
 							Tag:       "valid:\"max=4\"",
 						},
 					},
@@ -575,6 +576,7 @@ func TestParseStructsOk(t *testing.T) {
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("parseStructs() mismatch\ngot:\n%swant:\n%s", formatStructs(got), formatStructs(tt.want))
 				gotStr := structsToString(got)
 				wantStr := structsToString(tt.want)
 				dmp := diffmatchpatch.New()
@@ -585,6 +587,17 @@ func TestParseStructsOk(t *testing.T) {
 			}
 		})
 	}
+}
+
+func formatStructs(structs []*Struct) string {
+	var result string
+	for _, s := range structs {
+		result += fmt.Sprintf("Struct: %s package %s\n", s.StructName, s.PackageName)
+		for _, f := range s.Fields {
+			result += fmt.Sprintf("  %s %#v tag %s\n", f.FieldName, f.Type, f.Tag)
+		}
+	}
+	return result
 }
 
 func structsToString(structs []*Struct) string {

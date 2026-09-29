@@ -14,6 +14,10 @@ type TestElements struct {
 }
 
 func DefineTestElements(fieldName string, fieldType common.FieldType, fieldValidation *analyzer.Validation) (TestElements, error) {
+	return defineTestElements("obj."+fieldName, fieldName, fieldType, fieldValidation)
+}
+
+func defineTestElements(expr, fieldName string, fieldType common.FieldType, fieldValidation *analyzer.Validation) (TestElements, error) {
 
 	condition, err := GetConditionTable(fieldValidation.Operation, fieldType)
 	if err != nil {
@@ -27,14 +31,14 @@ func DefineTestElements(fieldName string, fieldType common.FieldType, fieldValid
 
 	switch fieldValidation.ExpectedValues {
 	case common.ZeroValue: // REFACTOR: codegenerator should inform how many values are expected
-		roperands = append(roperands, replaceNameAndTarget(condition.operation, fieldName, ""))
+		roperands = append(roperands, replaceExprNameAndTarget(condition.operation, expr, fieldName, ""))
 		targetValue = condition.operation
 		targetValues = "'" + condition.operation + "' "
 	case common.OneValue, common.ManyValues:
 		valuesAsNumericSlice, valuesAsStringSlice := normalizeSlicesAsCode(fieldType.BaseType, values)
 
 		for _, value := range values {
-			operation := replaceNameAndTarget(condition.operation, fieldName, value)
+			operation := replaceExprNameAndTarget(condition.operation, expr, fieldName, value)
 			operation = replaceSlicesTargets(operation, valuesAsStringSlice, valuesAsNumericSlice)
 			roperands = append(roperands, operation)
 			targetValue = value
@@ -49,7 +53,7 @@ func DefineTestElements(fieldName string, fieldType common.FieldType, fieldValid
 
 	targetValues = strings.TrimSpace(targetValues)
 	errorMsg := condition.errorMessage
-	errorMsg = replaceNameAndTarget(errorMsg, fieldName, targetValue)
+	errorMsg = replaceExprNameAndTarget(errorMsg, expr, fieldName, targetValue)
 	errorMsg = replaceTargetInErrors(errorMsg, targetValue, targetValues)
 
 	return TestElements{
@@ -59,7 +63,8 @@ func DefineTestElements(fieldName string, fieldType common.FieldType, fieldValid
 	}, nil
 }
 
-func replaceNameAndTarget(text, name, target string) string {
+func replaceExprNameAndTarget(text, expr, name, target string) string {
+	text = strings.ReplaceAll(text, "obj.{{.Name}}", expr)
 	text = strings.ReplaceAll(text, "{{.Name}}", name)
 	text = strings.ReplaceAll(text, "{{.Target}}", target)
 

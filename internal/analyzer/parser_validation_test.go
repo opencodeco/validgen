@@ -132,6 +132,15 @@ func TestValidParserValidation(t *testing.T) {
 				Values:         []string{"Nested.field123"},
 			},
 		},
+		{
+			name:       "dive tag",
+			validation: "dive",
+			want: &Validation{
+				Operation:      "dive",
+				ExpectedValues: common.ZeroValue,
+				Values:         []string{},
+			},
+		},
 	}
 
 	for _, tt := range tests {
@@ -174,6 +183,16 @@ func TestParserInvalidValidation(t *testing.T) {
 			name:        "undefined validation",
 			validation:  "xpto=a",
 			expectedErr: types.NewValidationError("unsupported validation xpto"),
+		},
+		{
+			name:        "keys is not implemented",
+			validation:  "keys",
+			expectedErr: types.NewValidationError("unsupported validation keys"),
+		},
+		{
+			name:        "endkeys is not implemented",
+			validation:  "endkeys",
+			expectedErr: types.NewValidationError("unsupported validation endkeys"),
 		},
 		{
 			name:        "malformed value",

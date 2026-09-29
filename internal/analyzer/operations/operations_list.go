@@ -130,4 +130,10 @@ var operationsList = map[string]Operation{
 		IsFieldOperation: true,
 		ValidTypes:       []string{"<INT>", "<FLOAT>"},
 	},
+	// dive is a level separator. The analyzer checks the container, then the element.
+	"dive": {
+		CountValues:      common.ZeroValue,
+		IsFieldOperation: false,
+		ValidTypes:       nil,
+	},
 }
