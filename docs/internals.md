@@ -28,7 +28,7 @@ TestGen is a separate program under `testgen/`. It is described at the end.
 
 `internal/common` holds the shared `FieldType`, the normalized type names, `KeyPath`, and `CountValues`.
 
-`types` is the module imported by generated validators. It defines `ValidationError` and the helpers the condition table calls, including `IsValidEmail`, `EqualFold`, `SliceOnlyContains`, `SliceNotContains`, `MapOnlyContains`, and `MapNotContains`.
+`types` is the package generated validators import, `github.com/opencodeco/validgen/types`. It defines `ValidationError` and the helpers the condition table calls, including `IsValidEmail`, `EqualFold`, `SliceOnlyContains`, `SliceNotContains`, `MapOnlyContains`, and `MapNotContains`.
 
 ## Parser
 
@@ -97,7 +97,7 @@ The target is the single value from the tag. `Field2` refers to a field of the s
 
 ## Code generator
 
-`GenerateCode` indexes every parsed struct by `package.Struct` and every package name it saw. It then skips structs whose `HasValidTag` is false. Those structs produce no function. Their names stay in the index used for nested calls.
+`GenerateCode` indexes every parsed struct by `package.Struct` and every package name it saw. It then skips structs whose `HasValidTag` is false. Those structs produce no function. Their `package.Struct` keys stay in the index used for nested calls.
 
 Structs that remain are grouped by `common.KeyPath(Path, PackageName)`. One group becomes one `codegenerator.Pkg` with the package name, the directory, a subset of imports, and a map of structs. Each struct stores the `Validate` function text.
 
