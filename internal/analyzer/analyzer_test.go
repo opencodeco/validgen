@@ -85,6 +85,66 @@ func TestAnalyzeStructsWithValidInnerFieldOperations(t *testing.T) {
 			fType: "int",
 			op:    "ltfield",
 		},
+		{
+			name:  "valid eqfield between float32",
+			fType: "float32",
+			op:    "eqfield",
+		},
+		{
+			name:  "valid neqfield between float32",
+			fType: "float32",
+			op:    "neqfield",
+		},
+		{
+			name:  "valid gtefield between float32",
+			fType: "float32",
+			op:    "gtefield",
+		},
+		{
+			name:  "valid gtfield between float32",
+			fType: "float32",
+			op:    "gtfield",
+		},
+		{
+			name:  "valid ltefield between float32",
+			fType: "float32",
+			op:    "ltefield",
+		},
+		{
+			name:  "valid ltfield between float32",
+			fType: "float32",
+			op:    "ltfield",
+		},
+		{
+			name:  "valid eqfield between float64",
+			fType: "float64",
+			op:    "eqfield",
+		},
+		{
+			name:  "valid neqfield between float64",
+			fType: "float64",
+			op:    "neqfield",
+		},
+		{
+			name:  "valid gtefield between float64",
+			fType: "float64",
+			op:    "gtefield",
+		},
+		{
+			name:  "valid gtfield between float64",
+			fType: "float64",
+			op:    "gtfield",
+		},
+		{
+			name:  "valid ltefield between float64",
+			fType: "float64",
+			op:    "ltefield",
+		},
+		{
+			name:  "valid ltfield between float64",
+			fType: "float64",
+			op:    "ltfield",
+		},
 	}
 
 	for _, tt := range tests {
@@ -159,6 +219,66 @@ func TestAnalyzeStructsWithValidNestedFieldOperations(t *testing.T) {
 		{
 			name:  "valid ltfield between nested uint8",
 			fType: "uint8",
+			op:    "ltfield",
+		},
+		{
+			name:  "valid eqfield between nested float32",
+			fType: "float32",
+			op:    "eqfield",
+		},
+		{
+			name:  "valid neqfield between nested float32",
+			fType: "float32",
+			op:    "neqfield",
+		},
+		{
+			name:  "valid gtefield between nested float32",
+			fType: "float32",
+			op:    "gtefield",
+		},
+		{
+			name:  "valid gtfield between nested float32",
+			fType: "float32",
+			op:    "gtfield",
+		},
+		{
+			name:  "valid ltefield between nested float32",
+			fType: "float32",
+			op:    "ltefield",
+		},
+		{
+			name:  "valid ltfield between nested float32",
+			fType: "float32",
+			op:    "ltfield",
+		},
+		{
+			name:  "valid eqfield between nested float64",
+			fType: "float64",
+			op:    "eqfield",
+		},
+		{
+			name:  "valid neqfield between nested float64",
+			fType: "float64",
+			op:    "neqfield",
+		},
+		{
+			name:  "valid gtefield between nested float64",
+			fType: "float64",
+			op:    "gtefield",
+		},
+		{
+			name:  "valid gtfield between nested float64",
+			fType: "float64",
+			op:    "gtfield",
+		},
+		{
+			name:  "valid ltefield between nested float64",
+			fType: "float64",
+			op:    "ltefield",
+		},
+		{
+			name:  "valid ltfield between nested float64",
+			fType: "float64",
 			op:    "ltfield",
 		},
 	}
@@ -258,6 +378,60 @@ func TestAnalyzeStructsWithInvalidInnerFieldOperations(t *testing.T) {
 				},
 			},
 			wantErr: types.NewValidationError("operation ltfield: invalid string(<STRING>) type"),
+		},
+		{
+			name: "mismatched float32 and float64",
+			arg: &parser.Struct{
+				Fields: []parser.Field{
+					{
+						FieldName: "Field1",
+						Type:      common.FieldType{BaseType: "float32"},
+						Tag:       `valid:"eqfield=Field2"`,
+					},
+					{
+						FieldName: "Field2",
+						Type:      common.FieldType{BaseType: "float64"},
+						Tag:       ``,
+					},
+				},
+			},
+			wantErr: types.NewValidationError("operation eqfield: mismatched types between Field1 and Field2"),
+		},
+		{
+			name: "mismatched float64 and int",
+			arg: &parser.Struct{
+				Fields: []parser.Field{
+					{
+						FieldName: "Field1",
+						Type:      common.FieldType{BaseType: "float64"},
+						Tag:       `valid:"gtfield=Field2"`,
+					},
+					{
+						FieldName: "Field2",
+						Type:      common.FieldType{BaseType: "int"},
+						Tag:       ``,
+					},
+				},
+			},
+			wantErr: types.NewValidationError("operation gtfield: mismatched types between Field1 and Field2"),
+		},
+		{
+			name: "unsupported eqfield on float slice",
+			arg: &parser.Struct{
+				Fields: []parser.Field{
+					{
+						FieldName: "Field1",
+						Type:      common.FieldType{ComposedType: "[]", BaseType: "float64"},
+						Tag:       `valid:"eqfield=Field2"`,
+					},
+					{
+						FieldName: "Field2",
+						Type:      common.FieldType{ComposedType: "[]", BaseType: "float64"},
+						Tag:       ``,
+					},
+				},
+			},
+			wantErr: types.NewValidationError("operation eqfield: invalid float64([]<FLOAT>) type"),
 		},
 	}
 
