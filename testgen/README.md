@@ -72,27 +72,38 @@ Previously, ValidGen had two separate test generators:
 
 However, these generators lacked a common configuration, didn't implement all tests for all cases, and keeping the separate configuration files in sync was difficult.
 
-## What TestGen does
+## What TestGen generates
 
-TestGen generates the following tests (without field operations):
-- [x] Benchmark tests between ValidGen and GoValidator
-- [x] End-to-end tests with all possible use cases (all validations vs all types vs valid and invalid inputs)
-- [x] Unit tests to validate the "buildValidationCode" function
+`typesValidation` in `validations.go` is the case list. `make testgen` walks that list and writes four suites. Each suite is a pointer file and a non-pointer file. The list contains non-field operations only.
 
-High priority generators:
-- [ ] Unit tests to validate the "condition table" (get_test_elements_*_test.go)
-- [ ] Benchmark tests between ValidGen and GoValidator with field operations
-- [ ] End-to-end tests with all possible use cases (all validations vs all types vs valid and invalid inputs) with field operations
-- [ ] Unit tests to validate the "buildValidationCode" function with field operations
+- Benchmark tests between ValidGen and GoValidator, in `tests/cmpbenchtests/generated_cmp_perf_*`.
+- End-to-end tests for each validation, type class, and valid or invalid input, in `tests/endtoend/generated_endtoend_*`.
+- Unit tests for `BuildValidationCode`, in `internal/codegenerator/generated_validation_code_*`.
+- Unit tests for the generated validator function, in `internal/codegenerator/generated_function_code_*`.
 
-Low priority generators (already exist, but could be automated):
-- [ ] Unit tests to validate operations (func TestOperationsIsValid)
-- [ ] Unit tests to validate operation vs type (func TestOperationsIsValidByType)
-- [ ] Unit tests to validate field operations (func TestOperationsIsFieldOperation)
-- [ ] Unit tests to validate argument count by operation (func TestOperationsArgsCount)
-- [ ] Examples (in _examples/) could be generated
+A case with both inputs emits the valid input and the invalid input. Array `required` cases set `excludeIf` to `noPointer` because a non-pointer Go array cannot be empty.
 
-Where applicable, TestGen generates both valid and invalid test scenarios.
+`go test ./testgen` checks that list. `TestTypesValidationListsNonFieldOperations` requires one entry for each operation below, with `isFieldValidation` false, the same argument count as `operations.New()`, and a case for every type `IsValidByType` accepts. `TestTypesValidationCasesBuildValidationCode` calls `BuildValidationCode` for each concrete type, including the pointer form, and checks that the generated error text contains the catalog message.
+
+| Operation | Generated |
+| - | - |
+| email, required, eq, neq | yes |
+| gt, gte, lt, lte | yes |
+| min, max, len | yes |
+| eq_ignore_case, neq_ignore_case | yes |
+| in, nin | yes |
+| eqfield, neqfield, gtfield, gtefield, ltfield, ltefield | hand-written |
+
+## Suites that stay hand-written
+
+These groups already have tests beside the code they check. A generator that reads the same list would only compare that list with itself.
+
+- Operation checks in `internal/analyzer/operations/operations_test.go`. The functions are `TestOperationsIsValid`, `TestOperationsIsValidByType`, `TestOperationsIsFieldOperation`, and `TestOperationsArgsCount`.
+- Condition-table checks in `internal/codegenerator/get_test_elements_*_test.go`. Each case stores the condition string and the error string passed to `DefineTestElements`.
+- Parser checks in `internal/parser/parser_test.go`. They compare parsed structs with source text.
+- Examples under `_examples/`.
+
+Field-operation rows in the four generated suites wait on integer field operations in issue #78. Complex ordering and `dive` in issue #7 are separate work.
 
 ## Usage
 

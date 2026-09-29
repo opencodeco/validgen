@@ -165,6 +165,6 @@ TestGen is `package main` in `testgen/`. `make testgen` runs it and moves the fi
 - `generated_function_code_no_pointer_test.go` and `generated_function_code_pointer_test.go` move to `internal/codegenerator/`.
 - `generated_cmp_perf_no_pointer_test.go` and `generated_cmp_perf_pointer_test.go` move to `tests/cmpbenchtests/`.
 
-The case list is `typesValidation` in `testgen/validations.go`. [testgen/README.md](../testgen/README.md) records which suites that list drives and which suites are still written by hand.
+The case list is `typesValidation` in `testgen/validations.go`. [testgen/README.md](../testgen/README.md) records which suites that list drives and which suites stay hand-written.
 
-Hand-written tests cover the parser, the analyzer, operation checks, and condition-table cases that TestGen does not emit. `make unittests` runs `go test` on `./internal/...` and `./types/...`. `make endtoendtests` builds `bin/validgen`, deletes existing `validator__.go` files under `tests/endtoend/`, runs the generator there, and executes `go run .` in that directory. It then does the same for `tests/jsonunmarshal/`, passing `-unmarshal-json`.
+Hand-written tests cover the parser, the analyzer operation checks, and condition-table cases. `make unittests` runs `go test` on `./internal/...`, `./types/...`, and `./testgen/`. `make endtoendtests` builds `bin/validgen`, deletes existing `validator__.go` files under `tests/endtoend/`, runs the generator there, and executes `go run .` in that directory. It then does the same for `tests/jsonunmarshal/`, passing `-unmarshal-json`.
