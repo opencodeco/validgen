@@ -288,6 +288,26 @@ func DiveUserValidate(obj *DiveUser) []error {
 	}
 	return errs
 }
+func KeyedDiveUserValidate(obj *KeyedDiveUser) []error {
+	var errs []error
+	for key1, elem1 := range obj.Labels {
+		if !(len(key1) >= 2) {
+			errs = append(errs, types.NewValidationError("Labels length must be >= 2"))
+		}
+		if !(elem1 != "") {
+			errs = append(errs, types.NewValidationError("Labels is required"))
+		}
+	}
+	for key1, elem1 := range obj.Scores {
+		if !(key1 >= 1) {
+			errs = append(errs, types.NewValidationError("Scores must be >= 1"))
+		}
+		if !(elem1 != "") {
+			errs = append(errs, types.NewValidationError("Scores is required"))
+		}
+	}
+	return errs
+}
 func PointerDiveUserValidate(obj *PointerDiveUser) []error {
 	var errs []error
 	if !(len(obj.Addresses) != 0) {

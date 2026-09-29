@@ -2,6 +2,80 @@ package common
 
 import "testing"
 
+func TestMapKey(t *testing.T) {
+	tests := []struct {
+		name    string
+		in      FieldType
+		want    FieldType
+		wantErr string
+	}{
+		{
+			name: "string key",
+			in: FieldType{
+				BaseType:     "string",
+				ComposedType: "map",
+				MapValue:     &FieldType{BaseType: "string"},
+			},
+			want: FieldType{BaseType: "string"},
+		},
+		{
+			name: "uint8 key",
+			in: FieldType{
+				BaseType:     "uint8",
+				ComposedType: "map",
+				MapValue:     &FieldType{BaseType: "string"},
+			},
+			want: FieldType{BaseType: "uint8"},
+		},
+		{
+			name: "pointer to a map",
+			in: FieldType{
+				BaseType:     "string",
+				ComposedType: "*map",
+				MapValue:     &FieldType{BaseType: "int"},
+			},
+			want: FieldType{BaseType: "string"},
+		},
+		{
+			name:    "slice",
+			in:      FieldType{BaseType: "string", ComposedType: "[]"},
+			wantErr: "[]string is not a map",
+		},
+		{
+			name:    "array key",
+			in:      FieldType{BaseType: "string", ComposedType: "map[N]", Size: "2"},
+			wantErr: "nested map keys are not supported",
+		},
+		{
+			name: "struct key",
+			in: FieldType{
+				BaseType:     "main.Address",
+				ComposedType: "map",
+				MapValue:     &FieldType{BaseType: "string"},
+			},
+			wantErr: "nested map keys are not supported",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := tt.in.MapKey()
+			if tt.wantErr != "" {
+				if err == nil || err.Error() != tt.wantErr {
+					t.Fatalf("MapKey() error = %v, want %s", err, tt.wantErr)
+				}
+				return
+			}
+			if err != nil {
+				t.Fatalf("MapKey() error = %v", err)
+			}
+			if got != tt.want {
+				t.Fatalf("MapKey() = %#v, want %#v", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestDiveInto(t *testing.T) {
 	tests := []struct {
 		name    string

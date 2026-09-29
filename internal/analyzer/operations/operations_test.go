@@ -35,6 +35,8 @@ func TestOperationsIsValid(t *testing.T) {
 		{op: "ltefield", want: true},
 		{op: "ltfield", want: true},
 		{op: "dive", want: true},
+		{op: "keys", want: true},
+		{op: "endkeys", want: true},
 		{op: "invalid_op", want: false},
 	}
 
@@ -427,6 +429,8 @@ func TestOperationsIsFieldOperation(t *testing.T) {
 		{op: "ltefield", want: true},
 		{op: "ltfield", want: true},
 		{op: "dive", want: false},
+		{op: "keys", want: false},
+		{op: "endkeys", want: false},
 		{op: "invalid_op", want: false},
 	}
 
@@ -468,6 +472,8 @@ func TestOperationsArgsCount(t *testing.T) {
 		{op: "ltefield", want: common.OneValue},
 		{op: "ltfield", want: common.OneValue},
 		{op: "dive", want: common.ZeroValue},
+		{op: "keys", want: common.ZeroValue},
+		{op: "endkeys", want: common.ZeroValue},
 		{op: "invalid_op", want: common.UndefinedValue},
 	}
 

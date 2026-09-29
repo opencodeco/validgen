@@ -89,32 +89,111 @@ func checkForInvalidOperations(structs []*Struct) error {
 
 	for _, st := range structs {
 		for i, fd := range st.Fields {
-			current := fd.Type
-			dived := false
-			for _, val := range st.FieldsValidations[i].Validations {
-				op := val.Operation
-				if !ops.IsValid(op) {
-					return types.NewValidationError("unsupported operation %s", op)
-				}
-
-				if op == "dive" {
-					next, err := current.DiveInto()
-					if err != nil {
-						return types.NewValidationError("operation dive: field %s: %s", fd.FieldName, err.Error())
-					}
-					current = next
-					dived = true
-					continue
-				}
-
-				if err := validateOperation(ops, op, current, structsWithValidation, dived); err != nil {
-					return err
-				}
+			err := checkValidations(ops, fd.FieldName, fd.Type, st.FieldsValidations[i].Validations, structsWithValidation, false, 0)
+			if err != nil {
+				return err
 			}
 		}
 	}
 
 	return nil
+}
+
+func checkValidations(ops *operations.Operations, fieldName string, current common.FieldType, validations []*Validation, structs map[string]bool, dived bool, keysDepth int) error {
+	for i, val := range validations {
+		op := val.Operation
+		if !ops.IsValid(op) {
+			return types.NewValidationError("unsupported operation %s", op)
+		}
+
+		switch op {
+		case "keys":
+			return types.NewValidationError("operation keys: field %s: keys must immediately follow dive", fieldName)
+		case "endkeys":
+			return types.NewValidationError("operation endkeys: field %s: endkeys without keys", fieldName)
+		case "dive":
+			if i+1 < len(validations) && validations[i+1].Operation == "keys" {
+				if keysDepth > 0 {
+					return types.NewValidationError("operation keys: field %s: nested keys are not supported", fieldName)
+				}
+				return checkMapKeys(ops, fieldName, current, validations[i+1:], structs)
+			}
+
+			next, err := current.DiveInto()
+			if err != nil {
+				return types.NewValidationError("operation dive: field %s: %s", fieldName, err.Error())
+			}
+			current = next
+			dived = true
+			continue
+		}
+
+		if err := validateOperation(ops, op, current, structs, dived); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func checkMapKeys(ops *operations.Operations, fieldName string, current common.FieldType, validations []*Validation, structs map[string]bool) error {
+	keyType, err := current.MapKey()
+	if err != nil {
+		return types.NewValidationError("operation keys: field %s: %s", fieldName, err.Error())
+	}
+
+	valueType, err := current.DiveInto()
+	if err != nil {
+		return types.NewValidationError("operation dive: field %s: %s", fieldName, err.Error())
+	}
+
+	keyVals, valueVals, err := SplitKeysBlock(fieldName, validations)
+	if err != nil {
+		return err
+	}
+
+	if err := checkValidations(ops, fieldName, keyType, keyVals, structs, true, 1); err != nil {
+		return err
+	}
+
+	return checkValidations(ops, fieldName, valueType, valueVals, structs, true, 1)
+}
+
+// SplitKeysBlock splits the validations that follow dive, starting at keys.
+// Tags between keys and endkeys apply to the map key. Tags after endkeys apply to the map value.
+func SplitKeysBlock(fieldName string, rest []*Validation) ([]*Validation, []*Validation, error) {
+	if len(rest) == 0 || rest[0].Operation != "keys" {
+		return nil, nil, types.NewValidationError("operation keys: field %s: keys must immediately follow dive", fieldName)
+	}
+
+	end := -1
+	for i := 1; i < len(rest); i++ {
+		switch rest[i].Operation {
+		case "endkeys":
+			end = i
+		case "dive":
+			return nil, nil, types.NewValidationError("operation dive: field %s: nested dive inside keys is not supported", fieldName)
+		case "keys":
+			return nil, nil, types.NewValidationError("operation keys: field %s: nested keys are not supported", fieldName)
+		}
+		if end != -1 {
+			break
+		}
+	}
+	if end == -1 {
+		return nil, nil, types.NewValidationError("operation keys: field %s: missing endkeys", fieldName)
+	}
+
+	for _, val := range rest[end+1:] {
+		switch val.Operation {
+		case "keys":
+			return nil, nil, types.NewValidationError("operation keys: field %s: nested keys are not supported", fieldName)
+		case "endkeys":
+			return nil, nil, types.NewValidationError("operation endkeys: field %s: extra endkeys", fieldName)
+		}
+	}
+
+	return rest[1:end], rest[end+1:], nil
 }
 
 func validateOperation(ops *operations.Operations, op string, ft common.FieldType, structs map[string]bool, dived bool) error {
