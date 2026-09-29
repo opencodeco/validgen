@@ -1,0 +1,88 @@
+name: Release
+
+# Version tags only. Pull requests do not publish binaries.
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  binaries:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.24'
+
+    - name: Build release binaries
+      env:
+        TAG: ${{ github.ref_name }}
+      run: |
+        set -euo pipefail
+        if [[ ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([.+-][0-9A-Za-z]+)*$ ]]; then
+          printf 'refusing tag %q; expected vMAJOR.MINOR.PATCH\n' "$TAG" >&2
+          exit 1
+        fi
+        mkdir -p dist
+        targets=(
+          linux/amd64
+          linux/arm64
+          darwin/amd64
+          darwin/arm64
+        )
+        for target in "${targets[@]}"; do
+          goos="${target%/*}"
+          goarch="${target#*/}"
+          out="dist/validgen_${TAG}_${goos}_${goarch}"
+          CGO_ENABLED=0 GOOS="$goos" GOARCH="$goarch" \
+            go build -trimpath -ldflags='-s -w -buildid=' -o "$out" .
+        done
+        (
+          cd dist
+          sha256sum validgen_* | LC_ALL=C sort -k 2 > SHA256SUMS
+        )
+        mapfile -t bins < <(find dist -maxdepth 1 -type f -name "validgen_${TAG}_*" | LC_ALL=C sort)
+        if (( ${#bins[@]} != 4 )); then
+          printf 'expected 4 binaries, found %s\n' "${#bins[@]}" >&2
+          printf '%s\n' "${bins[@]}" >&2
+          exit 1
+        fi
+
+    - name: Publish GitHub release assets
+      env:
+        GH_TOKEN: ${{ github.token }}
+        TAG: ${{ github.ref_name }}
+      run: |
+        set -euo pipefail
+        if [[ ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([.+-][0-9A-Za-z]+)*$ ]]; then
+          printf 'refusing tag %q; expected vMAJOR.MINOR.PATCH\n' "$TAG" >&2
+          exit 1
+        fi
+        assets=(
+          "dist/validgen_${TAG}_linux_amd64"
+          "dist/validgen_${TAG}_linux_arm64"
+          "dist/validgen_${TAG}_darwin_amd64"
+          "dist/validgen_${TAG}_darwin_arm64"
+          dist/SHA256SUMS
+        )
+        for asset in "${assets[@]}"; do
+          if [[ ! -f "$asset" ]]; then
+            printf 'missing asset %q\n' "$asset" >&2
+            exit 1
+          fi
+        done
+        if gh release view "$TAG" >/dev/null 2>&1; then
+          gh release upload "$TAG" --clobber "${assets[@]}"
+        else
+          args=(release create "$TAG" "${assets[@]}" --verify-tag --title "$TAG" --generate-notes)
+          if [[ "$TAG" == *-* ]]; then
+            args+=(--prerelease)
+          fi
+          gh "${args[@]}"
+        fi
