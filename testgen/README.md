@@ -12,8 +12,8 @@ ValidGen currently supports 21 validations across multiple data types:
 
 | Validation      | Basic types           | Slice                 | Array                 | Map                   |
 | -               | -                     | -                     | -                     | -                     |
-| eq              | STRING INT FLOAT BOOL |                       |                       |                       |
-| required        | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL |                       | STRING INT FLOAT BOOL |
+| eq              | STRING INT FLOAT COMPLEX BOOL |                       |                       |                       |
+| required        | STRING INT FLOAT COMPLEX BOOL | STRING INT FLOAT BOOL |                       | STRING INT FLOAT BOOL |
 | gt              | INT FLOAT             |                       |                       |                       |
 | gte             | INT FLOAT             |                       |                       |                       |
 | lte             | INT FLOAT             |                       |                       |                       |
@@ -22,10 +22,10 @@ ValidGen currently supports 21 validations across multiple data types:
 | max             | STRING                | STRING INT FLOAT BOOL |                       | STRING INT FLOAT BOOL | 
 | eq_ignore_case  | STRING                |                       |                       |                       |
 | len             | STRING                | STRING INT FLOAT BOOL |                       | STRING INT FLOAT BOOL |
-| neq             | STRING INT FLOAT BOOL |                       |                       |                       |
+| neq             | STRING INT FLOAT COMPLEX BOOL |                       |                       |                       |
 | neq_ignore_case | STRING                |                       |                       |                       |
-| in              | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL |
-| nin             | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL |
+| in              | STRING INT FLOAT COMPLEX BOOL | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL |
+| nin             | STRING INT FLOAT COMPLEX BOOL | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL |
 | email           | STRING                |                       |                       |                       |
 | eqfield         | STRING INT FLOAT COMPLEX BOOL |                       |                       |                       |
 | neqfield        | STRING INT FLOAT COMPLEX BOOL |                       |                       |                       |
@@ -39,7 +39,7 @@ In this table:
 - **BOOL** represents the `bool` Go type
 - **INT** represents all ten integer Go types: `int`, `int8`, `int16`, `int32`, `int64`, `uint`, `uint8`, `uint16`, `uint32`, `uint64`
 - **FLOAT** represents both float Go types: `float32`, `float64`
-- **COMPLEX** represents both complex Go types: `complex64`, `complex128` (equality only; no ordering field tags)
+- **COMPLEX** represents both complex Go types: `complex64`, `complex128`. Scalar `eq`, `neq`, `in`, `nin`, and `required` are generated for non-pointer values. Ordering tags are rejected. Field equality stays hand-written.
 
 For slices, arrays, and maps, the same type expansion applies. For example, slice STRING is `[]string`, while slice INT expands to all integer Go types.
 
@@ -81,9 +81,9 @@ However, these generators lacked a common configuration, didn't implement all te
 - Unit tests for `BuildValidationCode`, in `internal/codegenerator/generated_validation_code_*`.
 - Unit tests for the generated validator function, in `internal/codegenerator/generated_function_code_*`.
 
-A case with both inputs emits the valid input and the invalid input. Array `required` cases set `excludeIf` to `noPointer` because a non-pointer Go array cannot be empty.
+A case with both inputs emits the valid input and the invalid input. Array `required` cases set `excludeIf` to `noPointer` because a non-pointer Go array cannot be empty. Scalar complex cases set `skipPointer` because pointer complex values are outside this generator.
 
-`go test ./testgen` checks that list. `TestTypesValidationListsNonFieldOperations` requires one entry for each operation below, with `isFieldValidation` false, the same argument count as `operations.New()`, and a case for every type `IsValidByType` accepts. `TestTypesValidationCasesBuildValidationCode` calls `BuildValidationCode` for each concrete type, including the pointer form, and checks that the generated error text contains the catalog message.
+`go test ./testgen` checks that list. `TestTypesValidationListsNonFieldOperations` requires one entry for each operation below, with `isFieldValidation` false, the same argument count as `operations.New()`, and a case for every type `IsValidByType` accepts. `TestTypesValidationCasesBuildValidationCode` calls `BuildValidationCode` for each concrete type, including the pointer form, and checks that the generated error text contains the catalog message. Cases marked `skipPointer` are checked only as non-pointers.
 
 | Operation | Generated |
 | - | - |
@@ -103,7 +103,7 @@ These groups already have tests beside the code they check. A generator that rea
 - Parser checks in `internal/parser/parser_test.go`. They compare parsed structs with source text.
 - Examples under `_examples/`.
 
-Field-operation rows in the four generated suites wait on integer field operations in issue #78. Complex ordering and `dive` in issue #7 are separate work.
+Field-operation rows in the four generated suites wait on integer field operations in issue #78. Complex ordering tags stay rejected, and `dive` in issue #7 is separate work.
 
 ## Usage
 

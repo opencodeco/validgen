@@ -58,6 +58,10 @@ func generateValidationTypesEndToEndTest(tplFile, outputFile string, pointer boo
 				fmt.Printf("Skipping no pointer: tag %s type %s\n", testCase.tag, toGenerate.typeClass)
 				continue
 			}
+			if pointer && toGenerate.excludeIf&skipPointer != 0 {
+				fmt.Printf("Skipping pointer: tag %s type %s\n", testCase.tag, toGenerate.typeClass)
+				continue
+			}
 
 			normalizedType := toGenerate.typeClass
 			if pointer {

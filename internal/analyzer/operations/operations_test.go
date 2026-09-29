@@ -66,7 +66,7 @@ func TestOperationsIsValidByType(t *testing.T) {
 		{
 			op: "eq",
 			fieldTypes: []string{
-				"<STRING>", "<INT>", "<FLOAT>", "<BOOL>",
+				"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>",
 				"*<STRING>", "*<INT>", "*<FLOAT>", "*<BOOL>",
 			},
 			valid: true,
@@ -76,7 +76,7 @@ func TestOperationsIsValidByType(t *testing.T) {
 		{
 			op: "required",
 			fieldTypes: []string{
-				"<STRING>", "<INT>", "<FLOAT>",
+				"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>",
 				"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>",
 				"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]",
 				"*<STRING>", "*<INT>", "*<FLOAT>", "*<BOOL>",
@@ -179,7 +179,7 @@ func TestOperationsIsValidByType(t *testing.T) {
 		{
 			op: "neq",
 			fieldTypes: []string{
-				"<STRING>", "<INT>", "<FLOAT>", "<BOOL>",
+				"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>",
 				"*<STRING>", "*<INT>", "*<FLOAT>", "*<BOOL>",
 			},
 			valid: true,
@@ -199,7 +199,7 @@ func TestOperationsIsValidByType(t *testing.T) {
 		{
 			op: "in",
 			fieldTypes: []string{
-				"<STRING>", "<INT>", "<FLOAT>", "<BOOL>",
+				"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>",
 				"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>",
 				"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]",
 				"[N]<STRING>", "[N]<INT>", "[N]<FLOAT>", "[N]<BOOL>",
@@ -215,7 +215,7 @@ func TestOperationsIsValidByType(t *testing.T) {
 		{
 			op: "nin",
 			fieldTypes: []string{
-				"<STRING>", "<INT>", "<FLOAT>", "<BOOL>",
+				"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>",
 				"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>",
 				"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]",
 				"[N]<STRING>", "[N]<INT>", "[N]<FLOAT>", "[N]<BOOL>",
@@ -299,7 +299,7 @@ func TestOperationsIsValidByType(t *testing.T) {
 			op: "eqfield",
 			fieldTypes: []string{
 				"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>",
-				"*<STRING>", "*<INT>", "*<FLOAT>", "*<COMPLEX>", "*<BOOL>",
+				"*<STRING>", "*<INT>", "*<FLOAT>", "*<BOOL>",
 			},
 			valid: true,
 		},
@@ -309,7 +309,7 @@ func TestOperationsIsValidByType(t *testing.T) {
 			op: "neqfield",
 			fieldTypes: []string{
 				"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>",
-				"*<STRING>", "*<INT>", "*<FLOAT>", "*<COMPLEX>", "*<BOOL>",
+				"*<STRING>", "*<INT>", "*<FLOAT>", "*<BOOL>",
 			},
 			valid: true,
 		},
@@ -385,12 +385,85 @@ func TestOperationsIsValidByType(t *testing.T) {
 		{
 			op: "gt",
 			fieldTypes: []string{
-				"<BOOL>",
-				"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>",
+				"<BOOL>", "<COMPLEX>",
+				"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>", "[]<COMPLEX>",
 				"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]",
-				"*<BOOL>",
+				"*<BOOL>", "*<COMPLEX>",
 				"*[]<STRING>", "*[]<INT>", "*[]<FLOAT>", "*[]<BOOL>",
 				"*map[<STRING>]", "*map[<INT>]", "*map[<FLOAT>]", "*map[<BOOL>]",
+			},
+			valid: false,
+		},
+		{
+			op: "gte",
+			fieldTypes: []string{
+				"<STRING>", "<BOOL>", "<COMPLEX>",
+				"*<COMPLEX>", "[]<COMPLEX>",
+			},
+			valid: false,
+		},
+		{
+			op: "lt",
+			fieldTypes: []string{
+				"<STRING>", "<BOOL>", "<COMPLEX>",
+				"*<COMPLEX>", "[]<COMPLEX>",
+			},
+			valid: false,
+		},
+		{
+			op: "lte",
+			fieldTypes: []string{
+				"<STRING>", "<BOOL>", "<COMPLEX>",
+				"*<COMPLEX>", "[]<COMPLEX>",
+			},
+			valid: false,
+		},
+		{
+			op: "eq",
+			fieldTypes: []string{
+				"*<COMPLEX>", "[]<COMPLEX>", "[N]<COMPLEX>", "map[<COMPLEX>]",
+			},
+			valid: false,
+		},
+		{
+			op: "required",
+			fieldTypes: []string{
+				"*<COMPLEX>",
+			},
+			valid: false,
+		},
+		{
+			op: "neq",
+			fieldTypes: []string{
+				"*<COMPLEX>", "[]<COMPLEX>", "[N]<COMPLEX>", "map[<COMPLEX>]",
+			},
+			valid: false,
+		},
+		{
+			op: "in",
+			fieldTypes: []string{
+				"*<COMPLEX>", "[]<COMPLEX>", "[N]<COMPLEX>", "map[<COMPLEX>]",
+			},
+			valid: false,
+		},
+		{
+			op: "nin",
+			fieldTypes: []string{
+				"*<COMPLEX>", "[]<COMPLEX>", "[N]<COMPLEX>", "map[<COMPLEX>]",
+			},
+			valid: false,
+		},
+		{
+			op: "eqfield",
+			fieldTypes: []string{
+				"*<COMPLEX>",
+			},
+			valid: false,
+		},
+		{
+			op: "neqfield",
+			fieldTypes: []string{
+				"*<COMPLEX>",
 			},
 			valid: false,
 		},

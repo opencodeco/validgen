@@ -731,3 +731,83 @@ func TestAnalyzeStructsWithInvalidNestedFieldOperations(t *testing.T) {
 		})
 	}
 }
+
+func TestAnalyzeComplexScalarOperations(t *testing.T) {
+	validTags := []string{
+		`valid:"required"`,
+		`valid:"eq=1+2i"`,
+		`valid:"neq=3-4i"`,
+		`valid:"in=1+2i 5+6i"`,
+		`valid:"nin=7+8i 9+0i"`,
+	}
+	invalidTags := []struct {
+		tag string
+		op  string
+	}{
+		{tag: `valid:"gt=1+2i"`, op: "gt"},
+		{tag: `valid:"gte=1+2i"`, op: "gte"},
+		{tag: `valid:"lt=1+2i"`, op: "lt"},
+		{tag: `valid:"lte=1+2i"`, op: "lte"},
+	}
+
+	for _, baseType := range []string{"complex64", "complex128"} {
+		for _, tag := range validTags {
+			t.Run(baseType+" "+tag, func(t *testing.T) {
+				_, err := AnalyzeStructs([]*parser.Struct{{
+					Fields: []parser.Field{{
+						FieldName: "Value",
+						Type:      common.FieldType{BaseType: baseType},
+						Tag:       tag,
+					}},
+				}})
+				if err != nil {
+					t.Errorf("AnalyzeStructs() error = %v", err)
+				}
+			})
+		}
+
+		for _, tt := range invalidTags {
+			t.Run(baseType+" "+tt.tag, func(t *testing.T) {
+				_, err := AnalyzeStructs([]*parser.Struct{{
+					Fields: []parser.Field{{
+						FieldName: "Value",
+						Type:      common.FieldType{BaseType: baseType},
+						Tag:       tt.tag,
+					}},
+				}})
+				wantErr := types.NewValidationError("operation %s: invalid %s(<COMPLEX>) type", tt.op, baseType)
+				if err != wantErr {
+					t.Errorf("AnalyzeStructs() error = %v, wantErr %v", err, wantErr)
+				}
+			})
+		}
+	}
+
+	composed := []struct {
+		name     string
+		composed string
+		norm     string
+		tag      string
+		op       string
+	}{
+		{name: "slice", composed: "[]", norm: "[]<COMPLEX>", tag: `valid:"eq=1+2i"`, op: "eq"},
+		{name: "map", composed: "map", norm: "map[<COMPLEX>]", tag: `valid:"eq=1+2i"`, op: "eq"},
+		{name: "pointer", composed: "*", norm: "*<COMPLEX>", tag: `valid:"eq=1+2i"`, op: "eq"},
+		{name: "pointer required", composed: "*", norm: "*<COMPLEX>", tag: `valid:"required"`, op: "required"},
+	}
+	for _, shape := range composed {
+		t.Run(shape.name, func(t *testing.T) {
+			_, err := AnalyzeStructs([]*parser.Struct{{
+				Fields: []parser.Field{{
+					FieldName: "Value",
+					Type:      common.FieldType{BaseType: "complex128", ComposedType: shape.composed},
+					Tag:       shape.tag,
+				}},
+			}})
+			wantErr := types.NewValidationError("operation %s: invalid complex128(%s) type", shape.op, shape.norm)
+			if err != wantErr {
+				t.Errorf("AnalyzeStructs() error = %v, wantErr %v", err, wantErr)
+			}
+		})
+	}
+}
