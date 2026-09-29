@@ -29,6 +29,31 @@ make build
 
 After that the executable will be in `bin/validgen`.
 
+## Optional JSON unmarshaling
+
+By default ValidGen only generates `TValidate` functions. Pass `-unmarshal-json` to also generate `encoding/json.Unmarshaler` methods that decode with an alias (to avoid recursion) and then validate:
+
+```bash
+./bin/validgen -unmarshal-json ./mypackage
+```
+
+Generated methods look like:
+
+```go
+func (obj *User) UnmarshalJSON(b []byte) error {
+	type alias User
+	if err := json.Unmarshal(b, (*alias)(obj)); err != nil {
+		return err
+	}
+	if errs := UserValidate(obj); len(errs) > 0 {
+		return errors.Join(errs...)
+	}
+	return nil
+}
+```
+
+Malformed JSON still returns the usual `encoding/json` decode error. Validation failures are returned via `errors.Join` over the `[]error` from `UserValidate`.
+
 ## Validations
 
 The following validations will be implemented:

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"os"
 
@@ -11,12 +12,21 @@ import (
 )
 
 func main() {
-	argsWithoutCmd := os.Args[1:]
-	if len(argsWithoutCmd) != 1 {
-		log.Fatal("Invalid parameters:\n\tvalidgen <path>\n")
+	fs := flag.NewFlagSet(os.Args[0], flag.ExitOnError)
+	unmarshalJSON := fs.Bool("unmarshal-json", false, "generate UnmarshalJSON methods that validate after decoding")
+	fs.Usage = func() {
+		log.Printf("Usage:\n\tvalidgen [-unmarshal-json] <path>\n")
+		fs.PrintDefaults()
+	}
+	if err := fs.Parse(os.Args[1:]); err != nil {
+		log.Fatal(err)
+	}
+	if fs.NArg() != 1 {
+		fs.Usage()
+		os.Exit(1)
 	}
 
-	parsedStructs, err := parser.ExtractStructs(argsWithoutCmd[0])
+	parsedStructs, err := parser.ExtractStructs(fs.Arg(0))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -30,7 +40,9 @@ func main() {
 		st.PrintInfo()
 	}
 
-	pkgs, err := codegenerator.GenerateCode(analyzedStructs)
+	pkgs, err := codegenerator.GenerateCode(analyzedStructs, codegenerator.Options{
+		UnmarshalJSON: *unmarshalJSON,
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
