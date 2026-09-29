@@ -79,12 +79,12 @@ The following table shows the validations and possible types, where:
 | nin             | I      | I                        | -       | I     | I     | W   | -    | W        |
 | required        | I      | I                        | -       | I     | -     | W   | W    | W        |
 | email           | I      | -                        | -       | -     | -     | -   | -    | -        |
-| eqfield         | I      | P                        | I       | -     | -     | -   | W    | W        |
-| neqfield        | I      | P                        | I       | -     | -     | -   | W    | W        |
-| gtefield        | -      | P                        | -       | -     | -     | -   | W    | W        |
-| gtfield         | -      | P                        | -       | -     | -     | -   | W    | W        |
-| ltefield        | -      | P                        | -       | -     | -     | -   | W    | W        |
-| ltfield         | -      | P                        | -       | -     | -     | -   | W    | W        |
+| eqfield         | I      | I                        | I       | -     | -     | -   | W    | W        |
+| neqfield        | I      | I                        | I       | -     | -     | -   | W    | W        |
+| gtefield        | -      | I                        | -       | -     | -     | -   | W    | W        |
+| gtfield         | -      | I                        | -       | -     | -     | -   | W    | W        |
+| ltefield        | -      | I                        | -       | -     | -     | -   | W    | W        |
+| ltfield         | -      | I                        | -       | -     | -     | -   | W    | W        |
 
 ## Steps to run the unit tests
 

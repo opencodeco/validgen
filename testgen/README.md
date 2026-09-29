@@ -27,12 +27,12 @@ ValidGen currently supports 21 validations across multiple data types:
 | in              | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL |
 | nin             | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL | STRING INT FLOAT BOOL |
 | email           | STRING                |                       |                       |                       |
-| eqfield         | STRING INT BOOL       |                       |                       |                       |
-| neqfield        | STRING INT BOOL       |                       |                       |                       |
-| gtefield        | INT                   |                       |                       |                       |
-| gtfield         | INT                   |                       |                       |                       |
-| ltefield        | INT                   |                       |                       |                       |
-| ltfield         | INT                   |                       |                       |                       |
+| eqfield         | STRING INT FLOAT BOOL |                       |                       |                       |
+| neqfield        | STRING INT FLOAT BOOL |                       |                       |                       |
+| gtefield        | INT FLOAT             |                       |                       |                       |
+| gtfield         | INT FLOAT             |                       |                       |                       |
+| ltefield        | INT FLOAT             |                       |                       |                       |
+| ltfield         | INT FLOAT             |                       |                       |                       |
 
 In this table:
 - **STRING** represents the `string` Go type

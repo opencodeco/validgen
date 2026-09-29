@@ -9,6 +9,8 @@ func cmpBetweenInnerFieldsTests() {
 
 	cmpBetweenInnerStringFieldsTests()
 	cmpBetweenInnerUint8FieldsTests()
+	cmpBetweenInnerFloat32FieldsTests()
+	cmpBetweenInnerFloat64FieldsTests()
 	cmpBetweenInnerBoolFieldsTests()
 
 	log.Println("cmp between inner fields tests ok")
@@ -115,6 +117,104 @@ func cmpBetweenInnerUint8FieldsTests() {
 	}
 
 	log.Println("cmp between inner uint8 fields tests ok")
+}
+
+type CmpInnerFloat32Fields struct {
+	Field1     float32
+	Field2eq1  float32 `valid:"eqfield=Field1"`
+	Field3neq1 float32 `valid:"neqfield=Field1"`
+	Field4     float32
+	Field5gte4 float32 `valid:"gtefield=Field4"`
+	Field6gt4  float32 `valid:"gtfield=Field4"`
+	Field7lte4 float32 `valid:"ltefield=Field4"`
+	Field8lt4  float32 `valid:"ltfield=Field4"`
+}
+
+func cmpBetweenInnerFloat32FieldsTests() {
+	log.Println("starting between inner float32 fields tests")
+	cmpBetweenInnerFloatFieldsTests(
+		func(a, b, c, d, e, f, g, h float64) []error {
+			v := &CmpInnerFloat32Fields{
+				Field1:     float32(a),
+				Field2eq1:  float32(b),
+				Field3neq1: float32(c),
+				Field4:     float32(d),
+				Field5gte4: float32(e),
+				Field6gt4:  float32(f),
+				Field7lte4: float32(g),
+				Field8lt4:  float32(h),
+			}
+			return CmpInnerFloat32FieldsValidate(v)
+		},
+	)
+	log.Println("cmp between inner float32 fields tests ok")
+}
+
+type CmpInnerFloat64Fields struct {
+	Field1     float64
+	Field2eq1  float64 `valid:"eqfield=Field1"`
+	Field3neq1 float64 `valid:"neqfield=Field1"`
+	Field4     float64
+	Field5gte4 float64 `valid:"gtefield=Field4"`
+	Field6gt4  float64 `valid:"gtfield=Field4"`
+	Field7lte4 float64 `valid:"ltefield=Field4"`
+	Field8lt4  float64 `valid:"ltfield=Field4"`
+}
+
+func cmpBetweenInnerFloat64FieldsTests() {
+	log.Println("starting between inner float64 fields tests")
+	cmpBetweenInnerFloatFieldsTests(
+		func(a, b, c, d, e, f, g, h float64) []error {
+			v := &CmpInnerFloat64Fields{
+				Field1:     a,
+				Field2eq1:  b,
+				Field3neq1: c,
+				Field4:     d,
+				Field5gte4: e,
+				Field6gt4:  f,
+				Field7lte4: g,
+				Field8lt4:  h,
+			}
+			return CmpInnerFloat64FieldsValidate(v)
+		},
+	)
+	log.Println("cmp between inner float64 fields tests ok")
+}
+
+func cmpBetweenInnerFloatFieldsTests(validate func(a, b, c, d, e, f, g, h float64) []error) {
+	var expectedMsgErrors []string
+
+	// All comparisons fail, including values that are close but not equal.
+	errs := validate(1.5, 2.5, 1.5, 10.5, 9.5, 9.5, 11.5, 11.5)
+	expectedMsgErrors = []string{
+		"Field2eq1 must be equal to Field1",
+		"Field3neq1 must not be equal to Field1",
+		"Field5gte4 must be >= Field4",
+		"Field6gt4 must be > Field4",
+		"Field7lte4 must be <= Field4",
+		"Field8lt4 must be < Field4",
+	}
+	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
+		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
+	}
+
+	// Equal values pass eq, gte, and lte, and fail neq, gt, and lt.
+	errs = validate(1.5, 1.5, 1.5, -1.25, -1.25, -1.25, -1.25, -1.25)
+	expectedMsgErrors = []string{
+		"Field3neq1 must not be equal to Field1",
+		"Field6gt4 must be > Field4",
+		"Field8lt4 must be < Field4",
+	}
+	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
+		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
+	}
+
+	// Strict ordering in both directions.
+	errs = validate(-2.5, -2.5, 0, 1.25, 1.25, 2.5, 1.25, 0.5)
+	expectedMsgErrors = nil
+	if !expectedMsgErrorsOk(errs, expectedMsgErrors) {
+		log.Fatalf("error = %v, wantErr %v", errs, expectedMsgErrors)
+	}
 }
 
 type CmpInnerBoolFields struct {

@@ -28,6 +28,24 @@ func TestDefineTestElementsWithInvalidOperations(t *testing.T) {
 			},
 			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation min type <INT> (uint8)"),
 		},
+		{
+			name: "unsupported eqfield on float slice",
+			args: args{
+				fieldName:       "values",
+				fieldType:       common.FieldType{ComposedType: "[]", BaseType: "float32"},
+				fieldValidation: "eqfield=other",
+			},
+			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation eqfield type []<FLOAT> (float32)"),
+		},
+		{
+			name: "unsupported gtfield on float map",
+			args: args{
+				fieldName:       "values",
+				fieldType:       common.FieldType{ComposedType: "map", BaseType: "float64"},
+				fieldValidation: "gtfield=other",
+			},
+			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation gtfield type map[<FLOAT>] (float64)"),
+		},
 	}
 
 	for _, tt := range tests {

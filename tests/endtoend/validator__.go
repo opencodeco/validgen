@@ -78,6 +78,50 @@ func CmpInnerBoolFieldsValidate(obj *CmpInnerBoolFields) []error {
 	}
 	return errs
 }
+func CmpInnerFloat32FieldsValidate(obj *CmpInnerFloat32Fields) []error {
+	var errs []error
+	if !(obj.Field2eq1 == obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field2eq1 must be equal to Field1"))
+	}
+	if !(obj.Field3neq1 != obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field3neq1 must not be equal to Field1"))
+	}
+	if !(obj.Field5gte4 >= obj.Field4) {
+		errs = append(errs, types.NewValidationError("Field5gte4 must be >= Field4"))
+	}
+	if !(obj.Field6gt4 > obj.Field4) {
+		errs = append(errs, types.NewValidationError("Field6gt4 must be > Field4"))
+	}
+	if !(obj.Field7lte4 <= obj.Field4) {
+		errs = append(errs, types.NewValidationError("Field7lte4 must be <= Field4"))
+	}
+	if !(obj.Field8lt4 < obj.Field4) {
+		errs = append(errs, types.NewValidationError("Field8lt4 must be < Field4"))
+	}
+	return errs
+}
+func CmpInnerFloat64FieldsValidate(obj *CmpInnerFloat64Fields) []error {
+	var errs []error
+	if !(obj.Field2eq1 == obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field2eq1 must be equal to Field1"))
+	}
+	if !(obj.Field3neq1 != obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field3neq1 must not be equal to Field1"))
+	}
+	if !(obj.Field5gte4 >= obj.Field4) {
+		errs = append(errs, types.NewValidationError("Field5gte4 must be >= Field4"))
+	}
+	if !(obj.Field6gt4 > obj.Field4) {
+		errs = append(errs, types.NewValidationError("Field6gt4 must be > Field4"))
+	}
+	if !(obj.Field7lte4 <= obj.Field4) {
+		errs = append(errs, types.NewValidationError("Field7lte4 must be <= Field4"))
+	}
+	if !(obj.Field8lt4 < obj.Field4) {
+		errs = append(errs, types.NewValidationError("Field8lt4 must be < Field4"))
+	}
+	return errs
+}
 func CmpInnerStringFieldsValidate(obj *CmpInnerStringFields) []error {
 	var errs []error
 	if !(obj.Field2eq1 == obj.Field1) {
@@ -107,6 +151,50 @@ func CmpInnerUint8FieldsValidate(obj *CmpInnerUint8Fields) []error {
 	}
 	if !(obj.Field8lt4 < obj.Field4) {
 		errs = append(errs, types.NewValidationError("Field8lt4 must be < Field4"))
+	}
+	return errs
+}
+func CmpNestedFloat32FieldsValidate(obj *CmpNestedFloat32Fields) []error {
+	var errs []error
+	if !(obj.Field1eqNestedField1 == obj.Nested.Field1) {
+		errs = append(errs, types.NewValidationError("Field1eqNestedField1 must be equal to Nested.Field1"))
+	}
+	if !(obj.Field2neqNestedField1 != obj.Nested.Field1) {
+		errs = append(errs, types.NewValidationError("Field2neqNestedField1 must not be equal to Nested.Field1"))
+	}
+	if !(obj.Field3gteNestedField2 >= obj.Nested.Field2) {
+		errs = append(errs, types.NewValidationError("Field3gteNestedField2 must be >= Nested.Field2"))
+	}
+	if !(obj.Field4gtNestedField2 > obj.Nested.Field2) {
+		errs = append(errs, types.NewValidationError("Field4gtNestedField2 must be > Nested.Field2"))
+	}
+	if !(obj.Field5lteNestedField2 <= obj.Nested.Field2) {
+		errs = append(errs, types.NewValidationError("Field5lteNestedField2 must be <= Nested.Field2"))
+	}
+	if !(obj.Field6ltNestedField2 < obj.Nested.Field2) {
+		errs = append(errs, types.NewValidationError("Field6ltNestedField2 must be < Nested.Field2"))
+	}
+	return errs
+}
+func CmpNestedFloat64FieldsValidate(obj *CmpNestedFloat64Fields) []error {
+	var errs []error
+	if !(obj.Field1eqNestedField1 == obj.Nested.Field1) {
+		errs = append(errs, types.NewValidationError("Field1eqNestedField1 must be equal to Nested.Field1"))
+	}
+	if !(obj.Field2neqNestedField1 != obj.Nested.Field1) {
+		errs = append(errs, types.NewValidationError("Field2neqNestedField1 must not be equal to Nested.Field1"))
+	}
+	if !(obj.Field3gteNestedField2 >= obj.Nested.Field2) {
+		errs = append(errs, types.NewValidationError("Field3gteNestedField2 must be >= Nested.Field2"))
+	}
+	if !(obj.Field4gtNestedField2 > obj.Nested.Field2) {
+		errs = append(errs, types.NewValidationError("Field4gtNestedField2 must be > Nested.Field2"))
+	}
+	if !(obj.Field5lteNestedField2 <= obj.Nested.Field2) {
+		errs = append(errs, types.NewValidationError("Field5lteNestedField2 must be <= Nested.Field2"))
+	}
+	if !(obj.Field6ltNestedField2 < obj.Nested.Field2) {
+		errs = append(errs, types.NewValidationError("Field6ltNestedField2 must be < Nested.Field2"))
 	}
 	return errs
 }
