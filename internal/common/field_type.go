@@ -11,6 +11,11 @@ type FieldType struct {
 	ComposedType string // array ([N]), map (map) or slice ([])
 	BaseType     string // base type (e.g. string, int, etc.)
 	Size         string // for arrays
+	// MapValue is the value type of a map. Collection checks still use BaseType as the key.
+	MapValue *FieldType
+	// ElemPointer is true when a slice or array element is a pointer ([]*T, [N]*T).
+	// A leading * on ComposedType without ElemPointer is a pointer to the container (*[]T, *map[K]V).
+	ElemPointer bool
 }
 
 func (ft FieldType) IsGoType() bool {

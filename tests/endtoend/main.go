@@ -35,6 +35,7 @@ func main() {
 
 	structInPkgTests()
 	nestedStructTests()
+	diveTests()
 	cmpBetweenInnerFieldsTests()
 	cmpBetweenNestedFieldsTests()
 	boolTests()

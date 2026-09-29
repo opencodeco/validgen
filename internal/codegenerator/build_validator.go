@@ -66,32 +66,120 @@ func (gv *GenValidations) BuildUnmarshalJSONCode() string {
 }
 
 func (gv *GenValidations) BuildValidationCode(fieldName string, fieldType common.FieldType, fieldValidations []*analyzer.Validation) (string, error) {
+	return gv.emitValidations("obj."+fieldName, fieldName, fieldType, fieldValidations, false, 0)
+}
 
+func (gv *GenValidations) emitValidations(expr, fieldName string, fieldType common.FieldType, fieldValidations []*analyzer.Validation, dived bool, depth int) (string, error) {
 	tests := ""
-	for _, fieldValidation := range fieldValidations {
-		var testCode = ""
-		var err error
-
-		if fieldType.IsGoType() {
-			testCode, err = gv.buildIfCode(fieldName, fieldType, fieldValidation)
+	for i, fieldValidation := range fieldValidations {
+		if fieldValidation.Operation == "dive" {
+			loop, err := gv.emitDive(expr, fieldName, fieldType, fieldValidations[i+1:], depth)
 			if err != nil {
 				return "", err
 			}
-		} else {
-			testCode, err = gv.buildIfNestedCode(fieldName, fieldType)
-			if err != nil {
-				return "", err
-			}
+			return tests + loop, nil
 		}
 
+		testCode, err := gv.emitOne(expr, fieldName, fieldType, fieldValidation, dived)
+		if err != nil {
+			return "", err
+		}
 		tests += testCode
+	}
+
+	if dived && fieldType.IsNestedStruct() {
+		nested, err := gv.emitStructCall(expr, fieldType)
+		if err != nil {
+			return "", err
+		}
+		tests += nested
 	}
 
 	return tests, nil
 }
 
-func (gv *GenValidations) buildIfCode(fieldName string, fieldType common.FieldType, fieldValidation *analyzer.Validation) (string, error) {
-	testElements, err := DefineTestElements(fieldName, fieldType, fieldValidation)
+func (gv *GenValidations) emitDive(expr, fieldName string, fieldType common.FieldType, rest []*analyzer.Validation, depth int) (string, error) {
+	elemType, err := fieldType.DiveInto()
+	if err != nil {
+		return "", fmt.Errorf("field %s: %w", fieldName, err)
+	}
+
+	depth++
+	elemExpr := fmt.Sprintf("elem%d", depth)
+	body, err := gv.emitValidations(elemExpr, fieldName, elemType, rest, true, depth)
+	if err != nil {
+		return "", err
+	}
+	if strings.TrimSpace(body) == "" {
+		return "", nil
+	}
+
+	rangeExpr := expr
+	prefix := ""
+	suffix := ""
+	if fieldType.PointerToContainer() {
+		rangeExpr = "*" + expr
+		prefix = fmt.Sprintf("if %s != nil {\n", expr)
+		suffix = "}\n"
+	}
+
+	return prefix + fmt.Sprintf("for _, %s := range %s {\n%s}\n", elemExpr, rangeExpr, body) + suffix, nil
+}
+
+func (gv *GenValidations) emitOne(expr, fieldName string, fieldType common.FieldType, fieldValidation *analyzer.Validation, dived bool) (string, error) {
+	if fieldType.IsNestedStruct() {
+		if !dived {
+			return gv.buildIfNestedCode(fieldName, fieldType)
+		}
+		if fieldValidation.Operation == "required" && fieldType.ComposedType == "*" {
+			return fmt.Sprintf("if !(%s != nil) {\nerrs = append(errs, types.NewValidationError(\"%s is required\"))\n}\n", expr, fieldName), nil
+		}
+		if fieldValidation.Operation == "required" {
+			return "", nil
+		}
+		return "", fmt.Errorf("operation %s: cannot apply to struct %s", fieldValidation.Operation, fieldType.BaseType)
+	}
+
+	accept := func(candidate common.FieldType) bool {
+		_, err := GetConditionTable(fieldValidation.Operation, candidate)
+		return err == nil
+	}
+	target, ok := fieldType.OperationType(fieldValidation.Operation, accept)
+	if !ok {
+		return "", fmt.Errorf("field %s: operation %s is not supported for %s", fieldName, fieldValidation.Operation, fieldType.ToType())
+	}
+
+	return gv.buildIfCode(expr, fieldName, target, fieldValidation)
+}
+
+func (gv *GenValidations) emitStructCall(expr string, fieldType common.FieldType) (string, error) {
+	_, ok := gv.StructsWithValidation[fieldType.BaseType]
+	if !ok {
+		return "", fmt.Errorf("no validator found for struct type %s", fieldType.ToType())
+	}
+
+	funcName := nestedFuncName(gv.Struct.PackageName, fieldType.BaseType)
+	if fieldType.ComposedType == "*" {
+		return fmt.Sprintf("if %s != nil {\nerrs = append(errs, %s(%s)...)\n}\n", expr, funcName, expr), nil
+	}
+	if fieldType.ComposedType != "" {
+		return "", fmt.Errorf("no validator found for struct type %s", fieldType.ToType())
+	}
+
+	return fmt.Sprintf("errs = append(errs, %s(&%s)...)\n", funcName, expr), nil
+}
+
+func nestedFuncName(packageName, baseType string) string {
+	pkg := common.ExtractPackage(baseType)
+	if pkg == packageName {
+		baseType = strings.TrimPrefix(baseType, pkg+".")
+	}
+
+	return baseType + "Validate"
+}
+
+func (gv *GenValidations) buildIfCode(expr, fieldName string, fieldType common.FieldType, fieldValidation *analyzer.Validation) (string, error) {
+	testElements, err := defineTestElements(expr, fieldName, fieldType, fieldValidation)
 	if err != nil {
 		return "", fmt.Errorf("field %s: %w", fieldName, err)
 	}
@@ -115,7 +203,7 @@ errs = append(errs, types.NewValidationError("%s"))
 func (gv *GenValidations) buildIfNestedCode(fieldName string, fieldType common.FieldType) (string, error) {
 	_, ok := gv.StructsWithValidation[fieldType.BaseType]
 	if !ok {
-		return "", fmt.Errorf("no validator found for struct type %s", fieldType)
+		return "", fmt.Errorf("no validator found for struct type %s", fieldType.ToType())
 	}
 
 	pkg := common.ExtractPackage(fieldType.BaseType)

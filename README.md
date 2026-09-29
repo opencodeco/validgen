@@ -83,6 +83,20 @@ The following validations will be implemented:
 - gtfield (greater than field): field must be greater than another field
 - ltefield (less than or equal field): field must be less than or equal to another field
 - ltfield (less than field): field must be less than another field
+- dive: tags after `dive` apply to each slice element, array element, or map value
+
+### dive
+
+Tags before `dive` apply to the collection. Tags after `dive` apply to each element. A struct element is validated with that struct's generated function. Without `dive`, a slice or map is checked only as a collection, including a slice of structs.
+
+```go
+type User struct {
+	Addresses []*Address        `valid:"required,dive,required"`
+	Labels    map[string]string `valid:"dive,required"`
+}
+```
+
+`required` before `dive` checks that `Addresses` is not empty. After `dive`, each pointer must be non-nil and `Address` field tags run. Each `Labels` value must be non-empty. Map keys are not validated. `keys` and `endkeys` are not implemented.
 
 The following table shows the validations and possible types, where:
 
