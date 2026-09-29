@@ -1,8 +1,8 @@
 # ValidGen internals
 
-`validgen <path>` reads Go files under that path and writes `validator__.go` beside structs that carry a `valid` tag. The command is `main` in the repository root. This note follows that path through the current packages. The user-facing validation matrix stays in the [README](../README.md).
+`validgen [-unmarshal-json] <path>` reads Go files under that path and writes `validator__.go` beside structs that carry a `valid` tag. The command is `main` in the repository root. This note follows that path through the current packages. The user-facing validation matrix stays in the [README](../README.md).
 
-`main` takes exactly one argument. Any other argument count ends in `log.Fatal`. An error from the calls below does too.
+`main` parses flags with `flag.ExitOnError`. `-unmarshal-json` defaults to false. The command then requires one path argument. Any other argument count prints usage and exits with status 1. An error from the calls below ends in `log.Fatal`.
 
 ## Execution pipeline
 
@@ -11,7 +11,7 @@
 1. `parser.ExtractStructs` walks the path and returns `[]*parser.Struct`.
 2. `analyzer.AnalyzeStructs` checks tags and returns `[]*analyzer.Struct`.
 3. `analyzer.Struct.PrintInfo` prints every analyzed struct before any file is written.
-4. `codegenerator.GenerateCode` returns `map[string]*codegenerator.Pkg` with the function source for structs that have a `valid` tag.
+4. `codegenerator.GenerateCode` takes the analyzed structs and a `codegenerator.Options` value. `Options.UnmarshalJSON` is the flag. It returns `map[string]*codegenerator.Pkg` with function source for structs that have a `valid` tag.
 5. `pkgwriter.Writer` formats each package and writes `validator__.go`.
 
 TestGen is a separate program under `testgen/`. It is described at the end.
@@ -22,7 +22,7 @@ TestGen is a separate program under `testgen/`. It is described at the end.
 
 `internal/analyzer` reads `valid` tags, checks them against `internal/analyzer/operations`, and resolves field-to-field comparisons.
 
-`internal/codegenerator` turns an analyzed struct into the text of a `Validate` function. Operation expressions live in `condition_table.go`.
+`internal/codegenerator` turns an analyzed struct into the text of a `Validate` function, and into an `UnmarshalJSON` method when `-unmarshal-json` is set. Operation expressions live in `condition_table.go`.
 
 `internal/pkgwriter` wraps those functions in a file, runs `go/format`, and writes `validator__.go`.
 
@@ -99,7 +99,24 @@ The target is the single value from the tag. `Field2` refers to a field of the s
 
 `GenerateCode` indexes every parsed struct by `package.Struct` and every package name it saw. It then skips structs whose `HasValidTag` is false. Those structs produce no function. Their `package.Struct` keys stay in the index used for nested calls.
 
-Structs that remain are grouped by `common.KeyPath(Path, PackageName)`. One group becomes one `codegenerator.Pkg` with the package name, the directory, a subset of imports, and a map of structs. Each struct stores the `Validate` function text.
+Structs that remain are grouped by `common.KeyPath(Path, PackageName)`. One group becomes one `codegenerator.Pkg` with the package name, the directory, a subset of imports, and a map of structs. Each struct stores the `Validate` function text in `ValidatorFuncCode`. When `Options.UnmarshalJSON` is true, `BuildUnmarshalJSONCode` also fills `UnmarshalJSONCode`.
+
+`BuildUnmarshalJSONCode` returns this method for the struct name `Name`.
+
+```go
+func (obj *Name) UnmarshalJSON(b []byte) error {
+	type alias Name
+	if err := json.Unmarshal(b, (*alias)(obj)); err != nil {
+		return err
+	}
+	if errs := NameValidate(obj); len(errs) > 0 {
+		return errors.Join(errs...)
+	}
+	return nil
+}
+```
+
+The alias is a distinct type, so `json.Unmarshal` does not call the generated method again. A decode error is returned as-is. A non-empty validation slice is returned from `errors.Join`. The README section Optional JSON unmarshaling shows the same method from the user side. `tests/jsonunmarshal/validator__.go` is a checked-in copy of that output.
 
 `BuildFuncValidatorCode` fills this template.
 
@@ -128,11 +145,11 @@ Those slice and map copies call `types.SliceOnlyContains`, `types.SliceNotContai
 
 When `IsGoType` is false, each validation on that field appends a nested call instead of a condition-table test. The call is `TypeValidate(&obj.Field)`, where `Type` is `BaseType`. If `BaseType` starts with the struct's own package name and a dot, that prefix is removed. A same-package field whose `BaseType` is `main.InnerStructType` calls `InnerStructTypeValidate`. A field whose `BaseType` is `mypkg.InnerStructType` calls `mypkg.InnerStructTypeValidate`. The call is emitted when `BaseType` is in the parsed-struct index. A missing type returns `no validator found for struct type`.
 
-Imports kept on the generated package are the struct file's imports whose local name is a package name parsed in this run. `buildImportPath` writes each of those paths as a quoted import and always adds `github.com/opencodeco/validgen/types`.
+Imports kept on the generated package are the struct file's imports whose local name is a package name parsed in this run. `buildImportPath` writes each of those paths as a quoted import and always adds `github.com/opencodeco/validgen/types`. When any struct in the package has `UnmarshalJSON` source, it also adds `encoding/json` and `errors`.
 
 ## Package writer
 
-`Writer` renders `fileValidatorTpl` for each package. The file starts with `// Code generated by ValidGen. DO NOT EDIT.`, declares the source package, and prints one `Validate` function per struct in the package map. `go/format` formats the buffer. The output path is `Path + "/validator__.go"`, and the file mode is `os.ModePerm`.
+`Writer` renders `fileValidatorTpl` for each package. The file starts with `// Code generated by ValidGen. DO NOT EDIT.`, declares the source package, and prints `ValidatorFuncCode` then `UnmarshalJSONCode` for each struct in the package map. `go/format` formats the buffer. The output path is `Path + "/validator__.go"`, and the file mode is `os.ModePerm`.
 
 The same path is rewritten on every run. Structs in one package and directory share that file. Structs with no `valid` tag are absent from it. `_examples/test01` shows the shape. `User` has `valid` tags and `UserValidate` is written. `NoValidTag` is parsed, printed, and omitted from `validator__.go`.
 
@@ -149,4 +166,4 @@ TestGen is `package main` in `testgen/`. `make testgen` runs it and moves the fi
 
 The case list is `typesValidation` in `testgen/validations.go`. [testgen/README.md](../testgen/README.md) records which suites that list drives and which suites are still written by hand.
 
-Hand-written tests cover the parser, the analyzer, operation checks, and condition-table cases that TestGen does not emit. `make unittests` runs `go test` on `./internal/...` and `./types/...`. `make endtoendtests` builds `bin/validgen`, deletes existing `validator__.go` files under `tests/endtoend/`, runs the generator there, and executes `go run .` in that directory.
+Hand-written tests cover the parser, the analyzer, operation checks, and condition-table cases that TestGen does not emit. `make unittests` runs `go test` on `./internal/...` and `./types/...`. `make endtoendtests` builds `bin/validgen`, deletes existing `validator__.go` files under `tests/endtoend/`, runs the generator there, and executes `go run .` in that directory. It then does the same for `tests/jsonunmarshal/`, passing `-unmarshal-json`.
