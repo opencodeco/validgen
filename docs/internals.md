@@ -72,11 +72,11 @@ Slices, arrays, maps, and pointers keep a marker on that name, such as `[]<INT>`
 
 ### Tag parsing
 
-`analyzeFieldValidations` copies each `parser.Struct` into an `analyzer.Struct`. A field counts as validated when its struct tag has a `valid` key, or a `validate` key if `valid` is absent. The analyzer sets `HasValidTag` if any field matches. It splits that key's value on commas. `reflect.StructTag` reads the key, so `json:"email" validate:"required,email"` is accepted.
+`analyzeFieldValidations` copies each `parser.Struct` into an `analyzer.Struct`. A field counts as validated when its struct tag has a `valid` key, or a `validate` key if `valid` is absent. The analyzer sets `HasValidTag` if any field matches. It splits that key's value on commas and drops blank pieces, including a blank value such as `validate:""`. `reflect.StructTag` reads the key, so `json:"email" validate:"required,email"` is accepted.
 
-`ParserValidation` splits one validation on `=`. More than two pieces is an error. The operation's `CountValues` selects the shape.
+`ParserValidation` splits one validation on `=`. More than two pieces, or none, is an error. The operation's `CountValues` selects the shape.
 
-`ZeroValue` operations `required`, `email`, `hexcolor`, `rgb`, `rgba`, `hsl`, `hsla`, and `iscolor` reject a target. `OneValue` operations require one target. `ManyValues` operations `in`, `nin`, and `oneof` require a target list. A list that starts with a single quote is read as quoted strings. Any other list is split on commas and spaces. `iscolor` is the alias for `hexcolor|rgb|rgba|hsl|hsla` and calls `types.IsColor`. `ne` and `ne_ignore_case` are read as `neq` and `neq_ignore_case`.
+`ZeroValue` operations `required`, `email`, `hexcolor`, `rgb`, `rgba`, `hsl`, `hsla`, `iscolor`, `dive`, `keys`, and `endkeys` reject a target. `OneValue` operations require one target. `ManyValues` operations `in`, `nin`, and `oneof` require a target list. Spaces and commas separate tokens. A single-quoted token keeps its interior, including spaces, and quoted tokens can be mixed with bare tokens, as in `oneof=red 'light blue'`. `iscolor` is the alias for `hexcolor|rgb|rgba|hsl|hsla` and calls `types.IsColor`. `ne` and `ne_ignore_case` are read as `neq` and `neq_ignore_case`.
 
 The result is an `analyzer.Validation` with `Operation`, `ExpectedValues`, and `Values`.
 

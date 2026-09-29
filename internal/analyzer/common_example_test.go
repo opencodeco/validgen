@@ -78,6 +78,16 @@ func TestValidationTagKey(t *testing.T) {
 			tag:  `json:"email"`,
 			want: nil,
 		},
+		{
+			name: "empty validate value",
+			tag:  `validate:""`,
+			want: nil,
+		},
+		{
+			name: "blank piece between commas",
+			tag:  `valid:"required, ,email"`,
+			want: []string{"required", "email"},
+		},
 	}
 
 	for _, tt := range tests {

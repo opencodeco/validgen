@@ -252,6 +252,11 @@ func TestParserInvalidValidation(t *testing.T) {
 			expectedErr: types.NewValidationError("malformed validation eq=aaa=bbb"),
 		},
 		{
+			name:        "empty validation",
+			validation:  "",
+			expectedErr: types.NewValidationError("malformed validation "),
+		},
+		{
 			name:        "undefined validation",
 			validation:  "xpto=a",
 			expectedErr: types.NewValidationError("unsupported validation xpto"),

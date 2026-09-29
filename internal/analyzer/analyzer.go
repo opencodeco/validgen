@@ -74,7 +74,17 @@ func parseFieldValidations(fieldTag string) ([]string, bool) {
 		return nil, false
 	}
 
-	return strings.Split(value, ","), true
+	parts := strings.Split(value, ",")
+	fieldValidations := make([]string, 0, len(parts))
+	for _, part := range parts {
+		part = strings.TrimSpace(part)
+		if part == "" {
+			continue
+		}
+		fieldValidations = append(fieldValidations, part)
+	}
+
+	return fieldValidations, true
 }
 
 func checkForInvalidOperations(structs []*Struct) error {

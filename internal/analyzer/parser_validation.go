@@ -41,7 +41,7 @@ func ParserValidation(fieldValidation string) (*Validation, error) {
 
 func parserValidationString(tag string) (string, string, error) {
 	tokens := removeEmptyValues(strings.Split(tag, "="))
-	if len(tokens) > 2 {
+	if len(tokens) == 0 || len(tokens) > 2 {
 		return "", "", types.NewValidationError("malformed validation %s", tag)
 	}
 
