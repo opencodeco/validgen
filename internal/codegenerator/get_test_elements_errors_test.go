@@ -47,6 +47,42 @@ func TestDefineTestElementsWithInvalidOperations(t *testing.T) {
 			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation gtfield type map[<FLOAT>] (float64)"),
 		},
 		{
+			name: "unsupported gt on complex64",
+			args: args{
+				fieldName:       "value",
+				fieldType:       common.FieldType{BaseType: "complex64"},
+				fieldValidation: "gt=1+2i",
+			},
+			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation gt type <COMPLEX> (complex64)"),
+		},
+		{
+			name: "unsupported gte on complex128",
+			args: args{
+				fieldName:       "value",
+				fieldType:       common.FieldType{BaseType: "complex128"},
+				fieldValidation: "gte=1+2i",
+			},
+			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation gte type <COMPLEX> (complex128)"),
+		},
+		{
+			name: "unsupported lt on complex64",
+			args: args{
+				fieldName:       "value",
+				fieldType:       common.FieldType{BaseType: "complex64"},
+				fieldValidation: "lt=1+2i",
+			},
+			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation lt type <COMPLEX> (complex64)"),
+		},
+		{
+			name: "unsupported lte on complex128",
+			args: args{
+				fieldName:       "value",
+				fieldType:       common.FieldType{BaseType: "complex128"},
+				fieldValidation: "lte=1+2i",
+			},
+			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation lte type <COMPLEX> (complex128)"),
+		},
+		{
 			name: "unsupported gtfield on complex128",
 			args: args{
 				fieldName:       "values",
@@ -54,6 +90,24 @@ func TestDefineTestElementsWithInvalidOperations(t *testing.T) {
 				fieldValidation: "gtfield=other",
 			},
 			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation gtfield type <COMPLEX> (complex128)"),
+		},
+		{
+			name: "unsupported eq on complex pointer",
+			args: args{
+				fieldName:       "value",
+				fieldType:       common.FieldType{ComposedType: "*", BaseType: "complex64"},
+				fieldValidation: "eq=1+2i",
+			},
+			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation eq type *<COMPLEX> (complex64)"),
+		},
+		{
+			name: "unsupported eq on complex slice",
+			args: args{
+				fieldName:       "value",
+				fieldType:       common.FieldType{ComposedType: "[]", BaseType: "complex128"},
+				fieldValidation: "eq=1+2i",
+			},
+			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation eq type []<COMPLEX> (complex128)"),
 		},
 		{
 			name: "unsupported eqfield on complex slice",

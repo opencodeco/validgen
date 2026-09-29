@@ -7,6 +7,9 @@ type excludeIf uint32
 const (
 	cmpBenchTests excludeIf = 1 << iota
 	noPointer
+	// skipPointer keeps a scalar case out of pointer generation.
+	// Complex pointers are not in this issue's scope.
+	skipPointer
 )
 
 type typeValidation struct {
@@ -78,6 +81,14 @@ var typesValidation = []struct {
 				validCase:    `true`,
 				invalidCase:  `false`,
 				errorMessage: `{{.FieldName}} is required`,
+			},
+			{
+				typeClass:    `<COMPLEX>`,
+				validation:   ``,
+				validCase:    `1+2i`,
+				invalidCase:  `0`,
+				errorMessage: `{{.FieldName}} is required`,
+				excludeIf:    skipPointer | cmpBenchTests,
 			},
 
 			// required: "[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>"
@@ -212,6 +223,14 @@ var typesValidation = []struct {
 				invalidCase:  `false`,
 				errorMessage: `{{.FieldName}} must be equal to {{.Target}}`,
 			},
+			{
+				typeClass:    `<COMPLEX>`,
+				validation:   `1+2i`,
+				validCase:    `1+2i`,
+				invalidCase:  `3+4i`,
+				errorMessage: `{{.FieldName}} must be equal to {{.Target}}`,
+				excludeIf:    skipPointer | cmpBenchTests,
+			},
 		},
 	},
 
@@ -250,6 +269,14 @@ var typesValidation = []struct {
 				validCase:    `false`,
 				invalidCase:  `true`,
 				errorMessage: `{{.FieldName}} must not be equal to {{.Target}}`,
+			},
+			{
+				typeClass:    `<COMPLEX>`,
+				validation:   `3+4i`,
+				validCase:    `1+2i`,
+				invalidCase:  `3+4i`,
+				errorMessage: `{{.FieldName}} must not be equal to {{.Target}}`,
+				excludeIf:    skipPointer | cmpBenchTests,
 			},
 		},
 	},
@@ -662,6 +689,14 @@ var typesValidation = []struct {
 				errorMessage: `{{.FieldName}} must be one of {{.Targets}}`,
 				excludeIf:    cmpBenchTests,
 			},
+			{
+				typeClass:    `<COMPLEX>`,
+				validation:   `1+2i 5+6i`,
+				validCase:    `5+6i`,
+				invalidCase:  `7+8i`,
+				errorMessage: `{{.FieldName}} must be one of {{.Targets}}`,
+				excludeIf:    skipPointer | cmpBenchTests,
+			},
 
 			// in: "[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>"
 			{
@@ -802,6 +837,14 @@ var typesValidation = []struct {
 				validCase:    `false`,
 				invalidCase:  `true`,
 				errorMessage: `{{.FieldName}} must not be one of {{.Targets}}`,
+			},
+			{
+				typeClass:    `<COMPLEX>`,
+				validation:   `7+8i 9+0i`,
+				validCase:    `1+2i`,
+				invalidCase:  `9+0i`,
+				errorMessage: `{{.FieldName}} must not be one of {{.Targets}}`,
+				excludeIf:    skipPointer | cmpBenchTests,
 			},
 
 			// nin: "[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>"

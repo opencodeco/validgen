@@ -135,20 +135,20 @@ The following table shows the validations and possible types, where:
 
 | Validation/Type | String | Numeric types (integers and floats) | Complex | Boolean | Slice | Array | Map | Time | Duration |
 | -               | -      | -                        | -       | -       | -     | -     | -   | -    | -        |
-| eq              | I      | I                        | W       | I       | -     | -     | -   | W    | W        |
+| eq              | I      | I                        | I       | I       | -     | -     | -   | W    | W        |
 | eq_ignore_case  | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
 | gt              | -      | I                        | -       | -       | -     | -     | -   | W    | W        |
 | gte             | -      | I                        | -       | -       | -     | -     | -   | W    | W        |
 | lt              | -      | I                        | -       | -       | -     | -     | -   | W    | W        |
 | lte             | -      | I                        | -       | -       | -     | -     | -   | W    | W        |
-| neq             | I      | I                        | W       | I       | -     | -     | -   | W    | W        |
+| neq             | I      | I                        | I       | I       | -     | -     | -   | W    | W        |
 | neq_ignore_case | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
 | len             | I      | -                        | -       | -       | I     | -     | W   | -    | -        |
 | max             | I      | -                        | -       | -       | I     | -     | W   | W    | W        |
 | min             | I      | -                        | -       | -       | I     | -     | W   | W    | W        |
-| in              | I      | I                        | W       | -       | I     | I     | W   | -    | W        |
-| nin             | I      | I                        | W       | -       | I     | I     | W   | -    | W        |
-| required        | I      | I                        | W       | -       | I     | -     | W   | W    | W        |
+| in              | I      | I                        | I       | -       | I     | I     | W   | -    | W        |
+| nin             | I      | I                        | I       | -       | I     | I     | W   | -    | W        |
+| required        | I      | I                        | I       | -       | I     | -     | W   | W    | W        |
 | email           | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
 | eqfield         | I      | I                        | I       | I       | -     | -     | -   | W    | W        |
 | neqfield        | I      | I                        | I       | I       | -     | -     | -   | W    | W        |
@@ -157,7 +157,7 @@ The following table shows the validations and possible types, where:
 | ltefield        | -      | I                        | -       | -       | -     | -     | -   | W    | W        |
 | ltfield         | -      | I                        | -       | -       | -     | -     | -   | W    | W        |
 
-Complex (`complex64`, `complex128`) supports `eqfield` and `neqfield` via Go `==` / `!=`. Ordering field tags (`gtefield`, `gtfield`, `ltefield`, `ltfield`) are rejected: Go has no `<` / `>` / `<=` / `>=` for complex values, and go-playground/validator does not define concrete ordering semantics for them.
+Complex (`complex64`, `complex128`) supports `eq`, `neq`, `in`, `nin`, `eqfield`, and `neqfield` via Go `==` / `!=`, and `required` via `!= 0` (the zero value `0+0i`). Tag values are Go imaginary literals without spaces, for example `eq=1+2i` and `in=1+2i 5+6i`. Ordering tags (`gt`, `gte`, `lt`, `lte`, `gtfield`, `gtefield`, `ltfield`, `ltefield`) are rejected: Go has no `<` / `>` / `<=` / `>=` for complex values.
 
 ## Steps to run the unit tests
 

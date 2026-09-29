@@ -31,7 +31,13 @@ func (o *Operations) IsValid(op string) bool {
 
 func (o *Operations) IsValidByType(op, fieldType string) bool {
 	// * is a modifier and can be ignored for type validation.
-	fieldType, pointer := strings.CutPrefix(fieldType, "*")
+	normalized, pointer := strings.CutPrefix(fieldType, "*")
+
+	// Scalar complex pointers have no condition-table row. Reject them here
+	// so analysis does not accept a tag that generation cannot emit.
+	if pointer && normalized == "<COMPLEX>" {
+		return false
+	}
 
 	// Required can be used with all pointer types.
 	if pointer && op == "required" {
@@ -39,7 +45,7 @@ func (o *Operations) IsValidByType(op, fieldType string) bool {
 		return true
 	}
 
-	return slices.Contains(o.operations[op].ValidTypes, fieldType)
+	return slices.Contains(o.operations[op].ValidTypes, normalized)
 }
 
 func (o *Operations) IsFieldOperation(op string) bool {

@@ -141,6 +141,18 @@ return errs
 						},
 
 						{
+							FieldName: "FieldRequiredComplex64",
+							Type:      common.FieldType{ComposedType: "", BaseType: "complex64", Size: ""},
+							Tag:       `validate:"required"`,
+						},
+
+						{
+							FieldName: "FieldRequiredComplex128",
+							Type:      common.FieldType{ComposedType: "", BaseType: "complex128", Size: ""},
+							Tag:       `validate:"required"`,
+						},
+
+						{
 							FieldName: "FieldRequiredStringSlice",
 							Type:      common.FieldType{ComposedType: "[]", BaseType: "string", Size: ""},
 							Tag:       `validate:"required"`,
@@ -478,6 +490,14 @@ return errs
 					{
 						Validations: []*analyzer.Validation{AssertParserValidation(t, `required`)},
 					},
+
+					{
+						Validations: []*analyzer.Validation{AssertParserValidation(t, `required`)},
+					},
+
+					{
+						Validations: []*analyzer.Validation{AssertParserValidation(t, `required`)},
+					},
 				},
 			},
 			want: `func requiredStructValidate(obj *requiredStruct) []error {
@@ -523,6 +543,12 @@ errs = append(errs, types.NewValidationError("FieldRequiredFloat64 is required")
 }
 if !(obj.FieldRequiredBool != false) {
 errs = append(errs, types.NewValidationError("FieldRequiredBool is required"))
+}
+if !(obj.FieldRequiredComplex64 != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredComplex64 is required"))
+}
+if !(obj.FieldRequiredComplex128 != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredComplex128 is required"))
 }
 if !(len(obj.FieldRequiredStringSlice) != 0) {
 errs = append(errs, types.NewValidationError("FieldRequiredStringSlice must not be empty"))
@@ -703,6 +729,18 @@ return errs
 							Type:      common.FieldType{ComposedType: "", BaseType: "bool", Size: ""},
 							Tag:       `validate:"eq=true"`,
 						},
+
+						{
+							FieldName: "FieldEqComplex64",
+							Type:      common.FieldType{ComposedType: "", BaseType: "complex64", Size: ""},
+							Tag:       `validate:"eq=1+2i"`,
+						},
+
+						{
+							FieldName: "FieldEqComplex128",
+							Type:      common.FieldType{ComposedType: "", BaseType: "complex128", Size: ""},
+							Tag:       `validate:"eq=1+2i"`,
+						},
 					},
 				},
 				FieldsValidations: []analyzer.FieldValidations{
@@ -762,6 +800,14 @@ return errs
 					{
 						Validations: []*analyzer.Validation{AssertParserValidation(t, `eq=true`)},
 					},
+
+					{
+						Validations: []*analyzer.Validation{AssertParserValidation(t, `eq=1+2i`)},
+					},
+
+					{
+						Validations: []*analyzer.Validation{AssertParserValidation(t, `eq=1+2i`)},
+					},
 				},
 			},
 			want: `func eqStructValidate(obj *eqStruct) []error {
@@ -807,6 +853,12 @@ errs = append(errs, types.NewValidationError("FieldEqFloat64 must be equal to 12
 }
 if !(obj.FieldEqBool == true) {
 errs = append(errs, types.NewValidationError("FieldEqBool must be equal to true"))
+}
+if !(obj.FieldEqComplex64 == 1+2i) {
+errs = append(errs, types.NewValidationError("FieldEqComplex64 must be equal to 1+2i"))
+}
+if !(obj.FieldEqComplex128 == 1+2i) {
+errs = append(errs, types.NewValidationError("FieldEqComplex128 must be equal to 1+2i"))
 }
 return errs
 }
@@ -903,6 +955,18 @@ return errs
 							Type:      common.FieldType{ComposedType: "", BaseType: "bool", Size: ""},
 							Tag:       `validate:"neq=true"`,
 						},
+
+						{
+							FieldName: "FieldNeqComplex64",
+							Type:      common.FieldType{ComposedType: "", BaseType: "complex64", Size: ""},
+							Tag:       `validate:"neq=3+4i"`,
+						},
+
+						{
+							FieldName: "FieldNeqComplex128",
+							Type:      common.FieldType{ComposedType: "", BaseType: "complex128", Size: ""},
+							Tag:       `validate:"neq=3+4i"`,
+						},
 					},
 				},
 				FieldsValidations: []analyzer.FieldValidations{
@@ -962,6 +1026,14 @@ return errs
 					{
 						Validations: []*analyzer.Validation{AssertParserValidation(t, `neq=true`)},
 					},
+
+					{
+						Validations: []*analyzer.Validation{AssertParserValidation(t, `neq=3+4i`)},
+					},
+
+					{
+						Validations: []*analyzer.Validation{AssertParserValidation(t, `neq=3+4i`)},
+					},
 				},
 			},
 			want: `func neqStructValidate(obj *neqStruct) []error {
@@ -1007,6 +1079,12 @@ errs = append(errs, types.NewValidationError("FieldNeqFloat64 must not be equal 
 }
 if !(obj.FieldNeqBool != true) {
 errs = append(errs, types.NewValidationError("FieldNeqBool must not be equal to true"))
+}
+if !(obj.FieldNeqComplex64 != 3+4i) {
+errs = append(errs, types.NewValidationError("FieldNeqComplex64 must not be equal to 3+4i"))
+}
+if !(obj.FieldNeqComplex128 != 3+4i) {
+errs = append(errs, types.NewValidationError("FieldNeqComplex128 must not be equal to 3+4i"))
 }
 return errs
 }
@@ -3048,6 +3126,18 @@ return errs
 						},
 
 						{
+							FieldName: "FieldInComplex64",
+							Type:      common.FieldType{ComposedType: "", BaseType: "complex64", Size: ""},
+							Tag:       `validate:"in=1+2i 5+6i"`,
+						},
+
+						{
+							FieldName: "FieldInComplex128",
+							Type:      common.FieldType{ComposedType: "", BaseType: "complex128", Size: ""},
+							Tag:       `validate:"in=1+2i 5+6i"`,
+						},
+
+						{
 							FieldName: "FieldInStringSlice",
 							Type:      common.FieldType{ComposedType: "[]", BaseType: "string", Size: ""},
 							Tag:       `validate:"in=ab cd ef"`,
@@ -3359,6 +3449,14 @@ return errs
 					},
 
 					{
+						Validations: []*analyzer.Validation{AssertParserValidation(t, `in=1+2i 5+6i`)},
+					},
+
+					{
+						Validations: []*analyzer.Validation{AssertParserValidation(t, `in=1+2i 5+6i`)},
+					},
+
+					{
 						Validations: []*analyzer.Validation{AssertParserValidation(t, `in=ab cd ef`)},
 					},
 
@@ -3570,6 +3668,12 @@ errs = append(errs, types.NewValidationError("FieldInFloat64 must be one of '11.
 }
 if !(obj.FieldInBool == true) {
 errs = append(errs, types.NewValidationError("FieldInBool must be one of 'true'"))
+}
+if !(obj.FieldInComplex64 == 1+2i || obj.FieldInComplex64 == 5+6i) {
+errs = append(errs, types.NewValidationError("FieldInComplex64 must be one of '1+2i' '5+6i'"))
+}
+if !(obj.FieldInComplex128 == 1+2i || obj.FieldInComplex128 == 5+6i) {
+errs = append(errs, types.NewValidationError("FieldInComplex128 must be one of '1+2i' '5+6i'"))
 }
 if !(types.SliceOnlyContains(obj.FieldInStringSlice, []string{"ab", "cd", "ef"})) {
 errs = append(errs, types.NewValidationError("FieldInStringSlice elements must be one of 'ab' 'cd' 'ef'"))
@@ -3791,6 +3895,18 @@ return errs
 							FieldName: "FieldNinBool",
 							Type:      common.FieldType{ComposedType: "", BaseType: "bool", Size: ""},
 							Tag:       `validate:"nin=true"`,
+						},
+
+						{
+							FieldName: "FieldNinComplex64",
+							Type:      common.FieldType{ComposedType: "", BaseType: "complex64", Size: ""},
+							Tag:       `validate:"nin=7+8i 9+0i"`,
+						},
+
+						{
+							FieldName: "FieldNinComplex128",
+							Type:      common.FieldType{ComposedType: "", BaseType: "complex128", Size: ""},
+							Tag:       `validate:"nin=7+8i 9+0i"`,
 						},
 
 						{
@@ -4105,6 +4221,14 @@ return errs
 					},
 
 					{
+						Validations: []*analyzer.Validation{AssertParserValidation(t, `nin=7+8i 9+0i`)},
+					},
+
+					{
+						Validations: []*analyzer.Validation{AssertParserValidation(t, `nin=7+8i 9+0i`)},
+					},
+
+					{
 						Validations: []*analyzer.Validation{AssertParserValidation(t, `nin=ab cd ef`)},
 					},
 
@@ -4316,6 +4440,12 @@ errs = append(errs, types.NewValidationError("FieldNinFloat64 must not be one of
 }
 if !(obj.FieldNinBool != true) {
 errs = append(errs, types.NewValidationError("FieldNinBool must not be one of 'true'"))
+}
+if !(obj.FieldNinComplex64 != 7+8i && obj.FieldNinComplex64 != 9+0i) {
+errs = append(errs, types.NewValidationError("FieldNinComplex64 must not be one of '7+8i' '9+0i'"))
+}
+if !(obj.FieldNinComplex128 != 7+8i && obj.FieldNinComplex128 != 9+0i) {
+errs = append(errs, types.NewValidationError("FieldNinComplex128 must not be one of '7+8i' '9+0i'"))
 }
 if !(types.SliceNotContains(obj.FieldNinStringSlice, []string{"ab", "cd", "ef"})) {
 errs = append(errs, types.NewValidationError("FieldNinStringSlice elements must not be one of 'ab' 'cd' 'ef'"))
