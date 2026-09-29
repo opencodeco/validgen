@@ -15,4 +15,11 @@ type Pkg struct {
 type Struct struct {
 	*analyzer.Struct
 	ValidatorFuncCode string
+	UnmarshalJSONCode string
+}
+
+// Options controls optional code generation features.
+type Options struct {
+	// UnmarshalJSON generates encoding/json.Unmarshaler methods that validate after decoding.
+	UnmarshalJSON bool
 }

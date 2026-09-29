@@ -11,7 +11,7 @@ type GenValidations struct {
 	Struct                *analyzer.Struct
 }
 
-func GenerateCode(structs []*analyzer.Struct) (map[string]*Pkg, error) {
+func GenerateCode(structs []*analyzer.Struct, opts Options) (map[string]*Pkg, error) {
 	structsWithValidation := map[string]struct{}{}
 	usedPkgs := map[string]struct{}{}
 
@@ -36,6 +36,11 @@ func GenerateCode(structs []*analyzer.Struct) (map[string]*Pkg, error) {
 			return nil, err
 		}
 
+		var unmarshalJSONCode string
+		if opts.UnmarshalJSON {
+			unmarshalJSONCode = codeInfo.BuildUnmarshalJSONCode()
+		}
+
 		pkdId := common.KeyPath(st.Path, st.PackageName)
 		pkg, ok := pkgs[pkdId]
 		if !ok {
@@ -51,6 +56,7 @@ func GenerateCode(structs []*analyzer.Struct) (map[string]*Pkg, error) {
 		cgSt := &Struct{
 			Struct:            st,
 			ValidatorFuncCode: funcCode,
+			UnmarshalJSONCode: unmarshalJSONCode,
 		}
 
 		pkg.Structs[st.StructName] = cgSt
