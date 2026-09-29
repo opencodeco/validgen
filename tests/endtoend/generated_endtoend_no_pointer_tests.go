@@ -72,6 +72,8 @@ type requiredStructFields struct {
 	FieldRequiredFloat32      float32             `valid:"required"`
 	FieldRequiredFloat64      float64             `valid:"required"`
 	FieldRequiredBool         bool                `valid:"required"`
+	FieldRequiredComplex64    complex64           `valid:"required"`
+	FieldRequiredComplex128   complex128          `valid:"required"`
 	FieldRequiredStringSlice  []string            `valid:"required"`
 	FieldRequiredIntSlice     []int               `valid:"required"`
 	FieldRequiredInt8Slice    []int8              `valid:"required"`
@@ -125,6 +127,8 @@ func requiredStructFieldsTests() {
 		"FieldRequiredFloat32 is required",
 		"FieldRequiredFloat64 is required",
 		"FieldRequiredBool is required",
+		"FieldRequiredComplex64 is required",
+		"FieldRequiredComplex128 is required",
 		"FieldRequiredStringSlice must not be empty",
 		"FieldRequiredIntSlice must not be empty",
 		"FieldRequiredInt8Slice must not be empty",
@@ -169,6 +173,8 @@ func requiredStructFieldsTests() {
 	v.FieldRequiredFloat32 = 0
 	v.FieldRequiredFloat64 = 0
 	v.FieldRequiredBool = false
+	v.FieldRequiredComplex64 = 0
+	v.FieldRequiredComplex128 = 0
 	v.FieldRequiredStringSlice = []string{}
 	v.FieldRequiredIntSlice = []int{}
 	v.FieldRequiredInt8Slice = []int8{}
@@ -217,6 +223,8 @@ func requiredStructFieldsTests() {
 	v.FieldRequiredFloat32 = 12.34
 	v.FieldRequiredFloat64 = 12.34
 	v.FieldRequiredBool = true
+	v.FieldRequiredComplex64 = 1 + 2i
+	v.FieldRequiredComplex128 = 1 + 2i
 	v.FieldRequiredStringSlice = []string{"abcde"}
 	v.FieldRequiredIntSlice = []int{32}
 	v.FieldRequiredInt8Slice = []int8{32}
@@ -254,20 +262,22 @@ func requiredStructFieldsTests() {
 }
 
 type eqStructFields struct {
-	FieldEqString  string  `valid:"eq=abcde"`
-	FieldEqInt     int     `valid:"eq=32"`
-	FieldEqInt8    int8    `valid:"eq=32"`
-	FieldEqInt16   int16   `valid:"eq=32"`
-	FieldEqInt32   int32   `valid:"eq=32"`
-	FieldEqInt64   int64   `valid:"eq=32"`
-	FieldEqUint    uint    `valid:"eq=32"`
-	FieldEqUint8   uint8   `valid:"eq=32"`
-	FieldEqUint16  uint16  `valid:"eq=32"`
-	FieldEqUint32  uint32  `valid:"eq=32"`
-	FieldEqUint64  uint64  `valid:"eq=32"`
-	FieldEqFloat32 float32 `valid:"eq=12.34"`
-	FieldEqFloat64 float64 `valid:"eq=12.34"`
-	FieldEqBool    bool    `valid:"eq=true"`
+	FieldEqString     string     `valid:"eq=abcde"`
+	FieldEqInt        int        `valid:"eq=32"`
+	FieldEqInt8       int8       `valid:"eq=32"`
+	FieldEqInt16      int16      `valid:"eq=32"`
+	FieldEqInt32      int32      `valid:"eq=32"`
+	FieldEqInt64      int64      `valid:"eq=32"`
+	FieldEqUint       uint       `valid:"eq=32"`
+	FieldEqUint8      uint8      `valid:"eq=32"`
+	FieldEqUint16     uint16     `valid:"eq=32"`
+	FieldEqUint32     uint32     `valid:"eq=32"`
+	FieldEqUint64     uint64     `valid:"eq=32"`
+	FieldEqFloat32    float32    `valid:"eq=12.34"`
+	FieldEqFloat64    float64    `valid:"eq=12.34"`
+	FieldEqBool       bool       `valid:"eq=true"`
+	FieldEqComplex64  complex64  `valid:"eq=1+2i"`
+	FieldEqComplex128 complex128 `valid:"eq=1+2i"`
 }
 
 func eqStructFieldsTests() {
@@ -293,6 +303,8 @@ func eqStructFieldsTests() {
 		"FieldEqFloat32 must be equal to 12.34",
 		"FieldEqFloat64 must be equal to 12.34",
 		"FieldEqBool must be equal to true",
+		"FieldEqComplex64 must be equal to 1+2i",
+		"FieldEqComplex128 must be equal to 1+2i",
 	}
 
 	v.FieldEqString = "fghij"
@@ -309,6 +321,8 @@ func eqStructFieldsTests() {
 	v.FieldEqFloat32 = 34.56
 	v.FieldEqFloat64 = 34.56
 	v.FieldEqBool = false
+	v.FieldEqComplex64 = 3 + 4i
+	v.FieldEqComplex128 = 3 + 4i
 
 	errs = eqStructFieldsValidate(v)
 	assertExpectedErrorMsgs("testcase 1", errs, expectedMsgErrors)
@@ -329,6 +343,8 @@ func eqStructFieldsTests() {
 	v.FieldEqFloat32 = 12.34
 	v.FieldEqFloat64 = 12.34
 	v.FieldEqBool = true
+	v.FieldEqComplex64 = 1 + 2i
+	v.FieldEqComplex128 = 1 + 2i
 
 	expectedMsgErrors = nil
 	errs = eqStructFieldsValidate(v)
@@ -338,20 +354,22 @@ func eqStructFieldsTests() {
 }
 
 type neqStructFields struct {
-	FieldNeqString  string  `valid:"neq=abcde"`
-	FieldNeqInt     int     `valid:"neq=32"`
-	FieldNeqInt8    int8    `valid:"neq=32"`
-	FieldNeqInt16   int16   `valid:"neq=32"`
-	FieldNeqInt32   int32   `valid:"neq=32"`
-	FieldNeqInt64   int64   `valid:"neq=32"`
-	FieldNeqUint    uint    `valid:"neq=32"`
-	FieldNeqUint8   uint8   `valid:"neq=32"`
-	FieldNeqUint16  uint16  `valid:"neq=32"`
-	FieldNeqUint32  uint32  `valid:"neq=32"`
-	FieldNeqUint64  uint64  `valid:"neq=32"`
-	FieldNeqFloat32 float32 `valid:"neq=12.34"`
-	FieldNeqFloat64 float64 `valid:"neq=12.34"`
-	FieldNeqBool    bool    `valid:"neq=true"`
+	FieldNeqString     string     `valid:"neq=abcde"`
+	FieldNeqInt        int        `valid:"neq=32"`
+	FieldNeqInt8       int8       `valid:"neq=32"`
+	FieldNeqInt16      int16      `valid:"neq=32"`
+	FieldNeqInt32      int32      `valid:"neq=32"`
+	FieldNeqInt64      int64      `valid:"neq=32"`
+	FieldNeqUint       uint       `valid:"neq=32"`
+	FieldNeqUint8      uint8      `valid:"neq=32"`
+	FieldNeqUint16     uint16     `valid:"neq=32"`
+	FieldNeqUint32     uint32     `valid:"neq=32"`
+	FieldNeqUint64     uint64     `valid:"neq=32"`
+	FieldNeqFloat32    float32    `valid:"neq=12.34"`
+	FieldNeqFloat64    float64    `valid:"neq=12.34"`
+	FieldNeqBool       bool       `valid:"neq=true"`
+	FieldNeqComplex64  complex64  `valid:"neq=3+4i"`
+	FieldNeqComplex128 complex128 `valid:"neq=3+4i"`
 }
 
 func neqStructFieldsTests() {
@@ -377,6 +395,8 @@ func neqStructFieldsTests() {
 		"FieldNeqFloat32 must not be equal to 12.34",
 		"FieldNeqFloat64 must not be equal to 12.34",
 		"FieldNeqBool must not be equal to true",
+		"FieldNeqComplex64 must not be equal to 3+4i",
+		"FieldNeqComplex128 must not be equal to 3+4i",
 	}
 
 	v.FieldNeqString = "abcde"
@@ -393,6 +413,8 @@ func neqStructFieldsTests() {
 	v.FieldNeqFloat32 = 12.34
 	v.FieldNeqFloat64 = 12.34
 	v.FieldNeqBool = true
+	v.FieldNeqComplex64 = 3 + 4i
+	v.FieldNeqComplex128 = 3 + 4i
 
 	errs = neqStructFieldsValidate(v)
 	assertExpectedErrorMsgs("testcase 1", errs, expectedMsgErrors)
@@ -413,6 +435,8 @@ func neqStructFieldsTests() {
 	v.FieldNeqFloat32 = 34.56
 	v.FieldNeqFloat64 = 34.56
 	v.FieldNeqBool = false
+	v.FieldNeqComplex64 = 1 + 2i
+	v.FieldNeqComplex128 = 1 + 2i
 
 	expectedMsgErrors = nil
 	errs = neqStructFieldsValidate(v)
@@ -1236,6 +1260,8 @@ type inStructFields struct {
 	FieldInFloat32      float32             `valid:"in=11.11 22.22 33.33"`
 	FieldInFloat64      float64             `valid:"in=11.11 22.22 33.33"`
 	FieldInBool         bool                `valid:"in=true"`
+	FieldInComplex64    complex64           `valid:"in=1+2i 5+6i"`
+	FieldInComplex128   complex128          `valid:"in=1+2i 5+6i"`
 	FieldInStringSlice  []string            `valid:"in=ab cd ef"`
 	FieldInIntSlice     []int               `valid:"in=12 34 56"`
 	FieldInInt8Slice    []int8              `valid:"in=12 34 56"`
@@ -1303,6 +1329,8 @@ func inStructFieldsTests() {
 		"FieldInFloat32 must be one of '11.11' '22.22' '33.33'",
 		"FieldInFloat64 must be one of '11.11' '22.22' '33.33'",
 		"FieldInBool must be one of 'true'",
+		"FieldInComplex64 must be one of '1+2i' '5+6i'",
+		"FieldInComplex128 must be one of '1+2i' '5+6i'",
 		"FieldInStringSlice elements must be one of 'ab' 'cd' 'ef'",
 		"FieldInIntSlice elements must be one of '12' '34' '56'",
 		"FieldInInt8Slice elements must be one of '12' '34' '56'",
@@ -1361,6 +1389,8 @@ func inStructFieldsTests() {
 	v.FieldInFloat32 = 44.44
 	v.FieldInFloat64 = 44.44
 	v.FieldInBool = false
+	v.FieldInComplex64 = 7 + 8i
+	v.FieldInComplex128 = 7 + 8i
 	v.FieldInStringSlice = []string{"ab", "gh", "ef"}
 	v.FieldInIntSlice = []int{12, 78, 56}
 	v.FieldInInt8Slice = []int8{12, 78, 56}
@@ -1423,6 +1453,8 @@ func inStructFieldsTests() {
 	v.FieldInFloat32 = 22.22
 	v.FieldInFloat64 = 22.22
 	v.FieldInBool = true
+	v.FieldInComplex64 = 5 + 6i
+	v.FieldInComplex128 = 5 + 6i
 	v.FieldInStringSlice = []string{"ab", "ef"}
 	v.FieldInIntSlice = []int{12, 56}
 	v.FieldInInt8Slice = []int8{12, 56}
@@ -1488,6 +1520,8 @@ type ninStructFields struct {
 	FieldNinFloat32      float32             `valid:"nin=11.11 22.22 33.33"`
 	FieldNinFloat64      float64             `valid:"nin=11.11 22.22 33.33"`
 	FieldNinBool         bool                `valid:"nin=true"`
+	FieldNinComplex64    complex64           `valid:"nin=7+8i 9+0i"`
+	FieldNinComplex128   complex128          `valid:"nin=7+8i 9+0i"`
 	FieldNinStringSlice  []string            `valid:"nin=ab cd ef"`
 	FieldNinIntSlice     []int               `valid:"nin=12 34 56"`
 	FieldNinInt8Slice    []int8              `valid:"nin=12 34 56"`
@@ -1555,6 +1589,8 @@ func ninStructFieldsTests() {
 		"FieldNinFloat32 must not be one of '11.11' '22.22' '33.33'",
 		"FieldNinFloat64 must not be one of '11.11' '22.22' '33.33'",
 		"FieldNinBool must not be one of 'true'",
+		"FieldNinComplex64 must not be one of '7+8i' '9+0i'",
+		"FieldNinComplex128 must not be one of '7+8i' '9+0i'",
 		"FieldNinStringSlice elements must not be one of 'ab' 'cd' 'ef'",
 		"FieldNinIntSlice elements must not be one of '12' '34' '56'",
 		"FieldNinInt8Slice elements must not be one of '12' '34' '56'",
@@ -1613,6 +1649,8 @@ func ninStructFieldsTests() {
 	v.FieldNinFloat32 = 22.22
 	v.FieldNinFloat64 = 22.22
 	v.FieldNinBool = true
+	v.FieldNinComplex64 = 9 + 0i
+	v.FieldNinComplex128 = 9 + 0i
 	v.FieldNinStringSlice = []string{"ab", "ef"}
 	v.FieldNinIntSlice = []int{12, 78, 56}
 	v.FieldNinInt8Slice = []int8{12, 78, 56}
@@ -1675,6 +1713,8 @@ func ninStructFieldsTests() {
 	v.FieldNinFloat32 = 44.44
 	v.FieldNinFloat64 = 44.44
 	v.FieldNinBool = false
+	v.FieldNinComplex64 = 1 + 2i
+	v.FieldNinComplex128 = 1 + 2i
 	v.FieldNinStringSlice = []string{"gh", "ij", "kl"}
 	v.FieldNinIntSlice = []int{78, 91}
 	v.FieldNinInt8Slice = []int8{78, 91}

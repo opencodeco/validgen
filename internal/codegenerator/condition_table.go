@@ -38,7 +38,7 @@ var conditionTable = map[string]Operation{
 				},
 			},
 			{
-				AcceptedTypes: []string{"<INT>", "<FLOAT>", "<BOOL>"},
+				AcceptedTypes: []string{"<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>"},
 				ConditionTable: ConditionTable{
 					operation:      `obj.{{.Name}} == {{.Target}}`,
 					concatOperator: "",
@@ -74,7 +74,7 @@ var conditionTable = map[string]Operation{
 				},
 			},
 			{
-				AcceptedTypes: []string{"<INT>", "<FLOAT>"},
+				AcceptedTypes: []string{"<INT>", "<FLOAT>", "<COMPLEX>"},
 				ConditionTable: ConditionTable{
 					operation:      `obj.{{.Name}} != 0`,
 					concatOperator: "",
@@ -358,7 +358,7 @@ var conditionTable = map[string]Operation{
 				},
 			},
 			{
-				AcceptedTypes: []string{"<INT>", "<FLOAT>", "<BOOL>"},
+				AcceptedTypes: []string{"<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>"},
 				ConditionTable: ConditionTable{
 					operation:      `obj.{{.Name}} != {{.Target}}`,
 					concatOperator: "",
@@ -414,7 +414,7 @@ var conditionTable = map[string]Operation{
 				},
 			},
 			{
-				AcceptedTypes: []string{"<INT>", "<FLOAT>", "<BOOL>"},
+				AcceptedTypes: []string{"<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>"},
 				ConditionTable: ConditionTable{
 					operation:      `obj.{{.Name}} == {{.Target}}`,
 					concatOperator: "||",
@@ -546,7 +546,7 @@ var conditionTable = map[string]Operation{
 				},
 			},
 			{
-				AcceptedTypes: []string{"<INT>", "<FLOAT>", "<BOOL>"},
+				AcceptedTypes: []string{"<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>"},
 				ConditionTable: ConditionTable{
 					operation:      `obj.{{.Name}} != {{.Target}}`,
 					concatOperator: "&&",

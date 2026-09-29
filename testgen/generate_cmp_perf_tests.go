@@ -54,6 +54,10 @@ func generateComparativePerformanceTest(tplFile, outputFile string, pointer bool
 				fmt.Printf("Skipping no pointer: tag %s type %s\n", typeVal.tag, testCase.typeClass)
 				continue
 			}
+			if pointer && testCase.excludeIf&skipPointer != 0 {
+				fmt.Printf("Skipping pointer: tag %s type %s\n", typeVal.tag, testCase.typeClass)
+				continue
+			}
 
 			normalizedType := testCase.typeClass
 			if pointer {

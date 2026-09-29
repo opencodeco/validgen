@@ -123,6 +123,9 @@ func TestTypesValidationCasesBuildValidationCode(t *testing.T) {
 				if tc.excludeIf&noPointer != 0 && !pointer {
 					continue
 				}
+				if pointer && tc.excludeIf&skipPointer != 0 {
+					continue
+				}
 
 				normalizedType := tc.typeClass
 				if pointer {

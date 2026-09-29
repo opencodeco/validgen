@@ -201,6 +201,30 @@ errs = append(errs, types.NewValidationError("FieldRequiredBool is required"))
 `,
 		},
 		{
+			name: "required_complex64_required",
+			args: args{
+				fieldName:       "FieldRequiredComplex64",
+				fieldType:       common.FieldType{ComposedType: "", BaseType: "complex64", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredComplex64 != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredComplex64 is required"))
+}
+`,
+		},
+		{
+			name: "required_complex128_required",
+			args: args{
+				fieldName:       "FieldRequiredComplex128",
+				fieldType:       common.FieldType{ComposedType: "", BaseType: "complex128", Size: ""},
+				fieldValidation: "required",
+			},
+			want: `if !(obj.FieldRequiredComplex128 != 0) {
+errs = append(errs, types.NewValidationError("FieldRequiredComplex128 is required"))
+}
+`,
+		},
+		{
 			name: "required_stringslice_required",
 			args: args{
 				fieldName:       "FieldRequiredStringSlice",
@@ -705,6 +729,30 @@ errs = append(errs, types.NewValidationError("FieldEqBool must be equal to true"
 `,
 		},
 		{
+			name: "eq_complex64_eq=1+2i",
+			args: args{
+				fieldName:       "FieldEqComplex64",
+				fieldType:       common.FieldType{ComposedType: "", BaseType: "complex64", Size: ""},
+				fieldValidation: "eq=1+2i",
+			},
+			want: `if !(obj.FieldEqComplex64 == 1+2i) {
+errs = append(errs, types.NewValidationError("FieldEqComplex64 must be equal to 1+2i"))
+}
+`,
+		},
+		{
+			name: "eq_complex128_eq=1+2i",
+			args: args{
+				fieldName:       "FieldEqComplex128",
+				fieldType:       common.FieldType{ComposedType: "", BaseType: "complex128", Size: ""},
+				fieldValidation: "eq=1+2i",
+			},
+			want: `if !(obj.FieldEqComplex128 == 1+2i) {
+errs = append(errs, types.NewValidationError("FieldEqComplex128 must be equal to 1+2i"))
+}
+`,
+		},
+		{
 			name: "neq_string_neq=abcde",
 			args: args{
 				fieldName:       "FieldNeqString",
@@ -869,6 +917,30 @@ errs = append(errs, types.NewValidationError("FieldNeqFloat64 must not be equal 
 			},
 			want: `if !(obj.FieldNeqBool != true) {
 errs = append(errs, types.NewValidationError("FieldNeqBool must not be equal to true"))
+}
+`,
+		},
+		{
+			name: "neq_complex64_neq=3+4i",
+			args: args{
+				fieldName:       "FieldNeqComplex64",
+				fieldType:       common.FieldType{ComposedType: "", BaseType: "complex64", Size: ""},
+				fieldValidation: "neq=3+4i",
+			},
+			want: `if !(obj.FieldNeqComplex64 != 3+4i) {
+errs = append(errs, types.NewValidationError("FieldNeqComplex64 must not be equal to 3+4i"))
+}
+`,
+		},
+		{
+			name: "neq_complex128_neq=3+4i",
+			args: args{
+				fieldName:       "FieldNeqComplex128",
+				fieldType:       common.FieldType{ComposedType: "", BaseType: "complex128", Size: ""},
+				fieldValidation: "neq=3+4i",
+			},
+			want: `if !(obj.FieldNeqComplex128 != 3+4i) {
+errs = append(errs, types.NewValidationError("FieldNeqComplex128 must not be equal to 3+4i"))
 }
 `,
 		},
@@ -2685,6 +2757,30 @@ errs = append(errs, types.NewValidationError("FieldInBool must be one of 'true'"
 `,
 		},
 		{
+			name: "in_complex64_in=1+2i 5+6i",
+			args: args{
+				fieldName:       "FieldInComplex64",
+				fieldType:       common.FieldType{ComposedType: "", BaseType: "complex64", Size: ""},
+				fieldValidation: "in=1+2i 5+6i",
+			},
+			want: `if !(obj.FieldInComplex64 == 1+2i || obj.FieldInComplex64 == 5+6i) {
+errs = append(errs, types.NewValidationError("FieldInComplex64 must be one of '1+2i' '5+6i'"))
+}
+`,
+		},
+		{
+			name: "in_complex128_in=1+2i 5+6i",
+			args: args{
+				fieldName:       "FieldInComplex128",
+				fieldType:       common.FieldType{ComposedType: "", BaseType: "complex128", Size: ""},
+				fieldValidation: "in=1+2i 5+6i",
+			},
+			want: `if !(obj.FieldInComplex128 == 1+2i || obj.FieldInComplex128 == 5+6i) {
+errs = append(errs, types.NewValidationError("FieldInComplex128 must be one of '1+2i' '5+6i'"))
+}
+`,
+		},
+		{
 			name: "in_stringslice_in=ab cd ef",
 			args: args{
 				fieldName:       "FieldInStringSlice",
@@ -3353,6 +3449,30 @@ errs = append(errs, types.NewValidationError("FieldNinFloat64 must not be one of
 			},
 			want: `if !(obj.FieldNinBool != true) {
 errs = append(errs, types.NewValidationError("FieldNinBool must not be one of 'true'"))
+}
+`,
+		},
+		{
+			name: "nin_complex64_nin=7+8i 9+0i",
+			args: args{
+				fieldName:       "FieldNinComplex64",
+				fieldType:       common.FieldType{ComposedType: "", BaseType: "complex64", Size: ""},
+				fieldValidation: "nin=7+8i 9+0i",
+			},
+			want: `if !(obj.FieldNinComplex64 != 7+8i && obj.FieldNinComplex64 != 9+0i) {
+errs = append(errs, types.NewValidationError("FieldNinComplex64 must not be one of '7+8i' '9+0i'"))
+}
+`,
+		},
+		{
+			name: "nin_complex128_nin=7+8i 9+0i",
+			args: args{
+				fieldName:       "FieldNinComplex128",
+				fieldType:       common.FieldType{ComposedType: "", BaseType: "complex128", Size: ""},
+				fieldValidation: "nin=7+8i 9+0i",
+			},
+			want: `if !(obj.FieldNinComplex128 != 7+8i && obj.FieldNinComplex128 != 9+0i) {
+errs = append(errs, types.NewValidationError("FieldNinComplex128 must not be one of '7+8i' '9+0i'"))
 }
 `,
 		},

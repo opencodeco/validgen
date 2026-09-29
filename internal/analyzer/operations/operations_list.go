@@ -6,13 +6,13 @@ var operationsList = map[string]Operation{
 	"eq": {
 		CountValues:      common.OneValue,
 		IsFieldOperation: false,
-		ValidTypes:       []string{"<STRING>", "<INT>", "<FLOAT>", "<BOOL>"},
+		ValidTypes:       []string{"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>"},
 	},
 	"required": {
 		CountValues:      common.ZeroValue,
 		IsFieldOperation: false,
 		ValidTypes: []string{
-			"<STRING>", "<INT>", "<FLOAT>", "<BOOL>",
+			"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>",
 			"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>",
 			"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]"},
 	},
@@ -68,7 +68,7 @@ var operationsList = map[string]Operation{
 	"neq": {
 		CountValues:      common.OneValue,
 		IsFieldOperation: false,
-		ValidTypes:       []string{"<STRING>", "<BOOL>", "<INT>", "<FLOAT>"},
+		ValidTypes:       []string{"<STRING>", "<BOOL>", "<INT>", "<FLOAT>", "<COMPLEX>"},
 	},
 	"neq_ignore_case": {
 		CountValues:      common.OneValue,
@@ -79,7 +79,7 @@ var operationsList = map[string]Operation{
 		CountValues:      common.ManyValues,
 		IsFieldOperation: false,
 		ValidTypes: []string{
-			"<STRING>", "<INT>", "<FLOAT>", "<BOOL>",
+			"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>",
 			"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>",
 			"[N]<STRING>", "[N]<INT>", "[N]<FLOAT>", "[N]<BOOL>",
 			"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]",
@@ -89,7 +89,7 @@ var operationsList = map[string]Operation{
 		CountValues:      common.ManyValues,
 		IsFieldOperation: false,
 		ValidTypes: []string{
-			"<STRING>", "<INT>", "<FLOAT>", "<BOOL>",
+			"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>",
 			"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>",
 			"[N]<STRING>", "[N]<INT>", "[N]<FLOAT>", "[N]<BOOL>",
 			"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]",
