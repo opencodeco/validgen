@@ -3,16 +3,11 @@ package types
 import (
 	"regexp"
 	"slices"
-	"strings"
 )
 
 // emailRegex is a pre-compiled regex for email validation
 // This avoids recompiling the regex on every validation call
 var emailRegex = regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
-
-func EqualFold(s, t string) bool {
-	return strings.EqualFold(s, t)
-}
 
 // IsValidEmail validates if a string is a valid email format
 // Returns true for valid email format, false otherwise

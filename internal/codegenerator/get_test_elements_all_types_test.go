@@ -279,7 +279,7 @@ func TestDefineTestElementsWithAllTypes(t *testing.T) {
 					types: []string{"<STRING>"},
 					value: "abc",
 					want: TestElements{
-						conditions:     []string{`types.EqualFold(obj.field, "abc")`},
+						conditions:     []string{`strings.EqualFold(obj.field, "abc")`},
 						concatOperator: "",
 						errorMessage:   "field must be equal to 'abc'",
 					},
@@ -288,7 +288,7 @@ func TestDefineTestElementsWithAllTypes(t *testing.T) {
 					types: []string{"*<STRING>"},
 					value: "abc",
 					want: TestElements{
-						conditions:     []string{`obj.field != nil && types.EqualFold(*obj.field, "abc")`},
+						conditions:     []string{`obj.field != nil && strings.EqualFold(*obj.field, "abc")`},
 						concatOperator: "",
 						errorMessage:   "field must be equal to 'abc'",
 					},
@@ -304,7 +304,7 @@ func TestDefineTestElementsWithAllTypes(t *testing.T) {
 					types: []string{"<STRING>"},
 					value: "abc",
 					want: TestElements{
-						conditions:     []string{`!types.EqualFold(obj.field, "abc")`},
+						conditions:     []string{`!strings.EqualFold(obj.field, "abc")`},
 						concatOperator: "",
 						errorMessage:   "field must not be equal to 'abc'",
 					},
@@ -313,7 +313,7 @@ func TestDefineTestElementsWithAllTypes(t *testing.T) {
 					types: []string{"*<STRING>"},
 					value: "abc",
 					want: TestElements{
-						conditions:     []string{`obj.field != nil && !types.EqualFold(*obj.field, "abc")`},
+						conditions:     []string{`obj.field != nil && !strings.EqualFold(*obj.field, "abc")`},
 						concatOperator: "",
 						errorMessage:   "field must not be equal to 'abc'",
 					},

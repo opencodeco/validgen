@@ -4,6 +4,8 @@
 package main
 
 import (
+	"strings"
+
 	"github.com/opencodeco/validgen/tests/endtoend/structsinpkg"
 	"github.com/opencodeco/validgen/types"
 )
@@ -407,14 +409,14 @@ func eqStructFieldsPointerValidate(obj *eqStructFieldsPointer) []error {
 }
 func eq_ignore_caseStructFieldsValidate(obj *eq_ignore_caseStructFields) []error {
 	var errs []error
-	if !(types.EqualFold(obj.FieldEq_ignore_caseString, "abcde")) {
+	if !(strings.EqualFold(obj.FieldEq_ignore_caseString, "abcde")) {
 		errs = append(errs, types.NewValidationError("FieldEq_ignore_caseString must be equal to 'abcde'"))
 	}
 	return errs
 }
 func eq_ignore_caseStructFieldsPointerValidate(obj *eq_ignore_caseStructFieldsPointer) []error {
 	var errs []error
-	if !(obj.FieldEq_ignore_caseStringPointer != nil && types.EqualFold(*obj.FieldEq_ignore_caseStringPointer, "abcde")) {
+	if !(obj.FieldEq_ignore_caseStringPointer != nil && strings.EqualFold(*obj.FieldEq_ignore_caseStringPointer, "abcde")) {
 		errs = append(errs, types.NewValidationError("FieldEq_ignore_caseStringPointer must be equal to 'abcde'"))
 	}
 	return errs
@@ -1723,14 +1725,14 @@ func neqStructFieldsPointerValidate(obj *neqStructFieldsPointer) []error {
 }
 func neq_ignore_caseStructFieldsValidate(obj *neq_ignore_caseStructFields) []error {
 	var errs []error
-	if !(!types.EqualFold(obj.FieldNeq_ignore_caseString, "abcde")) {
+	if !(!strings.EqualFold(obj.FieldNeq_ignore_caseString, "abcde")) {
 		errs = append(errs, types.NewValidationError("FieldNeq_ignore_caseString must not be equal to 'abcde'"))
 	}
 	return errs
 }
 func neq_ignore_caseStructFieldsPointerValidate(obj *neq_ignore_caseStructFieldsPointer) []error {
 	var errs []error
-	if !(obj.FieldNeq_ignore_caseStringPointer != nil && !types.EqualFold(*obj.FieldNeq_ignore_caseStringPointer, "abcde")) {
+	if !(obj.FieldNeq_ignore_caseStringPointer != nil && !strings.EqualFold(*obj.FieldNeq_ignore_caseStringPointer, "abcde")) {
 		errs = append(errs, types.NewValidationError("FieldNeq_ignore_caseStringPointer must not be equal to 'abcde'"))
 	}
 	return errs

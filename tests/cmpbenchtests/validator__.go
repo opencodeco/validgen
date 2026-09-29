@@ -4,6 +4,8 @@
 package benchtests
 
 import (
+	"strings"
+
 	"github.com/opencodeco/validgen/types"
 )
 
@@ -219,14 +221,14 @@ func ValidGenEqUintStructValidate(obj *ValidGenEqUintStruct) []error {
 }
 func ValidGenEq_ignore_caseStringPointerStructValidate(obj *ValidGenEq_ignore_caseStringPointerStruct) []error {
 	var errs []error
-	if !(obj.Field != nil && types.EqualFold(*obj.Field, "abcde")) {
+	if !(obj.Field != nil && strings.EqualFold(*obj.Field, "abcde")) {
 		errs = append(errs, types.NewValidationError("Field must be equal to 'abcde'"))
 	}
 	return errs
 }
 func ValidGenEq_ignore_caseStringStructValidate(obj *ValidGenEq_ignore_caseStringStruct) []error {
 	var errs []error
-	if !(types.EqualFold(obj.Field, "abcde")) {
+	if !(strings.EqualFold(obj.Field, "abcde")) {
 		errs = append(errs, types.NewValidationError("Field must be equal to 'abcde'"))
 	}
 	return errs
@@ -2473,14 +2475,14 @@ func ValidGenNeqUintStructValidate(obj *ValidGenNeqUintStruct) []error {
 }
 func ValidGenNeq_ignore_caseStringPointerStructValidate(obj *ValidGenNeq_ignore_caseStringPointerStruct) []error {
 	var errs []error
-	if !(obj.Field != nil && !types.EqualFold(*obj.Field, "abcde")) {
+	if !(obj.Field != nil && !strings.EqualFold(*obj.Field, "abcde")) {
 		errs = append(errs, types.NewValidationError("Field must not be equal to 'abcde'"))
 	}
 	return errs
 }
 func ValidGenNeq_ignore_caseStringStructValidate(obj *ValidGenNeq_ignore_caseStringStruct) []error {
 	var errs []error
-	if !(!types.EqualFold(obj.Field, "abcde")) {
+	if !(!strings.EqualFold(obj.Field, "abcde")) {
 		errs = append(errs, types.NewValidationError("Field must not be equal to 'abcde'"))
 	}
 	return errs

@@ -2151,7 +2151,7 @@ errs = append(errs, types.NewValidationError("FieldMaxBoolMap must have at most 
 				fieldType:       common.FieldType{ComposedType: "", BaseType: "string", Size: ""},
 				fieldValidation: "eq_ignore_case=abcde",
 			},
-			want: `if !(types.EqualFold(obj.FieldEq_ignore_caseString, "abcde")) {
+			want: `if !(strings.EqualFold(obj.FieldEq_ignore_caseString, "abcde")) {
 errs = append(errs, types.NewValidationError("FieldEq_ignore_caseString must be equal to 'abcde'"))
 }
 `,
@@ -2163,7 +2163,7 @@ errs = append(errs, types.NewValidationError("FieldEq_ignore_caseString must be 
 				fieldType:       common.FieldType{ComposedType: "", BaseType: "string", Size: ""},
 				fieldValidation: "neq_ignore_case=abcde",
 			},
-			want: `if !(!types.EqualFold(obj.FieldNeq_ignore_caseString, "abcde")) {
+			want: `if !(!strings.EqualFold(obj.FieldNeq_ignore_caseString, "abcde")) {
 errs = append(errs, types.NewValidationError("FieldNeq_ignore_caseString must not be equal to 'abcde'"))
 }
 `,
