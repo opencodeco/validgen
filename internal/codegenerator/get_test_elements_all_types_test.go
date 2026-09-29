@@ -1162,7 +1162,7 @@ func TestDefineTestElementsWithAllTypes(t *testing.T) {
 						want.conditions[i] = strings.ReplaceAll(want.conditions[i], "{{.BaseType}}", fieldType.BaseType)
 					}
 
-					testName := fmt.Sprintf("validation(%s) type(%s)", validation, fieldType)
+					testName := fmt.Sprintf("validation(%s) type(%s)", validation, fieldType.ToType())
 					t.Run(testName, func(t *testing.T) {
 						validation := AssertParserValidation(t, validation)
 						got, err := DefineTestElements("field", fieldType, validation)

@@ -192,10 +192,20 @@ func extractCompleteType(fType common.FieldType, expr ast.Expr, packageName stri
 		}
 		return fType, nil
 	case *ast.ArrayType:
-		// Slice or array type
+		// Slice or array type.
+		// A star gained while parsing the element belongs to the element ([]*T),
+		// not to an outer pointer (*[]T).
+		before := fType.ComposedType
+		elemPointerBefore := fType.ElemPointer
 		fType, err = extractCompleteType(fType, v.Elt, packageName)
 		if err != nil {
 			return common.FieldType{}, err
+		}
+		gained := strings.TrimPrefix(fType.ComposedType, before)
+		if strings.Contains(gained, "*") {
+			fType.ElemPointer = true
+		} else {
+			fType.ElemPointer = elemPointerBefore
 		}
 
 		fType.Size = ""
@@ -224,11 +234,19 @@ func extractCompleteType(fType common.FieldType, expr ast.Expr, packageName stri
 		return fType, nil
 
 	case *ast.MapType:
-		// Map type
+		// Map type. BaseType stays the key. The value is kept for dive.
 		fType.ComposedType += "map"
 		fType, err = extractCompleteType(fType, v.Key, packageName)
 		if err != nil {
 			return common.FieldType{}, err
+		}
+
+		valueType, err := extractCompleteType(common.FieldType{}, v.Value, packageName)
+		if err != nil {
+			return common.FieldType{}, err
+		}
+		if valueType.BaseType != "" {
+			fType.MapValue = &valueType
 		}
 
 		return fType, nil

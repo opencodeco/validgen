@@ -273,6 +273,43 @@ func CmpNestedUint8FieldsValidate(obj *CmpNestedUint8Fields) []error {
 	}
 	return errs
 }
+func DiveUserValidate(obj *DiveUser) []error {
+	var errs []error
+	if !(len(obj.Addresses) != 0) {
+		errs = append(errs, types.NewValidationError("Addresses must not be empty"))
+	}
+	for _, elem1 := range obj.Addresses {
+		errs = append(errs, AddressValidate(&elem1)...)
+	}
+	for _, elem1 := range obj.Labels {
+		if !(elem1 != "") {
+			errs = append(errs, types.NewValidationError("Labels is required"))
+		}
+	}
+	return errs
+}
+func PointerDiveUserValidate(obj *PointerDiveUser) []error {
+	var errs []error
+	if !(len(obj.Addresses) != 0) {
+		errs = append(errs, types.NewValidationError("Addresses must not be empty"))
+	}
+	for _, elem1 := range obj.Addresses {
+		if !(elem1 != nil) {
+			errs = append(errs, types.NewValidationError("Addresses is required"))
+		}
+		if elem1 != nil {
+			errs = append(errs, AddressValidate(elem1)...)
+		}
+	}
+	return errs
+}
+func ShallowDiveUserValidate(obj *ShallowDiveUser) []error {
+	var errs []error
+	if !(len(obj.Addresses) != 0) {
+		errs = append(errs, types.NewValidationError("Addresses must not be empty"))
+	}
+	return errs
+}
 func UserValidate(obj *User) []error {
 	var errs []error
 	if !(obj.FirstName != "") {

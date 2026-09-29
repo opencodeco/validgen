@@ -89,33 +89,65 @@ func checkForInvalidOperations(structs []*Struct) error {
 
 	for _, st := range structs {
 		for i, fd := range st.Fields {
+			current := fd.Type
+			dived := false
 			for _, val := range st.FieldsValidations[i].Validations {
-				// Check if is a valid operation.
 				op := val.Operation
 				if !ops.IsValid(op) {
 					return types.NewValidationError("unsupported operation %s", op)
 				}
 
-				// If is a custom struct, check if it has validations.
-				fdType := fd.Type
-				if structsWithValidation[fdType.BaseType] {
+				if op == "dive" {
+					next, err := current.DiveInto()
+					if err != nil {
+						return types.NewValidationError("operation dive: field %s: %s", fd.FieldName, err.Error())
+					}
+					current = next
+					dived = true
 					continue
 				}
 
-				// If has a validation, must be for a go type.
-				if !fdType.IsGoType() {
-					return types.NewValidationError("unsupported operation %s with unknown go type %s", op, fdType.BaseType)
-				}
-
-				// Check if is a valid operation for this type.
-				if !ops.IsValidByType(op, fdType.ToNormalizedString()) {
-					return types.NewValidationError("operation %s: invalid %s(%s) type", op, fdType.BaseType, fdType.ToNormalizedString())
+				if err := validateOperation(ops, op, current, structsWithValidation, dived); err != nil {
+					return err
 				}
 			}
 		}
 	}
 
 	return nil
+}
+
+func validateOperation(ops *operations.Operations, op string, ft common.FieldType, structs map[string]bool, dived bool) error {
+	if dived && ops.IsFieldOperation(op) {
+		return types.NewValidationError("operation %s: field comparisons are not supported after dive", op)
+	}
+	if ft.ElemPointer && !common.IsLenOperation(op) {
+		return types.NewValidationError("operation %s: cannot apply to a slice or array of pointers", op)
+	}
+
+	if ft.IsNestedStruct() {
+		if !structs[ft.BaseType] {
+			return types.NewValidationError("unsupported operation %s with unknown go type %s", op, ft.BaseType)
+		}
+		if dived && op != "required" {
+			return types.NewValidationError("operation %s: cannot apply to struct %s", op, ft.BaseType)
+		}
+		return nil
+	}
+
+	accept := func(candidate common.FieldType) bool {
+		return ops.IsValidByType(op, candidate.ToNormalizedString())
+	}
+	if _, ok := ft.OperationType(op, accept); ok {
+		return nil
+	}
+
+	lookup := ft.ForCatalog()
+	if !lookup.IsGoType() {
+		return types.NewValidationError("unsupported operation %s with unknown go type %s", op, ft.BaseType)
+	}
+
+	return types.NewValidationError("operation %s: invalid %s(%s) type", op, lookup.BaseType, lookup.ToNormalizedString())
 }
 
 func analyzeFieldOperations(structs []*Struct) error {
