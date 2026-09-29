@@ -19,20 +19,22 @@ func (ft FieldType) IsGoType() bool {
 	}
 
 	goTypes := map[string]struct{}{
-		"string":  {},
-		"bool":    {},
-		"int":     {},
-		"int8":    {},
-		"int16":   {},
-		"int32":   {},
-		"int64":   {},
-		"uint":    {},
-		"uint8":   {},
-		"uint16":  {},
-		"uint32":  {},
-		"uint64":  {},
-		"float32": {},
-		"float64": {},
+		"string":     {},
+		"bool":       {},
+		"int":        {},
+		"int8":       {},
+		"int16":      {},
+		"int32":      {},
+		"int64":      {},
+		"uint":       {},
+		"uint8":      {},
+		"uint16":     {},
+		"uint32":     {},
+		"uint64":     {},
+		"float32":    {},
+		"float64":    {},
+		"complex64":  {},
+		"complex128": {},
 	}
 
 	_, ok := goTypes[ft.BaseType]
@@ -44,20 +46,22 @@ func (ft FieldType) NormalizeBaseType() NormalizedBaseType {
 	// Base type grouping by type (e.g. string, bool, int and float)
 
 	normalizedBaseType := map[string]NormalizedBaseType{
-		"string":  StringType,
-		"bool":    BoolType,
-		"int":     IntType,
-		"int8":    IntType,
-		"int16":   IntType,
-		"int32":   IntType,
-		"int64":   IntType,
-		"uint":    IntType,
-		"uint8":   IntType,
-		"uint16":  IntType,
-		"uint32":  IntType,
-		"uint64":  IntType,
-		"float32": FloatType,
-		"float64": FloatType,
+		"string":     StringType,
+		"bool":       BoolType,
+		"int":        IntType,
+		"int8":       IntType,
+		"int16":      IntType,
+		"int32":      IntType,
+		"int64":      IntType,
+		"uint":       IntType,
+		"uint8":      IntType,
+		"uint16":     IntType,
+		"uint32":     IntType,
+		"uint64":     IntType,
+		"float32":    FloatType,
+		"float64":    FloatType,
+		"complex64":  ComplexType,
+		"complex128": ComplexType,
 	}
 
 	return normalizedBaseType[ft.BaseType]

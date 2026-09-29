@@ -116,6 +116,20 @@ func TestFieldTypeIsGoType(t *testing.T) {
 			want: true,
 		},
 		{
+			name: "complex64 type",
+			args: args{
+				fieldType: FieldType{BaseType: "complex64", ComposedType: "", Size: ""},
+			},
+			want: true,
+		},
+		{
+			name: "complex128 type",
+			args: args{
+				fieldType: FieldType{BaseType: "complex128", ComposedType: "", Size: ""},
+			},
+			want: true,
+		},
+		{
 			name: "array type",
 			args: args{
 				fieldType: FieldType{BaseType: "string", ComposedType: "[N]", Size: "5"},
@@ -273,6 +287,20 @@ func TestFieldTypeNormalizeBaseType(t *testing.T) {
 				BaseType: "float64",
 			},
 			FloatType,
+		},
+		{
+			"complex64 type",
+			fields{
+				BaseType: "complex64",
+			},
+			ComplexType,
+		},
+		{
+			"complex128 type",
+			fields{
+				BaseType: "complex128",
+			},
+			ComplexType,
 		},
 		{
 			name: "custom type",
