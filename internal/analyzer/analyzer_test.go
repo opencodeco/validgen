@@ -787,20 +787,24 @@ func TestAnalyzeComplexScalarOperations(t *testing.T) {
 		name     string
 		composed string
 		norm     string
+		tag      string
+		op       string
 	}{
-		{name: "slice", composed: "[]", norm: "[]<COMPLEX>"},
-		{name: "map", composed: "map", norm: "map[<COMPLEX>]"},
+		{name: "slice", composed: "[]", norm: "[]<COMPLEX>", tag: `valid:"eq=1+2i"`, op: "eq"},
+		{name: "map", composed: "map", norm: "map[<COMPLEX>]", tag: `valid:"eq=1+2i"`, op: "eq"},
+		{name: "pointer", composed: "*", norm: "*<COMPLEX>", tag: `valid:"eq=1+2i"`, op: "eq"},
+		{name: "pointer required", composed: "*", norm: "*<COMPLEX>", tag: `valid:"required"`, op: "required"},
 	}
 	for _, shape := range composed {
-		t.Run(shape.name+" eq", func(t *testing.T) {
+		t.Run(shape.name, func(t *testing.T) {
 			_, err := AnalyzeStructs([]*parser.Struct{{
 				Fields: []parser.Field{{
 					FieldName: "Value",
 					Type:      common.FieldType{BaseType: "complex128", ComposedType: shape.composed},
-					Tag:       `valid:"eq=1+2i"`,
+					Tag:       shape.tag,
 				}},
 			}})
-			wantErr := types.NewValidationError("operation eq: invalid complex128(%s) type", shape.norm)
+			wantErr := types.NewValidationError("operation %s: invalid complex128(%s) type", shape.op, shape.norm)
 			if err != wantErr {
 				t.Errorf("AnalyzeStructs() error = %v, wantErr %v", err, wantErr)
 			}

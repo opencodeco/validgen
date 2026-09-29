@@ -234,7 +234,7 @@ func TestOperationsIsValidByType(t *testing.T) {
 			op: "eqfield",
 			fieldTypes: []string{
 				"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>",
-				"*<STRING>", "*<INT>", "*<FLOAT>", "*<COMPLEX>", "*<BOOL>",
+				"*<STRING>", "*<INT>", "*<FLOAT>", "*<BOOL>",
 			},
 			valid: true,
 		},
@@ -244,7 +244,7 @@ func TestOperationsIsValidByType(t *testing.T) {
 			op: "neqfield",
 			fieldTypes: []string{
 				"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>",
-				"*<STRING>", "*<INT>", "*<FLOAT>", "*<COMPLEX>", "*<BOOL>",
+				"*<STRING>", "*<INT>", "*<FLOAT>", "*<BOOL>",
 			},
 			valid: true,
 		},
@@ -341,28 +341,49 @@ func TestOperationsIsValidByType(t *testing.T) {
 		{
 			op: "eq",
 			fieldTypes: []string{
-				"[]<COMPLEX>", "[N]<COMPLEX>", "map[<COMPLEX>]",
+				"*<COMPLEX>", "[]<COMPLEX>", "[N]<COMPLEX>", "map[<COMPLEX>]",
+			},
+			valid: false,
+		},
+		{
+			op: "required",
+			fieldTypes: []string{
+				"*<COMPLEX>",
 			},
 			valid: false,
 		},
 		{
 			op: "neq",
 			fieldTypes: []string{
-				"[]<COMPLEX>", "[N]<COMPLEX>", "map[<COMPLEX>]",
+				"*<COMPLEX>", "[]<COMPLEX>", "[N]<COMPLEX>", "map[<COMPLEX>]",
 			},
 			valid: false,
 		},
 		{
 			op: "in",
 			fieldTypes: []string{
-				"[]<COMPLEX>", "[N]<COMPLEX>", "map[<COMPLEX>]",
+				"*<COMPLEX>", "[]<COMPLEX>", "[N]<COMPLEX>", "map[<COMPLEX>]",
 			},
 			valid: false,
 		},
 		{
 			op: "nin",
 			fieldTypes: []string{
-				"[]<COMPLEX>", "[N]<COMPLEX>", "map[<COMPLEX>]",
+				"*<COMPLEX>", "[]<COMPLEX>", "[N]<COMPLEX>", "map[<COMPLEX>]",
+			},
+			valid: false,
+		},
+		{
+			op: "eqfield",
+			fieldTypes: []string{
+				"*<COMPLEX>",
+			},
+			valid: false,
+		},
+		{
+			op: "neqfield",
+			fieldTypes: []string{
+				"*<COMPLEX>",
 			},
 			valid: false,
 		},

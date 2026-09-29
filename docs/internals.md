@@ -88,11 +88,11 @@ An unknown operation has `CountValues` zero, which is `UndefinedValue`, and `Par
 
 If the field's `BaseType` is `package.Struct` for a struct parsed in this run, the type check stops there. Otherwise the field must be a Go type, and `IsValidByType` must accept the operation for `ToNormalizedString`.
 
-`IsValidByType` strips one leading `*`. For `required` on a pointer it returns true without reading the type list. Every other operation must list the remaining normalized type. `GetConditionTable` still has to find a row for that normalized type when code is generated.
+`IsValidByType` strips one leading `*`. A stripped `<COMPLEX>` pointer is rejected, because the condition table has no `*<COMPLEX>` row. For `required` on any other pointer it returns true without reading the type list. Every other operation must list the remaining normalized type. `GetConditionTable` still has to find a row for that normalized type when code is generated.
 
 ### Field comparisons
 
-Scalar `<COMPLEX>` accepts `eq`, `neq`, `in`, `nin`, and `required`. The equality rows emit `==` or `!=` against the tag literal. `required` emits `!= 0`, which is the complex zero value. `gt`, `gte`, `lt`, and `lte` stay limited to `<INT>` and `<FLOAT>`, so the generator does not emit `<`, `>`, `<=`, or `>=` for complex values. Slice, array, and map complex values are rejected. Pointer forms are omitted from generation.
+Scalar `<COMPLEX>` accepts `eq`, `neq`, `in`, `nin`, and `required`. The equality rows emit `==` or `!=` against the tag literal. `required` emits `!= 0`, which is the complex zero value. `gt`, `gte`, `lt`, and `lte` stay limited to `<INT>` and `<FLOAT>`, so the generator does not emit `<`, `>`, `<=`, or `>=` for complex values. Slice, array, and map complex values are rejected. Scalar complex pointers are rejected in `IsValidByType` and omitted from generation.
 
 `eqfield`, `neqfield`, `gtfield`, `gtefield`, `ltfield`, and `ltefield` set `IsFieldOperation`. `eqfield` and `neqfield` allow `<STRING>`, `<INT>`, `<FLOAT>`, `<COMPLEX>`, and `<BOOL>`. Their condition-table rows compare with `==` and `!=`. `gtfield`, `gtefield`, `ltfield`, and `ltefield` allow `<INT>` and `<FLOAT>` only. `analyzeFieldOperations` checks field operations after the catalog checks.
 
