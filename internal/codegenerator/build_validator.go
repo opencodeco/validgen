@@ -48,6 +48,23 @@ func (gv *GenValidations) BuildFuncValidatorCode() (string, error) {
 	return code.String(), nil
 }
 
+func (gv *GenValidations) BuildUnmarshalJSONCode() string {
+	return fmt.Sprintf(
+		`func (obj *%s) UnmarshalJSON(b []byte) error {
+	type alias %s
+	if err := json.Unmarshal(b, (*alias)(obj)); err != nil {
+		return err
+	}
+	if errs := %sValidate(obj); len(errs) > 0 {
+		return errors.Join(errs...)
+	}
+	return nil
+}
+`,
+		gv.Struct.StructName, gv.Struct.StructName, gv.Struct.StructName,
+	)
+}
+
 func (gv *GenValidations) BuildValidationCode(fieldName string, fieldType common.FieldType, fieldValidations []*analyzer.Validation) (string, error) {
 
 	tests := ""
