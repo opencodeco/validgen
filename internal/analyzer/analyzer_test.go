@@ -145,6 +145,26 @@ func TestAnalyzeStructsWithValidInnerFieldOperations(t *testing.T) {
 			fType: "float64",
 			op:    "ltfield",
 		},
+		{
+			name:  "valid eqfield between complex64",
+			fType: "complex64",
+			op:    "eqfield",
+		},
+		{
+			name:  "valid neqfield between complex64",
+			fType: "complex64",
+			op:    "neqfield",
+		},
+		{
+			name:  "valid eqfield between complex128",
+			fType: "complex128",
+			op:    "eqfield",
+		},
+		{
+			name:  "valid neqfield between complex128",
+			fType: "complex128",
+			op:    "neqfield",
+		},
 	}
 
 	for _, tt := range tests {
@@ -280,6 +300,26 @@ func TestAnalyzeStructsWithValidNestedFieldOperations(t *testing.T) {
 			name:  "valid ltfield between nested float64",
 			fType: "float64",
 			op:    "ltfield",
+		},
+		{
+			name:  "valid eqfield between nested complex64",
+			fType: "complex64",
+			op:    "eqfield",
+		},
+		{
+			name:  "valid neqfield between nested complex64",
+			fType: "complex64",
+			op:    "neqfield",
+		},
+		{
+			name:  "valid eqfield between nested complex128",
+			fType: "complex128",
+			op:    "eqfield",
+		},
+		{
+			name:  "valid neqfield between nested complex128",
+			fType: "complex128",
+			op:    "neqfield",
 		},
 	}
 
@@ -432,6 +472,150 @@ func TestAnalyzeStructsWithInvalidInnerFieldOperations(t *testing.T) {
 				},
 			},
 			wantErr: types.NewValidationError("operation eqfield: invalid float64([]<FLOAT>) type"),
+		},
+		{
+			name: "mismatched complex64 and complex128",
+			arg: &parser.Struct{
+				Fields: []parser.Field{
+					{
+						FieldName: "Field1",
+						Type:      common.FieldType{BaseType: "complex64"},
+						Tag:       `valid:"eqfield=Field2"`,
+					},
+					{
+						FieldName: "Field2",
+						Type:      common.FieldType{BaseType: "complex128"},
+						Tag:       ``,
+					},
+				},
+			},
+			wantErr: types.NewValidationError("operation eqfield: mismatched types between Field1 and Field2"),
+		},
+		{
+			name: "mismatched complex128 and float64",
+			arg: &parser.Struct{
+				Fields: []parser.Field{
+					{
+						FieldName: "Field1",
+						Type:      common.FieldType{BaseType: "complex128"},
+						Tag:       `valid:"eqfield=Field2"`,
+					},
+					{
+						FieldName: "Field2",
+						Type:      common.FieldType{BaseType: "float64"},
+						Tag:       ``,
+					},
+				},
+			},
+			wantErr: types.NewValidationError("operation eqfield: mismatched types between Field1 and Field2"),
+		},
+		{
+			name: "unsupported gtfield on complex128",
+			arg: &parser.Struct{
+				Fields: []parser.Field{
+					{
+						FieldName: "Field1",
+						Type:      common.FieldType{BaseType: "complex128"},
+						Tag:       `valid:"gtfield=Field2"`,
+					},
+					{
+						FieldName: "Field2",
+						Type:      common.FieldType{BaseType: "complex128"},
+						Tag:       ``,
+					},
+				},
+			},
+			wantErr: types.NewValidationError("operation gtfield: invalid complex128(<COMPLEX>) type"),
+		},
+		{
+			name: "unsupported gtefield on complex64",
+			arg: &parser.Struct{
+				Fields: []parser.Field{
+					{
+						FieldName: "Field1",
+						Type:      common.FieldType{BaseType: "complex64"},
+						Tag:       `valid:"gtefield=Field2"`,
+					},
+					{
+						FieldName: "Field2",
+						Type:      common.FieldType{BaseType: "complex64"},
+						Tag:       ``,
+					},
+				},
+			},
+			wantErr: types.NewValidationError("operation gtefield: invalid complex64(<COMPLEX>) type"),
+		},
+		{
+			name: "unsupported ltefield on complex128",
+			arg: &parser.Struct{
+				Fields: []parser.Field{
+					{
+						FieldName: "Field1",
+						Type:      common.FieldType{BaseType: "complex128"},
+						Tag:       `valid:"ltefield=Field2"`,
+					},
+					{
+						FieldName: "Field2",
+						Type:      common.FieldType{BaseType: "complex128"},
+						Tag:       ``,
+					},
+				},
+			},
+			wantErr: types.NewValidationError("operation ltefield: invalid complex128(<COMPLEX>) type"),
+		},
+		{
+			name: "unsupported ltfield on complex64",
+			arg: &parser.Struct{
+				Fields: []parser.Field{
+					{
+						FieldName: "Field1",
+						Type:      common.FieldType{BaseType: "complex64"},
+						Tag:       `valid:"ltfield=Field2"`,
+					},
+					{
+						FieldName: "Field2",
+						Type:      common.FieldType{BaseType: "complex64"},
+						Tag:       ``,
+					},
+				},
+			},
+			wantErr: types.NewValidationError("operation ltfield: invalid complex64(<COMPLEX>) type"),
+		},
+		{
+			name: "unsupported eqfield on complex slice",
+			arg: &parser.Struct{
+				Fields: []parser.Field{
+					{
+						FieldName: "Field1",
+						Type:      common.FieldType{ComposedType: "[]", BaseType: "complex128"},
+						Tag:       `valid:"eqfield=Field2"`,
+					},
+					{
+						FieldName: "Field2",
+						Type:      common.FieldType{ComposedType: "[]", BaseType: "complex128"},
+						Tag:       ``,
+					},
+				},
+			},
+			wantErr: types.NewValidationError("operation eqfield: invalid complex128([]<COMPLEX>) type"),
+		},
+		{
+			name: "unsupported eqfield on complex map",
+			arg: &parser.Struct{
+				Fields: []parser.Field{
+					{
+						FieldName: "Field1",
+						Type:      common.FieldType{ComposedType: "map", BaseType: "complex64"},
+						Tag:       `valid:"eqfield=Field2"`,
+					},
+					{
+						FieldName: "Field2",
+						Type:      common.FieldType{ComposedType: "map", BaseType: "complex64"},
+						Tag:       ``,
+					},
+				},
+			},
+			wantErr: types.NewValidationError("operation eqfield: invalid complex64(map[<COMPLEX>]) type"),
 		},
 	}
 

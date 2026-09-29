@@ -60,6 +60,11 @@ func HelperFromNormalizedToFieldTypes(t string) ([]FieldType, error) {
 			{BaseType: "float32"},
 			{BaseType: "float64"},
 		}
+	case "<COMPLEX>":
+		fieldTypes = []FieldType{
+			{BaseType: "complex64"},
+			{BaseType: "complex128"},
+		}
 	case "map[<STRING>]":
 		fieldTypes = []FieldType{{BaseType: "string", ComposedType: "map"}}
 	case "map[<BOOL>]":
@@ -81,6 +86,11 @@ func HelperFromNormalizedToFieldTypes(t string) ([]FieldType, error) {
 		fieldTypes = []FieldType{
 			{BaseType: "float32", ComposedType: "map"},
 			{BaseType: "float64", ComposedType: "map"},
+		}
+	case "map[<COMPLEX>]":
+		fieldTypes = []FieldType{
+			{BaseType: "complex64", ComposedType: "map"},
+			{BaseType: "complex128", ComposedType: "map"},
 		}
 	case "[]<STRING>":
 		fieldTypes = []FieldType{{BaseType: "string", ComposedType: "[]"}}
@@ -104,6 +114,11 @@ func HelperFromNormalizedToFieldTypes(t string) ([]FieldType, error) {
 			{BaseType: "float32", ComposedType: "[]"},
 			{BaseType: "float64", ComposedType: "[]"},
 		}
+	case "[]<COMPLEX>":
+		fieldTypes = []FieldType{
+			{BaseType: "complex64", ComposedType: "[]"},
+			{BaseType: "complex128", ComposedType: "[]"},
+		}
 	case "[N]<STRING>":
 		fieldTypes = []FieldType{{BaseType: "string", ComposedType: "[N]", Size: "3"}}
 	case "[N]<BOOL>":
@@ -125,6 +140,11 @@ func HelperFromNormalizedToFieldTypes(t string) ([]FieldType, error) {
 		fieldTypes = []FieldType{
 			{BaseType: "float32", ComposedType: "[N]", Size: "3"},
 			{BaseType: "float64", ComposedType: "[N]", Size: "3"},
+		}
+	case "[N]<COMPLEX>":
+		fieldTypes = []FieldType{
+			{BaseType: "complex64", ComposedType: "[N]", Size: "3"},
+			{BaseType: "complex128", ComposedType: "[N]", Size: "3"},
 		}
 	}
 

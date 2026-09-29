@@ -103,12 +103,12 @@ var operationsList = map[string]Operation{
 	"eqfield": {
 		CountValues:      common.OneValue,
 		IsFieldOperation: true,
-		ValidTypes:       []string{"<STRING>", "<INT>", "<FLOAT>", "<BOOL>"},
+		ValidTypes:       []string{"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>"},
 	},
 	"neqfield": {
 		CountValues:      common.OneValue,
 		IsFieldOperation: true,
-		ValidTypes:       []string{"<STRING>", "<INT>", "<FLOAT>", "<BOOL>"},
+		ValidTypes:       []string{"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>"},
 	},
 	"gtefield": {
 		CountValues:      common.OneValue,

@@ -78,6 +78,26 @@ func CmpInnerBoolFieldsValidate(obj *CmpInnerBoolFields) []error {
 	}
 	return errs
 }
+func CmpInnerComplex128FieldsValidate(obj *CmpInnerComplex128Fields) []error {
+	var errs []error
+	if !(obj.Field2eq1 == obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field2eq1 must be equal to Field1"))
+	}
+	if !(obj.Field3neq1 != obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field3neq1 must not be equal to Field1"))
+	}
+	return errs
+}
+func CmpInnerComplex64FieldsValidate(obj *CmpInnerComplex64Fields) []error {
+	var errs []error
+	if !(obj.Field2eq1 == obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field2eq1 must be equal to Field1"))
+	}
+	if !(obj.Field3neq1 != obj.Field1) {
+		errs = append(errs, types.NewValidationError("Field3neq1 must not be equal to Field1"))
+	}
+	return errs
+}
 func CmpInnerFloat32FieldsValidate(obj *CmpInnerFloat32Fields) []error {
 	var errs []error
 	if !(obj.Field2eq1 == obj.Field1) {
@@ -151,6 +171,26 @@ func CmpInnerUint8FieldsValidate(obj *CmpInnerUint8Fields) []error {
 	}
 	if !(obj.Field8lt4 < obj.Field4) {
 		errs = append(errs, types.NewValidationError("Field8lt4 must be < Field4"))
+	}
+	return errs
+}
+func CmpNestedComplex128FieldsValidate(obj *CmpNestedComplex128Fields) []error {
+	var errs []error
+	if !(obj.Field1eqNestedField1 == obj.Nested.Field1) {
+		errs = append(errs, types.NewValidationError("Field1eqNestedField1 must be equal to Nested.Field1"))
+	}
+	if !(obj.Field2neqNestedField1 != obj.Nested.Field1) {
+		errs = append(errs, types.NewValidationError("Field2neqNestedField1 must not be equal to Nested.Field1"))
+	}
+	return errs
+}
+func CmpNestedComplex64FieldsValidate(obj *CmpNestedComplex64Fields) []error {
+	var errs []error
+	if !(obj.Field1eqNestedField1 == obj.Nested.Field1) {
+		errs = append(errs, types.NewValidationError("Field1eqNestedField1 must be equal to Nested.Field1"))
+	}
+	if !(obj.Field2neqNestedField1 != obj.Nested.Field1) {
+		errs = append(errs, types.NewValidationError("Field2neqNestedField1 must not be equal to Nested.Field1"))
 	}
 	return errs
 }
