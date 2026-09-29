@@ -296,7 +296,7 @@ var conditionTable = map[string]Operation{
 			{
 				AcceptedTypes: []string{"<STRING>"},
 				ConditionTable: ConditionTable{
-					operation:      `types.EqualFold(obj.{{.Name}}, "{{.Target}}")`,
+					operation:      `strings.EqualFold(obj.{{.Name}}, "{{.Target}}")`,
 					concatOperator: "",
 					errorMessage:   "{{.Name}} must be equal to '{{.Target}}'",
 				},
@@ -304,7 +304,7 @@ var conditionTable = map[string]Operation{
 			{
 				AcceptedTypes: []string{"*<STRING>"},
 				ConditionTable: ConditionTable{
-					operation:      `obj.{{.Name}} != nil && types.EqualFold(*obj.{{.Name}}, "{{.Target}}")`,
+					operation:      `obj.{{.Name}} != nil && strings.EqualFold(*obj.{{.Name}}, "{{.Target}}")`,
 					concatOperator: "",
 					errorMessage:   "{{.Name}} must be equal to '{{.Target}}'",
 				},
@@ -388,7 +388,7 @@ var conditionTable = map[string]Operation{
 			{
 				AcceptedTypes: []string{"<STRING>"},
 				ConditionTable: ConditionTable{
-					operation:      `!types.EqualFold(obj.{{.Name}}, "{{.Target}}")`,
+					operation:      `!strings.EqualFold(obj.{{.Name}}, "{{.Target}}")`,
 					concatOperator: "",
 					errorMessage:   "{{.Name}} must not be equal to '{{.Target}}'",
 				},
@@ -396,7 +396,7 @@ var conditionTable = map[string]Operation{
 			{
 				AcceptedTypes: []string{"*<STRING>"},
 				ConditionTable: ConditionTable{
-					operation:      `obj.{{.Name}} != nil && !types.EqualFold(*obj.{{.Name}}, "{{.Target}}")`,
+					operation:      `obj.{{.Name}} != nil && !strings.EqualFold(*obj.{{.Name}}, "{{.Target}}")`,
 					concatOperator: "",
 					errorMessage:   "{{.Name}} must not be equal to '{{.Target}}'",
 				},

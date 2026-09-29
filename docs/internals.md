@@ -28,7 +28,7 @@ TestGen is a separate program under `testgen/`. It is described at the end.
 
 `internal/common` holds the shared `FieldType`, the normalized type names, `KeyPath`, and `CountValues`.
 
-`types` is the package generated validators import, `github.com/opencodeco/validgen/types`. It defines `ValidationError` and the helpers the condition table calls, including `IsValidEmail`, `EqualFold`, `SliceOnlyContains`, `SliceNotContains`, `MapOnlyContains`, and `MapNotContains`.
+`types` is the package generated validators import, `github.com/opencodeco/validgen/types`. It defines `ValidationError` and the helpers the condition table calls, including `IsValidEmail`, `SliceOnlyContains`, `SliceNotContains`, `MapOnlyContains`, and `MapNotContains`. Case-insensitive string checks call `strings.EqualFold` directly.
 
 ## Parser
 
@@ -142,11 +142,11 @@ errs = append(errs, types.NewValidationError("message"))
 
 Scalar `in` rows set `concatOperator` to `||`, and the per-value copies are joined. That includes `*<STRING>`, `*<INT>`, `*<FLOAT>`, and `*<BOOL>`. Scalar `nin` rows set `concatOperator` to `&&`. Slice, array, and map rows leave `concatOperator` empty, so `DefineTestElements` keeps one copy. That copy lists every target through `{{.TargetsAsStringSlice}}` or `{{.TargetsAsNumericSlice}}`.
 
-Those slice and map copies call `types.SliceOnlyContains`, `types.SliceNotContains`, `types.MapOnlyContains`, or `types.MapNotContains`. Non-pointer array rows pass `obj.Field[:]` into the slice helpers. Literal string comparisons quote the target. `email` calls `types.IsValidEmail`. `eq_ignore_case` and `neq_ignore_case` call `types.EqualFold`. Field comparisons compile to `obj.Field` compared with `obj.Other` or `obj.Nested.Field`.
+Those slice and map copies call `types.SliceOnlyContains`, `types.SliceNotContains`, `types.MapOnlyContains`, or `types.MapNotContains`. Non-pointer array rows pass `obj.Field[:]` into the slice helpers. Literal string comparisons quote the target. `email` calls `types.IsValidEmail`. `eq_ignore_case` and `neq_ignore_case` call `strings.EqualFold`. Field comparisons compile to `obj.Field` compared with `obj.Other` or `obj.Nested.Field`.
 
 When `IsGoType` is false, each validation on that field appends a nested call instead of a condition-table test. The call is `TypeValidate(&obj.Field)`, where `Type` is `BaseType`. If `BaseType` starts with the struct's own package name and a dot, that prefix is removed. A same-package field whose `BaseType` is `main.InnerStructType` calls `InnerStructTypeValidate`. A field whose `BaseType` is `mypkg.InnerStructType` calls `mypkg.InnerStructTypeValidate`. The call is emitted when `BaseType` is in the parsed-struct index. A missing type returns `no validator found for struct type`.
 
-Imports kept on the generated package are the struct file's imports whose local name is a package name parsed in this run. `buildImportPath` writes each of those paths as a quoted import and always adds `github.com/opencodeco/validgen/types`. When any struct in the package has `UnmarshalJSON` source, it also adds `encoding/json` and `errors`.
+Imports kept on the generated package are the struct file's imports whose local name is a package name parsed in this run. `buildImportPath` writes each of those paths as a quoted import and always adds `github.com/opencodeco/validgen/types`. When any struct in the package has `UnmarshalJSON` source, it also adds `encoding/json` and `errors`. When generated code calls `strings.EqualFold`, it also adds `strings`.
 
 ## Package writer
 
