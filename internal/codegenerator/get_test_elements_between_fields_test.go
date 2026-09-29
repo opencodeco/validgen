@@ -169,6 +169,47 @@ func TestDefineTestElementsBetweenInnerFields(t *testing.T) {
 			}
 		})
 	}
+
+	testFloatFieldComparisons(t, "myfield2", "")
+}
+
+func testFloatFieldComparisons(t *testing.T, target, namePrefix string) {
+	t.Helper()
+
+	ops := []struct {
+		op       string
+		operator string
+		message  string
+	}{
+		{"eqfield", "==", "must be equal to"},
+		{"neqfield", "!=", "must not be equal to"},
+		{"gtefield", ">=", "must be >="},
+		{"gtfield", ">", "must be >"},
+		{"ltefield", "<=", "must be <="},
+		{"ltfield", "<", "must be <"},
+	}
+
+	for _, baseType := range []string{"float32", "float64"} {
+		for _, op := range ops {
+			t.Run(namePrefix+baseType+" fields "+op.op, func(t *testing.T) {
+				validation := AssertParserValidation(t, op.op+"="+target)
+				got, err := DefineTestElements("myfield1", common.FieldType{BaseType: baseType}, validation)
+				if err != nil {
+					t.Errorf("DefineTestElements() error = %v", err)
+					return
+				}
+
+				want := TestElements{
+					conditions:     []string{"obj.myfield1 " + op.operator + " obj." + target},
+					concatOperator: "",
+					errorMessage:   "myfield1 " + op.message + " " + target,
+				}
+				if !reflect.DeepEqual(got, want) {
+					t.Errorf("DefineTestElements() = %+v, want %+v", got, want)
+				}
+			})
+		}
+	}
 }
 
 func TestDefineTestElementsBetweenNestedFields(t *testing.T) {
@@ -302,4 +343,6 @@ func TestDefineTestElementsBetweenNestedFields(t *testing.T) {
 			}
 		})
 	}
+
+	testFloatFieldComparisons(t, "nested.myfield2", "nested ")
 }

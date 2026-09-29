@@ -229,6 +229,66 @@ func TestOperationsIsValidByType(t *testing.T) {
 			valid: true,
 		},
 
+		// eqfield operations
+		{
+			op: "eqfield",
+			fieldTypes: []string{
+				"<STRING>", "<INT>", "<FLOAT>", "<BOOL>",
+				"*<STRING>", "*<INT>", "*<FLOAT>", "*<BOOL>",
+			},
+			valid: true,
+		},
+
+		// neqfield operations
+		{
+			op: "neqfield",
+			fieldTypes: []string{
+				"<STRING>", "<INT>", "<FLOAT>", "<BOOL>",
+				"*<STRING>", "*<INT>", "*<FLOAT>", "*<BOOL>",
+			},
+			valid: true,
+		},
+
+		// gtefield operations
+		{
+			op: "gtefield",
+			fieldTypes: []string{
+				"<INT>", "<FLOAT>",
+				"*<INT>", "*<FLOAT>",
+			},
+			valid: true,
+		},
+
+		// gtfield operations
+		{
+			op: "gtfield",
+			fieldTypes: []string{
+				"<INT>", "<FLOAT>",
+				"*<INT>", "*<FLOAT>",
+			},
+			valid: true,
+		},
+
+		// ltefield operations
+		{
+			op: "ltefield",
+			fieldTypes: []string{
+				"<INT>", "<FLOAT>",
+				"*<INT>", "*<FLOAT>",
+			},
+			valid: true,
+		},
+
+		// ltfield operations
+		{
+			op: "ltfield",
+			fieldTypes: []string{
+				"<INT>", "<FLOAT>",
+				"*<INT>", "*<FLOAT>",
+			},
+			valid: true,
+		},
+
 		// invalid cases
 		{
 			op: "email",
@@ -258,6 +318,61 @@ func TestOperationsIsValidByType(t *testing.T) {
 			op:         "neq_ignore_case",
 			fieldTypes: []string{"<INT>", "<FLOAT>", "<BOOL>", "[]<STRING>", "map[<STRING>]", "<XPTO>", "*<XPTO>"},
 			valid:      false,
+		},
+		{
+			op: "eqfield",
+			fieldTypes: []string{
+				"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>",
+				"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]",
+				"*[]<STRING>", "*[]<INT>", "*[]<FLOAT>", "*[]<BOOL>",
+				"*map[<STRING>]", "*map[<INT>]", "*map[<FLOAT>]", "*map[<BOOL>]",
+			},
+			valid: false,
+		},
+		{
+			op: "gtefield",
+			fieldTypes: []string{
+				"<STRING>", "<BOOL>",
+				"[]<STRING>", "[]<INT>", "[]<FLOAT>", "[]<BOOL>",
+				"map[<STRING>]", "map[<INT>]", "map[<FLOAT>]", "map[<BOOL>]",
+				"*<STRING>", "*<BOOL>",
+				"*[]<STRING>", "*[]<INT>", "*[]<FLOAT>", "*[]<BOOL>",
+				"*map[<STRING>]", "*map[<INT>]", "*map[<FLOAT>]", "*map[<BOOL>]",
+			},
+			valid: false,
+		},
+		{
+			op: "gtfield",
+			fieldTypes: []string{
+				"<STRING>", "<BOOL>",
+				"[]<FLOAT>",
+			},
+			valid: false,
+		},
+		{
+			op: "ltefield",
+			fieldTypes: []string{
+				"<STRING>", "<BOOL>",
+				"[]<FLOAT>",
+			},
+			valid: false,
+		},
+		{
+			op: "ltfield",
+			fieldTypes: []string{
+				"<STRING>", "<BOOL>",
+				"[]<FLOAT>",
+				"map[<FLOAT>]",
+			},
+			valid: false,
+		},
+		{
+			op: "neqfield",
+			fieldTypes: []string{
+				"[]<FLOAT>",
+				"map[<FLOAT>]",
+			},
+			valid: false,
 		},
 	}
 
