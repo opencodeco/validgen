@@ -46,6 +46,24 @@ func TestDefineTestElementsWithInvalidOperations(t *testing.T) {
 			},
 			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation gtfield type map[<FLOAT>] (float64)"),
 		},
+		{
+			name: "unsupported gtfield on complex128",
+			args: args{
+				fieldName:       "values",
+				fieldType:       common.FieldType{BaseType: "complex128"},
+				fieldValidation: "gtfield=other",
+			},
+			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation gtfield type <COMPLEX> (complex128)"),
+		},
+		{
+			name: "unsupported eqfield on complex slice",
+			args: args{
+				fieldName:       "values",
+				fieldType:       common.FieldType{ComposedType: "[]", BaseType: "complex64"},
+				fieldValidation: "eqfield=other",
+			},
+			expectedErr: types.NewValidationError("INTERNAL ERROR: unsupported operation eqfield type []<COMPLEX> (complex64)"),
+		},
 	}
 
 	for _, tt := range tests {

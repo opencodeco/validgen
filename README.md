@@ -87,29 +87,31 @@ The following table shows the validations and possible types, where:
 - "P" means "Partially implemented"
 - "-" means "Will not be implemented"
 
-| Validation/Type | String | Numeric types (integers and floats) | Boolean | Slice | Array | Map | Time | Duration |
-| -               | -      | -                        | -       | -     | -     | -   | -    | -        |
-| eq              | I      | I                        | I       | -     | -     | -   | W    | W        |
-| eq_ignore_case  | I      | -                        | -       | -     | -     | -   | -    | -        |
-| gt              | -      | I                        | -       | -     | -     | -   | W    | W        |
-| gte             | -      | I                        | -       | -     | -     | -   | W    | W        |
-| lt              | -      | I                        | -       | -     | -     | -   | W    | W        |
-| lte             | -      | I                        | -       | -     | -     | -   | W    | W        |
-| neq             | I      | I                        | I       | -     | -     | -   | W    | W        |
-| neq_ignore_case | I      | -                        | -       | -     | -     | -   | -    | -        |
-| len             | I      | -                        | -       | I     | -     | W   | -    | -        |
-| max             | I      | -                        | -       | I     | -     | W   | W    | W        |
-| min             | I      | -                        | -       | I     | -     | W   | W    | W        |
-| in              | I      | I                        | -       | I     | I     | W   | -    | W        |
-| nin             | I      | I                        | -       | I     | I     | W   | -    | W        |
-| required        | I      | I                        | -       | I     | -     | W   | W    | W        |
-| email           | I      | -                        | -       | -     | -     | -   | -    | -        |
-| eqfield         | I      | I                        | I       | -     | -     | -   | W    | W        |
-| neqfield        | I      | I                        | I       | -     | -     | -   | W    | W        |
-| gtefield        | -      | I                        | -       | -     | -     | -   | W    | W        |
-| gtfield         | -      | I                        | -       | -     | -     | -   | W    | W        |
-| ltefield        | -      | I                        | -       | -     | -     | -   | W    | W        |
-| ltfield         | -      | I                        | -       | -     | -     | -   | W    | W        |
+| Validation/Type | String | Numeric types (integers and floats) | Complex | Boolean | Slice | Array | Map | Time | Duration |
+| -               | -      | -                        | -       | -       | -     | -     | -   | -    | -        |
+| eq              | I      | I                        | W       | I       | -     | -     | -   | W    | W        |
+| eq_ignore_case  | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
+| gt              | -      | I                        | -       | -       | -     | -     | -   | W    | W        |
+| gte             | -      | I                        | -       | -       | -     | -     | -   | W    | W        |
+| lt              | -      | I                        | -       | -       | -     | -     | -   | W    | W        |
+| lte             | -      | I                        | -       | -       | -     | -     | -   | W    | W        |
+| neq             | I      | I                        | W       | I       | -     | -     | -   | W    | W        |
+| neq_ignore_case | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
+| len             | I      | -                        | -       | -       | I     | -     | W   | -    | -        |
+| max             | I      | -                        | -       | -       | I     | -     | W   | W    | W        |
+| min             | I      | -                        | -       | -       | I     | -     | W   | W    | W        |
+| in              | I      | I                        | W       | -       | I     | I     | W   | -    | W        |
+| nin             | I      | I                        | W       | -       | I     | I     | W   | -    | W        |
+| required        | I      | I                        | W       | -       | I     | -     | W   | W    | W        |
+| email           | I      | -                        | -       | -       | -     | -     | -   | -    | -        |
+| eqfield         | I      | I                        | I       | I       | -     | -     | -   | W    | W        |
+| neqfield        | I      | I                        | I       | I       | -     | -     | -   | W    | W        |
+| gtefield        | -      | I                        | -       | -       | -     | -     | -   | W    | W        |
+| gtfield         | -      | I                        | -       | -       | -     | -     | -   | W    | W        |
+| ltefield        | -      | I                        | -       | -       | -     | -     | -   | W    | W        |
+| ltfield         | -      | I                        | -       | -       | -     | -     | -   | W    | W        |
+
+Complex (`complex64`, `complex128`) supports `eqfield` and `neqfield` via Go `==` / `!=`. Ordering field tags (`gtefield`, `gtfield`, `ltefield`, `ltfield`) are rejected: Go has no `<` / `>` / `<=` / `>=` for complex values, and go-playground/validator does not define concrete ordering semantics for them.
 
 ## Steps to run the unit tests
 

@@ -690,7 +690,7 @@ var conditionTable = map[string]Operation{
 	"eqfield": {
 		ConditionByTypes: []ConditionByType{
 			{
-				AcceptedTypes: []string{"<STRING>", "<INT>", "<FLOAT>", "<BOOL>"},
+				AcceptedTypes: []string{"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>"},
 				ConditionTable: ConditionTable{
 					operation:      `obj.{{.Name}} == obj.{{.Target}}`,
 					concatOperator: "",
@@ -702,7 +702,7 @@ var conditionTable = map[string]Operation{
 	"neqfield": {
 		ConditionByTypes: []ConditionByType{
 			{
-				AcceptedTypes: []string{"<STRING>", "<INT>", "<FLOAT>", "<BOOL>"},
+				AcceptedTypes: []string{"<STRING>", "<INT>", "<FLOAT>", "<COMPLEX>", "<BOOL>"},
 				ConditionTable: ConditionTable{
 					operation:      `obj.{{.Name}} != obj.{{.Target}}`,
 					concatOperator: "",

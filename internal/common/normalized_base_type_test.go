@@ -28,6 +28,11 @@ func TestNormalizedBaseTypeString(t *testing.T) {
 			n:    FloatType,
 			want: "<FLOAT>",
 		},
+		{
+			name: "ComplexType",
+			n:    ComplexType,
+			want: "<COMPLEX>",
+		},
 	}
 
 	for _, tt := range tests {
