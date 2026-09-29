@@ -273,6 +273,44 @@ func CmpNestedUint8FieldsValidate(obj *CmpNestedUint8Fields) []error {
 	}
 	return errs
 }
+func Complex128ValidationValidate(obj *Complex128Validation) []error {
+	var errs []error
+	if !(obj.Required != 0) {
+		errs = append(errs, types.NewValidationError("Required is required"))
+	}
+	if !(obj.Eq == 1+2i) {
+		errs = append(errs, types.NewValidationError("Eq must be equal to 1+2i"))
+	}
+	if !(obj.Neq != 3+4i) {
+		errs = append(errs, types.NewValidationError("Neq must not be equal to 3+4i"))
+	}
+	if !(obj.In == 1+2i || obj.In == 5+6i) {
+		errs = append(errs, types.NewValidationError("In must be one of '1+2i' '5+6i'"))
+	}
+	if !(obj.Nin != 7+8i && obj.Nin != 9+0i) {
+		errs = append(errs, types.NewValidationError("Nin must not be one of '7+8i' '9+0i'"))
+	}
+	return errs
+}
+func Complex64ValidationValidate(obj *Complex64Validation) []error {
+	var errs []error
+	if !(obj.Required != 0) {
+		errs = append(errs, types.NewValidationError("Required is required"))
+	}
+	if !(obj.Eq == 1+2i) {
+		errs = append(errs, types.NewValidationError("Eq must be equal to 1+2i"))
+	}
+	if !(obj.Neq != 3+4i) {
+		errs = append(errs, types.NewValidationError("Neq must not be equal to 3+4i"))
+	}
+	if !(obj.In == 1+2i || obj.In == 5+6i) {
+		errs = append(errs, types.NewValidationError("In must be one of '1+2i' '5+6i'"))
+	}
+	if !(obj.Nin != 7+8i && obj.Nin != 9+0i) {
+		errs = append(errs, types.NewValidationError("Nin must not be one of '7+8i' '9+0i'"))
+	}
+	return errs
+}
 func UserValidate(obj *User) []error {
 	var errs []error
 	if !(obj.FirstName != "") {
@@ -358,6 +396,12 @@ func eqStructFieldsValidate(obj *eqStructFields) []error {
 	}
 	if !(obj.FieldEqBool == true) {
 		errs = append(errs, types.NewValidationError("FieldEqBool must be equal to true"))
+	}
+	if !(obj.FieldEqComplex64 == 1+2i) {
+		errs = append(errs, types.NewValidationError("FieldEqComplex64 must be equal to 1+2i"))
+	}
+	if !(obj.FieldEqComplex128 == 1+2i) {
+		errs = append(errs, types.NewValidationError("FieldEqComplex128 must be equal to 1+2i"))
 	}
 	return errs
 }
@@ -624,6 +668,12 @@ func inStructFieldsValidate(obj *inStructFields) []error {
 	}
 	if !(obj.FieldInBool == true) {
 		errs = append(errs, types.NewValidationError("FieldInBool must be one of 'true'"))
+	}
+	if !(obj.FieldInComplex64 == 1+2i || obj.FieldInComplex64 == 5+6i) {
+		errs = append(errs, types.NewValidationError("FieldInComplex64 must be one of '1+2i' '5+6i'"))
+	}
+	if !(obj.FieldInComplex128 == 1+2i || obj.FieldInComplex128 == 5+6i) {
+		errs = append(errs, types.NewValidationError("FieldInComplex128 must be one of '1+2i' '5+6i'"))
 	}
 	if !(types.SliceOnlyContains(obj.FieldInStringSlice, []string{"ab", "cd", "ef"})) {
 		errs = append(errs, types.NewValidationError("FieldInStringSlice elements must be one of 'ab' 'cd' 'ef'"))
@@ -1675,6 +1725,12 @@ func neqStructFieldsValidate(obj *neqStructFields) []error {
 	if !(obj.FieldNeqBool != true) {
 		errs = append(errs, types.NewValidationError("FieldNeqBool must not be equal to true"))
 	}
+	if !(obj.FieldNeqComplex64 != 3+4i) {
+		errs = append(errs, types.NewValidationError("FieldNeqComplex64 must not be equal to 3+4i"))
+	}
+	if !(obj.FieldNeqComplex128 != 3+4i) {
+		errs = append(errs, types.NewValidationError("FieldNeqComplex128 must not be equal to 3+4i"))
+	}
 	return errs
 }
 func neqStructFieldsPointerValidate(obj *neqStructFieldsPointer) []error {
@@ -1780,6 +1836,12 @@ func ninStructFieldsValidate(obj *ninStructFields) []error {
 	}
 	if !(obj.FieldNinBool != true) {
 		errs = append(errs, types.NewValidationError("FieldNinBool must not be one of 'true'"))
+	}
+	if !(obj.FieldNinComplex64 != 7+8i && obj.FieldNinComplex64 != 9+0i) {
+		errs = append(errs, types.NewValidationError("FieldNinComplex64 must not be one of '7+8i' '9+0i'"))
+	}
+	if !(obj.FieldNinComplex128 != 7+8i && obj.FieldNinComplex128 != 9+0i) {
+		errs = append(errs, types.NewValidationError("FieldNinComplex128 must not be one of '7+8i' '9+0i'"))
 	}
 	if !(types.SliceNotContains(obj.FieldNinStringSlice, []string{"ab", "cd", "ef"})) {
 		errs = append(errs, types.NewValidationError("FieldNinStringSlice elements must not be one of 'ab' 'cd' 'ef'"))
@@ -2124,6 +2186,12 @@ func requiredStructFieldsValidate(obj *requiredStructFields) []error {
 	}
 	if !(obj.FieldRequiredBool != false) {
 		errs = append(errs, types.NewValidationError("FieldRequiredBool is required"))
+	}
+	if !(obj.FieldRequiredComplex64 != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredComplex64 is required"))
+	}
+	if !(obj.FieldRequiredComplex128 != 0) {
+		errs = append(errs, types.NewValidationError("FieldRequiredComplex128 is required"))
 	}
 	if !(len(obj.FieldRequiredStringSlice) != 0) {
 		errs = append(errs, types.NewValidationError("FieldRequiredStringSlice must not be empty"))

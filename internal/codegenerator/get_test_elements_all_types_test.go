@@ -32,7 +32,7 @@ func TestDefineTestElementsWithAllTypes(t *testing.T) {
 					},
 				},
 				{
-					types: []string{"<INT>", "<FLOAT>"},
+					types: []string{"<INT>", "<FLOAT>", "<COMPLEX>"},
 					want: TestElements{
 						conditions:     []string{`obj.field != 0`},
 						concatOperator: "",
@@ -145,6 +145,15 @@ func TestDefineTestElementsWithAllTypes(t *testing.T) {
 					},
 				},
 				{
+					types: []string{"<COMPLEX>"},
+					value: "1+2i",
+					want: TestElements{
+						conditions:     []string{`obj.field == 1+2i`},
+						concatOperator: "",
+						errorMessage:   "field must be equal to 1+2i",
+					},
+				},
+				{
 					types: []string{"<BOOL>"},
 					value: "true",
 					want: TestElements{
@@ -221,6 +230,15 @@ func TestDefineTestElementsWithAllTypes(t *testing.T) {
 						conditions:     []string{`obj.field != 123.45`},
 						concatOperator: "",
 						errorMessage:   "field must not be equal to 123.45",
+					},
+				},
+				{
+					types: []string{"<COMPLEX>"},
+					value: "3-4i",
+					want: TestElements{
+						conditions:     []string{`obj.field != 3-4i`},
+						concatOperator: "",
+						errorMessage:   "field must not be equal to 3-4i",
 					},
 				},
 				{
@@ -654,6 +672,15 @@ func TestDefineTestElementsWithAllTypes(t *testing.T) {
 					},
 				},
 				{
+					types: []string{"<COMPLEX>"},
+					value: "1+2i,3-4i",
+					want: TestElements{
+						conditions:     []string{`obj.field == 1+2i`, `obj.field == 3-4i`},
+						concatOperator: "||",
+						errorMessage:   "field must be one of '1+2i' '3-4i'",
+					},
+				},
+				{
 					types: []string{"<BOOL>"},
 					value: "true,false",
 					want: TestElements{
@@ -910,6 +937,15 @@ func TestDefineTestElementsWithAllTypes(t *testing.T) {
 						conditions:     []string{`obj.field != 1.23`, `obj.field != 4.56`, `obj.field != 7.89`},
 						concatOperator: "&&",
 						errorMessage:   "field must not be one of '1.23' '4.56' '7.89'",
+					},
+				},
+				{
+					types: []string{"<COMPLEX>"},
+					value: "7+8i,9+0i",
+					want: TestElements{
+						conditions:     []string{`obj.field != 7+8i`, `obj.field != 9+0i`},
+						concatOperator: "&&",
+						errorMessage:   "field must not be one of '7+8i' '9+0i'",
 					},
 				},
 				{

@@ -92,6 +92,8 @@ If the field's `BaseType` is `package.Struct` for a struct parsed in this run, t
 
 ### Field comparisons
 
+Scalar `<COMPLEX>` accepts `eq`, `neq`, `in`, `nin`, and `required`. The equality rows emit `==` or `!=` against the tag literal. `required` emits `!= 0`, which is the complex zero value. `gt`, `gte`, `lt`, and `lte` stay limited to `<INT>` and `<FLOAT>`, so the generator does not emit `<`, `>`, `<=`, or `>=` for complex values. Slice, array, and map complex values are rejected. Pointer forms are omitted from generation.
+
 `eqfield`, `neqfield`, `gtfield`, `gtefield`, `ltfield`, and `ltefield` set `IsFieldOperation`. `eqfield` and `neqfield` allow `<STRING>`, `<INT>`, `<FLOAT>`, `<COMPLEX>`, and `<BOOL>`. Their condition-table rows compare with `==` and `!=`. `gtfield`, `gtefield`, `ltfield`, and `ltefield` allow `<INT>` and `<FLOAT>` only. `analyzeFieldOperations` checks field operations after the catalog checks.
 
 The target is the single value from the tag. `Field2` refers to a field of the same struct. `Nested.Field2` refers to a field of the struct stored on `Nested`. The lookup key is `common.KeyPath`, which joins names with `.`. Both fields must already be in the parsed set, and their `FieldType` values must be equal. That comparison includes `ComposedType`, `BaseType`, and `Size`, so `int` and `int32` do not match.
@@ -140,7 +142,7 @@ errs = append(errs, types.NewValidationError("message"))
 
 `GetConditionTable` selects the row whose `AcceptedTypes` contain `ToNormalizedString`. `DefineTestElements` substitutes placeholders in that row's `operation` string. `{{.Name}}` becomes the field name. `{{.Target}}` becomes one tag value.
 
-Scalar `in` rows set `concatOperator` to `||`, and the per-value copies are joined. That includes `*<STRING>`, `*<INT>`, `*<FLOAT>`, and `*<BOOL>`. Scalar `nin` rows set `concatOperator` to `&&`. Slice, array, and map rows leave `concatOperator` empty, so `DefineTestElements` keeps one copy. That copy lists every target through `{{.TargetsAsStringSlice}}` or `{{.TargetsAsNumericSlice}}`.
+Scalar `in` rows set `concatOperator` to `||`, and the per-value copies are joined. That includes `<COMPLEX>`, `*<STRING>`, `*<INT>`, `*<FLOAT>`, and `*<BOOL>`. Scalar `nin` rows set `concatOperator` to `&&`. Complex scalar rows use the same `==` / `!=` form as numeric scalars, with the tag literal left unquoted. Slice, array, and map rows leave `concatOperator` empty, so `DefineTestElements` keeps one copy. That copy lists every target through `{{.TargetsAsStringSlice}}` or `{{.TargetsAsNumericSlice}}`.
 
 Those slice and map copies call `types.SliceOnlyContains`, `types.SliceNotContains`, `types.MapOnlyContains`, or `types.MapNotContains`. Non-pointer array rows pass `obj.Field[:]` into the slice helpers. Literal string comparisons quote the target. `email` calls `types.IsValidEmail`. `eq_ignore_case` and `neq_ignore_case` call `strings.EqualFold`. Field comparisons compile to `obj.Field` compared with `obj.Other` or `obj.Nested.Field`.
 

@@ -38,6 +38,7 @@ func main() {
 	cmpBetweenInnerFieldsTests()
 	cmpBetweenNestedFieldsTests()
 	boolTests()
+	complexTests()
 	pointerTests()
 	noPointerTests()
 
