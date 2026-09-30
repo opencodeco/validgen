@@ -183,17 +183,18 @@ cd validgen
 make unittests
 ```
 
-## Steps to run the benchmark tests
+## Benchmarks
 
-The steps to run the benchmark tests are:
+Comparisons with [go-playground/validator](https://github.com/go-playground/validator) live in [validgen-benchmarks](https://github.com/opencodeco/validgen-benchmarks). That module holds the small three-way benchmark, the generated comparison suite, and the color helper check.
 
 ```bash
-# Enter in the project root folder
-cd validgen
-
-# Run the benchmark tests
-make benchtests
+git clone git@github.com:opencodeco/validgen-benchmarks.git
+cd validgen-benchmarks
+make bench
+make color
 ```
+
+`make cmp` runs the generated suite. The default bench time is 5 seconds per benchmark. `make cmp BENCH_TIME=100ms` is a shorter pass.
 
 ## Steps to run the end-to-end tests
 
@@ -221,28 +222,14 @@ Build the CLI from this repository with `make build`. The binary is `bin/validge
 
 Pass `-unmarshal-json` to also generate `UnmarshalJSON` methods. The samples repository shows that flag on `signup`.
 
-## Steps to run the benchmark tests comparing ValidGen and Validator
+## Recorded comparison results
 
-The steps to run the benchmark tests are:
-
-```bash
-# Enter in the project root folder
-cd validgen
-
-# Run the benchmark tests
-make cmpbenchtests
-```
-
-The command `make cmpbenchtests` invoke the following command:
-
-`go test -bench=. -v -benchmem -benchtime=5s ./tests/cmpbenchtests/generated_tests`
-
-The setup used was:
+These numbers are from an Apple M4 Pro, 12 cores, running `go test -bench=. -benchmem -benchtime=5s` on the generated suite:
 
 ```bash
 goos: darwin
 goarch: arm64
-pkg: github.com/opencodeco/validgen/tests/cmpbenchtests/generated_tests
+pkg: github.com/opencodeco/validgen-benchmarks/cmp
 cpu: Apple M4 Pro (12 Cores used)
 ```
 

@@ -162,12 +162,12 @@ The same path is rewritten on every run. Structs in one package and directory sh
 
 TestGen is `package main` in `testgen/`. `make testgen` runs it and moves the files it writes.
 
-`generate_tests.go` calls four generators. Each one executes a template under `testgen/`, formats the result with `go/format`, and writes a pair of pointer and non-pointer files.
+`generate_tests.go` calls four generators. Three of them execute a template under `testgen/`. The comparative benchmark generator reads its templates from `$VALIDGEN_BENCHMARKS_DIR/cmp` when that variable is set. Each generator formats the result with `go/format` and writes a pair of pointer and non-pointer files.
 
 - `generated_endtoend_no_pointer_tests.go` and `generated_endtoend_pointer_tests.go` move to `tests/endtoend/`.
 - `generated_validation_code_no_pointer_test.go` and `generated_validation_code_pointer_test.go` move to `internal/codegenerator/`.
 - `generated_function_code_no_pointer_test.go` and `generated_function_code_pointer_test.go` move to `internal/codegenerator/`.
-- `generated_cmp_perf_no_pointer_test.go` and `generated_cmp_perf_pointer_test.go` move to `tests/cmpbenchtests/`.
+- `generated_cmp_perf_no_pointer_test.go` and `generated_cmp_perf_pointer_test.go` are written to `$VALIDGEN_BENCHMARKS_DIR/cmp/` when that variable is set. The templates are in [validgen-benchmarks](https://github.com/opencodeco/validgen-benchmarks). TestGen skips those files when the variable is unset.
 
 The case list is `typesValidation` in `testgen/validations.go`. [testgen/README.md](../testgen/README.md) records which suites that list drives and which suites stay hand-written.
 

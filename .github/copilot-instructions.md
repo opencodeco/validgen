@@ -23,7 +23,7 @@ validgen/
 │   ├── parser_validation.go  # Validation tag parsing
 │   └── test_elements.go      # Test condition building
 ├── types/                    # Common types and error handling
-└── tests/                    # Integration, unit, and benchmark tests
+└── tests/                    # Integration and end-to-end tests
 ```
 
 ## Code Style & Conventions
@@ -97,7 +97,7 @@ func UserValidate(obj *User) []error {
 - **Unit tests**: Test individual validation parsing and code generation
 - **Integration tests**: Test complete struct validation generation
 - **End-to-end tests**: Test full CLI workflow with real Go files
-- **Benchmark tests**: Performance comparison with reflection-based validators
+- **Benchmark tests**: Performance comparison lives in opencodeco/validgen-benchmarks
 
 ### File Processing Workflow
 1. `FindFiles()` - Recursively discover `.go` files
@@ -167,13 +167,13 @@ Follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/
 # Typical development workflow
 make build                    # Build the binary
 make endtoendtests            # Run full test suite
-make benchtests               # Run performance benchmarks
+# Benchmarks live in opencodeco/validgen-benchmarks
 ```
 
 ## When Working on ValidGen
 
 1. **Always regenerate test validators** after code changes using `make endtoendtests`
-2. **Run benchmarks** to ensure performance improvements with `make benchtests`
+2. **Run benchmarks** from opencodeco/validgen-benchmarks when a change can affect generated validation speed
 3. **Test multiple packages** - structs in different packages should work correctly
 4. **Validate generated code** - ensure it compiles and passes tests
 5. **Maintain compatibility** - keep validator tag syntax compatible where possible
