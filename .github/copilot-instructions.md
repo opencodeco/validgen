@@ -23,7 +23,6 @@ validgen/
 │   ├── parser_validation.go  # Validation tag parsing
 │   └── test_elements.go      # Test condition building
 ├── types/                    # Common types and error handling
-├── _examples/                # Example usage and test cases
 └── tests/                    # Integration and end-to-end tests
 ```
 
@@ -157,7 +156,7 @@ Follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/
 ### Documentation Standards
 - **Generated code comments**: Include generation warning in all generated files
 - **Function documentation**: Document validation functions if exported
-- **Example usage**: Provide clear examples in `_examples/` directory
+- **Example usage**: Examples live in github.com/opencodeco/validgen-samples
 
 ## CLI Usage Patterns
 

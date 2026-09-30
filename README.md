@@ -208,60 +208,19 @@ cd validgen
 make endtoendtests
 ```
 
-## Steps to run the examples
+## Examples
 
-All examples are in the `_examples` folder.
+Examples live in [opencodeco/validgen-samples](https://github.com/opencodeco/validgen-samples).
 
-### Steps to run test01
+That repository is a separate Go module. It shows the ValidGen CLI, the generated import of `github.com/opencodeco/validgen/types`, and a caller importing the package that owns the structs.
 
-Test01 aims to be a case where all the files are in the same package (in this case, the main package).
-
-```bash
-# Runs validgen to generate structs validator code
-./bin/validgen _examples/test01
-```
-
-After that the file `user_validator.go` will be generated. This file contains UserValidate function that is responsible to check if User object has a valid content.
+Build the CLI from this repository with `make build`. The binary is `bin/validgen`. It takes one path and writes `validator__.go` next to the structs.
 
 ```bash
-# Execute the test
-cd _examples/test01
-go run .
+./bin/validgen /path/to/package
 ```
 
-### Steps to run test02
-
-Test02 aims to be an example where the structs to be validated are in another package (structsinpkg in this test).
-
-```bash
-# Runs validgen to generate structs validator code
-./bin/validgen _examples/test02
-```
-
-After that the file `user_validator.go` will be generated. This file contains UserValidate function that is responsible to check if User object has a valid content.
-
-```bash
-# Execute the test
-cd _examples/test02
-go run .
-```
-
-### Steps to run test03
-
-Test03 aims to be an example where the structs to be validated use min and max tags.
-
-```bash
-# Runs validgen to generate structs validator code
-./bin/validgen _examples/test03
-```
-
-After that the file `user_validator.go` will be generated. This file contains UserValidate function that is responsible to check if User object has a valid content.
-
-```bash
-# Execute the test
-cd _examples/test03
-go run .
-```
+Pass `-unmarshal-json` to also generate `UnmarshalJSON` methods. The samples repository shows that flag on `signup`.
 
 ## Recorded comparison results
 
