@@ -101,7 +101,6 @@ These groups already have tests beside the code they check. A generator that rea
 - Operation checks in `internal/analyzer/operations/operations_test.go`. The functions are `TestOperationsIsValid`, `TestOperationsIsValidByType`, `TestOperationsIsFieldOperation`, and `TestOperationsArgsCount`.
 - Condition-table checks in `internal/codegenerator/get_test_elements_*_test.go`. Each case stores the condition string and the error string passed to `DefineTestElements`.
 - Parser checks in `internal/parser/parser_test.go`. They compare parsed structs with source text.
-- Examples under `_examples/`.
 
 Field-operation rows in the four generated suites wait on integer field operations in issue #78. Complex ordering tags stay rejected, and `dive` in issue #7 is separate work.
 
