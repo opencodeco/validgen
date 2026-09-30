@@ -74,9 +74,9 @@ However, these generators lacked a common configuration, didn't implement all te
 
 ## What TestGen generates
 
-`typesValidation` in `validations.go` is the case list. `make testgen` walks that list and writes four suites. Each suite is a pointer file and a non-pointer file. The list contains non-field operations only.
+`typesValidation` in `validations.go` is the case list. `make testgen` walks that list and writes the end-to-end suite and the two unit-test suites. It writes the comparative benchmark suite when `VALIDGEN_BENCHMARKS_DIR` is set. Each suite is a pointer file and a non-pointer file. The list contains non-field operations only.
 
-- Benchmark tests between ValidGen and GoValidator, in `tests/cmpbenchtests/generated_cmp_perf_*`.
+- Benchmark tests between ValidGen and GoValidator, written to `opencodeco/validgen-benchmarks` when `VALIDGEN_BENCHMARKS_DIR` is set. The templates are `cmp/cmp_perf_*_tests.tpl` in that repository.
 - End-to-end tests for each validation, type class, and valid or invalid input, in `tests/endtoend/generated_endtoend_*`.
 - Unit tests for `BuildValidationCode`, in `internal/codegenerator/generated_validation_code_*`.
 - Unit tests for the generated validator function, in `internal/codegenerator/generated_function_code_*`.
@@ -114,5 +114,9 @@ To generate the tests:
 cd validgen
 
 # Run testgen
+make testgen
+
+# Also regenerate the comparative benchmarks
+export VALIDGEN_BENCHMARKS_DIR=/absolute/path/to/validgen-benchmarks
 make testgen
 ```

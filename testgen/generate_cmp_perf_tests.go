@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/opencodeco/validgen/internal/common"
@@ -23,11 +25,26 @@ type CmpBenchTest struct {
 }
 
 func generateComparativePerformanceTests() error {
-	if err := generateComparativePerformanceTest("cmp_perf_no_pointer_tests.tpl", "generated_cmp_perf_no_pointer_test.go", false); err != nil {
+	dir := os.Getenv("VALIDGEN_BENCHMARKS_DIR")
+	if dir == "" {
+		fmt.Println("Skipping comparative performance tests: VALIDGEN_BENCHMARKS_DIR is not set")
+		return nil
+	}
+
+	cmpDir := filepath.Join(dir, "cmp")
+	if err := generateComparativePerformanceTest(
+		filepath.Join(cmpDir, "cmp_perf_no_pointer_tests.tpl"),
+		filepath.Join(cmpDir, "generated_cmp_perf_no_pointer_test.go"),
+		false,
+	); err != nil {
 		return err
 	}
 
-	if err := generateComparativePerformanceTest("cmp_perf_pointer_tests.tpl", "generated_cmp_perf_pointer_test.go", true); err != nil {
+	if err := generateComparativePerformanceTest(
+		filepath.Join(cmpDir, "cmp_perf_pointer_tests.tpl"),
+		filepath.Join(cmpDir, "generated_cmp_perf_pointer_test.go"),
+		true,
+	); err != nil {
 		return err
 	}
 

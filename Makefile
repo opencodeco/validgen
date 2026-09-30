@@ -1,13 +1,15 @@
-.PHONY: clean unittests benchtests build endtoendtests cmpbenchtests testgen setup lint
+.PHONY: clean unittests build endtoendtests testgen setup lint
 
 BIN_DIR=bin
 BIN_NAME=validgen
 VALIDGEN_BIN=$(BIN_DIR)/$(BIN_NAME)
-BENCH_TIME=5s
+ifdef VALIDGEN_BENCHMARKS_DIR
+export VALIDGEN_BENCHMARKS_DIR := $(abspath $(VALIDGEN_BENCHMARKS_DIR))
+endif
 GOLANGCILINT_PATH=$(HOME)/bin
 GOLANGCILINT_BIN=$(GOLANGCILINT_PATH)/golangci-lint
 
-all: clean unittests build endtoendtests benchtests cmpbenchtests
+all: clean unittests build endtoendtests
 
 clean:
 	@echo "Cleaning"
@@ -18,20 +20,13 @@ unittests:
 	go clean -testcache
 	go test -v ./internal/... ./types/... ./testgen/
 
-benchtests: build
-	@echo "Running bench tests"
-	find tests/bench/ -name '*_validator.go' -exec rm \{} \;
-	$(VALIDGEN_BIN) tests/bench
-	go clean -testcache
-	go test -bench=. -v -benchmem -benchtime=$(BENCH_TIME) ./tests/bench
-
 build: clean
 	@echo "Building"
 	go build -o $(VALIDGEN_BIN) .
 
 testgen:
 	@echo "Generating tests"
-	cd testgen/ && rm -f generated_*.go && go run *.go && mv generated_endtoend_*tests.go ../tests/endtoend/ && mv generated_validation_*_test.go ../internal/codegenerator/ && mv generated_function_code_*_test.go ../internal/codegenerator/ && mv generated_cmp_perf_*.go ../tests/cmpbenchtests/
+	cd testgen/ && rm -f generated_*.go && go run . && mv generated_endtoend_*tests.go ../tests/endtoend/ && mv generated_validation_*_test.go ../internal/codegenerator/ && mv generated_function_code_*_test.go ../internal/codegenerator/
 
 endtoendtests: build
 	@echo "Running endtoend tests"
@@ -42,12 +37,6 @@ endtoendtests: build
 	find tests/jsonunmarshal/ -name 'validator__.go' -exec rm \{} \;
 	$(VALIDGEN_BIN) -unmarshal-json tests/jsonunmarshal
 	cd tests/jsonunmarshal; go run .
-
-cmpbenchtests: build
-	@echo "Running cmp bench tests"
-	$(VALIDGEN_BIN) tests/cmpbenchtests/
-	go clean -testcache
-	go test -bench=. -v -benchmem -benchtime=$(BENCH_TIME) ./tests/cmpbenchtests/
 
 setup:
 	@echo "Setting up"
